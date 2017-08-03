@@ -1,0 +1,46 @@
+@CHARSET "ISO-8859-1";
+
+.top_bar{
+	background-color:#f36c00;
+}
+.top_textcolor{
+		margin-top:10px;
+	
+	font-size:40px;
+font-weight: bold;
+	color:#fff;
+}
+.top_menu{
+	margin-top:10px;
+	
+	
+}
+.top_menu ul{
+	
+
+	font-weight: bold;
+	font-size:17px;
+}
+.top_menu .navbar-default{
+	background:none;
+	border:none;
+}
+
+.top_menu .navbar-nav li a:hover{
+	background:green;
+	color:#fff;
+}
+.register{
+	{border-style: groove;}
+}
+
+.margin_di{
+	
+	 margin-top: 0px;
+    margin-bottom: 0px;
+    margin-right: 0px;
+    margin-left: 0px;
+}
+
+
+
