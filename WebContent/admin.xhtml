@@ -20,29 +20,36 @@
 	
  <div class="container-fluid top_bar" >
 <div class="container">
- <div class="row ">
- 
- <div class="col-sm-4 top_textcolor word_space">
- ReqMan
- </div><!-- end column -->
- 
-  <div class="nav navbar-nav pull-right "> 
- <div class="col-sm-4 top_menu ">
 
-<h3 style="color:white;">#{login.user}</h3>
-</div><!-- end column -->
-
-<div class="col-sm-4 top_menu pull-right">
+ <div class="row ">  
+ <div class="col-sm-6 top_menu" >
+ <nav class="navbar navbar-default" style="background:none; border:none;" >
+ <button type="button" class="navbar-toggle " data-toggle="collapse" data-target="#mymenu" >
+ <span class="icon-bar"></span>
+  <span class="icon-bar"></span>
+   <span class="icon-bar"></span>
+ </button> 
+ <div class="collapse navbar-collapse" id="mymenu">
+<ul class="nav navbar-nav  ">
+<li ><a href="faces/admin.xhtml" style="color:#faebd1; border-style: groove; background-color:green;">Home</a></li>
+<li ><a href="new_project.xhtml" style="color:#faebd1"> Project</a></li>
+<li><a href="new_category.xhtml" style="color:#faebd1;"> Category</a></li>
+<li><a href="new_type.xhtml" style="color:#faebd1;"> Type</a></li>
+<li><a href="new_friend.xhtml" style="color:#faebd1;"> Friend</a></li>
+</ul>
+</div><!-- end of collapse -->
+ </nav><!-- end of nav --> 
+ </div><!-- end column --> 
+<div class="col-sm-3 top_menu">
+<h4 style="color:white;">#{login.user}</h4>
+ </div><!-- end column --> 
+<div class="col-sm-3 pull-right top_menu">
 <h:form>
-
- <h:commandLink action="#{login.logout}" value="Logout" style="width:80px"></h:commandLink>
+ <h4 ><h:commandLink action="#{login.logout}" value="Logout" style="color:#fff" ></h:commandLink></h4>
  </h:form>
- </div><!-- end column -->
-
- 
- </div><!-- end of loginout div -->
- </div><!--end row  -->
- </div><!--end container  -->
+ </div><!-- end column --> 
+   </div><!-- end row --> 
+  </div><!--end container  --> 
    
  </div><!--end container- fluid  -->
       

@@ -1,0 +1,84 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough" 
+	   xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+<link rel="stylesheet" href="resource/css/bootstrap.css"/>
+<link rel="stylesheet" href="resource/mystyle/mystyle.css"/>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script type="text/javascript" src="resource/js/bootstrap.js"/>
+<script type="text/javascript" src="resource/js/jquery.js"/>
+<title>New project</title>
+</h:head>
+
+<h:body style="background-color:#fff">
+	
+ <div class="container-fluid top_bar" >
+<div class="container">
+
+ <div class="row ">  
+ <div class="col-sm-6 top_menu" >
+ <nav class="navbar navbar-default" style="background:none; border:none;" >
+ <button type="button" class="navbar-toggle " data-toggle="collapse" data-target="#mymenu" >
+ <span class="icon-bar"></span>
+  <span class="icon-bar"></span>
+   <span class="icon-bar"></span>
+ </button> 
+ <div class="collapse navbar-collapse" id="mymenu">
+<ul class="nav navbar-nav  ">
+<li ><a href="faces/admin.xhtml" style="color:#faebd1; border-style: groove; background-color:green;">Home</a></li>
+<li ><a href="new_project.xhtml" style="color:#faebd1"> Project</a></li>
+<li><a href="new_category.xhtml" style="color:#faebd1;"> Category</a></li>
+<li><a href="new_type.xhtml" style="color:#faebd1;"> Type</a></li>
+<li><a href="new_friend.xhtml" style="color:#faebd1;"> Friend</a></li>
+</ul>
+</div><!-- end of collapse -->
+ </nav><!-- end of nav --> 
+ </div><!-- end column --> 
+<div class="col-sm-3 top_menu">
+<h4 style="color:white;">#{login.user}</h4>
+ </div><!-- end column --> 
+<div class="col-sm-3 pull-right top_menu">
+<h:form>
+ <h4 ><h:commandLink action="#{login.logout}" value="Logout" style="color:#fff" ></h:commandLink></h4>
+ </h:form>
+ </div><!-- end column --> 
+   </div><!-- end row --> 
+  </div><!--end container  -->    
+ </div><!--end container- fluid  -->
+ <!-- end of header section -->
+ <div class="container">  
+ 
+
+  <div class="container" > 
+
+ <h2 style="text-align:center">Request Project To Which The Request Belong</h2>
+
+ </div><!-- end of container -->
+
+ 
+
+ 
+ <br></br> 
+<h:form>
+ 
+<h:inputText pt:placeholder="Enter New Request Project"   value="#{project.project}" class="form-control custom-control" required="true" >
+ </h:inputText><h:message for="project"></h:message>
+
+<h:inputText value="#{login.user}"></h:inputText>
+<h:inputText pt:placeholder="Enter Status" value="#{project.status}" class="form-control custom-control" required="true"></h:inputText>
+<h:commandButton value="submit" action="#{project.submit}"  class="btn btn-lg btn-primary btn-block"></h:commandButton>
+</h:form>
+  </div><!--end container  -->
+ 
+ 
+ 
+</h:body>
+</html>
