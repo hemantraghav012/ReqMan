@@ -8,12 +8,11 @@ import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
 
-import com.reqman.dao.LoginDAO;
 import com.reqman.dao.UserDetailsInterface;
 import com.reqman.daoimpl.UserDetailsImpl;
 import com.reqman.util.SessionUtils;
 
-@ManagedBean
+@ManagedBean(name = "login", eager = true)
 @SessionScoped
 public class Login implements Serializable {
 

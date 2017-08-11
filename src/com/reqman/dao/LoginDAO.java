@@ -15,7 +15,7 @@ public class LoginDAO {
 
 		try {
 			con = DataConnect.getConnection();
-			ps = con.prepareStatement("Select * from reqman.users  where emailid = ? and password = ?");
+			ps = con.prepareStatement("Select * from users  where emailid = ? and password = ?");
 			ps.setString(1, user);
 			ps.setString(2, password);
 

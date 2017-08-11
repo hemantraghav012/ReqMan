@@ -15,7 +15,7 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script type="text/javascript" src="resource/js/bootstrap.js"/>
 <script type="text/javascript" src="resource/js/jquery.js"/>
-<title>Insert title here</title>
+<title>New Category Request</title>
 </h:head>
 <h:body style="background-color:#fff">
 	
@@ -64,18 +64,63 @@
  </div><!-- end of container -->
 
  
- <br></br> 
+  <br></br> 
 <h:form>
  
-<h:inputText pt:placeholder="Enter New Request Category"   value="#" class="form-control custom-control" required="true" >
- </h:inputText>
-<h:inputHidden value="#{login.user}"></h:inputHidden>
-<h:inputHidden value="y"></h:inputHidden>
-<h:commandButton value="submit" action="home.xhtml"  class="btn btn-lg btn-primary btn-block"></h:commandButton>
+<h:inputText pt:placeholder="Enter New Request Category"   value="#{category.category}" class="form-control custom-control" required="true" requiredMessage="Please enter your project name" >
+ </h:inputText><h:message for="category"></h:message>
+
+<h:inputText value="#{login.user}"  class="form-control custom-control" ></h:inputText>
+
+<h:inputHidden pt:placeholder="Enter Status" value="#{category.status}"  ></h:inputHidden>
+
+<h:commandButton value="submit" action="#{category.submit}"  class="btn btn-lg btn-primary btn-block"></h:commandButton>
 </h:form>
   </div><!--end container  -->
  
+ <!-- end of  insert project   -->
  
+
+ <br></br>
+  <br></br>
+ <div class="container">  
  
+ <h:form>
+ <h:dataTable value="#{categorydao.getlist()}" var="u" border="2" class="table table-striped table-hover table-bordered ">
+ <div class="row"></div>
+ <h:column>
+ <f:facet name="header">
+Project
+ </f:facet>
+ #{u.category} 
+ </h:column>
+ 
+ <h:column>
+ <f:facet name="header">
+ Status
+ </f:facet>
+ #{u.status}
+ </h:column>
+ 
+ <h:column>
+ <f:facet name="header">
+Email
+ </f:facet>
+ #{u.email}
+ </h:column>
+ <!-- 
+ <h:column>  
+<f:facet name="header">Update</f:facet>  
+<h:commandButton action = "#{categorydao.update(u.category)}" value="Update" class="btn btn-primary">  
+</h:commandButton>  
+</h:column>  -->
+<h:column>  
+<f:facet name="header">Delete</f:facet>  
+<h:commandButton action = "#{categorydao.delete(u.category)}" value="Delete" class="btn btn-danger">  
+</h:commandButton>  
+</h:column>  
+ </h:dataTable> 
+ </h:form>
+ </div><!--end container  -->
 </h:body>
 </html>

@@ -15,45 +15,31 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
 import com.reqman.common.HibernateSessionFactory;
-import com.reqman.common.HibernateUtil;
-import com.reqman.common.HibernateUtilH;
-
-
-
 
 @ManagedBean
 @SessionScoped
 @Entity
-@Table(name="Project")
-public class Project implements Serializable{
+@Table(name="type")
+public class type implements Serializable{
 	
-
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -3058673729691320988L;
+	private static final long serialVersionUID = 1L;
 	@Id
-	@Column(name="project",length = 80)
-	private String project;
-	@Column(name="status",length = 45)
-	private String status;
-	@Column(name="email", length = 100)
-	private String email;	
-	
-	
-	
-	
-	public String getProject() {
-		return project;
+	@Column(name="type",length = 80)
+	private String type;
+	public String getType() {
+		return type;
 	}
-	public void setProject(String project) {
-		this.project = project;
+	public void setType(String type) {
+		this.type = type;
 	}
 	public String getStatus() {
 		return status;
 	}
 	public void setStatus(String status) {
-		this.status =status;
+		this.status = status;
 	}
 	public String getEmail() {
 		return email;
@@ -61,17 +47,20 @@ public class Project implements Serializable{
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	
+	@Column(name="status",length = 45)
+	private String status;
+	@Column(name="email", length = 100)
+	private String email;	
 	
 	public String submit(){	
 		  Session session; 
 	    String result=null;
-	    SessionFactory hsf = HibernateUtilH.getSessionFactory();
-        session = hsf.openSession();	
+	       SessionFactory hsf = HibernateSessionFactory.getSessionFactory();
+    session = hsf.openSession();	
 		try{
 			//create a student object			
 		this.setEmail(email);
-		this.setProject(project);
+        this.setType(type);
 		this.setStatus("yes");	
 			
 			//start a transaction 
@@ -82,26 +71,26 @@ public class Project implements Serializable{
 			session.getTransaction().commit();
 			System.out.println("done");
 			if(result!=null){
-				return "new_project";
+				return "new_category";
 			}else{
 				FacesContext.getCurrentInstance().addMessage(
 						null,
 						new FacesMessage(FacesMessage.SEVERITY_WARN,
-								"AlreadyExist project_name",
-								"Please Enter a another_name"));
-				return "new_project";
+								"AlreadyExist Type_name",
+								"Please Enter a anotherType_name"));
+				return "new_category";
 			}			
 		}	catch(Exception e){
 			System.out.print(e);
 			FacesContext.getCurrentInstance().addMessage(
 					null,
 					new FacesMessage(FacesMessage.SEVERITY_WARN,
-							"AlreadyExist project_name",
-							"Please Enter a another_name"));
-			return "new_project";
+							"AlreadyExist Type_name",
+							"Please Enter a anotherType_name"));
+			return "new_type";
 		}
 			
-        }
+    }
 
 	
 	}

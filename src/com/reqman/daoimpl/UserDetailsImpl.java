@@ -5,7 +5,8 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.Restrictions;
 
-import com.reqman.common.HibernateSessionFactory;
+
+import com.reqman.common.HibernateUtilH;
 import com.reqman.dao.UserDetailsInterface;
 import com.reqman.pojo.Users;
 
@@ -29,8 +30,9 @@ public class UserDetailsImpl implements UserDetailsInterface {
             if(userName != null && !userName.trim().equals(""))
             {
             	
-            	hsf = HibernateSessionFactory.getSessionFactory();
-                session = hsf.openSession();
+            	//hsf = HibernateSessionFactory.getSessionFactory();
+                //session = hsf.openSession();
+            	session = HibernateUtilH.getSession();
                 tx = session.beginTransaction();
                 users = (Users)session.createCriteria(Users.class)
                 		.add(Restrictions.eq("emailid", userName.toLowerCase().trim()).ignoreCase())

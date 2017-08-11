@@ -7,9 +7,8 @@ public class DataConnect {
 
 	public static Connection getConnection() {
 		try {
-			Class.forName("org.postgresql.Driver");
-			Connection con = DriverManager.getConnection(
-					"jdbc:postgresql://localhost:5432/reqman", "postgres", "3394");
+			String dburl=System.getenv("JDBC_DATABASE_URL");			
+	Connection con = DriverManager.getConnection(dburl);
 			return con;
 		} catch (Exception ex) {
 			System.out.println("Database.getConnection() Error -->"

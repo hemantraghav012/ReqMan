@@ -2,7 +2,8 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:ui="http://java.sun.com/jsf/facelets">
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
 <!-- <h:head>
 	<title>login</title>
 </h:head> -->
@@ -11,8 +12,17 @@
 
     <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
 
-    <title>JSF Integrate Bootstrap</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<link rel="stylesheet" href="resource/mystyle/login.css"/>
+<link rel="stylesheet" href="resource/css/bootstrap.css"/>
+<link rel="stylesheet" href="resource/mystyle/mystyle.css"/> 
+<script type="text/javascript" src="resource/js/bootstrap.min.js"/>
+<script type="text/javascript" src="resource/js/jquery11.js"/>
+    <title>Login </title>
 
     <h:outputStylesheet library="webjars" name="bootstrap/3.3.6/css/bootstrap.min-jsf.css" />
     <h:outputStylesheet library="webjars" name="bootstrap/3.3.6/css/bootstrap-theme.min-jsf.css" />
@@ -21,23 +31,47 @@
 
 </h:head>
 	
-<h:body>
-<div class="container" >
-	<h:form class="form-horizontal" >
-		<h3>JSF Login Logout</h3>
-		<h:outputText value="Username"  />
-		<h:inputText id="username" class="form-control"  value="#{login.user}"></h:inputText>
+<h:body style="background-color:#DCDCDC">
+ 
+    	  <div class="modal-dialog" Style=" margin-top: 2.5cm;">
+				<div class="loginmodal-container">
+					<h1>Login to <span style="font-weight: bold;">ReqMan</span> Account</h1><br></br>
+				  <h:form >
+   
+     <h:outputText>Email Id</h:outputText>
+     <h:inputText pt:placeholder="Email id"   value="#{login.user}"></h:inputText>
 		<h:message for="username"></h:message>
-		<br /><br />
-		
-		<h:outputText value="Password" />
-		<h:inputSecret class="form-control"  id="password" value="#{login.pwd}"></h:inputSecret>
+    
+    
+    <h:outputText>Password</h:outputText>
+     <h:inputSecret pt:placeholder="Password" value="#{login.pwd}"></h:inputSecret>
 		<h:message for="password"></h:message>
-		<br /><br />
-		
-		<h:commandButton class="btn btn-lg btn-primary btn-block"  action="#{login.validateUsernamePassword}"
-			value="Login"></h:commandButton>
-	</h:form>
-	</div>
+     
+ 
+  
+  
+   <h:commandButton   action="#{login.validateUsernamePassword}"
+			value="Login"  styleClass="loginbutton "></h:commandButton>
+   
+</h:form>
+					
+				  <div class="login-help">
+					 <a href="#" style="color:blue">Forgot Password</a>
+					 <br></br>
+					
+					  
+					 <a href="faces/register.xhtml" style="color:blue"> Go to Register...</a> 
+				  </div>
+				  <div class="or-break">
+    <span>or</span>
+  </div>
+  <a class="button-full btn btn-primary"  href="#" style="color:#fff;">
+    Sign In with Google
+</a>
+				</div>
+			</div>
+
+  
+			
 </h:body>
 </html>
