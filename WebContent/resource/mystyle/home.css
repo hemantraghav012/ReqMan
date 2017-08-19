@@ -1,0 +1,44 @@
+.top_menu{
+	background-color:#f36c00;
+	
+	
+}
+.margin_menu{
+	margin-top:0px;
+	margin-bottom:0px;
+	
+}
+.container {
+    padding-top: 0px;
+    padding-bottom: 0px;
+   
+}
+.top_menu .navbar-nav li a:hover{
+	  background: rgba(255,255,255,0.1);
+	 box-shadow: 0 1px 1px rgba(0,0,0,0.2);
+	 border: 0.5px solid;
+    opacity: 1;
+    transition: 0.2s;
+  
+     margin-top: 0px;
+    margin-bottom: 0px;
+    
+}
+<!-- Only  home page  coding   -->
+
+
+.home-container{
+	
+	padding: 30px;
+  max-width: 500px;
+  width: 100% !important;
+  background-color: #fff;
+  margin: 0 auto;
+  border-radius: 2px;
+  
+  overflow: hidden;
+  font-family: roboto;
+   
+
+}
+	

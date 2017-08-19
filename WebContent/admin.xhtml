@@ -9,81 +9,97 @@
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
 
 <link rel="stylesheet" href="resource/css/bootstrap.css"/>
-<link rel="stylesheet" href="resource/mystyle/mystyle.css"/>
+<link rel="stylesheet" href="resource/mystyle/home.css"/>
+<link rel="stylesheet" href="resource/mystyle/onlyhome.css"/>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script type="text/javascript" src="resource/js/bootstrap.js"/>
 <script type="text/javascript" src="resource/js/jquery.js"/>
 
-	<title>Landing Page</title>
+	<title>Reqman Home</title>
 </h:head>
 <h:body style="background-color:#fff">
 	
- <div class="container-fluid top_bar" >
-<div class="container">
+	<div class="container-fluid ">
 
- <div class="row ">  
- <div class="col-sm-6 top_menu" >
- <nav class="navbar navbar-default" style="background:none; border:none;" >
- <button type="button" class="navbar-toggle " data-toggle="collapse" data-target="#mymenu" >
- <span class="icon-bar"></span>
-  <span class="icon-bar"></span>
-   <span class="icon-bar"></span>
- </button> 
- <div class="collapse navbar-collapse" id="mymenu">
-<ul class="nav navbar-nav  ">
-<li ><a href="faces/admin.xhtml" style="color:#faebd1; border-style: groove; background-color:green;">Home</a></li>
-<li ><a href="new_project.xhtml" style="color:#faebd1"> Project</a></li>
-<li><a href="new_category.xhtml" style="color:#faebd1;"> Category</a></li>
-<li><a href="new_type.xhtml" style="color:#faebd1;"> Type</a></li>
-<li><a href="new_friend.xhtml" style="color:#faebd1;"> Friend</a></li>
-</ul>
-</div><!-- end of collapse -->
- </nav><!-- end of nav --> 
- </div><!-- end column --> 
-<div class="col-sm-3 top_menu">
-<h4 style="color:white;">#{login.user}</h4>
- </div><!-- end column --> 
-<div class="col-sm-3 pull-right top_menu">
-<h:form>
- <h4 ><h:commandLink action="#{login.logout}" value="Logout" style="color:#fff" ></h:commandLink></h4>
- </h:form>
- </div><!-- end column --> 
-   </div><!-- end row --> 
-  </div><!--end container  --> 
-   
- </div><!--end container- fluid  -->
+<div class="navbar  navbar-default navbar-fixed-top top_menu" >
+<a class= "navbar-brand " href="#" style="color:#fff; font-size:30px; font-weight: bold; margin-left:2cm;">ReqMan</a>
+<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+<spane class="icon-bar"></spane>
+<spane class="icon-bar"></spane>
+<spane class="icon-bar"></spane>
+</button>
+<div class="collapse navbar-collapse margin_menu">
+<ul class="nav navbar-nav navbar-left">
+<li> <h:link  style="color:#faebd1; font-weight: bold;   background: rgba(255,255,255,0.1);  border: 0.5px solid;" class="glyphicon glyphicon-home"  id="nav-sign-up" outcome="admin" /> </li>
+<li> <h:link value="Create New Request " style="color:#faebd1; font-weight: bold;" outcome="createnewrequeston friend.xhtml" /> </li>
+<li> <h:link value="Update Status " style="color:#faebd1; font-weight: bold;" outcome="login" /> </li>
+<li> <h:link value="See Status " style="color:#faebd1; font-weight: bold;" outcome="login" /> </li>
+<li> <h:link value="Respond to New Request  " style="color:#faebd1; font-weight: bold;" outcome="login" /> </li>
+ </ul>
+ 
+<ul class="nav navbar-nav navbar-right">
+ <li class="dropdown " style="margin-right: 2cm;">
+          <a class="dropdown-toggle " data-toggle="dropdown" style="color:#faebd1; font-weight: bold; background-color:#f36c00;">#{login.user}
+          <span class="caret"></span></a>         
+          <ul class="dropdown-menu" style="color:#faebd1; font-weight: bold;">
+         
+            <li><span class="btn btn-block hover-item" style="color:black; background-color:#808080; text-align:center">#{login.user}</span></li>
+           <li> <h:link value="My Profile  " style="color:black " class="btn btn-block hover-item" outcome="myprofile" /> </li>
+            <li><h:form>
+<h:commandLink action="#{login.logout}" value="Logout" style="color:black"  class="btn btn-block hover-item"></h:commandLink>
+ </h:form></li> 
+ 
+          </ul>
+          
+        </li>
       
-      <div class="row">
-<div class="col-sm-6 margin_di" >
- <iframe style="height:285px; width:103%" scrolling="auto" src="createnewrequest.xhtml">
-              <p>Your browser does not support iframes.</p>
-            </iframe>
-            </div><!-- end of column-->
-            
-            <div class="col-sm-6 margin_di">
- <iframe style="height:285px; width:100%" scrolling="auto" src="updatestatus.xhtml">
-              <p>Your browser does not support iframes.</p>
-            </iframe>
-            </div><!-- end of column-->
-            
-    </div><!-- end of row-->         
-  <div class="row" >          
-            <div class="col-sm-6 margin_di">
- <iframe style="height:285px; width:100%" scrolling="auto" src="seestatus.xhtml">
-              <p>Your browser does not support iframes.</p>
-            </iframe>
-            </div><!-- end of column-->
-            
-            <div class="col-sm-6 margin_di">
- <iframe style="height:285px; width:103%" scrolling="auto" src="responsetonewrequest.xhtml">
-              <p>Your browser does not support iframes.</p>
-            </iframe>
-            </div><!-- end of column-->
-            </div><!-- end of row-->
+</ul>
 
+</div>
+</div>
+</div>
+    
+      <!-- end of top menu -->
+      
+    <div class="containerfluid">
+      
+	  <div class="container homecontainer "  style="   margin-top:3cm; ">      
+     <h1 style="padding-left: 10px;"> Welcome to ReqMan, #{login.user}!</h1>
+      <h3 style="color:#808080; padding-left: 10px;">Here’s how to get started:</h3>  
+      <div class="container containerforbutton " >
+  
+    <button type="button" class="btn btn-default btn-sm btn-block homeiconbutton" >
+          <span class="glyphicon glyphicon-play-circle"></span> Learn the basics of time tracking
+        </button>
+    
+      <button type="button" class="btn btn-default btn-sm btn-block homeiconbutton ">
+          <span class="glyphicon">&#xe022;</span> Create New Request On Friends
+        </button>
+        
+        <button type="button" class="btn btn-default btn-sm btn-block homeiconbutton" >
+     <span class="glyphicon">&#xe022;</span> Respond to New Request  From Friends
+        </button>
+        
+        <button type="button" class="btn btn-default btn-sm btn-block homeiconbutton" >
+          <span class="glyphicon">&#xe022;</span> Respond to New Request  From Friends
+        </button>
+        
+        <button type="button" class="btn btn-default btn-sm btn-block homeiconbutton" >
+      <span class="glyphicon">&#xe022;</span> See Status Of Your Requests
+        </button>
+    
+    <!-- end of button -->
+    
+    <div class="row" style="margin-top:1cm;">
+    <div class="col-sm-4"><h:link value="Webinars" outcome="index" class="downlink"></h:link><br></br> <p>Live online classes. Pick the brains of our experts.</p> </div>
+     <div class="col-sm-4"><h:link value="Help Center" outcome="index" class="downlink"></h:link><br></br><p> Our knowledge base and FAQs.</p></div>
+     <div class="col-sm-4"><h:link value="Support" outcome="index" class="downlink"></h:link><br></br> <p>Friendly experts, always ready to help.</p></div>
+    </div>
+    
+    
+      </div>
+      </div>
 	
-	
-	
-	
+	</div>  
 </h:body>
 </html>

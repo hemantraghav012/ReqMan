@@ -19,6 +19,7 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <link rel="stylesheet" href="resource/mystyle/login.css"/>
 <link rel="stylesheet" href="resource/css/bootstrap.css"/>
+<link rel="stylesheet" href="resource/mystyle/home.css"/> 
 <link rel="stylesheet" href="resource/mystyle/mystyle.css"/> 
 <script type="text/javascript" src="resource/js/bootstrap.min.js"/>
 <script type="text/javascript" src="resource/js/jquery11.js"/>
@@ -33,19 +34,55 @@
 	
 <h:body style="background-color:#DCDCDC">
  
+ 
+ 
+ 
+ 
+ 
+ 
+ <div class="container-fluid ">
+
+<div class="navbar  navbar-inverse navbar-fixed-top top_menu" style="background-color:red" >
+<a class= "navbar-brand " href="#" style="color:#fff; font-size:30px; font-weight: bold; margin-left:2cm;">ReqMan</a>
+
+<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+<spane class="icon-bar"></spane>
+<spane class="icon-bar"></spane>
+<spane class="icon-bar"></spane>
+</button>
+<div class="collapse navbar-collapse margin_menu" >
+<ul class="nav navbar-nav navbar-right">
+<li ><a href="#" style="color:#fff; font-weight: bold;" >Feature</a></li>
+<li><a href="#" style="color:#fff; font-weight: bold;" class="hover1">Pricing</a></li>
+<li><a href="#" style="color:#fff; font-weight: bold;" >customers</a></li>
+<li><a href="#" style="color:#fff; font-weight: bold;">Blog</a></li>
+<li><a href="faces/login.xhtml"  style="color:#fff; font-weight: bold;">Sign in</a></li>
+<li class="active"><a href="faces/register.xhtml" style="color:#fff; font-weight: bold; margin-right:2cm;  background: rgba(255,255,255,0.1);  border: 0.5px solid;">Register</a></li>
+</ul>
+</div>
+</div>
+</div>
+    
+      <!-- end of top menu -->
+ 
+ 
+ 
+ 
+ 
+ 
     	  <div class="modal-dialog" Style=" margin-top: 2.5cm;">
 				<div class="loginmodal-container">
 					<h1>Login to <span style="font-weight: bold;">ReqMan</span> Account</h1><br></br>
 				  <h:form >
    
      <h:outputText>Email Id</h:outputText>
-     <h:inputText pt:placeholder="Email id"   value="#{login.user}"></h:inputText>
-		<h:message for="username"></h:message>
+     <h:inputText pt:placeholder="Email id"   value="#{login.user}" id="emailid" required="true" requiredMessage="* Please enter your emaid id"> </h:inputText>
+				 <h:message for="emailid"  style="color:red;margin:8px;"/> 
     
     
     <h:outputText>Password</h:outputText>
-     <h:inputSecret pt:placeholder="Password" value="#{login.pwd}"></h:inputSecret>
-		<h:message for="password"></h:message>
+     <h:inputSecret pt:placeholder="Password" value="#{login.pwd}" id="password" required="true" requiredMessage="* Please enter your password"></h:inputSecret>
+		 <h:message for="password"  style="color:red;margin:8px;"/> 
      
  
   

@@ -11,47 +11,95 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
 <link rel="stylesheet" href="resource/css/bootstrap.css"/>
-<link rel="stylesheet" href="resource/mystyle/mystyle.css"/> 
+<link rel="stylesheet" href="resource/mystyle/home.css"/> 
+<link rel="stylesheet" href="resource/mystyle/register.css"/> 
 <script type="text/javascript" src="resource/js/bootstrap.min.js"/>
 <script type="text/javascript" src="resource/js/jquery11.js"/>
 
-<title>Register Form</title>
+<title>Sign Up for ReqMan</title>
 </head>
-<h:body>
-<div class="container-fluid" style="background-color: 	#DCDCDC">">
-<div class="container" >
-<h2 style="text-align:center;font-weight: bold;  margin-top: 20px; margin-bottom: 20px;"> Register to ReqMan</h2>
-<div class="container" >
+<h:body style="background-color:#white">
+<div class="container-fluid ">
 
-<h:form class="form-group" >
-<h:outputLabel>Email Id</h:outputLabel>
-<h:inputText value="#{users.emailid}"  class="form-control"  ></h:inputText><br></br>
-
-<h:outputLabel>Password</h:outputLabel>
-<h:inputText value="#{users.password}"  class="form-control" ></h:inputText><br></br>
+<div class="navbar  navbar-default navbar-fixed-top top_menu" >
+<a class= "navbar-brand " href="#" style="color:#fff; font-size:30px; font-weight: bold; margin-left:2cm;">ReqMan</a>
 
 
-<h:outputLabel>First Name</h:outputLabel>
-<h:inputText value="#{users.firstname}"  class="form-control" ></h:inputText><br></br>
+<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+<spane class="icon-bar"></spane>
+<spane class="icon-bar"></spane>
+<spane class="icon-bar"></spane>
+</button>
+<div class="collapse navbar-collapse margin_menu">
+<ul class="nav navbar-nav navbar-right">
+<li ><a href="#" style="color:#fff; font-weight: bold;" >Feature</a></li>
+<li><a href="#" style="color:#fff; font-weight: bold;" class="hover1">Pricing</a></li>
+<li><a href="#" style="color:#fff; font-weight: bold;" >customers</a></li>
+<li><a href="#" style="color:#fff; font-weight: bold;">Blog</a></li>
+<li> <h:link value="Sign In" style="color:#faebd1; font-weight: bold;" outcome="login" /> </li>
+<li> <h:link value="Register Free" style="color:#faebd1; font-weight: bold; margin-right:2cm;  background: rgba(255,255,255,0.1);  border: 0.5px solid;" id="nav-sign-up" outcome="register" /> </li>
 
-<h:outputLabel>Last Name</h:outputLabel>
-<h:inputText value="#{users.lastname}"  class="form-control" ></h:inputText><br></br>
-
-<h:outputLabel>Group Name</h:outputLabel>
-<h:inputText value="#{users.groupname}"  class="form-control" ></h:inputText><br></br>
-
-<h:outputLabel>Status</h:outputLabel>
-<h:inputText value="#{users.status}"  class="form-control" ></h:inputText><br></br>
-
-<h:outputLabel>Created By</h:outputLabel>
-<h:inputText value="#{users.createdby}"  class="form-control" ></h:inputText><br></br>
+</ul>
+</div>
+</div>
+</div>
+    
+      <!-- end of top menu -->
 
 
-<h:commandLink action="#{users.submit}" value="submit" class="btn btn-lg btn-primary btn-block"></h:commandLink>
+<div class="container registerfield " style=" margin-top:1.5cm;" >
+<div class="row " >
+<div class="col-sm-4.col-sm-4" style=" margin-left:0.4cm; ">
+<h2 style="font-weight: bold;  margin-top: 20px;  "> Start your free 30-day trial.</h2>
+
+<h3 >Fully functional. No credit card required.</h3>
+</div>
+</div>
+</div>
+<div class="container registerfield"  >
+
+<h:form class="form-horizontal " >
+
+
+ <div class=" row form-group registerfieldname">
+ <div class="col-sm-2 control-label"><h:outputLabel  >Email Id:</h:outputLabel></div>
+<div class=" col-sm-6"> <h:inputText value="#{register.emailid}" class="  form-control"  id="emailid" required="true" requiredMessage="* Please enter your email id"/></div>
+ <h:message for="emailid"  style="color:red;margin:8px;"/> 
+
+</div>
+
+ <div class=" row form-group registerfieldname">
+ <div class="col-sm-2 control-label"><h:outputLabel>Password:</h:outputLabel></div>
+<div class=" col-sm-6"><h:inputText value="#{register.password}"  class="form-control"  id="password" required="true" requiredMessage="* Please enter your password"></h:inputText></div>
+ <h:message for="password"  style="color:red;margin:8px;"/> 
+</div>
+
+ <div class=" row form-group registerfieldname">
+<div class="col-sm-2 control-label"><h:outputLabel>First Name:</h:outputLabel></div>
+<div class=" col-sm-6"><h:inputText value="#{register.firstname}"  class="form-control" id="firstname" required="true" requiredMessage="* Please enter your first name"></h:inputText></div>
+ <h:message for="firstname"  style="color:red;margin:8px;"/> 
+</div>
+
+ <div class=" row form-group registerfieldname">
+<div class="col-sm-2 control-label"><h:outputLabel>Last Name:</h:outputLabel></div>
+<div class="col-sm-6"><h:inputText value="#{register.lastname}"  class="form-control" id="lastname" required="true" requiredMessage="* Please enter your last name"></h:inputText></div>
+ <h:message for="lastname"  style="color:red;margin:8px;"/> 
+</div>
+
+ <div class=" row form-group registerfieldname">
+<div class="col-sm-2 control-label"><h:outputLabel>Short Name:</h:outputLabel></div>
+<div class="col-sm-6"><h:inputText value="#{register.shortname}"  class="form-control" id="shortname" required="true" requiredMessage="* Please enter your last name"></h:inputText></div>
+ <h:message for="shortname"  style="color:red;margin:8px;"/> 
+</div>
+ <div class=" row form-group ">
+ <div class="col-sm-2 .col-sm-offset-2"></div>
+<div class="col-sm-6 "><h:commandLink action="#{register.submit()}" value="submit" class="btn btn-lg btn-primary btn-block"></h:commandLink></div>
+</div>
+
 </h:form>
 </div>
-</div>
-</div>
+
+
 
 </h:body>
 </html>

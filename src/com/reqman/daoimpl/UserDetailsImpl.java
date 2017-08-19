@@ -1,24 +1,18 @@
 package com.reqman.daoimpl;
 
+import java.util.Date;
+
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.Restrictions;
 
-
-import com.reqman.common.HibernateUtilH;
+import com.reqman.common.HibernateUtil;
 import com.reqman.dao.UserDetailsInterface;
 import com.reqman.pojo.Users;
 
 public class UserDetailsImpl implements UserDetailsInterface {
 
-/*	@Override
-	public int validate(String userName, String password) throws Exception {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-*/	
-	
 	public int validate(String userName, String password) throws Exception
     {
         Session session = null;
@@ -32,7 +26,7 @@ public class UserDetailsImpl implements UserDetailsInterface {
             	
             	//hsf = HibernateSessionFactory.getSessionFactory();
                 //session = hsf.openSession();
-            	session = HibernateUtilH.getSession();
+            	session = HibernateUtil.getSession();
                 tx = session.beginTransaction();
                 users = (Users)session.createCriteria(Users.class)
                 		.add(Restrictions.eq("emailid", userName.toLowerCase().trim()).ignoreCase())
@@ -65,5 +59,56 @@ public class UserDetailsImpl implements UserDetailsInterface {
 		return result;
     	
     }
+	
+	public int saveUser(String emailid, String password, String firstname, String lastname, String shortname) throws Exception
+	{
+        Session session = null;
+        SessionFactory hsf = null;
+        Transaction tx = null;
+        Users users = null;
+        int result = 0;
+        try {
+        	session = HibernateUtil.getSession();
+            tx = session.beginTransaction();
+            users = (Users)session.createCriteria(Users.class)
+            		.add(Restrictions.eq("emailid", emailid.toLowerCase().trim()).ignoreCase())
+            		.uniqueResult();
+            
+            if(users != null && users.getStatus() != null && users.getStatus().booleanValue() == true){
+            	result = 1;
+            }
+            else if(users != null && users.getStatus() != null && users.getStatus().booleanValue() == false){
+            	result = 2;
+            }
+            else
+            {
+            	users = new Users();
+            	users.setEmailid(emailid);
+            	users.setFirstname(firstname != null ? firstname.trim() : "");
+            	users.setLastname(lastname != null ? lastname.trim() : "");
+            	users.setPassword(password);
+            	users.setShortname(shortname != null ? shortname : "");
+            	users.setCreatedby("SYSTEM");
+            	users.setCreatedon(new Date());
+            	users.setStatus(true);
+            	session.save(users);
+            	tx.commit();
+            	result = 3;
+            }
+        } catch (Exception e) {
+        	if(tx != null)
+            tx.rollback();
+            e.printStackTrace();
+            result = 4;
+            throw new Exception(e);
+        } finally {
+        	if(session != null)
+            session.close();
+        }
+		
+		return result;
+ 	}
 
-}
+	
+	}
+
