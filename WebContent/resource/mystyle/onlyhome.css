@@ -1,0 +1,45 @@
+@CHARSET "ISO-8859-1";
+
+.homecontainer{
+	
+	
+  max-width: 1000px;
+  width: 100% !important;
+  background-color: #fff;
+
+  
+  overflow: hidden;
+  font-family: roboto;
+ 
+ 
+
+}
+.containerforbutton{
+		padding: 30px;
+  max-width: 700px;
+  width: 100% !important;
+  background-color: #fff;
+  margin: 0 auto;
+  border-radius: 2px;
+margin-left:-21px;
+
+  overflow: hidden;
+  font-family: roboto;
+}
+
+.homeiconbutton{
+ text-align:left;
+font-size:25px;   
+border-radius: 6px;
+    font-family: inherit;
+
+width:100%;
+}
+.downlink{
+	
+	text-decoration:inline;
+	font-size:20px; 
+}
+p{
+	color:#808080;
+}

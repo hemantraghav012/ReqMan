@@ -46,6 +46,7 @@ public class Users implements java.io.Serializable {
 	private Userfriendlist userfriendlist;
 	private Set<Userusertype> userusertypes = new HashSet<Userusertype>(0);
 
+
 	public Users() {
 	}
 

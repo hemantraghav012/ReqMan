@@ -9,6 +9,7 @@ public interface UserDetailsInterface
 	
 	public int saveUser(String emailid, String password, String firstname, String lastname, String shortname) throws Exception;
 
+	public int updateUsers(String emailid,String firstname, String lastname, String shortname) throws Exception;
 
 	
 }

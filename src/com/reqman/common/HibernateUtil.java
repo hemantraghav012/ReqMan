@@ -39,7 +39,7 @@ public class HibernateUtil {
     	    configuration.setProperty("hibernate.connection.password", "3394");
     	    configuration.setProperty("hibernate.show_sql", "true");
     	    configuration.setProperty("hibernate.default_schema", "reqman");
-    	  //  configuration.setProperty("hibernate.hbm2ddl.auto", "update");
+    	  // configuration.setProperty("hibernate.hbm2ddl.auto", "update");
     	    
     	    configuration.addAnnotatedClass(Users.class);
     	    configuration.addAnnotatedClass(Audittrail.class);

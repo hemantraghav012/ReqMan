@@ -7,6 +7,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.Restrictions;
 
+import com.reqman.beans.Update;
 import com.reqman.common.HibernateUtil;
 import com.reqman.dao.UserDetailsInterface;
 import com.reqman.pojo.Users;
@@ -109,6 +110,44 @@ public class UserDetailsImpl implements UserDetailsInterface {
 		return result;
  	}
 
-	
-	}
 
+	public int updateUsers(String emailid, String firstname, String lastname, String shortname) throws Exception{
+	 Session session = null; 
+    Transaction tx = null;
+    Users users = null;
+    int result = 0;
+    
+    
+   
+    try {
+    	session = HibernateUtil.getSession();
+    
+        users = (Users)session.createCriteria(Users.class,emailid)
+        		.add(Restrictions.eq("emailid", emailid.toLowerCase().trim()).ignoreCase())
+        		.uniqueResult();
+        
+       
+  
+        	
+        	
+        	session.update(users);
+        	tx.commit();
+        	result = 3;
+        
+        
+    } catch (Exception e) {
+    	if(tx != null)
+        tx.rollback();
+        e.printStackTrace();
+        result = 3;
+        throw new Exception(e);
+    } finally {
+    	if(session != null)
+        session.close();
+    }
+	return result;
+	
+	
+	
+}
+	}

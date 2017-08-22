@@ -2,6 +2,7 @@ package com.reqman.beans;
 
 import java.io.Serializable;
 
+import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
@@ -14,6 +15,7 @@ import com.reqman.util.SessionUtils;
 
 @ManagedBean(name = "login", eager = true)
 @SessionScoped
+@RequestScoped
 public class Login implements Serializable {
 
 	private static final long serialVersionUID = 1094801825228386363L;
@@ -50,13 +52,17 @@ public class Login implements Serializable {
 	public String validateUsernamePassword() {
 		UserDetailsInterface userImpl = new UserDetailsImpl();
 		int result = 0;
+		
 		try{
 			result = userImpl.validate(user, pwd);
 			//boolean valid = LoginDAO.validate(user, pwd);
 			if (result == 1) {
 				HttpSession session = SessionUtils.getSession();
 				session.setAttribute("username", user);
-				return "admin";
+				FacesContext context=FacesContext.getCurrentInstance();
+				Update update=context.getApplication().evaluateExpressionGet(context, "#{update}", Update.class);
+				update.setEmailid(this.user);
+				return "home";
 			} else {
 				FacesContext.getCurrentInstance().addMessage(
 						null,
@@ -64,6 +70,7 @@ public class Login implements Serializable {
 								"Incorrect Username and Passowrd",
 								"Please enter correct username and Password"));
 				return "login";
+				
 			}
 		}
 		catch(Exception e){
@@ -73,7 +80,9 @@ public class Login implements Serializable {
 					new FacesMessage(FacesMessage.SEVERITY_WARN,
 							"Incorrect Username and Passowrd",
 							"Please enter correct username and Password"));
+			
 			return "login";
+			
 		}
 	}
 

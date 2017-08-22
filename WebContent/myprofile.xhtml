@@ -1,0 +1,104 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" 	xmlns:h="http://java.sun.com/jsf/html" 	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough" 
+	   xmlns:ui="http://java.sun.com/jsf/facelets" 	   xmlns:f="http://java.sun.com/jsf/core" 	    xmlns:p="http://primefaces.org/ui">
+<h:head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<link rel="stylesheet" href="resource/css/bootstrap.css"/>
+<link rel="stylesheet" href="resource/mystyle/home.css"/>
+<link rel="stylesheet" href="resource/mystyle/myprofile.css"/>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script type="text/javascript" src="resource/js/bootstrap.js"/>
+<script type="text/javascript" src="resource/js/jquery.js"/>
+<title>My Profile</title>
+</h:head>
+
+<h:body>
+<div id="header">
+	<ui:insert name="header">
+		<ui:include src="header.xhtml" />
+	</ui:insert>
+</div>
+       
+      <!-- -end of header --> 
+      
+      <div class="container" style="margin:2cm;">
+  <div class="row">
+           
+               
+    <nav class="col-sm-2" >
+                
+      <img src="resource/image/reqman.jpg" class="img-responsive" alt="reqman" style="width:100%;"></img>           
+
+  
+      <ul class="nav  stacked"  >
+        <li class="active"><h:link value=" Basic Info" outcome="myprofile"></h:link>  </li>
+       <li class="active"><h:link value="Security" outcome="changepassword"></h:link> </li>
+     
+      </ul>
+    </nav>
+    <div class="col-sm-10"  >   
+      <h1>Your Basic Info</h1>
+    
+    <hr></hr>
+    
+    <h:outputLabel value="#{update.emailid}"></h:outputLabel>
+     
+
+    
+    <h:form class="form-horizontal " >
+ <div class=" row form-group registerfieldname">
+ <div class="col-sm-2 control-label"><h:outputLabel  >Email Id:</h:outputLabel></div>
+<div class=" col-sm-6"> <h:inputText value="#{update.emailid}" class="  form-control"  id="emailid" required="true" requiredMessage="* Please enter your email id"/></div>
+ <h:message for="emailid"  style="color:red;margin:8px;"/> 
+
+</div>
+
+ <div class=" row form-group ">
+<div class="col-sm-2 control-label"><h:outputLabel>First Name:</h:outputLabel></div>
+<div class=" col-sm-6"><h:inputText value="#{update.firstname}"  class="form-control" id="firstname" required="true" requiredMessage="* Please enter your first name"></h:inputText></div>
+ <h:message for="firstname"  style="color:red;margin:8px;"/> 
+</div>
+
+ <div class=" row form-group ">
+<div class="col-sm-2 control-label"><h:outputLabel>Last Name:</h:outputLabel></div>
+<div class="col-sm-6"><h:inputText value="#{update.lastname}"  class="form-control" id="lastname" required="true" requiredMessage="* Please enter your last name"></h:inputText></div>
+ <h:message for="lastname"  style="color:red;margin:8px;"/> 
+</div>
+
+ <div class=" row form-group ">
+<div class="col-sm-2 control-label"><h:outputLabel>Short Name:</h:outputLabel></div>
+<div class="col-sm-6"><h:inputText value="#{update.shortname}"  class="form-control" id="shortname" required="true" requiredMessage="* Please enter your last name"></h:inputText></div>
+ <h:message for="shortname"  style="color:red;margin:8px;"/> 
+</div>
+ <div class=" row form-group ">
+ <div class="col-sm-2 .col-sm-offset-2"></div>
+<div class="col-sm-6 "><h:commandLink action="#{update.submit()}" value="submit" class="btn btn-lg btn-primary btn-block"></h:commandLink></div>
+</div>
+
+</h:form>
+    
+    
+    
+   
+   
+     
+    </div>
+  </div>
+      </div>
+      
+      
+      
+      
+      
+      
+      
+      
+      
+       
+     
+</h:body>
+</html>

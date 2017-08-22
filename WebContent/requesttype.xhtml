@@ -1,0 +1,64 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough" 
+	   xmlns:ui="http://java.sun.com/jsf/facelets"
+	   xmlns:f="http://java.sun.com/jsf/core">
+<h:head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+<link rel="stylesheet" href="resource/css/bootstrap.css"/>
+<link rel="stylesheet" href="resource/mystyle/home.css"/>
+<link rel="stylesheet" href="resource/mystyle/newproject.css"/>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script type="text/javascript" src="resource/js/bootstrap.js"/>
+<script type="text/javascript" src="resource/js/jquery.js"/>
+<title>New Request Type</title>
+</h:head>
+
+<h:body>
+	
+ 	<div id="header">
+	<ui:insert name="header">
+		<ui:include src="header.xhtml" />
+	</ui:insert>
+</div>
+       
+      <!-- -end of header --> 
+      
+   
+	<div id="categoryheader">
+	<ui:insert name="categoryheader">
+		<ui:include src="categoryheader.xhtml" />
+	</ui:insert>
+</div>
+        
+       <!-- -end of categoryheader -->
+        
+      <div class="container" style=" margin-top:0cm; ">
+ 
+      
+      <div class="container create_new_project">
+       <h1 >    Create New Request Type</h1>
+     <h:form class="form-horizontal ">
+     
+      <h:inputText  pt:placeholder="Enter Request type " value=""  class="  form-control"  id="project" required="true" requiredMessage="* Please enter Project Name"/>
+ <h:message for="project"  style="color:red;margin:8px;"/>  <br></br>
+      <h:commandButton value="submit" action="save"  class="btn btn-lg btn-primary btn-block"></h:commandButton>
+      
+      </h:form >
+      </div>
+      
+      
+      
+      </div>
+      
+      
+      
+      
+</h:body>
+</html>
