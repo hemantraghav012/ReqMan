@@ -23,7 +23,6 @@ ALTER TABLE reqman.audittrail
 
 GRANT ALL ON TABLE reqman.audittrail TO postgres WITH GRANT OPTION;
 
-
 -- Table: reqman.category
 
 -- DROP TABLE reqman.category;
@@ -104,9 +103,9 @@ CREATE TABLE reqman.request
 (
     id integer NOT NULL DEFAULT nextval('reqman.request_id_seq'::regclass),
     title character varying(100) COLLATE "default".pg_catalog,
-    projectid integer,
-    categoryid integer,
-    requesttypeid integer,
+    userprojectid integer,
+    usercategoryid integer,
+    userrequesttypeid integer,
     description character varying(500) COLLATE "default".pg_catalog,
     completiondate timestamp without time zone,
     attachment bytea,
@@ -117,17 +116,17 @@ CREATE TABLE reqman.request
     datemodified timestamp without time zone,
     modifiedby character varying(50) COLLATE "default".pg_catalog,
     CONSTRAINT pk_request_id PRIMARY KEY (id),
-    CONSTRAINT uni_request_title UNIQUE (requesttypeid, title, projectid, categoryid),
-    CONSTRAINT fk_request_category FOREIGN KEY (id)
-        REFERENCES reqman.category (id) MATCH SIMPLE
+    CONSTRAINT uni_request_key UNIQUE (title, userprojectid, usercategoryid, userrequesttypeid),
+    CONSTRAINT fk_request_usercategory_id FOREIGN KEY (usercategoryid)
+        REFERENCES reqman.usercategory (id) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
-    CONSTRAINT fk_request_project FOREIGN KEY (id)
-        REFERENCES reqman.project (id) MATCH SIMPLE
+    CONSTRAINT fk_request_userproject_id FOREIGN KEY (userprojectid)
+        REFERENCES reqman.userproject (id) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
-    CONSTRAINT fk_request_requesttype FOREIGN KEY (id)
-        REFERENCES reqman.requesttype (id) MATCH SIMPLE
+    CONSTRAINT fk_request_userrequesttype_id FOREIGN KEY (userrequesttypeid)
+        REFERENCES reqman.userrequesttype (id) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION
 )
@@ -214,6 +213,9 @@ CREATE TABLE reqman.rolemenus
 (
     roleid integer,
     menuid integer,
+    id integer NOT NULL DEFAULT nextval('reqman.rolemenus_id_seq'::regclass),
+    CONSTRAINT pk_rolemenus_id PRIMARY KEY (id),
+    CONSTRAINT uni_rolemenu UNIQUE (menuid, roleid),
     CONSTRAINT fk_rolemenu_menuid FOREIGN KEY (menuid)
         REFERENCES reqman.menu (id) MATCH SIMPLE
         ON UPDATE NO ACTION
@@ -256,6 +258,36 @@ ALTER TABLE reqman.roles
 
 GRANT ALL ON TABLE reqman.roles TO postgres WITH GRANT OPTION;
 
+-- Table: reqman.usercategory
+
+-- DROP TABLE reqman.usercategory;
+
+CREATE TABLE reqman.usercategory
+(
+    id integer NOT NULL DEFAULT nextval('reqman.usercategory_id_seq'::regclass),
+    userid integer,
+    categoryid integer,
+    CONSTRAINT pk_usercategory_id PRIMARY KEY (id),
+    CONSTRAINT uni_usercategory_key UNIQUE (categoryid, userid),
+    CONSTRAINT fk_usercategory_categoryid FOREIGN KEY (categoryid)
+        REFERENCES reqman.category (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT fk_usercategory_userid FOREIGN KEY (userid)
+        REFERENCES reqman.users (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+)
+WITH (
+    OIDS = FALSE
+)
+TABLESPACE pg_default;
+
+ALTER TABLE reqman.usercategory
+    OWNER to postgres;
+
+GRANT ALL ON TABLE reqman.usercategory TO postgres WITH GRANT OPTION;
+
 -- Table: reqman.userfriendlist
 
 -- DROP TABLE reqman.userfriendlist;
@@ -283,6 +315,66 @@ ALTER TABLE reqman.userfriendlist
 
 GRANT ALL ON TABLE reqman.userfriendlist TO postgres WITH GRANT OPTION;
 
+-- Table: reqman.userproject
+
+-- DROP TABLE reqman.userproject;
+
+CREATE TABLE reqman.userproject
+(
+    id integer NOT NULL DEFAULT nextval('reqman.userproject_id_seq'::regclass),
+    userid integer,
+    projectid integer,
+    CONSTRAINT pk_userproject PRIMARY KEY (id),
+    CONSTRAINT uni_userproject_key UNIQUE (projectid, userid),
+    CONSTRAINT fk_user_project_projectid FOREIGN KEY (projectid)
+        REFERENCES reqman.project (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT fk_userproject_userid FOREIGN KEY (userid)
+        REFERENCES reqman.users (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+)
+WITH (
+    OIDS = FALSE
+)
+TABLESPACE pg_default;
+
+ALTER TABLE reqman.userproject
+    OWNER to postgres;
+
+GRANT ALL ON TABLE reqman.userproject TO postgres WITH GRANT OPTION;
+
+-- Table: reqman.userrequesttype
+
+-- DROP TABLE reqman.userrequesttype;
+
+CREATE TABLE reqman.userrequesttype
+(
+    id integer NOT NULL DEFAULT nextval('reqman.userrequesttype_id_seq'::regclass),
+    userid integer,
+    requesttypeid integer,
+    CONSTRAINT pk_userrequesttype_id PRIMARY KEY (id),
+    CONSTRAINT uni_userrequesttype UNIQUE (requesttypeid, userid),
+    CONSTRAINT fk_userrequesttype_requesttypeid FOREIGN KEY (requesttypeid)
+        REFERENCES reqman.requesttype (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT fk_userrequesttype_userid FOREIGN KEY (userid)
+        REFERENCES reqman.users (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+)
+WITH (
+    OIDS = FALSE
+)
+TABLESPACE pg_default;
+
+ALTER TABLE reqman.userrequesttype
+    OWNER to postgres;
+
+GRANT ALL ON TABLE reqman.userrequesttype TO postgres WITH GRANT OPTION;
+
 -- Table: reqman.userroles
 
 -- DROP TABLE reqman.userroles;
@@ -291,6 +383,9 @@ CREATE TABLE reqman.userroles
 (
     roleid integer,
     userid integer,
+    id integer NOT NULL DEFAULT nextval('reqman.userroles_id_seq'::regclass),
+    CONSTRAINT pk_userroles_id PRIMARY KEY (id),
+    CONSTRAINT uni_userroles UNIQUE (roleid, userid),
     CONSTRAINT fk_userrole_roleid FOREIGN KEY (roleid)
         REFERENCES reqman.roles (id) MATCH SIMPLE
         ON UPDATE NO ACTION
@@ -361,7 +456,7 @@ TABLESPACE pg_default;
 ALTER TABLE reqman.usertype
     OWNER to postgres;
 
-GRANT ALL ON TABLE reqman.usertype TO postgres;
+GRANT ALL ON TABLE reqman.usertype TO postgres WITH GRANT OPTION;
 
 -- Table: reqman.userusertype
 

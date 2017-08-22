@@ -18,7 +18,10 @@ import com.reqman.pojo.Requestworkflow;
 import com.reqman.pojo.Rolemenus;
 import com.reqman.pojo.RolemenusId;
 import com.reqman.pojo.Roles;
+import com.reqman.pojo.Usercategory;
 import com.reqman.pojo.Userfriendlist;
+import com.reqman.pojo.Userproject;
+import com.reqman.pojo.Userrequesttype;
 import com.reqman.pojo.Userroles;
 import com.reqman.pojo.UserrolesId;
 import com.reqman.pojo.Users;
@@ -50,7 +53,6 @@ public class HibernateUtilH {
         	    configuration.setProperty("hibernate.default_schema", "reqman");
         	    //configuration.setProperty("hibernate.hbm2ddl.auto", "update");
         	    
-        	    configuration.addAnnotatedClass(Users.class);
         	    configuration.addAnnotatedClass(Audittrail.class);
         	    configuration.addAnnotatedClass(Category.class);
         	    configuration.addAnnotatedClass(Menu.class);
@@ -61,9 +63,13 @@ public class HibernateUtilH {
         	    configuration.addAnnotatedClass(Rolemenus.class);
         	    configuration.addAnnotatedClass(RolemenusId.class);
         	    configuration.addAnnotatedClass(Roles.class);
+        	    configuration.addAnnotatedClass(Usercategory.class);
         	    configuration.addAnnotatedClass(Userfriendlist.class);
+        	    configuration.addAnnotatedClass(Userproject.class);
+        	    configuration.addAnnotatedClass(Userrequesttype.class);
         	    configuration.addAnnotatedClass(Userroles.class);
         	    configuration.addAnnotatedClass(UserrolesId.class);
+        	    configuration.addAnnotatedClass(Users.class);
         	    configuration.addAnnotatedClass(Usertype.class);
         	    configuration.addAnnotatedClass(Userusertype.class);
         	    configuration.addAnnotatedClass(UserusertypeId.class);
