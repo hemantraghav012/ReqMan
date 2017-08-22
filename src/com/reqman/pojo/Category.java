@@ -1,17 +1,17 @@
 package com.reqman.pojo;
 
-// Generated 13 Aug, 2017 10:25:05 PM by Hibernate Tools 4.3.1
+// Generated 22 Aug, 2017 7:11:21 PM by Hibernate Tools 4.3.1
 
 import java.util.Date;
-import java.util.Objects;
-
+import java.util.HashSet;
+import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -33,7 +33,7 @@ public class Category implements java.io.Serializable {
 	private Boolean status;
 	private Date datecreated;
 	private String createdby;
-	private Request request;
+	private Set<Usercategory> usercategories = new HashSet<Usercategory>(0);
 
 	public Category() {
 	}
@@ -43,13 +43,13 @@ public class Category implements java.io.Serializable {
 	}
 
 	public Category(int id, String name, Boolean status, Date datecreated,
-			String createdby, Request request) {
+			String createdby, Set<Usercategory> usercategories) {
 		this.id = id;
 		this.name = name;
 		this.status = status;
 		this.datecreated = datecreated;
 		this.createdby = createdby;
-		this.request = request;
+		this.usercategories = usercategories;
 	}
 
 	@Id
@@ -100,19 +100,13 @@ public class Category implements java.io.Serializable {
 		this.createdby = createdby;
 	}
 
-	@OneToOne(fetch = FetchType.LAZY, mappedBy = "category")
-	public Request getRequest() {
-		return this.request;
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "category")
+	public Set<Usercategory> getUsercategories() {
+		return this.usercategories;
 	}
 
-	public void setRequest(Request request) {
-		this.request = request;
+	public void setUsercategories(Set<Usercategory> usercategories) {
+		this.usercategories = usercategories;
 	}
 
-	
-	
-
-
-	
-	
 }

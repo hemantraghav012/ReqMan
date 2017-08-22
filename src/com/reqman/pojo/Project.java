@@ -1,13 +1,15 @@
 package com.reqman.pojo;
 
-// Generated 13 Aug, 2017 10:25:05 PM by Hibernate Tools 4.3.1
+// Generated 22 Aug, 2017 7:11:21 PM by Hibernate Tools 4.3.1
 
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -29,7 +31,7 @@ public class Project implements java.io.Serializable {
 	private Boolean status;
 	private Date datecreated;
 	private String createdby;
-	private Request request;
+	private Set<Userproject> userprojects = new HashSet<Userproject>(0);
 
 	public Project() {
 	}
@@ -39,13 +41,13 @@ public class Project implements java.io.Serializable {
 	}
 
 	public Project(int id, String name, Boolean status, Date datecreated,
-			String createdby, Request request) {
+			String createdby, Set<Userproject> userprojects) {
 		this.id = id;
 		this.name = name;
 		this.status = status;
 		this.datecreated = datecreated;
 		this.createdby = createdby;
-		this.request = request;
+		this.userprojects = userprojects;
 	}
 
 	@Id
@@ -95,13 +97,13 @@ public class Project implements java.io.Serializable {
 		this.createdby = createdby;
 	}
 
-	@OneToOne(fetch = FetchType.LAZY, mappedBy = "category")
-	public Request getRequest() {
-		return this.request;
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "project")
+	public Set<Userproject> getUserprojects() {
+		return this.userprojects;
 	}
 
-	public void setRequest(Request request) {
-		this.request = request;
+	public void setUserprojects(Set<Userproject> userprojects) {
+		this.userprojects = userprojects;
 	}
 
 }

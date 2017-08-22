@@ -1,12 +1,10 @@
 package com.reqman.pojo;
 
-// Generated 14 Aug, 2017 12:03:59 AM by Hibernate Tools 4.3.1
+// Generated 22 Aug, 2017 7:11:21 PM by Hibernate Tools 4.3.1
 
 import java.util.Date;
 import java.util.HashSet;
-import java.util.Objects;
 import java.util.Set;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -30,7 +28,7 @@ public class Users implements java.io.Serializable {
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 2189653975926055580L;
+	private static final long serialVersionUID = 5383011521070997237L;
 	private int id;
 	private String emailid;
 	private String password;
@@ -45,7 +43,10 @@ public class Users implements java.io.Serializable {
 	private Set<Userroles> userroleses = new HashSet<Userroles>(0);
 	private Userfriendlist userfriendlist;
 	private Set<Userusertype> userusertypes = new HashSet<Userusertype>(0);
-
+	private Set<Userrequesttype> userrequesttypes = new HashSet<Userrequesttype>(
+			0);
+	private Set<Userproject> userprojects = new HashSet<Userproject>(0);
+	private Set<Usercategory> usercategories = new HashSet<Usercategory>(0);
 
 	public Users() {
 	}
@@ -58,7 +59,9 @@ public class Users implements java.io.Serializable {
 			String lastname, String shortname, Boolean status,
 			String createdby, Date createdon, Date lastlogin, byte[] photo,
 			Set<Userroles> userroleses, Userfriendlist userfriendlist,
-			Set<Userusertype> userusertypes) {
+			Set<Userusertype> userusertypes,
+			Set<Userrequesttype> userrequesttypes,
+			Set<Userproject> userprojects, Set<Usercategory> usercategories) {
 		this.id = id;
 		this.emailid = emailid;
 		this.password = password;
@@ -73,6 +76,9 @@ public class Users implements java.io.Serializable {
 		this.userroleses = userroleses;
 		this.userfriendlist = userfriendlist;
 		this.userusertypes = userusertypes;
+		this.userrequesttypes = userrequesttypes;
+		this.userprojects = userprojects;
+		this.usercategories = usercategories;
 	}
 
 	@Id
@@ -205,13 +211,31 @@ public class Users implements java.io.Serializable {
 		this.userusertypes = userusertypes;
 	}
 
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "users")
+	public Set<Userrequesttype> getUserrequesttypes() {
+		return this.userrequesttypes;
+	}
 
-	
+	public void setUserrequesttypes(Set<Userrequesttype> userrequesttypes) {
+		this.userrequesttypes = userrequesttypes;
+	}
 
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "users")
+	public Set<Userproject> getUserprojects() {
+		return this.userprojects;
+	}
 
+	public void setUserprojects(Set<Userproject> userprojects) {
+		this.userprojects = userprojects;
+	}
 
-	
-	
-	
-	
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "users")
+	public Set<Usercategory> getUsercategories() {
+		return this.usercategories;
+	}
+
+	public void setUsercategories(Set<Usercategory> usercategories) {
+		this.usercategories = usercategories;
+	}
+
 }
