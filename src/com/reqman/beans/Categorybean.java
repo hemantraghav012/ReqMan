@@ -45,66 +45,7 @@ public class Categorybean implements Serializable{
 	}
 	
 	
-	public String submit()
-	{
-	System.out.println("--category--"+name);
-
-	CategoryMasterInterface categoryImpl =  new CategoryMasterImpl();
-	int result = 0;
-		try{
-		result = categoryImpl.savecategory(name);
-		
-		if (result == 1) {
-			FacesContext.getCurrentInstance().addMessage(
-				null,
-				new FacesMessage(FacesMessage.SEVERITY_WARN,
-					"Category Name Exit",
-					"Category Name already created"));
-				return "category";
-			}
-			if (result == 2) {
-				FacesContext.getCurrentInstance().addMessage(
-						null,
-						new FacesMessage(FacesMessage.SEVERITY_WARN,
-								"Category  Inactive",
-								"Category Name  already created"));
-				return "category";
-			}
-			if (result == 4) {
-				FacesContext.getCurrentInstance().addMessage(
-						null,
-						new FacesMessage(FacesMessage.SEVERITY_WARN,
-								"Internal Error",
-								"Please check the server logs"));
-				return "category";
-			}
-			
-		}
-		catch(Exception e){
-			e.printStackTrace();
-			FacesContext.getCurrentInstance().addMessage(
-					null,
-					new FacesMessage(FacesMessage.SEVERITY_WARN,
-							"Internal Error",
-							"Please check the server logs"));
-			return "category";
-		}
 	
-		return "newrequestfriend";
-	}
-
-
-		 
-	@PostConstruct
-    public void init(){
-        //init code
-        Session session = HibernateUtil.getSessionFactory().openSession();
-        
-        category = session.createCriteria(Category.class).list();
-        
-        session.close();
-    }
-    
 	 
 	    
 	}
