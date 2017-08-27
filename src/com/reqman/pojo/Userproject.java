@@ -1,6 +1,6 @@
 package com.reqman.pojo;
 
-// Generated 22 Aug, 2017 7:11:21 PM by Hibernate Tools 4.3.1
+// Generated 26 Aug, 2017 12:28:54 PM by Hibernate Tools 4.3.1
 
 import java.util.HashSet;
 import java.util.Set;
@@ -29,6 +29,7 @@ public class Userproject implements java.io.Serializable {
 	private int id;
 	private Project project;
 	private Users users;
+	private Boolean status;
 	private Set<Request> requests = new HashSet<Request>(0);
 
 	public Userproject() {
@@ -38,11 +39,12 @@ public class Userproject implements java.io.Serializable {
 		this.id = id;
 	}
 
-	public Userproject(int id, Project project, Users users,
+	public Userproject(int id, Project project, Users users, Boolean status,
 			Set<Request> requests) {
 		this.id = id;
 		this.project = project;
 		this.users = users;
+		this.status = status;
 		this.requests = requests;
 	}
 
@@ -74,6 +76,15 @@ public class Userproject implements java.io.Serializable {
 
 	public void setUsers(Users users) {
 		this.users = users;
+	}
+
+	@Column(name = "status")
+	public Boolean getStatus() {
+		return this.status;
+	}
+
+	public void setStatus(Boolean status) {
+		this.status = status;
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "userproject")

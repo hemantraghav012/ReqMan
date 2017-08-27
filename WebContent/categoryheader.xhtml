@@ -17,16 +17,21 @@
 </h:head>
 <h:body>
 <ui:composition>
+<h:form>
 <div class="container" style=" margin-top:1.7cm; ">      
  <ul class="nav nav-tabs">
  <li class="active">
 <h:link value="Friend List" style="color:black;" outcome="addfriend"/> </li>
-<li><h:link value="Request Category List" style="color:black;" outcome="category"/></li>
+<!-- <li><h:link value="Request Category List" style="color:black;" outcome="category"/></li> -->
+<!-- <h:commandLink onclick="return confirmFunction();" value="Login" action="#{loginBean.login('Admin')}"/> -->
+<li><h:commandLink value="Request Category List"  action="#{categorybean.categoryPage}" /></li>
+<!-- <li><h:link value="Request Category List" style="color:black;" outcome="category"/></li> -->
 <li><h:link value="Request Type " style="color:black;" outcome="requesttype"/></li>
 <li><h:link value="New Project" style="color:black;" outcome="project"/></li>    
 </ul>
 </div>
       <!-- -end of sub menu -->
+</h:form>
 </ui:composition>
 
 

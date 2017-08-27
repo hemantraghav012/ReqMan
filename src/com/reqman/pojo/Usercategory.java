@@ -1,12 +1,15 @@
 package com.reqman.pojo;
 
-// Generated 22 Aug, 2017 7:11:21 PM by Hibernate Tools 4.3.1
+// Generated 26 Aug, 2017 12:28:54 PM by Hibernate Tools 4.3.1
 
 import java.util.HashSet;
 import java.util.Set;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -29,6 +32,7 @@ public class Usercategory implements java.io.Serializable {
 	private int id;
 	private Category category;
 	private Users users;
+	private Boolean status;
 	private Set<Request> requests = new HashSet<Request>(0);
 
 	public Usercategory() {
@@ -38,15 +42,17 @@ public class Usercategory implements java.io.Serializable {
 		this.id = id;
 	}
 
-	public Usercategory(int id, Category category, Users users,
+	public Usercategory(int id, Category category, Users users, Boolean status,
 			Set<Request> requests) {
 		this.id = id;
 		this.category = category;
 		this.users = users;
+		this.status = status;
 		this.requests = requests;
 	}
 
 	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name = "id", unique = true, nullable = false)
 	public int getId() {
 		return this.id;
@@ -74,6 +80,15 @@ public class Usercategory implements java.io.Serializable {
 
 	public void setUsers(Users users) {
 		this.users = users;
+	}
+
+	@Column(name = "status")
+	public Boolean getStatus() {
+		return this.status;
+	}
+
+	public void setStatus(Boolean status) {
+		this.status = status;
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "usercategory")
