@@ -267,6 +267,7 @@ CREATE TABLE reqman.usercategory
     id integer NOT NULL DEFAULT nextval('reqman.usercategory_id_seq'::regclass),
     userid integer,
     categoryid integer,
+    status boolean,
     CONSTRAINT pk_usercategory_id PRIMARY KEY (id),
     CONSTRAINT uni_usercategory_key UNIQUE (categoryid, userid),
     CONSTRAINT fk_usercategory_categoryid FOREIGN KEY (categoryid)
@@ -324,6 +325,7 @@ CREATE TABLE reqman.userproject
     id integer NOT NULL DEFAULT nextval('reqman.userproject_id_seq'::regclass),
     userid integer,
     projectid integer,
+    status boolean,
     CONSTRAINT pk_userproject PRIMARY KEY (id),
     CONSTRAINT uni_userproject_key UNIQUE (projectid, userid),
     CONSTRAINT fk_user_project_projectid FOREIGN KEY (projectid)
@@ -354,6 +356,7 @@ CREATE TABLE reqman.userrequesttype
     id integer NOT NULL DEFAULT nextval('reqman.userrequesttype_id_seq'::regclass),
     userid integer,
     requesttypeid integer,
+    status boolean,
     CONSTRAINT pk_userrequesttype_id PRIMARY KEY (id),
     CONSTRAINT uni_userrequesttype UNIQUE (requesttypeid, userid),
     CONSTRAINT fk_userrequesttype_requesttypeid FOREIGN KEY (requesttypeid)
