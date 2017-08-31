@@ -1,23 +1,16 @@
 package com.reqman.beans;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
-import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
-import javax.servlet.http.HttpSession;
 
-import org.hibernate.Session;
-
-import com.reqman.common.HibernateUtil;
 import com.reqman.dao.FriendMasterInterface;
 import com.reqman.daoimpl.FriendMasterImpl;
 import com.reqman.pojo.Users;
-import com.reqman.util.SessionUtils;
-import com.reqman.vo.EmailUtility;
+//import com.reqman.vo.EmailUtility;
 
 
 
@@ -124,7 +117,7 @@ public class Friendbean implements Serializable{
 		int result = 0;
 		
 		try{
-			EmailUtility.sendEmail(host, port, user1, pass, emailid, firstname, message);
+			//EmailUtility.sendEmail(host, port, user1, pass, emailid, firstname, message);
 			result = friendMasterInterface.saveFriend(emailid, password, firstname, lastname, shortname);				
 				
 			//	EmailUtility.sendEmail(host, port, user1, pass, emailid, subject, message);			

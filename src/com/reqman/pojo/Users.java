@@ -1,6 +1,6 @@
 package com.reqman.pojo;
 
-// Generated 22 Aug, 2017 7:11:21 PM by Hibernate Tools 4.3.1
+// Generated 31 Aug, 2017 10:45:24 PM by Hibernate Tools 4.3.1
 
 import java.util.Date;
 import java.util.HashSet;
@@ -12,7 +12,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -41,7 +40,7 @@ public class Users implements java.io.Serializable {
 	private Date lastlogin;
 	private byte[] photo;
 	private Set<Userroles> userroleses = new HashSet<Userroles>(0);
-	private Userfriendlist userfriendlist;
+	private Set<Userfriendlist> userfriendlists = new HashSet<Userfriendlist>(0);
 	private Set<Userusertype> userusertypes = new HashSet<Userusertype>(0);
 	private Set<Userrequesttype> userrequesttypes = new HashSet<Userrequesttype>(
 			0);
@@ -58,7 +57,7 @@ public class Users implements java.io.Serializable {
 	public Users(int id, String emailid, String password, String firstname,
 			String lastname, String shortname, Boolean status,
 			String createdby, Date createdon, Date lastlogin, byte[] photo,
-			Set<Userroles> userroleses, Userfriendlist userfriendlist,
+			Set<Userroles> userroleses, Set<Userfriendlist> userfriendlists,
 			Set<Userusertype> userusertypes,
 			Set<Userrequesttype> userrequesttypes,
 			Set<Userproject> userprojects, Set<Usercategory> usercategories) {
@@ -74,7 +73,7 @@ public class Users implements java.io.Serializable {
 		this.lastlogin = lastlogin;
 		this.photo = photo;
 		this.userroleses = userroleses;
-		this.userfriendlist = userfriendlist;
+		this.userfriendlists = userfriendlists;
 		this.userusertypes = userusertypes;
 		this.userrequesttypes = userrequesttypes;
 		this.userprojects = userprojects;
@@ -193,13 +192,13 @@ public class Users implements java.io.Serializable {
 		this.userroleses = userroleses;
 	}
 
-	@OneToOne(fetch = FetchType.LAZY, mappedBy = "users")
-	public Userfriendlist getUserfriendlist() {
-		return this.userfriendlist;
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "users")
+	public Set<Userfriendlist> getUserfriendlists() {
+		return this.userfriendlists;
 	}
 
-	public void setUserfriendlist(Userfriendlist userfriendlist) {
-		this.userfriendlist = userfriendlist;
+	public void setUserfriendlists(Set<Userfriendlist> userfriendlists) {
+		this.userfriendlists = userfriendlists;
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "users")
