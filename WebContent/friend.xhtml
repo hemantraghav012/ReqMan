@@ -1,42 +1,33 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<!-- <html xmlns="http://www.w3.org/1999/xhtml"	xmlns:h="http://java.sun.com/jsf/html"	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough" 
-	   xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core" xmlns:p="http://primefaces.org/ui">
- -->	   
- <html lang="en"
-      xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html"
-	  xmlns:f="http://java.sun.com/jsf/core" xmlns:ui="http://java.sun.com/jsf/facelets"
-	   xmlns:p="http://primefaces.org/ui" > 
-  
+<html xmlns="http://www.w3.org/1999/xhtml"
+ xmlns:ui="http://java.sun.com/jsf/facelets"
+  xmlns:p="http://primefaces.org/ui"
+	xmlns:h="http://java.sun.com/jsf/html">
 <h:head>
 <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
+
 <link rel="stylesheet" href="resource/css/bootstrap.css"/>
 <link rel="stylesheet" href="resource/mystyle/home.css"/>
 <link rel="stylesheet" href="resource/mystyle/createcategory.css"/>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script type="text/javascript" src="resource/js/bootstrap.js"/>
 <script type="text/javascript" src="resource/js/jquery.js"/>
-<title>New Category</title>
-
-
-
+<title>Friend List</title>
 </h:head>
-
-<h:body>
-
-  
-
-	<div id="header">
+<h:body style="background-color:#fff">
+	
+<div id="header">
 	<ui:insert name="header">
 		<ui:include src="header.xhtml" />
 	</ui:insert>
 </div>
        
       <!-- -end of header --> 
-   
+      
    
 	<div id="categoryheader">
 	<ui:insert name="categoryheader">
@@ -45,58 +36,59 @@
 </div>
         
        <!-- -end of categoryheader -->
-      
-       <h:form>
+
+
+
       <div class="container fixedcontainer" style=" margin-top:1cm; ">
  
       <div class="row">
       
       	<div class="col-sm-6">
-      		<span style=";font-size:25px;margin-left: 3px;">Manage Category</span>
+      		<span style=";font-size:25px;margin-left: 3px;">Manage Friend</span>
       	</div>
       	
      	<div class="col-sm-6">
        		<button type="button" class="btn btn-primary btn-md pull-right"  style="margin-top: 5px;margin-right: 5px;margin-bottom: 8px;"> 
-				<!-- <h:link value="Create Category" style="text-decoration:none; color:#fff;" outcome="createcategory"/> -->
-				<h:commandLink value="Create Category" style="text-decoration:none; color:#fff;" action="#{categorybean.newCategory}" />
+				 <h:link value="Add Friend" style="text-decoration:none; color:#fff;" outcome="addfriend"/> 
 			</button>
 		</div>
 
 	  </div>
 
+<h:form>
 
-
-     <p:dataTable var="category" value="#{categorybean.categoryList}" reflow="true" class="table table-striped table-hover table-bordered" style="margin-top:20px">
+     <p:dataTable var="friend" value="#{friendbean.users}" reflow="true" class="table table-striped table-hover table-bordered" style="margin-top:20px">
         
-        <p:column headerText="S.No" style="width:2.5cm;">
-            <h:outputText value="#{category.srNo}" />
+        
+ 
+       <p:column headerText="Short Name" style="width:3.5cm;">
+        <h:outputText value="#{friend.shortname}" />
+        </p:column>
+        
+        <p:column headerText="First Name">			
+        		<h:outputText value="#{friend.firstname}" />    		
         </p:column>
  
-        <p:column headerText="Category Name" >
-            <!-- <h:outputText value="#{category.name}" /> -->
-           
-			<p:commandLink id="nonAjax" action="#{categorybean.modifyAction(category.userCategoryId)}" ajax="false" >
-        		<h:outputText value="#{category.name}" style="color:blue;"/>
-    		</p:commandLink>
+        <p:column headerText="Last Name">
+       	<h:outputText value="#{friend.lastname}" />    		
         </p:column>
  
+ <p:column headerText="Email Id" style="width:8cm;">
+       	<h:outputText value="#{friend.emailid}" />    		
+        </p:column>
+        
         <p:column headerText="Status" style="width:4.5cm;">
-            <h:outputText value="#{category.status}" />
+            <h:outputText value="#{friend.status}" />
         </p:column>
  
-       
        
     </p:dataTable>
-
-
+</h:form>
 
       </div><!-- end oc container -->
       
-      </h:form>
       
       
-      
-      
-      </h:body>
 
+</h:body>
 </html>

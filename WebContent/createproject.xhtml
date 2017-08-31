@@ -16,7 +16,7 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script type="text/javascript" src="resource/js/bootstrap.js"/>
 <script type="text/javascript" src="resource/js/jquery.js"/>
-<title>Modify Category</title>
+<title>Create Project</title>
 
 </h:head>
 
@@ -33,31 +33,26 @@
       
       
       
-      <div class="container" style=" margin-top:3cm; ">
-  <h2>  Modify Category</h2>
+      <div class="container-fluid" style=" margin-top:3cm; ">
+  <h2>  Create Project</h2>
   
   <div  style="margin-top:1.5cm;"> 
   <h:form class="form-horizontal fixedcontainer " >
 
 <div><h:messages style = "color:red;margin:8px;" /></div>
 
-
-
  <div class=" row form-group ">
- 
- <h:inputHidden value = "#{categorybean.categoryId}" id = "hiddenField" /> 
- 
- <div class="col-sm-2 control-label"><h:outputLabel  >Category Name:</h:outputLabel></div>
-<div class=" col-sm-6"> <h:inputText value="#{categorybean.categoryName}" readonly="true" class="  form-control"  id="categoryname"  required="true" requiredMessage="* Please enter Category name"/></div>
- <h:message for="categoryname"  style="color:red;margin:8px;"/> 
+ <div class="col-sm-2 control-label"><h:outputLabel  >Project Name:</h:outputLabel></div>
+<div class=" col-sm-6"> <h:inputText value="#{projectbean.projectName}" class="  form-control"  id="projectname"  required="true" requiredMessage="* Please enter project Name"/></div>
+ <h:message for="projectname"  style="color:red;margin:8px;"/> 
 </div><br></br>
 
  <div class=" row form-group ">
  <div class="col-sm-2 control-label"><h:outputLabel  >Status: </h:outputLabel></div>
 <div class=" col-sm-6"> 
-<h:selectOneRadio value = "#{categorybean.status}" id="status" required="true"    requiredMessage="* Please enter status"> 
-   <f:selectItem itemValue = "true" itemLabel = "Active &nbsp; &nbsp;&nbsp; &nbsp;" /> 
-   <f:selectItem itemValue = "false" itemLabel = "In Active"  />
+<h:selectOneRadio value = "#{projectbean.status}" id="status" required="true"    requiredMessage="* Please enter status"> 
+   <f:selectItem itemValue = "true" itemLabel = "Active"  /> 
+   <f:selectItem itemValue = "false" itemLabel = "In Active" />
 </h:selectOneRadio> </div>
  <h:message for="status"  style="color:red;margin:8px;"/> 
  </div><br></br>
@@ -66,13 +61,13 @@
 
  <div class=" row form-group ">
  <div class="col-sm-2 .col-sm-offset-2"></div>
- <div class="col-sm-3 "><h:commandButton action="#{categorybean.updateCategory}" value="Update" class="btn btn-lg btn-success btn-block"></h:commandButton></div>
+ <div class="col-sm-3 "><h:commandButton action="#{projectbean.saveProject}" value="submit" class="btn btn-lg btn-success btn-block"></h:commandButton></div>
 
  <div class="col-sm-3 ">
  
 
 <button type="button" class="btn btn-lg btn-primary btn-block" > 
-<h:link value="Back to Categories" style="text-decoration:none; color:#fff;" outcome="category"/></button>
+<h:link value="Back to Project" style="text-decoration:none; color:#fff;" outcome="project"/></button>
 </div>
 </div>
 
