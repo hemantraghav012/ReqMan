@@ -11,33 +11,43 @@ import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
 
 import com.reqman.dao.CategoryMasterInterface;
+import com.reqman.dao.ProjectMasterInterface;
 import com.reqman.daoimpl.CategoryMasterImpl;
+import com.reqman.daoimpl.ProjectMasterImpl;
 import com.reqman.util.SessionUtils;
 import com.reqman.util.UserSession;
 import com.reqman.vo.CategoryVo;
+import com.reqman.vo.ProjectVo;
 
-@ManagedBean(name="categorybean",eager = true)
-public class Categorybean implements Serializable
-{
-	private static final long serialVersionUID = 3076255353187837257L;
+@ManagedBean(name="projectbean",eager = true)
+public class Projectbean implements Serializable{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -3573038442804289644L;
 	
-	private  List<CategoryVo> categoryList = new ArrayList<CategoryVo>();	
-	private String categoryName;	
-	private Boolean status;	
-	private String categoryId;
+private  List<ProjectVo> projectList = new ArrayList<ProjectVo>();
 	
+	private ProjectMasterInterface  projectMasterInterface = new ProjectMasterImpl();
 	
-	private CategoryMasterInterface categoryMasterInterface = new CategoryMasterImpl();	
+	private String emailId = "hemantraghav012@gmail.com";
+	
+	private String projectName;
+	
+	private Boolean status;
+	
+	private String projectId;
 	
 	@PostConstruct
     public void init() {
 		try
 		{
-			categoryList = new ArrayList<CategoryVo>();
+			projectList = new ArrayList<ProjectVo>();
 			HttpSession session = SessionUtils.getSession();
 			String userName = (String)session.getAttribute("username");
 			System.out.println("--usersession--userName-->"+userName);
-			categoryList = categoryMasterInterface.getCategoryDetails(userName);
+			projectList = projectMasterInterface.getProjectDetails(userName);
 		}
 		catch(Exception e)
 		{
@@ -46,82 +56,81 @@ public class Categorybean implements Serializable
 	}
 	
 	
-	public String categoryPage()
+	public String projectPage()
 	{
 		try
 		{
-			categoryList = new ArrayList<CategoryVo>();
+			projectList = new ArrayList<ProjectVo>();
 			HttpSession session = SessionUtils.getSession();
 			String userName = (String)session.getAttribute("username");
 			System.out.println("--usersession--userName-->"+userName);
-			categoryList = categoryMasterInterface.getCategoryDetails(userName);
+			projectList = projectMasterInterface.getProjectDetails(userName);
 		}
 		catch(Exception e)
 		{
 			e.printStackTrace();
 		}
-		return "category";
+		return "project";
 	}
 	
 	
-	public String newCategory()
+	public String newProject()
 	{
 		try
 		{
-			categoryList = new ArrayList<CategoryVo>();
+			projectList = new ArrayList<ProjectVo>();
 		}
 		catch(Exception e)
 		{
 			e.printStackTrace();
 		}
-		return "createcategory";
+		return "createproject";
 	}
 	
 	
-	public String saveCategory()
+	public String saveProject()
 	{
 		int result = 0;
 		UserSession usersession = new UserSession();
 		try
 		{
-			categoryList = new ArrayList<CategoryVo>();
-			System.out.println("--categoryName-->"+categoryName);
+			projectList = new ArrayList<ProjectVo>();
+			System.out.println("--projectName-->"+projectName);
 			System.out.println("--status-->"+status);
 			
 			HttpSession session = SessionUtils.getSession();
 			String userName = (String)session.getAttribute("username");
-			
 			System.out.println("--usersession--userName-->"+userName);
-			result = categoryMasterInterface.savecategory(categoryName, status, userName);
+			result = projectMasterInterface.saveproject(projectName, status, userName);
 			
 			if(result == 1)
 			{
 				FacesContext.getCurrentInstance().addMessage(
 						null,
 						new FacesMessage(FacesMessage.SEVERITY_WARN,
-								"Category already exist",
-								"Category already exist"));
-				return "createcategory";
+								"Project already exist",
+								"Project already exist"));
+				return "createproject";
 			}
 			if(result == 2)
 			{
 				FacesContext.getCurrentInstance().addMessage(
 						null,
 						new FacesMessage(FacesMessage.SEVERITY_WARN,
-								"Category already exist and in active, please activate by using modify category ",
-								"Category already exist and in active, please activate by using modify category"));
-				return "createcategory";
+								"project already exist and in active, please activate by using modify category ",
+								"Project already exist and in active, please activate by using modify category"));
+				return "createproject";
 			}
 			if(result == 3)
 			{
 				
-				categoryList = categoryMasterInterface.getCategoryDetails(userName);
+			projectList = projectMasterInterface.getProjectDetails(userName);
 				
 				FacesContext.getCurrentInstance().addMessage(
 						null,
 						new FacesMessage(FacesMessage.SEVERITY_WARN,
-								"Category created  successfully.",
-								"Category created  successfully."));
+								"Project created  successfully.",
+								"Project created  successfully."));
 			}
 			
 			
@@ -134,33 +143,33 @@ public class Categorybean implements Serializable
 					new FacesMessage(FacesMessage.SEVERITY_WARN,
 							"Server Error "+e.getMessage(),
 							"Server Error "+e.getMessage()));
-			return "createcategory";
+			return "createproject";
 		}
-		return "category";
+		return "project";
 	}
 	
 	
-	public void modifyAction(String categoryIdOne) {
+	public void modifyAction(String projectIdOne) {
 		
-		CategoryVo categoryVo = new CategoryVo();
+		ProjectVo projectVo = new ProjectVo();
         
         try{
-        	System.out.println("modify action"+categoryIdOne);
+        	System.out.println("modify action"+projectIdOne);
             //addMessage("Welcome to Primefaces!!");
-        	setCategoryId(categoryIdOne);
-        	categoryVo = categoryMasterInterface.getUserCategoryById(categoryIdOne);
-        	if(categoryVo != null && categoryVo.getStatus().trim().equalsIgnoreCase("Active")){
-        		setCategoryName(categoryVo.getName() != null ? categoryVo.getName() : "");
+        	setProjectId(projectIdOne);
+        	projectVo = projectMasterInterface.getUserProjectById(projectIdOne);
+        	if(projectVo != null && projectVo.getStatus().trim().equalsIgnoreCase("Active")){
+        		setProjectName(projectVo.getName() != null ? projectVo.getName() : "");
         		setStatus(true);
         	}
         	else
         	{
-        		setCategoryName(categoryVo.getName() != null ? categoryVo.getName() : "");
+        		setProjectName(projectVo.getName() != null ? projectVo.getName() : "");
         		setStatus(false);
         	}
         	
         	FacesContext.getCurrentInstance()
-            .getExternalContext().dispatch("modifycategory.xhtml");
+            .getExternalContext().dispatch("modifyproject.xhtml");
 
         }
         catch(Exception e){
@@ -169,29 +178,28 @@ public class Categorybean implements Serializable
         
     }
 	
-	public String updateCategory(){
+	public String updateProject(){
 		int result = 0;
 		try{
-			System.out.println("--updateCategory-status-"+status);
-			System.out.println("--updateCategory-categoryId-"+categoryId);
+			System.out.println("--updateproject-status-"+status);
+			System.out.println("--updateProject-projectId-"+projectId);
 			HttpSession session = SessionUtils.getSession();
 			String userName = (String)session.getAttribute("username");
-			
 			System.out.println("--usersession--userName-->"+userName);
 			
-        	result = categoryMasterInterface.updateUserCategoryById(categoryId, status);
+        	result = projectMasterInterface.updateUserprojectById(projectId, status);
         	
         	if(result == 2){
         		FacesContext.getCurrentInstance().addMessage(
 						null,
 						new FacesMessage(FacesMessage.SEVERITY_WARN,
-								"Problem while modifying the Category",
-								"Problem while modifying the Category"));
-				return "modifycategory.xhtml";
+								"Problem while modifying the Project",
+								"Problem while modifying the Project"));
+				return "modifyproject.xhtml";
         	}
         	
         	if(result == 1){
-        		categoryList = categoryMasterInterface.getCategoryDetails(userName);
+        		projectList = projectMasterInterface.getProjectDetails(userName);
         	}
         	
         	
@@ -201,11 +209,11 @@ public class Categorybean implements Serializable
 			FacesContext.getCurrentInstance().addMessage(
 					null,
 					new FacesMessage(FacesMessage.SEVERITY_WARN,
-							"Problem while modifying the Category",
-							"Problem while modifying the Category"));
-			return "modifycategory.xhtml";
+							"Problem while modifying the Project",
+							"Problem while modifying the Project"));
+			return "modifyproject.xhtml";
 		}
-		return "category";
+		return "project";
 	}
 
 	public void addMessage(String summary) {
@@ -214,23 +222,23 @@ public class Categorybean implements Serializable
     }
 
 
-	
-	public List<CategoryVo> getCategoryList() {
-		return categoryList;
-	}
-
-	public void setCategoryList(List<CategoryVo> categoryList) {
-		this.categoryList = categoryList;
+	public List<ProjectVo> getProjectList() {
+		return projectList;
 	}
 
 
-	public String getCategoryName() {
-		return categoryName;
+	public void setProjectList(List<ProjectVo> projectList) {
+		this.projectList = projectList;
 	}
 
 
-	public void setCategoryName(String categoryName) {
-		this.categoryName = categoryName;
+	public String getProjectName() {
+		return projectName;
+	}
+
+
+	public void setProjectName(String projectName) {
+		this.projectName = projectName;
 	}
 
 
@@ -244,13 +252,15 @@ public class Categorybean implements Serializable
 	}
 
 
-	public String getCategoryId() {
-		return categoryId;
+	public String getProjectId() {
+		return projectId;
 	}
 
 
-	public void setCategoryId(String categoryId) {
-		this.categoryId = categoryId;
+	public void setProjectId(String projectId) {
+		this.projectId = projectId;
 	}
+
+	
 
 }
