@@ -1,0 +1,63 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+
+	
+<h:head>
+
+<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<link rel="stylesheet" href="resource/css/bootstrap.css"/>
+<link rel="stylesheet" href="resource/mystyle/home.css"/>
+<link rel="stylesheet" href="resource/mystyle/createcategory.css"/>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script type="text/javascript" src="resource/js/bootstrap.js"/>
+<script type="text/javascript" src="resource/js/jquery.js"/>
+<title>Create Category</title>
+
+</h:head>
+
+
+
+<h:body>
+
+<div id="header">
+	<ui:insert name="header">
+		<ui:include src="header.xhtml" />
+	</ui:insert>
+</div>
+      <!-- end of header -->
+      
+      
+        <div class="container-fluid fixedcontainer" style=" margin-top:1cm; " >
+
+    <h2>Create Suggestion </h2>
+  <div  style="margin-top:1.5cm;"> 
+  
+<h:form class="form-horizontal " >
+
+
+
+<h:inputHidden value="#{suggestionbean.emailid}" required="true"></h:inputHidden>
+<h:inputTextarea id="address" value="#{suggestionbean.message}" required="true"   
+requiredMessage="* Please Enter your Suggestion " cols="140" rows="15" class="  form-control" />
+<h:message for="address"  style="color:red;margin:8px;"/>
+<br></br>
+<h:commandButton action="#{suggestionbean.submit}" value="submit" class="btn btn-lg btn-success btn-block"></h:commandButton>
+
+</h:form>
+  </div>
+      
+  </div>
+      
+      
+      
+      
+      
+      
+      
+      </h:body>
+</html>

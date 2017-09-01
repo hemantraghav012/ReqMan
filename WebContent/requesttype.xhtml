@@ -2,8 +2,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough" 
+	xmlns:h="http://java.sun.com/jsf/html"	
 	   xmlns:ui="http://java.sun.com/jsf/facelets"
 	   xmlns:f="http://java.sun.com/jsf/core"
 	   xmlns:p="http://primefaces.org/ui">
@@ -49,10 +48,9 @@
       	</div>
       	
      	<div class="col-sm-6">
-       		<button type="button" class="btn btn-primary btn-md pull-right"  style="margin-top: 5px;margin-right: 5px;margin-bottom: 8px;"> 
-				<!-- <h:link value="Create Category" style="text-decoration:none; color:#fff;" outcome="createcategory"/> -->
-				<h:commandLink value="Create Request Type" style="text-decoration:none; color:#fff;" action="#{requesttypebean.newRequesttype}" />
-			</button>
+     	
+     	<h:commandLink  value="Create Request Type" style="text-decoration:none; color:#fff;" action="#{requesttypebean.newRequesttype}" class="btn btn-primary btn-md pull-right"/>
+       		
 		</div>
 
 	  </div>

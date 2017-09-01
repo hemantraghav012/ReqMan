@@ -16,7 +16,7 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script type="text/javascript" src="resource/js/bootstrap.js"/>
 <script type="text/javascript" src="resource/js/jquery.js"/>
-<title>Create Requesttype</title>
+<title>Create Request type</title>
 
 </h:head>
 
@@ -33,7 +33,7 @@
       
       
       
-      <div class="container-fluid" style=" margin-top:3cm; ">
+      <div class="container" style=" margin-top:3cm; ">
   <h2>  Create Request type</h2>
   
   <div  style="margin-top:1.5cm;"> 
@@ -61,13 +61,13 @@
 
  <div class=" row form-group ">
  <div class="col-sm-2 .col-sm-offset-2"></div>
- <div class="col-sm-3 "><h:commandButton action="#{requesttypebean.saveRequesttype}" value="submit" class="btn btn-lg btn-success btn-block"></h:commandButton></div>
+ <div class="col-sm-3 "><h:commandButton action="#{requesttypebean.saveRequesttype}" value="Submit" class="btn btn-lg btn-success btn-block"></h:commandButton></div>
 
  <div class="col-sm-3 ">
  
 
-<button type="button" class="btn btn-lg btn-primary btn-block" > 
-<h:link value="Back to RequestType" style="text-decoration:none; color:#fff;" outcome="requesttype"/></button>
+<h:link value="Back to RequestType" style="text-decoration:none; " class="btn btn-lg btn-primary btn-block" outcome="requesttype">
+</h:link>
 </div>
 </div>
 

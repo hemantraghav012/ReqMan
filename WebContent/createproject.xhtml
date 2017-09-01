@@ -33,7 +33,7 @@
       
       
       
-      <div class="container-fluid" style=" margin-top:3cm; ">
+      <div class="container" style=" margin-top:3cm; ">
   <h2>  Create Project</h2>
   
   <div  style="margin-top:1.5cm;"> 
@@ -61,13 +61,13 @@
 
  <div class=" row form-group ">
  <div class="col-sm-2 .col-sm-offset-2"></div>
- <div class="col-sm-3 "><h:commandButton action="#{projectbean.saveProject}" value="submit" class="btn btn-lg btn-success btn-block"></h:commandButton></div>
+ <div class="col-sm-3 "><h:commandButton action="#{projectbean.saveProject}" value="Submit" class="btn btn-lg btn-success btn-block"></h:commandButton></div>
 
  <div class="col-sm-3 ">
  
 
-<button type="button" class="btn btn-lg btn-primary btn-block" > 
-<h:link value="Back to Project" style="text-decoration:none; color:#fff;" outcome="project"/></button>
+
+<h:link value="Back to Project" style="text-decoration:none; color:#fff;" outcome="project" class="btn btn-lg btn-primary btn-block"/>
 </div>
 </div>
 
