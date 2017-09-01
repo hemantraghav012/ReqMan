@@ -42,8 +42,8 @@
       
       
       
-      <div class="container" style=" margin-top:1cm; ">
-  <h1 style=" text-align: center;">    Create New Request On Friends</h1>
+      <div class="container" style=" margin-top:0.5cm; ">
+  <h3 style=" text-align: left;">    Create New Request </h3><br></br>
       
       
       
@@ -61,7 +61,7 @@
  <div class=" row form-group ">
  <div class="col-sm-3 control-label"><h:outputLabel>Description:</h:outputLabel></div>
 <div class=" col-sm-8"><h:inputTextarea id="address" value="#{suggestionbean.message}" required="true"   
-requiredMessage="* Please Enter your Suggestion " cols="19" rows="7" class="  form-control" /></div>
+requiredMessage="* Please Enter your Suggestion " cols="19" rows="3" class="  form-control" /></div>
 <h:message for="address"  style="color:red;margin:8px;"/>
 </div>
 
@@ -110,7 +110,7 @@ requiredMessage="* Please Enter your Suggestion " cols="19" rows="7" class="  fo
 </h:selectOneMenu> </div>
  <h:message for="drop2"  style="color:red;margin:8px;"/>
 </div>
-
+<br></br>
 <div class=" row form-group ">
  <div class="col-sm-3 .col-sm-offset-2"></div>
 <div class="col-sm-8"><h:commandLink action="#{register.submit()}" value="submit" class="btn btn-lg btn-primary btn-block"></h:commandLink></div>

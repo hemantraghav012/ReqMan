@@ -1,0 +1,104 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+ xmlns:ui="http://java.sun.com/jsf/facelets" 
+  xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:p="http://primefaces.org/ui"
+ 	xmlns:h="http://java.sun.com/jsf/html">
+<h:head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<link rel="stylesheet" href="resource/css/bootstrap.css"/>
+<link rel="stylesheet" href="resource/mystyle/home.css"/>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script type="text/javascript" src="resource/js/bootstrap.js"/>
+<script type="text/javascript" src="resource/js/jquery.js"/>
+
+	<title> Request </title>
+</h:head>
+<h:body>
+
+<div id="header">
+	<ui:insert name="header">
+		<ui:include src="header.xhtml" />
+	</ui:insert>
+</div>
+       
+      <!-- -end of header --> 
+      
+   
+	<div id="categoryheader">
+	<ui:insert name="categoryheader">
+		<ui:include src="categoryheader.xhtml" />
+	</ui:insert>
+</div>
+        
+       <!-- -end of categoryheader -->
+        
+
+      <div class="container fixedcontainer" style=" margin-top:1cm; ">
+ 
+      <div class="row">
+      
+      	<div class="col-sm-6">
+      		<span style=";font-size:25px;margin-left: 3px;">Manage New Request</span>
+      	</div>
+      	
+     	<div class="col-sm-6">       				
+				 <h:link value="Create New Request" style="text-decoration:none; color:#fff;" outcome="newrequestfriend" class="btn btn-primary btn-md pull-right"/> 
+			
+		</div>
+
+	  </div>
+
+  <h:form>
+
+     <p:dataTable var="" value="" reflow="true" class="table table-striped table-hover table-bordered" style="margin-top:15px">
+        
+        <p:column headerText="S.No" style="width:2.5cm;">
+            <h:outputText value="" />
+        </p:column>
+ 
+        <p:column headerText="Title" >
+   
+        		<h:outputText value="" style="color:blue;"/>
+    	
+        </p:column>
+ 
+        <p:column headerText="Descripition" >
+            <h:outputText value="" />
+        </p:column>
+ 
+         <p:column headerText="Completion Date" >
+            <h:outputText value="" />
+        </p:column>
+       
+         <p:column headerText="Team Member" >
+            <h:outputText value="" />
+        </p:column>
+          <p:column headerText="Project" >
+            <h:outputText value="" />
+        </p:column>
+          <p:column headerText="Category" >
+            <h:outputText value="" />
+        </p:column>
+          <p:column headerText="Type" >
+            <h:outputText value="" />
+        </p:column>
+        
+    </p:dataTable>
+   </h:form>
+
+
+      </div><!-- end oc container -->
+      
+   
+      
+      
+      
+      
+      </h:body>
+
+</html>
