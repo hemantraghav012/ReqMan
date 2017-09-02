@@ -3,15 +3,16 @@
 .fixedcontainer{
 	
 	  padding: 30px;
-  max-width: 900px;
+  max-width: 921px;
   width: 100% !important;
   background-color: #fff;
   margin: 0 auto;
   border-radius: 2px;
-  box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+  box-shadow: 4px 4px 3px rgba(0, 0, 0, 0.5);
   overflow: hidden;
   font-family: roboto;
-   border-radius: 6px;
+   
+       border: .5px solid rgba(0, 0, 0, 0.2);
 }
 
 .column1{

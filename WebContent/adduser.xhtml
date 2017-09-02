@@ -1,0 +1,97 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+
+
+<h:head>
+
+<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<link rel="stylesheet" href="resource/css/bootstrap.css"/>
+<link rel="stylesheet" href="resource/mystyle/home.css"/>
+<link rel="stylesheet" href="resource/mystyle/createcategory.css"/>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script type="text/javascript" src="resource/js/bootstrap.js"/>
+<script type="text/javascript" src="resource/js/jquery.js"/>
+<title>Add User</title>
+
+</h:head>
+
+
+
+<h:body>
+
+<div id="header">
+	<ui:insert name="header">
+		<ui:include src="header.xhtml" />
+	</ui:insert>
+</div>
+      <!-- end of header -->
+      
+      
+	<div id="userheader">
+	<ui:insert name="userheader">
+		<ui:include src="userheader.xhtml" />
+	</ui:insert>
+</div>
+        
+       <!-- -end of user header -->
+      
+      <div class="container" >
+  <h2></h2>
+  
+  <div  style="margin-top:1cm;"> 
+  <h:form class="form-horizontal fixedcontainer " >
+
+<h2 style="  margin-bottom:2cm; margin-top:0px; " >Add User</h2>
+<div><h:messages style = "color:red;margin:8px;" /></div>
+
+ <div class=" row form-group ">
+ <div class="col-sm-2 control-label"><h:outputLabel  >First Name:</h:outputLabel></div>
+<div class=" col-sm-6"> <h:inputText value="#{friendbean.firstname}" class="  form-control"  id="firstname"  required="true" requiredMessage="* Please enter your email id"/></div>
+ <h:message for="firstname"  style="color:red;margin:8px;"/> 
+</div><br></br>
+
+<div class=" row form-group ">
+ <div class="col-sm-2 control-label"><h:outputLabel  >Last Name:</h:outputLabel></div>
+<div class=" col-sm-6"> <h:inputText value="#{friendbean.lastname}" class="  form-control"  id="lastname"  required="true" requiredMessage="* Please enter your email id"/></div>
+ <h:message for="lastname"  style="color:red;margin:8px;"/> 
+</div><br></br>
+<div class=" row form-group ">
+ <div class="col-sm-2 control-label"><h:outputLabel  >Short Name:</h:outputLabel></div>
+<div class=" col-sm-6"> <h:inputText value="#{friendbean.shortname}" class="  form-control"  id="shortname"  required="true" requiredMessage="* Please enter your email id"/></div>
+ <h:message for="shortname"  style="color:red;margin:8px;"/> 
+</div><br></br>
+<div class=" row form-group ">
+ <div class="col-sm-2 control-label"><h:outputLabel  >Email Id:</h:outputLabel></div>
+<div class=" col-sm-6"> <h:inputText value="#{friendbean.emailid}" class="  form-control"  id="emailid"  required="true" requiredMessage="* Please enter your email id"/></div>
+ <h:message for="emailid"  style="color:red;margin:8px;"/> 
+</div><br></br>
+ 
+
+
+ <div class=" row form-group ">
+ <div class="col-sm-2 .col-sm-offset-2"></div>
+ <div class="col-sm-3 "><h:commandButton action="#{friendbean.submit}" value="Submit" class="btn btn-lg btn-success btn-block"></h:commandButton></div>
+
+ <div class="col-sm-3 ">
+ 
+
+
+<h:link value="Back to Friend List" style="text-decoration:none; color:#fff;" outcome="friend" class="btn btn-lg btn-primary btn-block"/>
+</div>
+</div>
+
+
+
+</h:form>
+  
+  </div>
+      
+  </div>
+</h:body>
+	
+</html>
