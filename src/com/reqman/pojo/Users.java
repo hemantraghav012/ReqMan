@@ -1,6 +1,6 @@
 package com.reqman.pojo;
 
-// Generated 31 Aug, 2017 10:45:24 PM by Hibernate Tools 4.3.1
+// Generated 5 Sep, 2017 6:45:26 PM by Hibernate Tools 4.3.1
 
 import java.util.Date;
 import java.util.HashSet;
@@ -40,9 +40,12 @@ public class Users implements java.io.Serializable {
 	private Date lastlogin;
 	private byte[] photo;
 	private Set<Userroles> userroleses = new HashSet<Userroles>(0);
-	private Set<Userfriendlist> userfriendlists = new HashSet<Userfriendlist>(0);
+	private Set<Userfriendlist> userfriendlistsForUserid = new HashSet<Userfriendlist>(
+			0);
 	private Set<Userusertype> userusertypes = new HashSet<Userusertype>(0);
 	private Set<Userrequesttype> userrequesttypes = new HashSet<Userrequesttype>(
+			0);
+	private Set<Userfriendlist> userfriendlistsForFriendid = new HashSet<Userfriendlist>(
 			0);
 	private Set<Userproject> userprojects = new HashSet<Userproject>(0);
 	private Set<Usercategory> usercategories = new HashSet<Usercategory>(0);
@@ -57,9 +60,11 @@ public class Users implements java.io.Serializable {
 	public Users(int id, String emailid, String password, String firstname,
 			String lastname, String shortname, Boolean status,
 			String createdby, Date createdon, Date lastlogin, byte[] photo,
-			Set<Userroles> userroleses, Set<Userfriendlist> userfriendlists,
+			Set<Userroles> userroleses,
+			Set<Userfriendlist> userfriendlistsForUserid,
 			Set<Userusertype> userusertypes,
 			Set<Userrequesttype> userrequesttypes,
+			Set<Userfriendlist> userfriendlistsForFriendid,
 			Set<Userproject> userprojects, Set<Usercategory> usercategories) {
 		this.id = id;
 		this.emailid = emailid;
@@ -73,9 +78,10 @@ public class Users implements java.io.Serializable {
 		this.lastlogin = lastlogin;
 		this.photo = photo;
 		this.userroleses = userroleses;
-		this.userfriendlists = userfriendlists;
+		this.userfriendlistsForUserid = userfriendlistsForUserid;
 		this.userusertypes = userusertypes;
 		this.userrequesttypes = userrequesttypes;
+		this.userfriendlistsForFriendid = userfriendlistsForFriendid;
 		this.userprojects = userprojects;
 		this.usercategories = usercategories;
 	}
@@ -192,13 +198,14 @@ public class Users implements java.io.Serializable {
 		this.userroleses = userroleses;
 	}
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "users")
-	public Set<Userfriendlist> getUserfriendlists() {
-		return this.userfriendlists;
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "usersByUserid")
+	public Set<Userfriendlist> getUserfriendlistsForUserid() {
+		return this.userfriendlistsForUserid;
 	}
 
-	public void setUserfriendlists(Set<Userfriendlist> userfriendlists) {
-		this.userfriendlists = userfriendlists;
+	public void setUserfriendlistsForUserid(
+			Set<Userfriendlist> userfriendlistsForUserid) {
+		this.userfriendlistsForUserid = userfriendlistsForUserid;
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "users")
@@ -217,6 +224,16 @@ public class Users implements java.io.Serializable {
 
 	public void setUserrequesttypes(Set<Userrequesttype> userrequesttypes) {
 		this.userrequesttypes = userrequesttypes;
+	}
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "usersByFriendid")
+	public Set<Userfriendlist> getUserfriendlistsForFriendid() {
+		return this.userfriendlistsForFriendid;
+	}
+
+	public void setUserfriendlistsForFriendid(
+			Set<Userfriendlist> userfriendlistsForFriendid) {
+		this.userfriendlistsForFriendid = userfriendlistsForFriendid;
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "users")

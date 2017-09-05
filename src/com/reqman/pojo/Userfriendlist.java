@@ -1,9 +1,10 @@
 package com.reqman.pojo;
 
-// Generated 31 Aug, 2017 10:45:24 PM by Hibernate Tools 4.3.1
+// Generated 5 Sep, 2017 6:45:26 PM by Hibernate Tools 4.3.1
 
 import java.util.Date;
-
+import java.util.HashSet;
+import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -12,7 +13,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -29,11 +30,13 @@ public class Userfriendlist implements java.io.Serializable {
 	 */
 	private static final long serialVersionUID = 7672874640318531848L;
 	private int id;
-	private Users users;
+	private Users usersByUserid;
+	private Users usersByFriendid;
 	private Boolean status;
 	private Date datecreated;
 	private String createdby;
-	private Requestworkflow requestworkflow;
+	private Set<Requestworkflow> requestworkflows = new HashSet<Requestworkflow>(
+			0);
 
 	public Userfriendlist() {
 	}
@@ -42,14 +45,16 @@ public class Userfriendlist implements java.io.Serializable {
 		this.id = id;
 	}
 
-	public Userfriendlist(int id, Users users, Boolean status,
-			Date datecreated, String createdby, Requestworkflow requestworkflow) {
+	public Userfriendlist(int id, Users usersByUserid, Users usersByFriendid,
+			Boolean status, Date datecreated, String createdby,
+			Set<Requestworkflow> requestworkflows) {
 		this.id = id;
-		this.users = users;
+		this.usersByUserid = usersByUserid;
+		this.usersByFriendid = usersByFriendid;
 		this.status = status;
 		this.datecreated = datecreated;
 		this.createdby = createdby;
-		this.requestworkflow = requestworkflow;
+		this.requestworkflows = requestworkflows;
 	}
 
 	@Id
@@ -65,12 +70,22 @@ public class Userfriendlist implements java.io.Serializable {
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "userid")
-	public Users getUsers() {
-		return this.users;
+	public Users getUsersByUserid() {
+		return this.usersByUserid;
 	}
 
-	public void setUsers(Users users) {
-		this.users = users;
+	public void setUsersByUserid(Users usersByUserid) {
+		this.usersByUserid = usersByUserid;
+	}
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "friendid")
+	public Users getUsersByFriendid() {
+		return this.usersByFriendid;
+	}
+
+	public void setUsersByFriendid(Users usersByFriendid) {
+		this.usersByFriendid = usersByFriendid;
 	}
 
 	@Column(name = "status")
@@ -101,13 +116,13 @@ public class Userfriendlist implements java.io.Serializable {
 		this.createdby = createdby;
 	}
 
-	@OneToOne(fetch = FetchType.LAZY, mappedBy = "request")
-	public Requestworkflow getRequestworkflow() {
-		return this.requestworkflow;
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "userfriendlist")
+	public Set<Requestworkflow> getRequestworkflows() {
+		return this.requestworkflows;
 	}
 
-	public void setRequestworkflow(Requestworkflow requestworkflow) {
-		this.requestworkflow = requestworkflow;
+	public void setRequestworkflows(Set<Requestworkflow> requestworkflows) {
+		this.requestworkflows = requestworkflows;
 	}
 
 }

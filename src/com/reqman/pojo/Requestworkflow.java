@@ -1,6 +1,6 @@
 package com.reqman.pojo;
 
-// Generated 13 Aug, 2017 10:25:05 PM by Hibernate Tools 4.3.1
+// Generated 5 Sep, 2017 6:45:26 PM by Hibernate Tools 4.3.1
 
 import java.util.Date;
 import javax.persistence.Column;
@@ -8,6 +8,8 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
@@ -31,7 +33,6 @@ public class Requestworkflow implements java.io.Serializable {
 	private Request request;
 	private Userfriendlist userfriendlist;
 	private Integer requestid;
-	private Integer friendid;
 	private Float completionpercentage;
 	private String requestby;
 	private Integer requeststatus;
@@ -48,21 +49,19 @@ public class Requestworkflow implements java.io.Serializable {
 	public Requestworkflow() {
 	}
 
-	public Requestworkflow(Request request, Userfriendlist userfriendlist) {
+	public Requestworkflow(Request request) {
 		this.request = request;
-		this.userfriendlist = userfriendlist;
 	}
 
 	public Requestworkflow(Request request, Userfriendlist userfriendlist,
-			Integer requestid, Integer friendid, Float completionpercentage,
-			String requestby, Integer requeststatus, Date acceptdate,
-			Date updatedate, Integer revisionnumber, String approvedby,
-			Date approveddate, Date datecreated, String createdby,
-			Date datemodified, String modifiedby) {
+			Integer requestid, Float completionpercentage, String requestby,
+			Integer requeststatus, Date acceptdate, Date updatedate,
+			Integer revisionnumber, String approvedby, Date approveddate,
+			Date datecreated, String createdby, Date datemodified,
+			String modifiedby) {
 		this.request = request;
 		this.userfriendlist = userfriendlist;
 		this.requestid = requestid;
-		this.friendid = friendid;
 		this.completionpercentage = completionpercentage;
 		this.requestby = requestby;
 		this.requeststatus = requeststatus;
@@ -99,8 +98,8 @@ public class Requestworkflow implements java.io.Serializable {
 		this.request = request;
 	}
 
-	@OneToOne(fetch = FetchType.LAZY)
-	@PrimaryKeyJoinColumn
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "friendid")
 	public Userfriendlist getUserfriendlist() {
 		return this.userfriendlist;
 	}
@@ -116,15 +115,6 @@ public class Requestworkflow implements java.io.Serializable {
 
 	public void setRequestid(Integer requestid) {
 		this.requestid = requestid;
-	}
-
-	@Column(name = "friendid")
-	public Integer getFriendid() {
-		return this.friendid;
-	}
-
-	public void setFriendid(Integer friendid) {
-		this.friendid = friendid;
 	}
 
 	@Column(name = "completionpercentage", precision = 8, scale = 8)
