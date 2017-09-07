@@ -7,6 +7,7 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
 
@@ -17,11 +18,12 @@ import com.reqman.util.UserSession;
 import com.reqman.vo.CategoryVo;
 
 @ManagedBean(name="categorybean",eager = true)
+@RequestScoped
 public class Categorybean implements Serializable
 {
 	private static final long serialVersionUID = 3076255353187837257L;
 	
-	private  List<CategoryVo> categoryList = new ArrayList<CategoryVo>();	
+	private List<CategoryVo> categoryList = new ArrayList<CategoryVo>();	
 	private String categoryName;	
 	private Boolean status;	
 	private String categoryId;
@@ -30,7 +32,8 @@ public class Categorybean implements Serializable
 	private CategoryMasterInterface categoryMasterInterface = new CategoryMasterImpl();	
 	
 	@PostConstruct
-    public void init() {
+    public void init() 
+	{
 		try
 		{
 			categoryList = new ArrayList<CategoryVo>();
@@ -140,15 +143,15 @@ public class Categorybean implements Serializable
 	}
 	
 	
-	public void modifyAction(String categoryIdOne) {
+	public void modifyAction() {
 		
 		CategoryVo categoryVo = new CategoryVo();
-        
-        try{
-        	System.out.println("modify action"+categoryIdOne);
+        try
+        {
+        	System.out.println("modify action"+categoryId);
             //addMessage("Welcome to Primefaces!!");
-        	setCategoryId(categoryIdOne);
-        	categoryVo = categoryMasterInterface.getUserCategoryById(categoryIdOne);
+        	setCategoryId(categoryId);
+        	categoryVo = categoryMasterInterface.getUserCategoryById(categoryId);
         	if(categoryVo != null && categoryVo.getStatus().trim().equalsIgnoreCase("Active")){
         		setCategoryName(categoryVo.getName() != null ? categoryVo.getName() : "");
         		setStatus(true);
@@ -169,7 +172,8 @@ public class Categorybean implements Serializable
         
     }
 	
-	public String updateCategory(){
+	public String updateCategory()
+	{
 		int result = 0;
 		try{
 			System.out.println("--updateCategory-status-"+status);
@@ -181,7 +185,8 @@ public class Categorybean implements Serializable
 			
         	result = categoryMasterInterface.updateUserCategoryById(categoryId, status);
         	
-        	if(result == 2){
+        	if(result == 2)
+        	{
         		FacesContext.getCurrentInstance().addMessage(
 						null,
 						new FacesMessage(FacesMessage.SEVERITY_WARN,
@@ -190,13 +195,14 @@ public class Categorybean implements Serializable
 				return "modifycategory.xhtml";
         	}
         	
-        	if(result == 1){
+        	if(result == 1)
+        	{
         		categoryList = categoryMasterInterface.getCategoryDetails(userName);
         	}
         	
-        	
 		}
-		catch(Exception e){
+		catch(Exception e)
+		{
 			e.printStackTrace();
 			FacesContext.getCurrentInstance().addMessage(
 					null,
@@ -208,48 +214,49 @@ public class Categorybean implements Serializable
 		return "category";
 	}
 
-	public void addMessage(String summary) {
+	public void addMessage(String summary) 
+	{
         FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, summary,  null);
         FacesContext.getCurrentInstance().addMessage(null, message);
     }
-
-
 	
-	public List<CategoryVo> getCategoryList() {
+	public List<CategoryVo> getCategoryList() 
+	{
 		return categoryList;
 	}
 
-	public void setCategoryList(List<CategoryVo> categoryList) {
+	public void setCategoryList(List<CategoryVo> categoryList) 
+	{
 		this.categoryList = categoryList;
 	}
 
-
-	public String getCategoryName() {
+	public String getCategoryName() 
+	{
 		return categoryName;
 	}
 
-
-	public void setCategoryName(String categoryName) {
+	public void setCategoryName(String categoryName) 
+	{
 		this.categoryName = categoryName;
 	}
 
-
-	public Boolean getStatus() {
+	public Boolean getStatus() 
+	{
 		return status;
 	}
 
-
-	public void setStatus(Boolean status) {
+	public void setStatus(Boolean status) 
+	{
 		this.status = status;
 	}
 
-
-	public String getCategoryId() {
+	public String getCategoryId() 
+	{
 		return categoryId;
 	}
 
-
-	public void setCategoryId(String categoryId) {
+	public void setCategoryId(String categoryId) 
+	{
 		this.categoryId = categoryId;
 	}
 

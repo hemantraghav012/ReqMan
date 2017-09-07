@@ -1,8 +1,7 @@
 package com.reqman.vo;
 
+
 public class CategoryVo {
-	
-	private Integer srNo;
 	
 	private Integer userCategoryId;
 	
@@ -10,14 +9,6 @@ public class CategoryVo {
 	
 	private String status;
 
-
-	public Integer getSrNo() {
-		return srNo;
-	}
-
-	public void setSrNo(Integer srNo) {
-		this.srNo = srNo;
-	}
 
 	public Integer getUserCategoryId() {
 		return userCategoryId;
@@ -42,8 +33,6 @@ public class CategoryVo {
 	public void setStatus(String status) {
 		this.status = status;
 	}
-	
-	
 	
 	
 

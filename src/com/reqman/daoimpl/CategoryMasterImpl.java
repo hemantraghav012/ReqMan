@@ -189,7 +189,7 @@ public class CategoryMasterImpl implements CategoryMasterInterface{
             					&& usercategoryDB.getCategory().getStatus() == true)
             			{
             				categoryVo = new CategoryVo();
-                			categoryVo.setSrNo(counter);
+                			//categoryVo.setSrNo(counter);
                 			categoryVo.setName(usercategoryDB.getCategory().getName());
                 			categoryVo.setUserCategoryId(usercategoryDB.getId());
                 			if(usercategoryDB.getStatus().equals(true))
@@ -239,7 +239,7 @@ public class CategoryMasterImpl implements CategoryMasterInterface{
             
             int counter = 1;
             if(usercategory != null){
-            	categoryVo.setSrNo(counter);
+            	//categoryVo.setSrNo(counter);
     			categoryVo.setName(usercategory.getCategory().getName());
     			categoryVo.setUserCategoryId(usercategory.getId());
     			if(usercategory.getStatus() == true)
