@@ -13,7 +13,7 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script type="text/javascript" src="resource/js/bootstrap.js"/>
 <script type="text/javascript" src="resource/js/jquery.js"/>
-<title> header</title>
+<title> Index Header</title>
 </h:head>
 <h:body>
 <ui:composition>
@@ -27,25 +27,13 @@
 <span class="icon-bar"></span>
 </button>
 <div class="collapse navbar-collapse margin_menu">
-<ul class="nav navbar-nav navbar-left">
-<li> <h:link  style="color:#faebd1; font-weight: bold;   background: rgba(255,255,255,0.1);  border: 0.5px solid;" class="glyphicon glyphicon-home"  id="nav-sign-up" outcome="home" /> </li>
-<li> <h:link value=" Request " style="color:#faebd1; font-weight: bold;" outcome="request" /> </li>
-<li><h:link value="Users " style="color:#faebd1; font-weight: bold;" outcome="users"/> </li>
-<li> <h:link value="See Status " style="color:#faebd1; font-weight: bold;" outcome="login" /> </li>
-<li> <h:link value="Respond to New Request  " style="color:#faebd1; font-weight: bold;" outcome="login" /> </li>
-<li> <h:link value="Improvement Suggestion  " style="color:#faebd1; font-weight: bold;" outcome="suggestion" /> </li>
-</ul>
- 
 <ul class="nav navbar-nav navbar-right">
- <li class="dropdown " style="margin-right: 2cm;">
- <a class="dropdown-toggle " data-toggle="dropdown" style="color:#faebd1; font-weight: bold; background-color:#f36c00;">#{login.user}
- <span class="caret"></span></a>         
-<ul class="dropdown-menu" style="color:#faebd1; font-weight: bold;">         
-<li><span class="btn btn-block hover-item" style="color:black; background-color:#808080; text-align:center">#{login.user}</span></li>
-<li> <h:link value="My Profile  " style="color:black " class="btn btn-block hover-item" outcome="myprofile" /> </li>
-<li><h:form><h:commandLink action="#{login.logout}" value="Logout" style="color:black"  class="btn btn-block hover-item"></h:commandLink></h:form></li>
-</ul>        
-</li>      
+<li ><a href="#" style="color:#fff; font-weight: bold;" >Feature</a></li>
+<li><a href="#" style="color:#fff; font-weight: bold;" class="hover1">Pricing</a></li>
+<li><a href="#" style="color:#fff; font-weight: bold;" >customers</a></li>
+<li><a href="#" style="color:#fff; font-weight: bold;">Blog</a></li>
+<li><a href="faces/login.xhtml"  style="color:#fff; font-weight: bold;">Sign in</a></li>
+<li class="active"><a href="faces/register.xhtml" style="color:#fff; font-weight: bold; margin-right:2cm;  background: rgba(255,255,255,0.1);  border: 0.5px solid;">Register</a></li>
 </ul>
 </div>
 </div>

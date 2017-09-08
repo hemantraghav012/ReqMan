@@ -88,7 +88,7 @@ function setCategoryHiddenValue(new_value)
 	        
 	        <p:column  headerText="Modify" exportable="false" style="width:3cm; text-align:center">
 				
-				<p:commandLink id="nonAjax" styleClass="btn btn-primary" onclick='setCategoryHiddenValue(#{category.userCategoryId})' action="#{categorybean.modifyAction()}" ajax="false" >
+				<p:commandLink id="nonAjax" styleClass="btn btn-primary " style="color:white;" onclick='setCategoryHiddenValue(#{category.userCategoryId})' action="#{categorybean.modifyAction()}" ajax="false" >
 	        		Update
 	    		</p:commandLink>
 	    		 

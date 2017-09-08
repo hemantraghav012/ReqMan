@@ -9,7 +9,7 @@ public interface ProjectMasterInterface {
 
 
 
-public int saveproject(String name) throws Exception;
+     public int saveproject(String name) throws Exception;
 	
 	public int saveproject(String projectName, Boolean status, String emailId) throws Exception;
 	

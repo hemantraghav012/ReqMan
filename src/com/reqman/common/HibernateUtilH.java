@@ -50,8 +50,8 @@ public class HibernateUtilH {
         	    configuration.setProperty("hibernate.connection.username", dbUri.getUserInfo().split(":")[0]);
         	    configuration.setProperty("hibernate.connection.password", dbUri.getUserInfo().split(":")[1]);
         	    configuration.setProperty("hibernate.show_sql", "true");
-        	    configuration.setProperty("hibernate.default_schema", "reqman");
-        	    //configuration.setProperty("hibernate.hbm2ddl.auto", "update");
+        	   // configuration.setProperty("hibernate.default_schema", "reqman");
+        	    configuration.setProperty("hibernate.hbm2ddl.auto", "update");
         	    
         	    configuration.addAnnotatedClass(Audittrail.class);
         	    configuration.addAnnotatedClass(Category.class);

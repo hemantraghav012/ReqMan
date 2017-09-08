@@ -4,6 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
  xmlns:ui="http://java.sun.com/jsf/facelets"
   xmlns:p="http://primefaces.org/ui"
+  xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:h="http://java.sun.com/jsf/html">
 <h:head>
 <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
@@ -17,6 +18,19 @@
 <script type="text/javascript" src="resource/js/bootstrap.js"/>
 <script type="text/javascript" src="resource/js/jquery.js"/>
 <title>Friend List</title>
+
+<script>
+
+function setFriendHiddenValue(new_value)
+{
+	
+	document.getElementById('friendForm:friendId').value = new_value;
+
+}
+
+</script>
+
+
 </h:head>
 <h:body style="background-color:#fff">
 	
@@ -38,57 +52,78 @@
        <!-- -end of userheader -->
 
 
-
+ <h:form id="friendForm">
       <div class="container fixedcontainer" style=" margin-top:1cm; ">
- 
+ 		<h:inputHidden id="friendId" value="#{friendbean.friendId}" ></h:inputHidden>
       <div class="row">
       
       	<div class="col-sm-6">
       		<span style=";font-size:25px;margin-left: 3px;">Manage Friend List</span>
       	</div>
       	
-     	<div class="col-sm-6">
-       		
-				 <h:link value="Add Friend" style="text-decoration:none; color:#fff;" outcome="addfriend" class="btn btn-primary btn-md pull-right"/> 
+     	<div class="col-sm-6">       				
+				<h:commandLink  value="Add friend" action="#{friendbean.newFriend}" class="btn btn-primary btn-md pull-right"/>				
+				
 			
 		</div>
 
 	  </div>
 
-<h:form>
 
-     <p:dataTable var="friend" value="#{friendbean.users}" reflow="true" class="table table-striped table-hover table-bordered" style="margin-top:20px">
-        
-        
- 
-       <p:column headerText="Short Name" style="width:3.5cm;">
+	<div>
+
+	     <p:dataTable id="friendTable" var="friend" value="#{friendbean.friendList}" reflow="true" scrollable="true" scrollHeight="250" sortBy="#{friend.status},#{friend.firstname}" class="table table-striped table-hover table-bordered" style="margin-top:20px">
+	 
+	       <p:column headerText="Short Name" style="width:3cm;">
         <h:outputText value="#{friend.shortname}" />
-        </p:column>
+         </p:column>
         
-        <p:column headerText="First Name">			
+        <p:column headerText="First Name" style="width:3cm;" sortBy="#{friend.firstname}">			
         		<h:outputText value="#{friend.firstname}" />    		
         </p:column>
  
-        <p:column headerText="Last Name">
+        <p:column headerText="Last Name" style="width:3cm;">
        	<h:outputText value="#{friend.lastname}" />    		
         </p:column>
  
- <p:column headerText="Email Id" style="width:8cm;">
-       	<h:outputText value="#{friend.emailid}" />    		
-        </p:column>
-        
-        <p:column headerText="Status" style="width:4.5cm;">
-            <h:outputText value="#{friend.status}" />
-        </p:column>
- 
-       
-    </p:dataTable>
-</h:form>
+         <p:column headerText="Email Id" style="width:7cm;"  >
+         <h:outputText value="#{friend.emailid}"   /> 
+            	</p:column>        
+	 
+	        <p:column headerText="Status" style="width:3cm;" sortBy="#{friend.status}" >
+	            <h:outputText value="#{friend.status}" />
+	        </p:column>
+	        
+	        <p:column  headerText="Modify" exportable="false" style="width:3cm; text-align:center">
+				
+				<p:commandLink id="nonAjax" styleClass="btn btn-primary " style="color:white;" onclick='setFriendHiddenValue(#{friend.userFriendId})' action="#{friendbean.modifyAction()}" ajax="false" >
+	        		Update
+	    		</p:commandLink>
+	    		 
+	        </p:column>
+	       
+	    </p:dataTable>
+	    
+	</div>
 
-      </div><!-- end oc container -->
-      
-      
-      
+	<div>
+		<strong>Export Data &nbsp;</strong>
+	    <h:commandButton id="excel" class="btn btn-info" value="Excel">
+	        <p:dataExporter type="xls" target="friendTable" fileName="friend" />
+	    </h:commandButton>
+	 	&nbsp;
+	    <h:commandButton id="pdf" class="btn btn-info" value="Pdf">
+	        <p:dataExporter type="pdf" target="friendTable" fileName="friend" />
+	    </h:commandButton>
+	</div>
 
-</h:body>
+</div><!-- end oc container -->
+      
+      </h:form>
+      
+      
+      
+      
+      </h:body>
+
 </html>

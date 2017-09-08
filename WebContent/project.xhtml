@@ -18,6 +18,20 @@
 <script type="text/javascript" src="resource/js/bootstrap.js"/>
 <script type="text/javascript" src="resource/js/jquery.js"/>
 <title> project</title>
+
+<script>
+
+function setProjectHiddenValue(new_value)
+{
+	
+	document.getElementById('projectForm:projectId').value = new_value;
+
+}
+
+</script>
+
+
+
 </h:head>
 
 <h:body>
@@ -38,49 +52,67 @@
         
        <!-- -end of categoryheader -->
           
-   	<h:form>
+    <h:form id="projectForm">
       <div class="container fixedcontainer" style=" margin-top:1cm; ">
- 
+ 		<h:inputHidden id="projectId" value="#{projectbean.projectId}" ></h:inputHidden>
       <div class="row">
       
       	<div class="col-sm-6">
       		<span style=";font-size:25px;margin-left: 3px;">Manage Project</span>
       	</div>
       	
-     	<div class="col-sm-6">
-     	<h:commandLink  value="Create Project" style="text-decoration:none;  color:#fff;" action="#{projectbean.newProject}" class="btn btn-primary btn-md pull-right"/>
-       	
-
+     	<div class="col-sm-6">       				
+				<h:commandLink  value="Create Project" action="#{projectbean.newProject}" class="btn btn-primary btn-md pull-right"/>				
+				
 			
 		</div>
 
 	  </div>
 
-     <p:dataTable var="project" value="#{projectbean.projectList}" reflow="true" class="table table-striped table-hover table-bordered" style="margin-top:20px">
-       
-        <p:column headerText="S.No" style="width:2.5cm;">
-            <h:outputText value="#{project.srNo}" />
-        </p:column>
- 
-        <p:column headerText="Project Name">
-          
-           
-			<p:commandLink id="nonAjax" action="#{projectbean.modifyAction(project.userProjectId)}" ajax="false">
-        		<h:outputText value="#{project.name}" style="color:blue;" />
-    		</p:commandLink>
-        </p:column>
- 
-        <p:column headerText="Status" style="width:4.5cm;">
-            <h:outputText value="#{project.status}" />
-        </p:column>
- 
-       
-    </p:dataTable>
 
-      </div><!-- end oc container -->
+	<div>
+
+	     <p:dataTable id="projectTable" var="project" value="#{projectbean.projectList}" reflow="true" scrollable="true" scrollHeight="250" sortBy="#{project.status},#{project.name}" class="table table-striped table-hover table-bordered" style="margin-top:20px">
+	 
+	        <p:column headerText="Project Name" sortBy="#{project.name}" >
+	            <h:outputText value="#{project.name}" />
+	        </p:column>
+	 
+	        <p:column headerText="Status" style="width:4.5cm;" sortBy="#{project.status}" >
+	            <h:outputText value="#{project.status}" />
+	        </p:column>
+	        
+	        <p:column  headerText="Modify" exportable="false" style="width:3cm; text-align:center">
+				
+				<p:commandLink id="nonAjax" styleClass="btn btn-primary " style="color:white;" onclick='setProjectHiddenValue(#{project.userProjectId})' action="#{projectbean.modifyAction()}" ajax="false" >
+	        		Update
+	    		</p:commandLink>
+	    		 
+	        </p:column>
+	       
+	    </p:dataTable>
+	    
+	</div>
+
+	<div>
+		<strong>Export Data &nbsp;</strong>
+	    <h:commandButton id="excel" class="btn btn-info" value="Excel">
+	        <p:dataExporter type="xls" target="categoryTable" fileName="category" />
+	    </h:commandButton>
+	 	&nbsp;
+	    <h:commandButton id="pdf" class="btn btn-info" value="Pdf">
+	        <p:dataExporter type="pdf" target="categoryTable" fileName="category" />
+	    </h:commandButton>
+	</div>
+
+</div><!-- end oc container -->
       
       </h:form>
       
+      
+      
+      
       </h:body>
+
 
 </html>

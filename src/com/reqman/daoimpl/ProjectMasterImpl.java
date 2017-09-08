@@ -193,9 +193,10 @@ public class ProjectMasterImpl implements ProjectMasterInterface{
             					&& userprojectDB.getProject().getStatus() == true)
             			{
             				projectVo = new ProjectVo();
-            				projectVo.setSrNo(counter);
+            				//projectVo.setSrNo(counter);
             				projectVo.setName(userprojectDB.getProject().getName());
             				projectVo.setUserProjectId(userprojectDB.getId());
+            				
                 			if(userprojectDB.getStatus().equals(true))
                 			{
                 				projectVo.setStatus("Active");
@@ -245,7 +246,7 @@ public class ProjectMasterImpl implements ProjectMasterInterface{
             
             int counter = 1;
             if(userproject != null){
-            	projectVo.setSrNo(counter);
+            	//projectVo.setSrNo(counter);
             	projectVo.setName(userproject.getProject().getName());
             	projectVo.setUserProjectId(userproject.getId());
     			if(userproject.getStatus() == true)

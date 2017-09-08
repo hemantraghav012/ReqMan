@@ -7,31 +7,29 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
 
-import com.reqman.dao.CategoryMasterInterface;
 import com.reqman.dao.ProjectMasterInterface;
-import com.reqman.daoimpl.CategoryMasterImpl;
+
 import com.reqman.daoimpl.ProjectMasterImpl;
 import com.reqman.util.SessionUtils;
 import com.reqman.util.UserSession;
-import com.reqman.vo.CategoryVo;
 import com.reqman.vo.ProjectVo;
 
 @ManagedBean(name="projectbean",eager = true)
+@RequestScoped
 public class Projectbean implements Serializable{
 
-	/**
-	 * 
-	 */
+	
 	private static final long serialVersionUID = -3573038442804289644L;
 	
 private  List<ProjectVo> projectList = new ArrayList<ProjectVo>();
 	
 	private ProjectMasterInterface  projectMasterInterface = new ProjectMasterImpl();
 	
-	private String emailId = "hemantraghav012@gmail.com";
+	
 	
 	private String projectName;
 	
@@ -149,15 +147,15 @@ private  List<ProjectVo> projectList = new ArrayList<ProjectVo>();
 	}
 	
 	
-	public void modifyAction(String projectIdOne) {
+	public void modifyAction() {
 		
 		ProjectVo projectVo = new ProjectVo();
         
         try{
-        	System.out.println("modify action"+projectIdOne);
+        	System.out.println("modify action"+ projectId);
             //addMessage("Welcome to Primefaces!!");
-        	setProjectId(projectIdOne);
-        	projectVo = projectMasterInterface.getUserProjectById(projectIdOne);
+        	setProjectId(projectId);
+        	projectVo = projectMasterInterface.getUserProjectById(projectId);
         	if(projectVo != null && projectVo.getStatus().trim().equalsIgnoreCase("Active")){
         		setProjectName(projectVo.getName() != null ? projectVo.getName() : "");
         		setStatus(true);

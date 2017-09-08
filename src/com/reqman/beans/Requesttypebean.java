@@ -3,23 +3,21 @@ package com.reqman.beans;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
-
-import com.reqman.dao.CategoryMasterInterface;
 import com.reqman.dao.requesttypeMasterInterface;
-import com.reqman.daoimpl.CategoryMasterImpl;
 import com.reqman.daoimpl.RequesttypeMasterImpl;
 import com.reqman.util.SessionUtils;
 import com.reqman.util.UserSession;
-import com.reqman.vo.CategoryVo;
+
 import com.reqman.vo.RequesttypeVo;
 
 @ManagedBean(name="requesttypebean",eager = true)
+@RequestScoped
 public class Requesttypebean implements Serializable{
 
 	/**
@@ -151,15 +149,15 @@ private  List<RequesttypeVo> requesttypeList = new ArrayList<RequesttypeVo>();
 	}
 	
 	
-	public void modifyAction(String requesttypeIdOne) {
+	public void modifyAction() {
 		
 		RequesttypeVo requesttypeVo = new RequesttypeVo();
         
         try{
-        	System.out.println("modify action"+requesttypeIdOne);
+        	System.out.println("modify action"+requesttypeId);
             //addMessage("Welcome to Primefaces!!");
-        	setRequesttypeId(requesttypeIdOne);
-        	requesttypeVo = requesttypeMasterInterface.getUserRequesttypeById(requesttypeIdOne);
+        	setRequesttypeId(requesttypeId);
+        	requesttypeVo = requesttypeMasterInterface.getUserRequesttypeById(requesttypeId);
         	if(requesttypeVo != null && requesttypeVo.getStatus().trim().equalsIgnoreCase("Active")){
         		setRequesttypeName(requesttypeVo.getName() != null ? requesttypeVo.getName() : "");
         		setStatus(true);

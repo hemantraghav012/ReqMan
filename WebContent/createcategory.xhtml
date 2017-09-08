@@ -46,20 +46,20 @@
   <div  style="margin-top:1cm;"> 
   <h:form class="form-horizontal fixedcontainer " >
   
-<h2 style="  margin-bottom:2cm; margin-top:0px; " >   Create Category</h2>
+<h2 style="  margin-bottom:2cm; margin-top:0px; text-align:center" >   Create Category</h2>
 
 <div><h:messages style = "color:red;margin:8px;" /></div>
 
  <div class=" row form-group ">
- <div class="col-sm-2 control-label"><h:outputLabel  >Category Name:</h:outputLabel></div>
-<div class=" col-sm-6"> <h:inputText value="#{categorybean.categoryName}" class="  form-control"  id="categoryname"  required="true" requiredMessage="* Please enter your email id"/></div>
+ <div class="col-sm-3 control-label"><h:outputLabel  >Category Name :</h:outputLabel></div>
+<div class=" col-sm-6"> <h:inputText value="#{categorybean.categoryName}" maxlength="20" class="  form-control"  id="categoryname"  required="true" requiredMessage="* Please enter your email id"/><span style="color:red;">*( Max.-20 characters)</span></div>
  <h:message for="categoryname"  style="color:red;margin:8px;"/> 
 </div><br></br>
 
  <div class=" row form-group ">
- <div class="col-sm-2 control-label"><h:outputLabel  >Status: </h:outputLabel></div>
+ <div class="col-sm-3 control-label"><h:outputLabel  >Status: </h:outputLabel></div>
 <div class=" col-sm-6"> 
-<h:selectOneRadio value = "#{categorybean.status}" id="status" required="true"    requiredMessage="* Please enter status"> 
+<h:selectOneRadio value = "#{categorybean.status}" id="status" > 
    <f:selectItem itemValue = "true" itemLabel = "Active"  /> 
    <f:selectItem itemValue = "false" itemLabel = "In Active"/>
 </h:selectOneRadio> </div>
@@ -69,7 +69,7 @@
 
 
  <div class=" row form-group ">
- <div class="col-sm-2 .col-sm-offset-2"></div>
+ <div class="col-sm-3 .col-sm-offset-2"></div>
  <div class="col-sm-3 "><h:commandButton action="#{categorybean.saveCategory}" value="Submit" class="btn btn-lg btn-success btn-block"></h:commandButton></div>
 
  <div class="col-sm-3 ">

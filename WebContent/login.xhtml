@@ -1,87 +1,52 @@
-<?xml version='1.0' encoding='UTF-8' ?>
-<!DOCTYPE html>
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Frameset//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-frameset.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
-<!-- <h:head>
-	<title>login</title>
-</h:head> -->
-
-<h:head>
-
-    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+      xmlns:f="http://java.sun.com/jsf/core"  
+      xmlns:ui="http://java.sun.com/jsf/facelets"><h:head>
 <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<link rel="stylesheet" href="resource/mystyle/login.css"/>
 <link rel="stylesheet" href="resource/css/bootstrap.css"/>
-<link rel="stylesheet" href="resource/mystyle/home.css"/> 
-<link rel="stylesheet" href="resource/mystyle/mystyle.css"/> 
-<script type="text/javascript" src="resource/js/bootstrap.min.js"/>
-<script type="text/javascript" src="resource/js/jquery11.js"/>
-    <title>Login </title>
+<link rel="stylesheet" href="resource/mystyle/home.css"/>
 
-    <h:outputStylesheet library="webjars" name="bootstrap/3.3.6/css/bootstrap.min-jsf.css" />
-    <h:outputStylesheet library="webjars" name="bootstrap/3.3.6/css/bootstrap-theme.min-jsf.css" />
-    <h:outputStylesheet library="webjars" name="font-awesome/4.5.0/css/font-awesome.min-jsf.css" />
-
-
+<link rel="stylesheet" href="resource/mystyle/login.css"/>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script type="text/javascript" src="resource/js/bootstrap.js"/>
+<script type="text/javascript" src="resource/js/jquery.js"/>
+<title>Log In</title>
 </h:head>
-	
-<h:body style="background-color:#DCDCDC">
- 
- 
- 
- 
- 
- 
- 
- <div class="container-fluid ">
+<h:body style="background-color:#DCDCDC"> 
 
-<div class="navbar  navbar-inverse navbar-fixed-top top_menu" style="background-color:red" >
-<a class= "navbar-brand " href="#" style="color:#fff; font-size:30px; font-weight: bold; margin-left:2cm;">ReqMan</a>
-
-<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-<spane class="icon-bar"></spane>
-<spane class="icon-bar"></spane>
-<spane class="icon-bar"></spane>
-</button>
-<div class="collapse navbar-collapse margin_menu" >
-<ul class="nav navbar-nav navbar-right">
-<li ><a href="#" style="color:#fff; font-weight: bold;" >Feature</a></li>
-<li><a href="#" style="color:#fff; font-weight: bold;" class="hover1">Pricing</a></li>
-<li><a href="#" style="color:#fff; font-weight: bold;" >customers</a></li>
-<li><a href="#" style="color:#fff; font-weight: bold;">Blog</a></li>
-<li><a href="faces/login.xhtml"  style="color:#fff; font-weight: bold;">Sign in</a></li>
-<li class="active"><a href="faces/register.xhtml" style="color:#fff; font-weight: bold; margin-right:2cm;  background: rgba(255,255,255,0.1);  border: 0.5px solid;">Register</a></li>
-</ul>
+            
+            
+            <div id="indexheader">
+	<ui:insert name="indexheader">
+		<ui:include src="indexheader.xhtml" />
+	</ui:insert>
 </div>
-</div>
-</div>
-    
-      <!-- end of top menu -->
+       
+      <!-- -end of header --> 
+            
  
  
  
  
  
  
-    	  <div class="modal-dialog" Style=" margin-top: 2.5cm;">
+    	  <div class="modal-dialog" style=" margin-top: 2.5cm;">
 				<div class="loginmodal-container">
 					<h1>Login to <span style="font-weight: bold;">ReqMan</span> Account</h1><br></br>
 				  <h:form >
-   
+   <div><h:messages style = "color:red;margin:8px;" /></div>
      <h:outputText>Email Id</h:outputText>
-     <h:inputText pt:placeholder="Email id"   value="#{login.user}" id="emailid" required="true" requiredMessage="* Please enter your emaid id"> </h:inputText>
+     <h:inputText   value="#{login.user}" id="emailid" required="true" requiredMessage="* Please enter your emaid id" validatorMessage="Invalid email format"> <f:validateRegex
+		pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" /> </h:inputText>
 				 <h:message for="emailid"  style="color:red;margin:8px;"/> 
     
     
     <h:outputText>Password</h:outputText>
-     <h:inputSecret pt:placeholder="Password" value="#{login.pwd}" id="password" required="true" requiredMessage="* Please enter your password"></h:inputSecret>
+     <h:inputSecret  value="#{login.pwd}" id="password" required="true" requiredMessage="* Please enter your password"></h:inputSecret>
 		 <h:message for="password"  style="color:red;margin:8px;"/> 
      
  

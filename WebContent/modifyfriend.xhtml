@@ -16,7 +16,7 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script type="text/javascript" src="resource/js/bootstrap.js"/>
 <script type="text/javascript" src="resource/js/jquery.js"/>
-<title>Create Project</title>
+<title>Modify Friend</title>
 
 </h:head>
 
@@ -31,38 +31,32 @@
 </div>
       <!-- end of header -->
       
-       
-	<div id="categoryheader">
-	<ui:insert name="categoryheader">
-		<ui:include src="categoryheader.xhtml" />
-	</ui:insert>
-</div>
-        
-       <!-- -end of categoryheader -->
       
-      <div class="container" >
-
+      
+      <div class="container" style=" margin-top:3cm; ">
+  <h2>  Modify friend</h2>
   
-  <div  style="margin-top:1cm;"> 
+  <div  style="margin-top:1.5cm;"> 
   <h:form class="form-horizontal fixedcontainer " >
-  
-<h2 style="  margin-bottom:2cm; margin-top:0px; text-align:center" > Create Project</h2>
 
 <div><h:messages style = "color:red;margin:8px;" /></div>
 
+
+
  <div class=" row form-group ">
- <div class="col-sm-3 control-label"><h:outputLabel  >Project Name:</h:outputLabel></div>
-<div class=" col-sm-6"> <h:inputText value="#{projectbean.projectName}" maxlength="20" class="  form-control"  id="projectname"  required="true" requiredMessage="* Please enter project Name">
- </h:inputText><span style="color:red;">*( Max.-20 characters)</span></div>
- <h:message for="projectname"  style="color:red;margin:8px;"/> 
  
+ <h:inputHidden value = "#{friendbean.friendId}" id = "hiddenField" /> 
+ 
+ <div class="col-sm-2 control-label"><h:outputLabel  >Email Id :</h:outputLabel></div>
+<div class=" col-sm-6"> <h:inputText value="#{friendbean.frienduser}" readonly="true" class="  form-control"  id="projectname"  required="true" requiredMessage="* Please enter project name"/></div>
+ <h:message for="categoryname"  style="color:red;margin:8px;"/> 
 </div><br></br>
 
  <div class=" row form-group ">
- <div class="col-sm-3 control-label"><h:outputLabel  >Status: </h:outputLabel></div>
+ <div class="col-sm-2 control-label"><h:outputLabel  >Status: </h:outputLabel></div>
 <div class=" col-sm-6"> 
-<h:selectOneRadio value = "#{projectbean.status}" id="status" required="true"  requiredMessage="* Please enter status"> 
-   <f:selectItem itemValue = "true" itemLabel = "Active"  /> 
+<h:selectOneRadio value = "#{friendbean.status}" id="status" required="true"    requiredMessage="* Please enter status"> 
+   <f:selectItem itemValue = "true" itemLabel = "Active &nbsp; &nbsp;&nbsp; &nbsp;" /> 
    <f:selectItem itemValue = "false" itemLabel = "In Active"  />
 </h:selectOneRadio> </div>
  <h:message for="status"  style="color:red;margin:8px;"/> 
@@ -71,14 +65,14 @@
 
 
  <div class=" row form-group ">
- <div class="col-sm-3 .col-sm-offset-2"></div>
- <div class="col-sm-3 "><h:commandButton action="#{projectbean.saveProject}" value="Submit" class="btn btn-lg btn-success btn-block"></h:commandButton></div>
+ <div class="col-sm-2 .col-sm-offset-2"></div>
+ <div class="col-sm-3 "><h:commandButton action="#{friendbean.updateFriend}" value="Update" class="btn btn-lg btn-success btn-block"></h:commandButton></div>
 
  <div class="col-sm-3 ">
  
 
 
-<h:link value="Back to Project" style="text-decoration:none; color:#fff;" outcome="project" class="btn btn-lg btn-primary btn-block"/>
+<h:link value="Back to friend List" style="text-decoration:none; color:#fff;" outcome="friend" class="btn btn-lg btn-primary btn-block"/>
 </div>
 </div>
 

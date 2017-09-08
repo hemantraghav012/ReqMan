@@ -3,17 +3,13 @@ package com.reqman.vo;
 public class RequesttypeVo {
 
 
-private Integer srNo;
 private String name;
 
 private String status;
 private Integer userRequesttypeId;
-public Integer getSrNo() {
-	return srNo;
-}
-public void setSrNo(Integer srNo) {
-	this.srNo = srNo;
-}
+
+
+
 public String getName() {
 	return name;
 }

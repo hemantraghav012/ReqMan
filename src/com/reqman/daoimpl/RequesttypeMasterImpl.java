@@ -190,7 +190,7 @@ public class RequesttypeMasterImpl implements requesttypeMasterInterface{
             					&& userrequesttypeDB.getRequesttype().getStatus() == true)
             			{
             				requesttypeVo = new RequesttypeVo();
-            				requesttypeVo.setSrNo(counter);
+            				//requesttypeVo.setSrNo(counter);
             				requesttypeVo.setName(userrequesttypeDB.getRequesttype().getName());
             				requesttypeVo.setUserRequesttypeId(userrequesttypeDB.getId());
                 			if(userrequesttypeDB.getStatus().equals(true))
@@ -242,7 +242,7 @@ RequesttypeVo requesttypeVo = new RequesttypeVo();
             
             int counter = 1;
             if(userrequesttype != null){
-            	requesttypeVo.setSrNo(counter);
+            //	requesttypeVo.setSrNo(counter);
             	requesttypeVo.setName(userrequesttype.getRequesttype().getName());
             	requesttypeVo.setUserRequesttypeId(userrequesttype.getId());
     			if(userrequesttype.getStatus() == true)

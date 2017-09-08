@@ -42,11 +42,6 @@
       <div class="container fixedcontainer" style=" margin-top:1cm; ">
   <h2 style=" text-align: center;">    Create New Request </h2><br></br>
       
-      
-      
-      
-      
-
 
  <div class=" row form-group ">
  <div class="col-sm-3 control-label"><h:outputLabel  >Title:</h:outputLabel></div>
@@ -63,9 +58,15 @@ requiredMessage="* Please Enter your Suggestion " cols="19" rows="3" class="  fo
 </div>
 
  <div class=" row form-group">
-<div class="col-sm-3 control-label"><h:outputLabel>Completion Date:</h:outputLabel></div>
-<div class=" col-sm-2"><h:inputText value="#{register.firstname}"  class="form-control" id="firstname" required="true" requiredMessage="* Please enter your first name"></h:inputText></div>
- <h:message for="firstname"  style="color:red;margin:8px;"/> 
+<div class="col-sm-3 control-label">
+ <p:outputLabel for="date" value="Completion Date:" >Completion Date:</p:outputLabel></div>
+<div class=" col-sm-2"><p:calendar id="date" value="#{register.firstname}" pattern="dd-MM-yyyy" mask="true" class="form-control" required="true" requiredMessage="* Please enter your first name" /></div>
+ 
+
+
+ 
+ 
+ <h:message for="date"  style="color:red;margin:8px;"/> 
  
  <div class="col-sm-2 control-label"><h:outputLabel>Team Member:</h:outputLabel></div>
  <div class=" col-sm-4"><h:selectOneMenu value = "#{userData.data}" class="form-control" id="drop" required="true" requiredMessage="* Please enter your first name">
@@ -107,15 +108,14 @@ requiredMessage="* Please Enter your Suggestion " cols="19" rows="3" class="  fo
 </h:selectOneMenu> </div>
  <h:message for="drop2"  style="color:red;margin:8px;"/>
 </div>
-<br></br>
+
 <div class=" row form-group ">
  <div class="col-sm-3 .col-sm-offset-2"></div>
-<div class="col-sm-4"><h:commandLink action="#{register.submit()}" value="submit" class="btn btn-lg btn-success btn-block"></h:commandLink></div>
+<div class="col-sm-4"><h:commandLink action="#{register.submit()}" value="Submit" class="btn btn-lg btn-success btn-block"></h:commandLink></div>
 <div class="col-sm-4"><h:link value="Back to Request" style="text-decoration:none; color:#fff;" outcome="request" class="btn btn-lg btn-primary btn-block"/></div>
 
 </div>
-<br></br>
-<br></br>
+
    </div><!-- end of container -->
 </h:form>
 

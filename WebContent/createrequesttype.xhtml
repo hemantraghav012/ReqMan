@@ -46,19 +46,19 @@
   <h:form class="form-horizontal fixedcontainer " >
   
   
-<h2 style="  margin-bottom:2cm; margin-top:0px; " >Create Request Type</h2>
+<h2 style="  margin-bottom:2cm; margin-top:0px; text-align:center" >Create Request Type</h2>
 
 
 <div><h:messages style = "color:red;margin:8px;" /></div>
 
  <div class=" row form-group ">
- <div class="col-sm-2 control-label"><h:outputLabel  >RequestType Name:</h:outputLabel></div>
-<div class=" col-sm-6"> <h:inputText value="#{requesttypebean.requesttypeName}" class="  form-control"  id="requesttypename"  required="true" requiredMessage="* Please enter user type "/></div>
+ <div class="col-sm-3 control-label"><h:outputLabel  >RequestType Name:</h:outputLabel></div>
+<div class=" col-sm-6"> <h:inputText value="#{requesttypebean.requesttypeName}" maxlength="20" class="  form-control"  id="requesttypename"  required="true" requiredMessage="* Please enter user type "/><span style="color:red;">*( Max.-20 characters)</span></div>
  <h:message for="requesttypename"  style="color:red;margin:8px;"/> 
 </div><br></br>
 
  <div class=" row form-group ">
- <div class="col-sm-2 control-label"><h:outputLabel  >Status: </h:outputLabel></div>
+ <div class="col-sm-3 control-label"><h:outputLabel  >Status: </h:outputLabel></div>
 <div class=" col-sm-6"> 
 <h:selectOneRadio value = "#{requesttypebean.status}" id="status" required="true"    requiredMessage="* Please enter status"> 
    <f:selectItem itemValue = "true" itemLabel = "Active"  /> 
@@ -70,7 +70,7 @@
 
 
  <div class=" row form-group ">
- <div class="col-sm-2 .col-sm-offset-2"></div>
+ <div class="col-sm-3 .col-sm-offset-2"></div>
  <div class="col-sm-3 "><h:commandButton action="#{requesttypebean.saveRequesttype}" value="Submit" class="btn btn-lg btn-success btn-block"></h:commandButton></div>
 
  <div class="col-sm-3 ">
