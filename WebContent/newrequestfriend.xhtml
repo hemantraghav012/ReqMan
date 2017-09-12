@@ -38,57 +38,31 @@
        <!-- -end of categoryheader -->
         
       
-      <h:form class="form-horizontal " >
+      <h:form class="form-horizontal">
       <div class="container fixedcontainer" style=" margin-top:1cm; ">
   <h2 style=" text-align: center;">    Create New Request </h2><br></br>
       
 
  <div class=" row form-group ">
- <div class="col-sm-3 control-label"><h:outputLabel  >Title:</h:outputLabel></div>
+ <div class="col-sm-2 control-label"><h:outputLabel  >Title:</h:outputLabel></div>
 <div class=" col-sm-8"> <h:inputText value="#{r.emailid}" class="  form-control"  id="emailid" required="true" requiredMessage="* Please enter your email id"/></div>
  <h:message for="emailid"  style="color:red;margin:8px;"/> 
 
 </div>
 
- <div class=" row form-group ">
- <div class="col-sm-3 control-label"><h:outputLabel>Description:</h:outputLabel></div>
+ <div class=" row form-group " style="text-align: center;">
+ <div class="col-sm-2 control-label"><h:outputLabel>Description:</h:outputLabel></div>
 <div class=" col-sm-8"><h:inputTextarea id="address" value="#{suggestionbean.message}" required="true"   
 requiredMessage="* Please Enter your Suggestion " cols="19" rows="3" class="  form-control" /></div>
-<h:message for="address"  style="color:red;margin:8px;"/>
+<h:message for="address"  style="color:red;margin:6px;"/>
 </div>
 
- <div class=" row form-group">
-<div class="col-sm-3 control-label">
- <p:outputLabel for="date" value="Completion Date:" >Completion Date:</p:outputLabel></div>
-<div class=" col-sm-2"><p:calendar id="date" value="#{register.firstname}" pattern="dd-MM-yyyy" mask="true" class="form-control" required="true" requiredMessage="* Please enter your first name" /></div>
- 
-
-
  
  
- <h:message for="date"  style="color:red;margin:8px;"/> 
- 
- <div class="col-sm-2 control-label"><h:outputLabel>Team Member:</h:outputLabel></div>
- <div class=" col-sm-4"><h:selectOneMenu value = "#{userData.data}" class="form-control" id="drop" required="true" requiredMessage="* Please enter your first name">
-   <f:selectItem itemValue = "1" itemLabel = "Item 1" /> 
-   <f:selectItem itemValue = "2" itemLabel = "Item 2" /> 
-</h:selectOneMenu> </div>
- <h:message for="drop"  style="color:red;margin:8px;"/>
-</div>
-
- <div class=" row form-group ">
-<div class="col-sm-3 control-label"><h:outputLabel>Project:</h:outputLabel></div>
-<div class=" col-sm-8"><h:selectOneMenu value = "#{userData.data}" class="form-control" id="dropg" required="true" requiredMessage="* Please enter your first name">
-   <f:selectItem itemValue = "1" itemLabel = "Item 1" /> 
-   <f:selectItem itemValue = "2" itemLabel = "Item 2" /> 
-</h:selectOneMenu> </div>
- <h:message for="dropg"  style="color:red;margin:8px;"/> 
-</div>
-
- <div class=" row form-group ">
-<div class="col-sm-3 control-label">
-<h:outputLabel>Category:</h:outputLabel></div>
- <div class=" col-sm-3"><h:selectOneMenu value = "#{userData1.data}" class="form-control" id="drop1" required="true" requiredMessage="* Please enter your first name">
+<div class=" row form-group ">
+<div class="col-sm-2 control-label">
+<h:outputLabel>Team Member:</h:outputLabel></div>
+ <div class=" col-sm-4"><h:selectOneMenu value = "#{userData1.data}" class="form-control" id="drop11" required="true" requiredMessage="* Please enter your first name">
    <p:dataTable var="category" value="#{categorybean.categoryList}" reflow="true">
    <f:selectItem itemValue = "#{category.name}" itemLabel = "#{category.name}" /> 
     
@@ -101,8 +75,33 @@ requiredMessage="* Please Enter your Suggestion " cols="19" rows="3" class="  fo
  
  
  
- <div class="col-sm-2 control-label"><h:outputLabel>Request type:</h:outputLabel></div>
- <div class=" col-sm-3"><h:selectOneMenu value = "#{userData.data2}" class="form-control" id="drop2" required="true" requiredMessage="* Please enter your first name">
+ <div class="col-sm-2 control-label"><h:outputLabel>Category:</h:outputLabel></div>
+ <div class=" col-sm-4"><h:selectOneMenu value = "#{userData.data2}" class="form-control" id="drop21" required="true" requiredMessage="* Please enter your first name">
+   <f:selectItem itemValue = "1" itemLabel = "Item 1" /> 
+   <f:selectItem itemValue = "2" itemLabel = "Item 2" /> 
+</h:selectOneMenu> </div>
+ <h:message for="drop2"  style="color:red;margin:8px;"/>
+</div>
+
+
+ <div class=" row form-group ">
+<div class="col-sm-2 control-label">
+<h:outputLabel>Project:</h:outputLabel></div>
+ <div class=" col-sm-4"><h:selectOneMenu value = "#{userData1.data}" class="form-control" id="drop1" required="true" requiredMessage="* Please enter your first name">
+   <p:dataTable var="category" value="#{categorybean.categoryList}" reflow="true">
+   <f:selectItem itemValue = "#{category.name}" itemLabel = "#{category.name}" /> 
+    
+   </p:dataTable>
+</h:selectOneMenu> </div>
+
+ <h:message for="drop1"  style="color:red;margin:8px;"/>
+ 
+ 
+ 
+ 
+ 
+ <div class="col-sm-2 control-label"><h:outputLabel style="white-space:nowrap;">Request type:</h:outputLabel></div>
+ <div class=" col-sm-4"><h:selectOneMenu value = "#{userData.data2}" class="form-control" id="drop2" required="true" requiredMessage="* Please enter your first name">
    <f:selectItem itemValue = "1" itemLabel = "Item 1" /> 
    <f:selectItem itemValue = "2" itemLabel = "Item 2" /> 
 </h:selectOneMenu> </div>
