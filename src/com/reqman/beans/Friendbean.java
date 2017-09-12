@@ -1,5 +1,6 @@
 package com.reqman.beans;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -10,12 +11,26 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
+
+import org.apache.poi.hssf.usermodel.HSSFCell;
+import org.apache.poi.hssf.usermodel.HSSFCellStyle;
+import org.apache.poi.hssf.usermodel.HSSFRow;
+import org.apache.poi.hssf.usermodel.HSSFSheet;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.hssf.util.HSSFColor;
+
+import com.lowagie.text.BadElementException;
+import com.lowagie.text.Document;
+import com.lowagie.text.DocumentException;
+import com.lowagie.text.PageSize;
 import com.reqman.dao.FriendMasterInterface;
 import com.reqman.daoimpl.FriendMasterImpl;
+import com.reqman.pojo.Users;
 //import com.reqman.vo.EmailUtility;
 import com.reqman.util.SessionUtils;
 import com.reqman.util.UserSession;
 import com.reqman.vo.FriendVo;
+import com.reqman.vo.ProjectVo;
 
 
 
@@ -34,6 +49,7 @@ private  List<FriendVo> friendList = new ArrayList<FriendVo>();
 	
 	private FriendMasterInterface  friendMasterInterface = new FriendMasterImpl();
 	
+	private  List<FriendVo> filteredFriendList = new ArrayList<FriendVo>();
 	private String frienduser;
     private Boolean status;	
 	private String userid;
@@ -41,6 +57,33 @@ private  List<FriendVo> friendList = new ArrayList<FriendVo>();
 	private String friendlastname;
 	private String friendshortname;
 	private String friendId;
+	private ProjectVo selectedFriend;
+	
+	private  List<Users> usersList ;
+	
+	
+	
+	
+	
+	
+	
+	/*public List<String> countryList() {  
+		ArrayList<FriendVo> list =new ArrayList<FriendVo>();  
+		
+		
+		 
+		return list;  
+		}  
+	
+	
+	 public List < Users > getUsers() throws Exception  
+     {   
+     	 
+         usersList = friendMasterInterface.AllUsers(); 
+         
+         return usersList;  
+     }  */
+	
 	
 	
 	
@@ -53,6 +96,7 @@ private  List<FriendVo> friendList = new ArrayList<FriendVo>();
 			String userName = (String)session.getAttribute("username");
 			System.out.println("--usersession--userName-->"+userName);
 			friendList = friendMasterInterface.getUsersDetails(userName);
+			setFilteredFriendList(friendList);
 		}
 		catch(Exception e)
 		{
@@ -225,7 +269,36 @@ public void modifyAction() {
 		return "friend";
 	}
 	
+
+	public void postProcessXLS(Object document) {
+        HSSFWorkbook wb = (HSSFWorkbook) document;
+        HSSFSheet sheet = wb.getSheetAt(0);
+        HSSFRow header = sheet.getRow(0);
+         
+        HSSFCellStyle cellStyle = wb.createCellStyle();  
+        cellStyle.setFillForegroundColor(HSSFColor.GREEN.index);
+        cellStyle.setFillPattern(HSSFCellStyle.SOLID_FOREGROUND);
+         
+        for(int i=0; i < header.getPhysicalNumberOfCells();i++) {
+            HSSFCell cell = header.getCell(i);
+             
+            cell.setCellStyle(cellStyle);
+        }
+        
+        
+     }
+     
+    public void preProcessPDF(Object document) throws IOException, BadElementException, DocumentException {
+        Document pdf = (Document) document;
+        pdf.open();
+        pdf.setPageSize(PageSize.A4);
+ 
+        
+        pdf.addTitle("Collabor8");
+    }
+
 	
+
 	
 
 
@@ -319,6 +392,36 @@ public void modifyAction() {
 
 	public void setFriendshortname(String friendshortname) {
 		this.friendshortname = friendshortname;
+	}
+
+
+	public List<FriendVo> getFilteredFriendList() {
+		return filteredFriendList;
+	}
+
+
+	public void setFilteredFriendList(List<FriendVo> filteredFriendList) {
+		this.filteredFriendList = filteredFriendList;
+	}
+
+
+	public ProjectVo getSelectedFriend() {
+		return selectedFriend;
+	}
+
+
+	public void setSelectedFriend(ProjectVo selectedFriend) {
+		this.selectedFriend = selectedFriend;
+	}
+
+
+	public List<Users> getUsersList() {
+		return usersList;
+	}
+
+
+	public void setUsersList(List<Users> usersList) {
+		this.usersList = usersList;
 	}
 
 	

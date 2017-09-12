@@ -24,4 +24,7 @@ public FriendVo getUserFriendById(String friendId) throws Exception;
 	
 	public int updateUserFriendById(String friendId, boolean status) throws Exception;
 	
+	//public List < Users > AllUsers()  throws Exception;
+	
+	
 }

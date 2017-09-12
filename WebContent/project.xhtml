@@ -72,23 +72,62 @@ function setProjectHiddenValue(new_value)
 
 	<div>
 
-	     <p:dataTable id="projectTable" var="project" value="#{projectbean.projectList}" reflow="true" scrollable="true" scrollHeight="250" sortBy="#{project.status},#{project.name}" class="table table-striped table-hover table-bordered" style="margin-top:20px">
-	 
-	        <p:column headerText="Project Name" sortBy="#{project.name}" >
+	     <p:dataTable id="projectTable" var="project" value="#{projectbean.projectList}" 
+	     reflow="true" scrollable="true" scrollHeight="250" sortBy="#{project.status},#{project.name}"
+	      class="table table-striped table-hover table-bordered" style="margin-top:20px" 
+	       filteredValue="#{projectbean.filteredProjectList}"     widgetVar="projectListTable">
+	      
+	      
+	      
+	        	     
+	     <f:facet name="header">
+			<p:outputPanel>
+				<h:outputText value="Search all fields:" />
+				<h:inputText id="globalFilter" onkeyup="PF('projectListTable').filter()" />
+			</p:outputPanel>
+		</f:facet>
+			
+			
+			
+			  <p:column headerText="Project Name" sortBy="#{project.name}" filterBy="#{project.name}" filterStyle="display:none;" filterMatchMode="contains">
+	        <f:facet name="header">
+					<h:outputText value="Project Name" />
+				</f:facet>
+	        
 	            <h:outputText value="#{project.name}" />
 	        </p:column>
+			
 	 
-	        <p:column headerText="Status" style="width:4.5cm;" sortBy="#{project.status}" >
-	            <h:outputText value="#{project.status}" />
+	 
+	 
+	  <p:column headerText="Project Status" sortBy="#{project.status}" filterBy="#{project.status}" filterStyle="display:none;" filterMatchMode="contains">
+	        <f:facet name="header">
+				 <h:outputText value="Status" />
+				</f:facet>
+	        
+	           <h:outputText value="#{project.status}" />
 	        </p:column>
+	      
+	 
+	        
 	        
 	        <p:column  headerText="Modify" exportable="false" style="width:3cm; text-align:center">
 				
-				<p:commandLink id="nonAjax" styleClass="btn btn-primary " style="color:white;" onclick='setProjectHiddenValue(#{project.userProjectId})' action="#{projectbean.modifyAction()}" ajax="false" >
+				<p:commandLink id="nonAjax" styleClass="btn btn-primary " style="color:white;"
+				 onclick='setProjectHiddenValue(#{project.userProjectId})' action="#{projectbean.modifyAction()}" ajax="false" >
 	        		Update
 	    		</p:commandLink>
 	    		 
 	        </p:column>
+	        
+	        
+	        
+	    		 
+	      
+	       
+	        
+	        
+	        
 	       
 	    </p:dataTable>
 	    
@@ -97,11 +136,11 @@ function setProjectHiddenValue(new_value)
 	<div>
 		<strong>Export Data &nbsp;</strong>
 	    <h:commandButton id="excel" class="btn btn-info" value="Excel">
-	        <p:dataExporter type="xls" target="categoryTable" fileName="category" />
+	        <p:dataExporter type="xls" target="categoryTable" fileName="category"   postProcessor="#{projectbean.postProcessXLS}"/>
 	    </h:commandButton>
 	 	&nbsp;
 	    <h:commandButton id="pdf" class="btn btn-info" value="Pdf">
-	        <p:dataExporter type="pdf" target="categoryTable" fileName="category" />
+	        <p:dataExporter type="pdf" target="categoryTable" fileName="category"  preProcessor="#{projectbean.preProcessPDF}"/>
 	    </h:commandButton>
 	</div>
 

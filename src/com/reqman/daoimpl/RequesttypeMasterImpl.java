@@ -10,6 +10,7 @@ import org.hibernate.Transaction;
 import org.hibernate.criterion.Restrictions;
 
 import com.reqman.common.HibernateUtil;
+import com.reqman.common.HibernateUtilH;
 import com.reqman.dao.requesttypeMasterInterface;
 import com.reqman.pojo.Category;
 import com.reqman.pojo.Requesttype;
@@ -130,7 +131,7 @@ public class RequesttypeMasterImpl implements requesttypeMasterInterface{
 	            {
 	            	requesttype = new Requesttype();
 	            	requesttype.setName(requesttypeName.trim());
-	            	requesttype.setStatus(status);
+	            	requesttype.setStatus(true);
 	            	requesttype.setCreatedby(emailId);
 	            	requesttype.setDatecreated(new Date());
 	            	

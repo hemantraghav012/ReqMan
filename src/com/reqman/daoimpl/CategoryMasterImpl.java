@@ -11,6 +11,7 @@ import org.hibernate.Transaction;
 import org.hibernate.criterion.Restrictions;
 
 import com.reqman.common.HibernateUtil;
+import com.reqman.common.HibernateUtilH;
 import com.reqman.dao.CategoryMasterInterface;
 import com.reqman.pojo.Category;
 import com.reqman.pojo.Usercategory;
@@ -130,7 +131,7 @@ public class CategoryMasterImpl implements CategoryMasterInterface{
             {
             	category = new Category();
             	category.setName(categoryName.trim());
-            	category.setStatus(status);
+            	category.setStatus(true);
             	category.setCreatedby(emailId);
             	category.setDatecreated(new Date());
             	

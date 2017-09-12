@@ -13,7 +13,7 @@
 <link rel="stylesheet" href="resource/css/bootstrap.css"/>
 <link rel="stylesheet" href="resource/mystyle/home.css"/>
 <link rel="stylesheet" href="resource/mystyle/createcategory.css"/>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
 <script type="text/javascript" src="resource/js/bootstrap.js"/>
 <script type="text/javascript" src="resource/js/jquery.js"/>
 
@@ -114,6 +114,14 @@ requiredMessage="* Please Enter your Suggestion " cols="19" rows="3" class="  fo
 <div class="col-sm-4"><h:link value="Back to Request" style="text-decoration:none; color:#fff;" outcome="request" class="btn btn-lg btn-primary btn-block"/></div>
 
 </div>
+
+
+<p:fileUpload fileUploadListener="#{fileUpload.handleFileUpload}" mode="advanced" dragDropSupport="false"  
+update="messages"  />  
+<p:growl id="messages" showDetail="true" />
+
+
+
 
    </div><!-- end of container -->
 </h:form>

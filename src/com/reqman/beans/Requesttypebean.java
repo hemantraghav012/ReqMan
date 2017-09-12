@@ -1,5 +1,6 @@
 package com.reqman.beans;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -9,11 +10,23 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
+
+import org.apache.poi.hssf.usermodel.HSSFCell;
+import org.apache.poi.hssf.usermodel.HSSFCellStyle;
+import org.apache.poi.hssf.usermodel.HSSFRow;
+import org.apache.poi.hssf.usermodel.HSSFSheet;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.hssf.util.HSSFColor;
+
+import com.lowagie.text.BadElementException;
+import com.lowagie.text.Document;
+import com.lowagie.text.DocumentException;
+import com.lowagie.text.PageSize;
 import com.reqman.dao.requesttypeMasterInterface;
 import com.reqman.daoimpl.RequesttypeMasterImpl;
 import com.reqman.util.SessionUtils;
 import com.reqman.util.UserSession;
-
+import com.reqman.vo.ProjectVo;
 import com.reqman.vo.RequesttypeVo;
 
 @ManagedBean(name="requesttypebean",eager = true)
@@ -30,12 +43,12 @@ private  List<RequesttypeVo> requesttypeList = new ArrayList<RequesttypeVo>();
 	
 	private requesttypeMasterInterface requesttypeMasterInterface = new RequesttypeMasterImpl();
 	
-	
+	private  List<RequesttypeVo> filteredRequesttypeList = new ArrayList<RequesttypeVo>();
 	
 	private String requesttypeName;
 	
 	private Boolean status;
-	
+	private ProjectVo selectedRequesttype;
 	private String requesttypeId;
 	
 	
@@ -48,6 +61,7 @@ private  List<RequesttypeVo> requesttypeList = new ArrayList<RequesttypeVo>();
 			String userName = (String)session.getAttribute("username");
 			System.out.println("--usersession--userName-->"+userName);
 			requesttypeList = requesttypeMasterInterface.getRequesttypeDetails(userName);
+			setFilteredRequesttypeList(requesttypeList);
 		}
 		catch(Exception e)
 		{
@@ -216,6 +230,38 @@ private  List<RequesttypeVo> requesttypeList = new ArrayList<RequesttypeVo>();
 		return "requesttype";
 	}
 
+	public void postProcessXLS(Object document) {
+        HSSFWorkbook wb = (HSSFWorkbook) document;
+        HSSFSheet sheet = wb.getSheetAt(0);
+        HSSFRow header = sheet.getRow(0);
+         
+        HSSFCellStyle cellStyle = wb.createCellStyle();  
+        cellStyle.setFillForegroundColor(HSSFColor.GREEN.index);
+        cellStyle.setFillPattern(HSSFCellStyle.SOLID_FOREGROUND);
+         
+        for(int i=0; i < header.getPhysicalNumberOfCells();i++) {
+            HSSFCell cell = header.getCell(i);
+             
+            cell.setCellStyle(cellStyle);
+        }
+        
+        
+     }
+     
+    public void preProcessPDF(Object document) throws IOException, BadElementException, DocumentException {
+        Document pdf = (Document) document;
+        pdf.open();
+        pdf.setPageSize(PageSize.A4);
+ 
+        
+        pdf.addTitle("Collabor8");
+    }
+
+	
+	
+	
+	
+	
 	public void addMessage(String summary) {
         FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, summary,  null);
         FacesContext.getCurrentInstance().addMessage(null, message);
@@ -267,6 +313,26 @@ private  List<RequesttypeVo> requesttypeList = new ArrayList<RequesttypeVo>();
 
 	public void setRequesttypeId(String requesttypeId) {
 		this.requesttypeId = requesttypeId;
+	}
+
+
+	public List<RequesttypeVo> getFilteredRequesttypeList() {
+		return filteredRequesttypeList;
+	}
+
+
+	public void setFilteredRequesttypeList(List<RequesttypeVo> filteredRequesttypeList) {
+		this.filteredRequesttypeList = filteredRequesttypeList;
+	}
+
+
+	public ProjectVo getSelectedRequesttype() {
+		return selectedRequesttype;
+	}
+
+
+	public void setSelectedRequesttype(ProjectVo selectedRequesttype) {
+		this.selectedRequesttype = selectedRequesttype;
 	}
 	
 	

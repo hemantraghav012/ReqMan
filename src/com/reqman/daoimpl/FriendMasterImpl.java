@@ -8,9 +8,12 @@ import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.hibernate.criterion.Projection;
+import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 
 import com.reqman.common.HibernateUtil;
+import com.reqman.common.HibernateUtilH;
 import com.reqman.dao.FriendMasterInterface;
 import com.reqman.pojo.Project;
 import com.reqman.pojo.Usercategory;
@@ -151,7 +154,7 @@ public class FriendMasterImpl implements FriendMasterInterface {
 	            	users.setFirstname(friendfirstname);
 	            	users.setLastname(friendlastname);
 	            	users.setShortname(friendshortname);
-	            	users.setStatus(status);
+	            	users.setStatus(true);
 	            	users.setCreatedby(userName);
 	            	users.setCreatedon(new Date());
 	            	
@@ -355,8 +358,6 @@ public class FriendMasterImpl implements FriendMasterInterface {
 	
 	
 	}
-
-
 
 
 	

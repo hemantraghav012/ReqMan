@@ -60,7 +60,7 @@ function setRequesttypeHiddenValue(new_value)
       <div class="row">
       
       	<div class="col-sm-6">
-      		<span style=";font-size:25px;margin-left: 3px;">Manage Requesttype</span>
+      		<span style=";font-size:25px;margin-left: 3px;">Manage RequestType</span>
       	</div>
       	
      	<div class="col-sm-6">       				
@@ -73,14 +73,40 @@ function setRequesttypeHiddenValue(new_value)
 
 
 	<div>
+	
+	
+	
 
-	     <p:dataTable id="RequesttypeTable" var="requesttype" value="#{requesttypebean.requesttypeList}" reflow="true" scrollable="true" scrollHeight="250" sortBy="#{requesttype.status},#{requesttype.name}" class="table table-striped table-hover table-bordered" style="margin-top:20px">
+	     <p:dataTable id="requesttypeTable" var="requesttype" value="#{requesttypebean.requesttypeList}" 
+	     reflow="true" scrollable="true" scrollHeight="250" sortBy="#{requesttype.status},#{requesttype.name}"
+	      class="table table-striped table-hover table-bordered" style="margin-top:20px"
+	      filteredValue="#{requesttypebean.filteredRequesttypeList}"     widgetVar="requesttypeListTable">
+	      
+	      
+	        <f:facet name="header">
+			<p:outputPanel>
+				<h:outputText value="Search all fields:" />
+				<h:inputText id="globalFilter" onkeyup="PF('requesttypeListTable').filter()" />
+			</p:outputPanel>
+		</f:facet>
+			
+			
+	      
 	 
-	        <p:column headerText="Requesttype Name" sortBy="#{requesttype.name}" >
+	        <p:column headerText="Requesttype Name" sortBy="#{requesttype.name}" filterBy="#{requesttype.name}" filterStyle="display:none;" filterMatchMode="contains">
+	         <f:facet name="header">
+				<h:outputText value="Requesttype Name" />
+				</f:facet>
 	            <h:outputText value="#{requesttype.name}" />
 	        </p:column>
 	 
-	        <p:column headerText="Status" style="width:4.5cm;" sortBy="#{requesttype.status}" >
+	 
+	 
+	        <p:column headerText="Status" style="width:4.5cm;" sortBy="#{requesttype.status}" filterBy="#{requesttype.status}"  filterStyle="display:none;" filterMatchMode="contains">
+	        
+	        <f:facet name="header">
+			<h:outputText value="Status" />
+				</f:facet>
 	            <h:outputText value="#{requesttype.status}" />
 	        </p:column>
 	        
@@ -99,11 +125,11 @@ function setRequesttypeHiddenValue(new_value)
 	<div>
 		<strong>Export Data &nbsp;</strong>
 	    <h:commandButton id="excel" class="btn btn-info" value="Excel">
-	        <p:dataExporter type="xls" target="requesttypeTable" fileName="requesttype" />
+	        <p:dataExporter type="xls" target="requesttypeTable" fileName="requesttype" postProcessor="#{requesttypebean.postProcessXLS}" />
 	    </h:commandButton>
 	 	&nbsp;
 	    <h:commandButton id="pdf" class="btn btn-info" value="Pdf">
-	        <p:dataExporter type="pdf" target="requesttypeTable" fileName="requesttype" />
+	        <p:dataExporter type="pdf" target="requesttypeTable" fileName="requesttype"  preProcessor="#{requesttypebean.preProcessPDF}"/>
 	    </h:commandButton>
 	</div>
 

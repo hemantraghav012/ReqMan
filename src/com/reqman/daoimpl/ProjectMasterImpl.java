@@ -11,6 +11,7 @@ import org.hibernate.Transaction;
 import org.hibernate.criterion.Restrictions;
 
 import com.reqman.common.HibernateUtil;
+import com.reqman.common.HibernateUtilH;
 import com.reqman.dao.ProjectMasterInterface;
 import com.reqman.pojo.Project;
 import com.reqman.pojo.Usercategory;
@@ -131,7 +132,7 @@ public class ProjectMasterImpl implements ProjectMasterInterface{
 	            {
 	            	project = new Project();
 	            	project.setName(projectName.trim());
-	            	project.setStatus(status);
+	            	project.setStatus(true);
 	            	project.setCreatedby(emailId);
 	            	project.setDatecreated(new Date());
 	            	
