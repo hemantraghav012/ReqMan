@@ -1,6 +1,6 @@
 package com.reqman.pojo;
 
-// Generated 22 Aug, 2017 7:11:21 PM by Hibernate Tools 4.3.1
+// Generated 13 Sep, 2017 2:36:35 PM by Hibernate Tools 4.3.1
 
 import java.util.Date;
 import javax.persistence.Column;
@@ -42,6 +42,7 @@ public class Request implements java.io.Serializable {
 	private String createdby;
 	private Date datemodified;
 	private String modifiedby;
+	private String filename;
 	private Requestworkflow requestworkflow;
 
 	public Request() {
@@ -55,7 +56,7 @@ public class Request implements java.io.Serializable {
 			Userrequesttype userrequesttype, String title, String description,
 			Date completiondate, byte[] attachment, Integer requeststatus,
 			Boolean status, Date datecreated, String createdby,
-			Date datemodified, String modifiedby,
+			Date datemodified, String modifiedby, String filename,
 			Requestworkflow requestworkflow) {
 		this.id = id;
 		this.usercategory = usercategory;
@@ -71,6 +72,7 @@ public class Request implements java.io.Serializable {
 		this.createdby = createdby;
 		this.datemodified = datemodified;
 		this.modifiedby = modifiedby;
+		this.filename = filename;
 		this.requestworkflow = requestworkflow;
 	}
 
@@ -205,6 +207,15 @@ public class Request implements java.io.Serializable {
 
 	public void setModifiedby(String modifiedby) {
 		this.modifiedby = modifiedby;
+	}
+
+	@Column(name = "filename", length = 50)
+	public String getFilename() {
+		return this.filename;
+	}
+
+	public void setFilename(String filename) {
+		this.filename = filename;
 	}
 
 	@OneToOne(fetch = FetchType.LAZY, mappedBy = "request")

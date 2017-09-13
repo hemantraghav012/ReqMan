@@ -115,6 +115,7 @@ CREATE TABLE reqman.request
     createdby character varying(50) COLLATE "default".pg_catalog,
     datemodified timestamp without time zone,
     modifiedby character varying(50) COLLATE "default".pg_catalog,
+    filename character varying(50) COLLATE "default".pg_catalog,
     CONSTRAINT pk_request_id PRIMARY KEY (id),
     CONSTRAINT uni_request_key UNIQUE (title, userprojectid, usercategoryid, userrequesttypeid),
     CONSTRAINT fk_request_usercategory_id FOREIGN KEY (usercategoryid)
