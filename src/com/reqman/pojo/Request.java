@@ -1,8 +1,10 @@
 package com.reqman.pojo;
 
-// Generated 13 Sep, 2017 2:36:35 PM by Hibernate Tools 4.3.1
+// Generated 15 Sep, 2017 11:33:36 AM by Hibernate Tools 4.3.1
 
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -10,7 +12,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -29,7 +31,7 @@ public class Request implements java.io.Serializable {
 	 */
 	private static final long serialVersionUID = 7850920915635663322L;
 	private int id;
-	private Usercategory usercategory;
+	private Usercategory usercategory;	
 	private Userproject userproject;
 	private Userrequesttype userrequesttype;
 	private String title;
@@ -43,7 +45,8 @@ public class Request implements java.io.Serializable {
 	private Date datemodified;
 	private String modifiedby;
 	private String filename;
-	private Requestworkflow requestworkflow;
+	private Set<Requestworkflow> requestworkflows = new HashSet<Requestworkflow>(
+			0);
 
 	public Request() {
 	}
@@ -57,7 +60,7 @@ public class Request implements java.io.Serializable {
 			Date completiondate, byte[] attachment, Integer requeststatus,
 			Boolean status, Date datecreated, String createdby,
 			Date datemodified, String modifiedby, String filename,
-			Requestworkflow requestworkflow) {
+			Set<Requestworkflow> requestworkflows) {
 		this.id = id;
 		this.usercategory = usercategory;
 		this.userproject = userproject;
@@ -73,7 +76,7 @@ public class Request implements java.io.Serializable {
 		this.datemodified = datemodified;
 		this.modifiedby = modifiedby;
 		this.filename = filename;
-		this.requestworkflow = requestworkflow;
+		this.requestworkflows = requestworkflows;
 	}
 
 	@Id
@@ -218,13 +221,13 @@ public class Request implements java.io.Serializable {
 		this.filename = filename;
 	}
 
-	@OneToOne(fetch = FetchType.LAZY, mappedBy = "request")
-	public Requestworkflow getRequestworkflow() {
-		return this.requestworkflow;
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "request")
+	public Set<Requestworkflow> getRequestworkflows() {
+		return this.requestworkflows;
 	}
 
-	public void setRequestworkflow(Requestworkflow requestworkflow) {
-		this.requestworkflow = requestworkflow;
+	public void setRequestworkflows(Set<Requestworkflow> requestworkflows) {
+		this.requestworkflows = requestworkflows;
 	}
 
 }
