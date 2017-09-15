@@ -175,23 +175,23 @@ CREATE TABLE reqman.requestworkflow
     requestid integer,
     friendid integer,
     completionpercentage real,
-    requestby character varying(50) COLLATE "default".pg_catalog,
+    requestby character varying(50) COLLATE pg_catalog."default",
     requeststatus integer,
     acceptdate timestamp without time zone,
     updatedate timestamp without time zone,
     revisionnumber integer,
-    approvedby character varying(50) COLLATE "default".pg_catalog,
+    approvedby character varying(50) COLLATE pg_catalog."default",
     approveddate timestamp without time zone,
     datecreated timestamp without time zone,
-    createdby character varying COLLATE "default".pg_catalog,
+    createdby character varying COLLATE pg_catalog."default",
     datemodified timestamp without time zone,
-    modifiedby character varying(50) COLLATE "default".pg_catalog,
+    modifiedby character varying(50) COLLATE pg_catalog."default",
     CONSTRAINT pk_requestworkflow_id PRIMARY KEY (id),
-    CONSTRAINT fk_workflow_friendid FOREIGN KEY (id)
+    CONSTRAINT fk_workflow_friendid FOREIGN KEY (friendid)
         REFERENCES reqman.userfriendlist (id) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION,
-    CONSTRAINT fk_workflow_requestid FOREIGN KEY (id)
+    CONSTRAINT fk_workflow_requestid FOREIGN KEY (requestid)
         REFERENCES reqman.request (id) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION
