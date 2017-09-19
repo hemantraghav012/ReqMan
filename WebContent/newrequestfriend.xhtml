@@ -37,88 +37,117 @@
         
        <!-- -end of categoryheader -->
         
-      
-      <h:form class="form-horizontal">
+     
+       <h:form enctype="multipart/form-data" class="form-horizontal">
       <div class="container fixedcontainer" style=" margin-top:1cm; ">
   <h2 style=" text-align: center;">    Create New Request </h2><br></br>
       
 
  <div class=" row form-group ">
  <div class="col-sm-2 control-label"><h:outputLabel  >Title:</h:outputLabel></div>
-<div class=" col-sm-8"> <h:inputText value="#{r.emailid}" class="  form-control"  id="emailid" required="true" requiredMessage="* Please enter your email id"/></div>
+<div class=" col-sm-10"> <h:inputText value="#{createrequest.title}" class="  form-control"  id="emailid" required="true" requiredMessage="* Please enter your email id"/></div>
  <h:message for="emailid"  style="color:red;margin:8px;"/> 
 
 </div>
 
  <div class=" row form-group " style="text-align: center;">
  <div class="col-sm-2 control-label"><h:outputLabel>Description:</h:outputLabel></div>
-<div class=" col-sm-8"><h:inputTextarea id="address" value="#{suggestionbean.message}" required="true"   
-requiredMessage="* Please Enter your Suggestion " cols="19" rows="3" class="  form-control" /></div>
+<div class=" col-sm-10"><h:inputTextarea id="address" value="#{createrequest.description}"    
+ cols="19" rows="3" class="  form-control" /></div>
 <h:message for="address"  style="color:red;margin:6px;"/>
 </div>
 
  
- 
-<div class=" row form-group ">
-<div class="col-sm-2 control-label">
-<h:outputLabel>Team Member:</h:outputLabel></div>
- <div class=" col-sm-4"><h:selectOneMenu value = "#{userData1.data}" class="form-control" id="drop11" required="true" requiredMessage="* Please enter your first name">
-   <p:dataTable var="category" value="#{categorybean.categoryList}" reflow="true">
-   <f:selectItem itemValue = "#{category.name}" itemLabel = "#{category.name}" /> 
-    
-   </p:dataTable>
-</h:selectOneMenu> </div>
 
- <h:message for="drop1"  style="color:red;margin:8px;"/>
+<div class=" row form-group ">
+ <div class="col-sm-2 control-label">
+ <h:outputLabel style="white-space:nowrap;">Completion Date:</h:outputLabel>
+ </div>
+<div class="col-sm-4"> 
+<p:calendar id="calender" value="#{createrequest.completiondate}"  showOn="both"   mindate="today+7" />
+
+ </div>
+ <h:message   style="color:red;margin:8px;"/>
  
- 
- 
- 
- 
- <div class="col-sm-2 control-label"><h:outputLabel>Category:</h:outputLabel></div>
- <div class=" col-sm-4"><h:selectOneMenu value = "#{userData.data2}" class="form-control" id="drop21" required="true" requiredMessage="* Please enter your first name">
-   <f:selectItem itemValue = "1" itemLabel = "Item 1" /> 
-   <f:selectItem itemValue = "2" itemLabel = "Item 2" /> 
-</h:selectOneMenu> </div>
- <h:message for="drop2"  style="color:red;margin:8px;"/>
+ <div class="col-sm-2 control-label"> 
+ <h:outputLabel>Category:</h:outputLabel>
+ </div>
+ <div class=" col-sm-4">
+      <p:selectOneMenu  value="#{createrequest.usercategory}" class="form-control"   >
+            <f:selectItem itemLabel="Select" itemValue="" />
+           <f:selectItems value="#{categorybean.categoryList}"  var="category" itemLabel="#{category.name}"
+                          itemValue="#{category.userCategoryId}"/>
+        </p:selectOneMenu>
+
+</div>
+ <h:message   style="color:red;margin:8px;"/>
 </div>
 
+<div class="row form-grop">
+ <div class="col-sm-2 control-label">
+ <h:outputLabel>Team Member:</h:outputLabel>
+</div>
+ <div class="col-sm-10 control-label">
+ <p:selectCheckboxMenu id="multiple" value="#{createrequest.userfriendlist}" label="friend add" multiple="true"
+                              filter="true" filterMatchMode="startsWith" class="form-control" >
+                                <f:selectItems value="#{friendbean.friendList}" var="friend" itemLabel="#{friend.emailid}" 
+                      itemValue="#{friend.userFriendId}"/>
+                               
+                                </p:selectCheckboxMenu>
+                              
+ </div>
+ </div>
 
+
+ <br></br>
  <div class=" row form-group ">
 <div class="col-sm-2 control-label">
-<h:outputLabel>Project:</h:outputLabel></div>
- <div class=" col-sm-4"><h:selectOneMenu value = "#{userData1.data}" class="form-control" id="drop1" required="true" requiredMessage="* Please enter your first name">
-   <p:dataTable var="category" value="#{categorybean.categoryList}" reflow="true">
-   <f:selectItem itemValue = "#{category.name}" itemLabel = "#{category.name}" /> 
-    
-   </p:dataTable>
-</h:selectOneMenu> </div>
-
- <h:message for="drop1"  style="color:red;margin:8px;"/>
- 
- 
- 
- 
- 
- <div class="col-sm-2 control-label"><h:outputLabel style="white-space:nowrap;">Request type:</h:outputLabel></div>
- <div class=" col-sm-4"><h:selectOneMenu value = "#{userData.data2}" class="form-control" id="drop2" required="true" requiredMessage="* Please enter your first name">
-   <f:selectItem itemValue = "1" itemLabel = "Item 1" /> 
-   <f:selectItem itemValue = "2" itemLabel = "Item 2" /> 
-</h:selectOneMenu> </div>
- <h:message for="drop2"  style="color:red;margin:8px;"/>
+<h:outputLabel>Project:</h:outputLabel>
 </div>
+ <div class=" col-sm-4">
+ 
+ <p:selectOneMenu id="project" value="#{createrequest.userproject}" class="form-control" >
+            <f:selectItem itemLabel="Select" itemValue="" />
+           <f:selectItems value="#{projectbean.projectList}" var="project" itemLabel="#{project.name}"  itemValue="#{project.userProjectId}"/>
+        </p:selectOneMenu>
+</div>
+ <h:message for="project"  style="color:red;margin:8px;"/>
+ 
+ 
+ 
+ 
+ 
+ <div class="col-sm-2 control-label">
+ <h:outputLabel style="white-space:nowrap;">Request type:</h:outputLabel>
+ </div>
+ <div class=" col-sm-4">
+ <p:selectOneMenu id="requesttype" value="#{createrequest.userrequesttype}" class="form-control">
+            <f:selectItem itemLabel="Select" itemValue="" />
+            <f:selectItems value="#{requesttypebean.requesttypeList}" var="requesttype" itemLabel="#{requesttype.name}"  itemValue="#{requesttype.userRequesttypeId}"/>
+        </p:selectOneMenu>
+</div>
+ <h:message for="requesttype"  style="color:red;margin:8px;"/>
+</div>
+ <br></br>
+<div class=" row form-group ">
+<div class="col-sm-2 control-label"><h:outputLabel style="white-space:nowrap;">Attached File :</h:outputLabel></div>
+<div class="col-sm-4">
+<p:fileUpload value="#{createrequest.attachment}" mode="simple" />
+</div>
+
+</div>
+
+
 
 <div class=" row form-group ">
  <div class="col-sm-3 .col-sm-offset-2"></div>
-<div class="col-sm-4"><h:commandLink action="#{register.submit()}" value="Submit" class="btn btn-lg btn-success btn-block"></h:commandLink></div>
+<div class="col-sm-4"><h:commandLink action="#{createrequest.save()}" value="Submit" class="btn btn-lg btn-success btn-block"></h:commandLink></div>
 <div class="col-sm-4"><h:link value="Back to Request" style="text-decoration:none; color:#fff;" outcome="request" class="btn btn-lg btn-primary btn-block"/></div>
 
 </div>
 
 
-<p:fileUpload fileUploadListener="#{fileUpload.handleFileUpload}" mode="advanced" dragDropSupport="false"  
-update="messages"  />  
-<p:growl id="messages" showDetail="true" />
+
 
 
 
@@ -127,7 +156,7 @@ update="messages"  />
 </h:form>
 
       
-      
+   
       
       
       

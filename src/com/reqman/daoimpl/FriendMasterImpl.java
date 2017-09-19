@@ -11,10 +11,12 @@ import org.hibernate.Transaction;
 import org.hibernate.criterion.Projection;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
+import org.primefaces.model.chart.PieChartModel;
 
 import com.reqman.common.HibernateUtil;
 import com.reqman.common.HibernateUtilH;
 import com.reqman.dao.FriendMasterInterface;
+import com.reqman.pojo.Category;
 import com.reqman.pojo.Project;
 import com.reqman.pojo.Usercategory;
 import com.reqman.pojo.Userfriendlist;
@@ -361,8 +363,4 @@ public class FriendMasterImpl implements FriendMasterInterface {
 
 
 	
-	
-
-	
-
 }

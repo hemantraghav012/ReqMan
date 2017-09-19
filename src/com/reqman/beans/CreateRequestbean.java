@@ -1,89 +1,97 @@
 package com.reqman.beans;
 
-import java.io.File;
-import java.io.IOException;
+
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.RequestScoped;
 import javax.faces.bean.ViewScoped;
-import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
 
-import org.apache.poi.hssf.usermodel.HSSFCell;
-import org.apache.poi.hssf.usermodel.HSSFCellStyle;
-import org.apache.poi.hssf.usermodel.HSSFRow;
-import org.apache.poi.hssf.usermodel.HSSFSheet;
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.apache.poi.hssf.util.HSSFColor;
-import org.apache.poi.ss.usermodel.Row;
+import org.primefaces.model.UploadedFile;
 
-import com.lowagie.text.BadElementException;
-import com.lowagie.text.Document;
-import com.lowagie.text.DocumentException;
-import com.lowagie.text.Image;
-import com.lowagie.text.PageSize;
-import com.reqman.dao.CategoryMasterInterface;
-import com.reqman.daoimpl.CategoryMasterImpl;
+
+
+import com.reqman.dao.NewrequestInterface;
+import com.reqman.daoimpl.NewrequestImpl;
+import com.reqman.pojo.Request;
 import com.reqman.util.SessionUtils;
-import com.reqman.util.UserSession;
-import com.reqman.vo.CategoryVo;
+
+
+import com.reqman.vo.NewrequestVo;
 
 @ManagedBean(name="createrequest",eager = true)
+@RequestScoped
 @ViewScoped
 public class CreateRequestbean implements Serializable
 {
 	private static final long serialVersionUID = 3076255353187837257L;
 	
-	private List<CategoryVo> categoryList = new ArrayList<CategoryVo>();	
-	private List<CategoryVo> filteredCategoryList = new ArrayList<CategoryVo>();
-	private String categoryName;	
-	private Boolean status;	
-	private String categoryId;
-	private CategoryVo selectedCategory;
+	 private String title;
+	 private String description;
+	 private Integer  usercategory;
+	 private Integer userproject;
+	 private Integer userrequesttype;
+	 private Integer[]  userfriendlist;
+	 private UploadedFile attachment;
+	 private Date completiondate;
+	 private  List<Request> request ;
+	 
+	 private List<NewrequestVo> newrequestList = new ArrayList<NewrequestVo>();
 	
+	 private NewrequestInterface newrequestInterface = new NewrequestImpl();	
 	
-	private CategoryMasterInterface categoryMasterInterface = new CategoryMasterImpl();	
-	
+
+	 
+	 
+	 
+	 
+	 
+	 
 	@PostConstruct
     public void init() 
 	{
 		try
 		{
-			
-			System.out.println("--create request-->");
-			/*categoryList = new ArrayList<CategoryVo>();
+			 	
+		System.out.println("--create request-->");
+			newrequestList = new ArrayList<NewrequestVo>();
 			HttpSession session = SessionUtils.getSession();
 			String userName = (String)session.getAttribute("username");
 			System.out.println("--usersession--userName-->"+userName);
-			categoryList = categoryMasterInterface.getCategoryDetails(userName);
-			setFilteredCategoryList(categoryList);*/
+			newrequestList = newrequestInterface.getNewrequestDetails(userName);
+		
 		}
 		catch(Exception e)
 		{
 			e.printStackTrace();
 		}
+		
 	}
+	
+	
+	
+	
+	
+	 
+	
+	
 	
 	
 	public String createRequestPage()
 	{
 		try
 		{
-			
+			newrequestList = new ArrayList<NewrequestVo>();
 			System.out.println("--create new request-->");
 			
-		/*
-			categoryList = new ArrayList<CategoryVo>();
-			HttpSession session = SessionUtils.getSession();
-			String userName = (String)session.getAttribute("username");
-			System.out.println("--usersession--userName-->"+userName);
-			categoryList = categoryMasterInterface.getCategoryDetails(userName);
-		*/
+		
 		}
 		catch(Exception e)
 		{
@@ -97,7 +105,7 @@ public class CreateRequestbean implements Serializable
 	{
 		try
 		{
-			//categoryList = new ArrayList<CategoryVo>();
+			newrequestList = new ArrayList<NewrequestVo>();
 			System.out.println("newrequestfriend");
 		}
 		catch(Exception e)
@@ -108,22 +116,35 @@ public class CreateRequestbean implements Serializable
 	}
 	
 	
-	public String saveCategory()
+   
+
+	
+	
+	public String save()
 	{
-		int result = 0;
-		UserSession usersession = new UserSession();
-		try
-		{
-			categoryList = new ArrayList<CategoryVo>();
-			System.out.println("--categoryName-->"+categoryName);
-			System.out.println("--status-->"+status);
-			
-			HttpSession session = SessionUtils.getSession();
-			String userName = (String)session.getAttribute("username");
-			
-			System.out.println("--usersession--userName-->"+userName);
-			result = categoryMasterInterface.savecategory(categoryName, status, userName);
-			
+		
+		 NewrequestInterface newrequestinterface = new NewrequestImpl();
+				int result = 0;
+				try{
+					newrequestList = new ArrayList<NewrequestVo>();
+					HttpSession session = SessionUtils.getSession();
+					String userName = (String)session.getAttribute("username");
+					
+				System.out.println("friendlist"+userfriendlist);
+				
+
+				System.out.println("arraylist"+userfriendlist);
+				 // for(Integer i:userfriendlist){
+		        	  
+		        	//  System.out.println("arraylist"+i);
+		          //}
+		      
+					
+				result =newrequestinterface.save(title,description,usercategory,userproject,
+							     userrequesttype,attachment,userName,completiondate, userfriendlist);
+					
+					
+					
 			if(result == 1)
 			{
 				FacesContext.getCurrentInstance().addMessage(
@@ -131,7 +152,7 @@ public class CreateRequestbean implements Serializable
 						new FacesMessage(FacesMessage.SEVERITY_WARN,
 								"Category already exist",
 								"Category already exist"));
-				return "createcategory";
+				return "newrequestfriend";
 			}
 			if(result == 2)
 			{
@@ -140,12 +161,12 @@ public class CreateRequestbean implements Serializable
 						new FacesMessage(FacesMessage.SEVERITY_WARN,
 								"Category already exist and in active, please activate by using modify category ",
 								"Category already exist and in active, please activate by using modify category"));
-				return "createcategory";
+				return "newrequestfriend";
 			}
 			if(result == 3)
 			{
 				
-				categoryList = categoryMasterInterface.getCategoryDetails(userName);
+				
 				
 				FacesContext.getCurrentInstance().addMessage(
 						null,
@@ -164,12 +185,12 @@ public class CreateRequestbean implements Serializable
 					new FacesMessage(FacesMessage.SEVERITY_WARN,
 							"Server Error "+e.getMessage(),
 							"Server Error "+e.getMessage()));
-			return "createcategory";
+			return "newrequestfriend";
 		}
-		return "category";
+		return "request";
 	}
 	
-	
+/*	
 	public void modifyAction() {
 		
 		CategoryVo categoryVo = new CategoryVo();
@@ -268,7 +289,7 @@ public class CreateRequestbean implements Serializable
         //String logo = externalContext.getRealPath("") + File.separator + "resources" + File.separator + "demo" + File.separator + "images" + File.separator + "prime_logo.png";
          
         pdf.addTitle("Collabor8");
-    }
+    }*/
 	
 
 	public void addMessage(String summary) 
@@ -276,65 +297,182 @@ public class CreateRequestbean implements Serializable
         FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, summary,  null);
         FacesContext.getCurrentInstance().addMessage(null, message);
     }
+
+
+	public String getTitle() {
+		return title;
+	}
+
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
+
+	public String getDescription() {
+		return description;
+	}
+
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+
 	
-	public List<CategoryVo> getCategoryList() 
-	{
-		return categoryList;
-	}
 
-	public void setCategoryList(List<CategoryVo> categoryList) 
-	{
-		this.categoryList = categoryList;
-	}
+	
 
-	public String getCategoryName() 
-	{
-		return categoryName;
-	}
 
-	public void setCategoryName(String categoryName) 
-	{
-		this.categoryName = categoryName;
-	}
-
-	public Boolean getStatus() 
-	{
-		return status;
-	}
-
-	public void setStatus(Boolean status) 
-	{
-		this.status = status;
-	}
-
-	public String getCategoryId() 
-	{
-		return categoryId;
-	}
-
-	public void setCategoryId(String categoryId) 
-	{
-		this.categoryId = categoryId;
+	public Integer getUsercategory() {
+		return usercategory;
 	}
 
 
-	public List<CategoryVo> getFilteredCategoryList() {
-		return filteredCategoryList;
+	public void setUsercategory(Integer usercategory) {
+		this.usercategory = usercategory;
 	}
 
 
-	public void setFilteredCategoryList(List<CategoryVo> filteredCategoryList) {
-		this.filteredCategoryList = filteredCategoryList;
+	public Integer getUserproject() {
+		return userproject;
 	}
 
 
-	public CategoryVo getSelectedCategory() {
-		return selectedCategory;
+	public void setUserproject(Integer userproject) {
+		this.userproject = userproject;
 	}
 
 
-	public void setSelectedCategory(CategoryVo selectedCategory) {
-		this.selectedCategory = selectedCategory;
+	public Integer getUserrequesttype() {
+		return userrequesttype;
 	}
 
+
+	public void setUserrequesttype(Integer userrequesttype) {
+		this.userrequesttype = userrequesttype;
+	}
+
+
+	
+
+
+	
+
+
+
+
+	
+
+	
+
+
+
+
+	
+
+
+	public List<NewrequestVo> getNewrequestList() {
+		return newrequestList;
+	}
+
+
+
+
+
+
+
+
+
+
+	public void setNewrequestList(List<NewrequestVo> newrequestList) {
+		this.newrequestList = newrequestList;
+	}
+
+
+
+
+
+
+
+
+
+
+	
+	public Integer[] getUserfriendlist() {
+		return userfriendlist;
+	}
+
+
+
+
+
+
+
+
+
+
+	public void setUserfriendlist(Integer[] userfriendlist) {
+		this.userfriendlist = userfriendlist;
+	}
+
+
+
+
+
+
+
+
+
+
+	public UploadedFile getAttachment() {
+		return attachment;
+	}
+
+
+	public void setAttachment(UploadedFile attachment) {
+		this.attachment = attachment;
+	}
+
+
+	public Date getCompletiondate() {
+		return completiondate;
+	}
+
+
+	public void setCompletiondate(Date completiondate) {
+		this.completiondate = completiondate;
+	}
+
+
+
+
+
+
+
+
+
+
+	public List<Request> getRequest() {
+		return request;
+	}
+
+
+
+
+
+
+
+
+
+
+	public void setRequest(List<Request> request) {
+		this.request = request;
+	}
+
+
+	
+	
+	
+	
 }

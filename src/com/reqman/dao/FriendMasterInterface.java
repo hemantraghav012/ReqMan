@@ -2,6 +2,9 @@ package com.reqman.dao;
 
 import java.util.List;
 
+import org.primefaces.model.chart.PieChartModel;
+
+import com.reqman.pojo.Category;
 import com.reqman.pojo.Users;
 import com.reqman.vo.FriendVo;
 import com.reqman.vo.ProjectVo;
@@ -23,8 +26,6 @@ public interface FriendMasterInterface {
 public FriendVo getUserFriendById(String friendId) throws Exception;
 	
 	public int updateUserFriendById(String friendId, boolean status) throws Exception;
-	
-	//public List < Users > AllUsers()  throws Exception;
-	
+
 	
 }
