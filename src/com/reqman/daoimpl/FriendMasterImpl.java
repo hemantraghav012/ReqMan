@@ -225,7 +225,7 @@ public class FriendMasterImpl implements FriendMasterInterface {
             		for(Userfriendlist userfriendDB : usersTemp.getUserfriendlistsForUserid())
             		{
             			if(userfriendDB != null && userfriendDB.getUsersByFriendid() != null 
-            					&& userfriendDB.getUsersByFriendid() .getStatus() == true)
+            					&& userfriendDB.getUsersByFriendid().getStatus() == true)
             			{
             				friendVo = new FriendVo();
             			

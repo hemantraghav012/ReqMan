@@ -80,7 +80,7 @@ public class NewrequestImpl implements NewrequestInterface {
             
             
             
-          userfriendlist1 = (Userfriendlist)session.createCriteria(  Userfriendlist.class)
+          userfriendlist1 = (Userfriendlist)session.createCriteria(Userfriendlist.class)
             .add(Restrictions.eq("id", friendlist))
                  .uniqueResult(); 		
             
@@ -159,23 +159,27 @@ public class NewrequestImpl implements NewrequestInterface {
 	            		.uniqueResult();
 	            
 	            if(usersTemp != null){
-	            
-	            	 //request = new Request();
-	          
-	            	
-	            				newrequestVo = new NewrequestVo();
-	                			
-	            				Request request = (Request)session.createCriteria(Request.class)
-	            				.add(Restrictions.eq("createdby",userName.toLowerCase().trim()).ignoreCase())
-	    	            		.list();
-	            				newrequestVo.setTitle(request.getTitle());	                			
-	            				newrequestVo.setDescription(request.getDescription());
-	            				newrequestVo.setCompletiondate(request.getCompletiondate());
-	            				newrequestVo.setUsercategory(request.getUsercategory());
-	            				newrequestVo.setUserproject(request.getUserproject());
-	            				newrequestVo.setUserrequesttype(request.getUserrequesttype());
+
+	            	newrequestVo = new NewrequestVo();
+        			
+    				List<Request> requesPojoList = (List<Request>)session.createCriteria(Request.class)
+    								.add(Restrictions.eq("createdby",userName.toLowerCase().trim()).ignoreCase())
+    								.list();
+    				if(requesPojoList != null && requesPojoList.size() != 0)
+    				{
+    					for(Request requestDB : requesPojoList)
+    					{
+        					newrequestVo.setTitle(requestDB.getTitle());	                			
+            				newrequestVo.setDescription(requestDB.getDescription());
+            				newrequestVo.setCompletiondate(requestDB.getCompletiondate());
+            				newrequestVo.setUsercategory(requestDB.getUsercategory());
+            				newrequestVo.setUserproject(requestDB.getUserproject());
+            				newrequestVo.setUserrequesttype(requestDB.getUserrequesttype());
+                			requestList.add(newrequestVo);
+    					}
+    				}
 	            				
-	                			requestList.add(newrequestVo);
+	            				
 	            		
 	            
 	            	
