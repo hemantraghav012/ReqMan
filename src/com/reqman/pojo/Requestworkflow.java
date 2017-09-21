@@ -1,9 +1,8 @@
 package com.reqman.pojo;
 
-// Generated 15 Sep, 2017 11:33:36 AM by Hibernate Tools 4.3.1
+// Generated 21 Sep, 2017 11:33:25 AM by Hibernate Tools 4.3.1
 
 import java.util.Date;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -42,6 +41,7 @@ public class Requestworkflow implements java.io.Serializable {
 	private String createdby;
 	private Date datemodified;
 	private String modifiedby;
+	private Boolean status;
 
 	public Requestworkflow() {
 	}
@@ -55,7 +55,7 @@ public class Requestworkflow implements java.io.Serializable {
 			String requestby, Integer requeststatus, Date acceptdate,
 			Date updatedate, Integer revisionnumber, String approvedby,
 			Date approveddate, Date datecreated, String createdby,
-			Date datemodified, String modifiedby) {
+			Date datemodified, String modifiedby, Boolean status) {
 		this.id = id;
 		this.request = request;
 		this.userfriendlist = userfriendlist;
@@ -71,6 +71,7 @@ public class Requestworkflow implements java.io.Serializable {
 		this.createdby = createdby;
 		this.datemodified = datemodified;
 		this.modifiedby = modifiedby;
+		this.status = status;
 	}
 
 	@Id
@@ -215,6 +216,15 @@ public class Requestworkflow implements java.io.Serializable {
 
 	public void setModifiedby(String modifiedby) {
 		this.modifiedby = modifiedby;
+	}
+
+	@Column(name = "status")
+	public Boolean getStatus() {
+		return this.status;
+	}
+
+	public void setStatus(Boolean status) {
+		this.status = status;
 	}
 
 }

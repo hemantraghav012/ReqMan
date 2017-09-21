@@ -69,9 +69,12 @@ public class NewrequestImpl implements NewrequestInterface {
 			
 			requestDB = (Request)crit.uniqueResult();
 			
+			
 			// if request exist then update the request object
 			if(requestDB != null)
 			{
+				Hibernate.initialize(requestDB.getRequestworkflows());
+				
 				result = updateRequest(requestDB, request, session);
 				tx.commit();
 			}
@@ -122,6 +125,8 @@ public class NewrequestImpl implements NewrequestInterface {
 			String emailIdNew = "";
 			String emailIdDB = "";
 			Requestworkflow requestworkflowTemp = null;
+			Requestworkflow requestworkflowNewTemp = null;
+			
 			if(request != null && request.getRequestworkflows() != null && request.getRequestworkflows().size() != 0)
 			{
 				for(Requestworkflow requestworkflowNew : request.getRequestworkflows() )
@@ -135,10 +140,10 @@ public class NewrequestImpl implements NewrequestInterface {
 									&& requestworkflowDB.getUserfriendlist() != null 
 									&& requestworkflowNew.getUserfriendlist() != null)
 							{
-								emailIdDB = requestworkflowDB.getUserfriendlist().getUsersByUserid() != null 
-										? requestworkflowDB.getUserfriendlist().getUsersByUserid().getEmailid() : "";
-								emailIdNew = requestworkflowNew.getUserfriendlist().getUsersByUserid() != null 
-										? requestworkflowNew.getUserfriendlist().getUsersByUserid().getEmailid() : "";
+								emailIdDB = requestworkflowDB.getUserfriendlist().getUsersByFriendid() != null 
+										? requestworkflowDB.getUserfriendlist().getUsersByFriendid().getEmailid() : "";
+								emailIdNew = requestworkflowNew.getUserfriendlist().getUsersByFriendid() != null 
+										? requestworkflowNew.getUserfriendlist().getUsersByFriendid().getEmailid() : "";
 								if(emailIdDB.trim().equalsIgnoreCase(emailIdNew.trim()))
 								{
 									requestworkflowTemp = requestworkflowDB;
@@ -149,7 +154,8 @@ public class NewrequestImpl implements NewrequestInterface {
 						
 						//save the friend id else skip the update 
 						if(requestworkflowTemp == null){
-							session.save(requestworkflowTemp);
+							requestworkflowNew.setRequest(requestDB);
+							session.save(requestworkflowNew);
 						}
 					}
 				}
@@ -238,14 +244,14 @@ public class NewrequestImpl implements NewrequestInterface {
 								name = "";
 
 								if(requestworkflowDB != null && requestworkflowDB.getUserfriendlist() != null 
-										&& requestworkflowDB.getUserfriendlist().getUsersByUserid() != null)
+										&& requestworkflowDB.getUserfriendlist().getUsersByFriendid() != null)
 								{
 									
-									firstName = requestworkflowDB.getUserfriendlist().getUsersByUserid().getFirstname() != null 
-											? requestworkflowDB.getUserfriendlist().getUsersByUserid().getFirstname() : "";
+									firstName = requestworkflowDB.getUserfriendlist().getUsersByFriendid().getFirstname() != null 
+											? requestworkflowDB.getUserfriendlist().getUsersByFriendid().getFirstname() : "";
 											
-									lastName = requestworkflowDB.getUserfriendlist().getUsersByUserid().getLastname() != null 
-											? requestworkflowDB.getUserfriendlist().getUsersByUserid().getLastname() : "";
+									lastName = requestworkflowDB.getUserfriendlist().getUsersByFriendid().getLastname() != null 
+											? requestworkflowDB.getUserfriendlist().getUsersByFriendid().getLastname() : "";
 											
 									if(firstName != null && !firstName.trim().equals(""))
 									{
@@ -265,8 +271,8 @@ public class NewrequestImpl implements NewrequestInterface {
 									newrequestVo.setUserproject(userProject);
 									newrequestVo.setUserrequesttype(userRequestType);
 									
-									if(requestDB != null && requestDB.getStatus() != null 
-											&& requestDB.getStatus().booleanValue() == true)
+									if(requestworkflowDB != null && requestworkflowDB.getStatus() != null 
+											&& requestworkflowDB.getStatus().booleanValue() == true)
 									{
 										newrequestVo.setStatus("Active");
 									}
@@ -404,6 +410,7 @@ public class NewrequestImpl implements NewrequestInterface {
 					requestworkflowTemp.setRequeststatus(1);
 					requestworkflowTemp.setCreatedby(userName.trim());
 					requestworkflowTemp.setDatecreated(new Date());
+					requestworkflowTemp.setStatus(true);
 					requestworkflows.add(requestworkflowTemp);
 				}
 				request.setRequestworkflows(requestworkflows);

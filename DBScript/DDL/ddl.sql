@@ -186,6 +186,7 @@ CREATE TABLE reqman.requestworkflow
     createdby character varying COLLATE pg_catalog."default",
     datemodified timestamp without time zone,
     modifiedby character varying(50) COLLATE pg_catalog."default",
+    status boolean DEFAULT true,
     CONSTRAINT pk_requestworkflow_id PRIMARY KEY (id),
     CONSTRAINT fk_workflow_friendid FOREIGN KEY (friendid)
         REFERENCES reqman.userfriendlist (id) MATCH SIMPLE

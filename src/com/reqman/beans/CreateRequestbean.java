@@ -47,20 +47,13 @@ public class CreateRequestbean implements Serializable
 	
 	 private NewrequestInterface newrequestInterface = new NewrequestImpl();	
 	
-
-	 
-	 
-	 
-	 
-	 
-	 
 	@PostConstruct
     public void init() 
 	{
 		try
 		{
 			 	
-		System.out.println("--create request-->");
+			System.out.println("--create request-->");
 			newrequestList = new ArrayList<NewrequestVo>();
 			HttpSession session = SessionUtils.getSession();
 			String userName = (String)session.getAttribute("username");
@@ -74,15 +67,6 @@ public class CreateRequestbean implements Serializable
 		}
 		
 	}
-	
-	
-	
-	
-	
-	 
-	
-	
-	
 	
 	public String createRequestPage()
 	{
@@ -117,9 +101,6 @@ public class CreateRequestbean implements Serializable
 	
 	
    
-
-	
-	
 	public String save()
  {
 
