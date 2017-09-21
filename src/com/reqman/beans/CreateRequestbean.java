@@ -121,32 +121,22 @@ public class CreateRequestbean implements Serializable
 	
 	
 	public String save()
-	{
-		
-		 NewrequestInterface newrequestinterface = new NewrequestImpl();
-				int result = 0;
-				try{
-					newrequestList = new ArrayList<NewrequestVo>();
-					HttpSession session = SessionUtils.getSession();
-					String userName = (String)session.getAttribute("username");
-					
-				System.out.println("friendlist"+userfriendlist);
-				
+ {
 
-				System.out.println("arraylist"+userfriendlist);
-				 // for(Integer i:userfriendlist){
-		        	  
-		        	//  System.out.println("arraylist"+i);
-		          //}
-		      
-					
-				result =newrequestinterface.save(title,description,usercategory,userproject,
-							     userrequesttype,attachment,userName,completiondate, userfriendlist);
-					
-					
-					
-			if(result == 1)
-			{
+		NewrequestInterface newrequestinterface = new NewrequestImpl();
+		int result = 0;
+		try {
+			newrequestList = new ArrayList<NewrequestVo>();
+			HttpSession session = SessionUtils.getSession();
+			String userName = (String) session.getAttribute("username");
+
+			System.out.println("friendlist" + userfriendlist);
+
+			result = newrequestinterface.save(title, description, usercategory,
+					userproject, userrequesttype, attachment, userName,
+					completiondate, userfriendlist);
+
+			if (result == 1) {
 				FacesContext.getCurrentInstance().addMessage(
 						null,
 						new FacesMessage(FacesMessage.SEVERITY_WARN,
@@ -154,37 +144,33 @@ public class CreateRequestbean implements Serializable
 								"Category already exist"));
 				return "newrequestfriend";
 			}
-			if(result == 2)
-			{
-				FacesContext.getCurrentInstance().addMessage(
-						null,
-						new FacesMessage(FacesMessage.SEVERITY_WARN,
-								"Category already exist and in active, please activate by using modify category ",
-								"Category already exist and in active, please activate by using modify category"));
+			if (result == 2) {
+				FacesContext
+						.getCurrentInstance()
+						.addMessage(
+								null,
+								new FacesMessage(
+										FacesMessage.SEVERITY_WARN,
+										"Category already exist and in active, please activate by using modify category ",
+										"Category already exist and in active, please activate by using modify category"));
 				return "newrequestfriend";
 			}
-			if(result == 3)
-			{
-				
-				
-				
+			if (result == 3) {
+
 				FacesContext.getCurrentInstance().addMessage(
 						null,
 						new FacesMessage(FacesMessage.SEVERITY_WARN,
 								"Category created  successfully.",
 								"Category created  successfully."));
 			}
-			
-			
-		}
-		catch(Exception e)
-		{
+
+		} catch (Exception e) {
 			e.printStackTrace();
 			FacesContext.getCurrentInstance().addMessage(
 					null,
 					new FacesMessage(FacesMessage.SEVERITY_WARN,
-							"Server Error "+e.getMessage(),
-							"Server Error "+e.getMessage()));
+							"Server Error " + e.getMessage(), "Server Error "
+									+ e.getMessage()));
 			return "newrequestfriend";
 		}
 		return "request";

@@ -11,23 +11,14 @@ import com.reqman.vo.NewrequestVo;
 
 public interface NewrequestInterface {
 
-	//int savefile(String title,UploadedFile attachment) throws IOException;
-	
+	// int savefile(String title,UploadedFile attachment) throws IOException;
 
+	public int save(String title, String description, Integer usercategory,
+			Integer userproject, Integer userrequesttype,
+			UploadedFile attachment, String userName, Date completiondate,
+			Integer[] userfriendlist) throws IOException, Exception;
 
-public	int save(String title, String description, Integer usercategory,	Integer userproject, 
-		Integer userrequesttype, UploadedFile attachment, String userName, Date completiondate, Integer[] userfriendlist)throws IOException, Exception;
-
-
-
-public List<NewrequestVo> getNewrequestDetails(String userName) throws Exception;
-
-
-
-
-	
-
-
-
+	public List<NewrequestVo> getNewrequestDetails(String userName)
+			throws Exception;
 
 }
