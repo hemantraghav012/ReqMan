@@ -18,7 +18,17 @@ public class NewrequestVo implements Serializable
 	private String completiondate;
 	private String status;
 	private String friendName;
+	private byte[] file;
+	private String fileName;
 	
+
+	public byte[] getFile() {
+		return file;
+	}
+
+	public void setFile(byte[] file) {
+		this.file = file;
+	}
 
 	public StreamedContent getAttachment() {
 		return attachment;
@@ -98,6 +108,14 @@ public class NewrequestVo implements Serializable
 
 	public void setCompletiondate(String completiondate) {
 		this.completiondate = completiondate;
+	}
+
+	public String getFileName() {
+		return fileName;
+	}
+
+	public void setFileName(String fileName) {
+		this.fileName = fileName;
 	}
 
 }

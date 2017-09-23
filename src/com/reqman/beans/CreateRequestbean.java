@@ -1,6 +1,8 @@
 package com.reqman.beans;
 
 
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
@@ -14,18 +16,14 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
 
+import org.primefaces.model.DefaultStreamedContent;
+import org.primefaces.model.StreamedContent;
 import org.primefaces.model.UploadedFile;
-
-
-
-
 
 import com.reqman.dao.NewrequestInterface;
 import com.reqman.daoimpl.NewrequestImpl;
 import com.reqman.pojo.Request;
 import com.reqman.util.SessionUtils;
-
-
 import com.reqman.vo.NewrequestVo;
 
 @ManagedBean(name="createrequest",eager = true)
@@ -46,8 +44,10 @@ public class CreateRequestbean implements Serializable
 	 private  List<Request> request ;
 	 private String requestId;
 	 private List<NewrequestVo> newrequestList = new ArrayList<NewrequestVo>();
-		private Boolean status;
-	 private NewrequestInterface newrequestInterface = new NewrequestImpl();	
+	 private Boolean status;
+	 private NewrequestInterface newrequestInterface = new NewrequestImpl();
+	 private StreamedContent file;
+	 private NewrequestVo newrequestVo = new NewrequestVo();
 	
 	@PostConstruct
     public void init() 
@@ -162,7 +162,7 @@ public class CreateRequestbean implements Serializable
 
 	public void modifyAction() {
 		
-		NewrequestVo newrequestVo = new NewrequestVo();
+		
         try
         {
         	System.out.println("modify action"+requestId);
@@ -188,6 +188,44 @@ public class CreateRequestbean implements Serializable
         }
         
     }
+	
+	
+	 public StreamedContent fileDownloadView() { 
+		 	System.out.println("hello");
+		 	InputStream stream = null;
+		 	try{
+		 		//System.out.println("modify action"+requestId);
+	            //addMessage("Welcome to Primefaces!!");
+	        	setRequestId(requestId);
+	        	newrequestVo = newrequestInterface.getRequestById(requestId);
+	        	//stream = FacesContext.getCurrentInstance().getExternalContext().getResourceAsStream("/resource/temp/avatar.jpg");
+	        	if(newrequestVo.getFile() != null && newrequestVo.getFile().length != 0)
+	        	{
+	        		stream = new ByteArrayInputStream(newrequestVo.getFile());
+	        		
+	        	}
+	        	String fileExtn = "";
+	        	String strArr[] = {};
+	        	
+	        	if(newrequestVo.getFileName() != null && !newrequestVo.getFileName().trim().equals(""))
+	        	{
+	        		strArr = newrequestVo.getFileName().split(".");
+	        		for(String extn : strArr){
+	        			fileExtn = extn;
+	        		}
+	        		file = new DefaultStreamedContent(stream, fileExtn, "downloaded_"+newrequestVo.getFileName().trim());
+	        	}
+	        	
+
+	        	
+		 	}
+		 	catch(Exception e){
+		 		e.printStackTrace();
+		 	}
+	        
+	       return file;
+	    }
+	 
 	public String updateCategory()
 	{
 		int result = 0;
@@ -386,6 +424,22 @@ public class CreateRequestbean implements Serializable
 
 	public void setStatus(Boolean status) {
 		this.status = status;
+	}
+
+	public StreamedContent getFile() {
+		return file;
+	}
+
+	public void setFile(StreamedContent file) {
+		this.file = file;
+	}
+
+	public NewrequestVo getNewrequestVo() {
+		return newrequestVo;
+	}
+
+	public void setNewrequestVo(NewrequestVo newrequestVo) {
+		this.newrequestVo = newrequestVo;
 	}
 
 

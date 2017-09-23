@@ -111,8 +111,8 @@ function setRequestHiddenValue(new_value)
        <p:dialog modal="true" widgetVar="statusDialog" header="Status" draggable="false" closable="false" resizable="false">
     <p:graphicImage name="/demo/images/ajaxloadingbar.gif" />
 </p:dialog>
-<p:commandButton value="Download" ajax="false" onclick="PrimeFaces.monitorDownload(start, stop);" >
-        <p:fileDownload value="#{fileDownloadView.file}" />
+<p:commandButton value="Download" ajax="false" onclick="PrimeFaces.monitorDownload(start, stop);setRequestHiddenValue(#{request1.newRequestId})" >
+        <p:fileDownload value="#{createrequest.fileDownloadView()}" />
     </p:commandButton>
     </p:column>
     

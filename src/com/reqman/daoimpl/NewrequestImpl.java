@@ -22,7 +22,6 @@ import com.reqman.pojo.Userfriendlist;
 import com.reqman.pojo.Userproject;
 import com.reqman.pojo.Userrequesttype;
 import com.reqman.pojo.Users;
-import com.reqman.vo.CategoryVo;
 import com.reqman.vo.NewrequestVo;
 
 public class NewrequestImpl implements NewrequestInterface {
@@ -434,24 +433,35 @@ public class NewrequestImpl implements NewrequestInterface {
 		    Session session = null;
 		    Transaction tx = null;
 		   NewrequestVo  newrequestVo = new  NewrequestVo();
-		    Request request = null;
+		   Requestworkflow requestworkflow = null;
 			try
 			{
 	           	session = HibernateUtil.getSession();
 	            tx = session.beginTransaction();
-	            request = ( Request)
-	            			session.createCriteria( Request.class)
+	            requestworkflow = (Requestworkflow)
+	            			session.createCriteria(Requestworkflow.class)
 	            			.add(Restrictions.eq("id", Integer.valueOf(requestId)))
 	            			.uniqueResult();
 	            
-	            int counter = 1;
-	            if(request != null){
+	            Hibernate.initialize(requestworkflow.getRequest());
+	            if(requestworkflow != null && requestworkflow.getRequest() != null){
 	       
-	            	newrequestVo.setTitle(request.getTitle());
-	            	newrequestVo.setNewRequestId(request.getId());
+	            	if(requestworkflow.getRequest().getAttachment() != null && requestworkflow.getRequest().getAttachment().length != 0)
+	            	{
+	            		newrequestVo.setFile(requestworkflow.getRequest().getAttachment());
+	            	}
+	            	
+	            	newrequestVo.setTitle(requestworkflow.getRequest().getTitle());
+	            	newrequestVo.setNewRequestId(requestworkflow.getId());
+	            	if(requestworkflow.getRequest().getFilename() != null 
+	            			&& !requestworkflow.getRequest().getFilename().trim().equals(""))
+	            	{
+	            		newrequestVo.setFileName(requestworkflow.getRequest().getFilename().trim());
+	            	}
 	            	
 	            	
-	    			if(request.getStatus() == true)
+	            	
+	    			if(requestworkflow.getStatus() == true)
 	    			{
 	    				newrequestVo.setStatus("Active");
 	    			}
