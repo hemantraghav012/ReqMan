@@ -57,16 +57,16 @@ function setCategoryHiddenValue(new_value)
        <!-- -end of categoryheader -->
       
        <h:form id="categoryForm">
-      <div class="container fixedcontainer" style=" margin-top:1cm; ">
+      <div class="container fixedcontainer1" style=" margin-top:1cm; ">
  		<h:inputHidden id="categoryId" value="#{categorybean.categoryId}" ></h:inputHidden>
       <div class="row">
       
       	<div class="col-sm-6">
-      		<span style=";font-size:25px;margin-left: 3px;">Manage Category</span>
+      		<span style=";font-size:25px;margin-left: 3px;">Manage Category List</span>
       	</div>
       	
      	<div class="col-sm-6">       				
-				<h:commandLink  value="Create Category" action="#{categorybean.newCategory}" class="btn btn-primary btn-md pull-right"/>				
+				<h:commandLink  value="Create Category" action="#{categorybean.newCategory}"  class=" btn btn-primary pull-right"/>				
 				
 			
 		</div>
@@ -74,13 +74,13 @@ function setCategoryHiddenValue(new_value)
 	  </div>
 
 
-	<div>
+<div class="ui-fluid">
 
 	     <p:dataTable id="categoryTable" var="category" value="#{categorybean.categoryList}" 
 	     reflow="true" scrollable="true" scrollHeight="250" 
 	     sortBy="#{category.status},#{category.name}" 
 	     class="table table-striped table-hover table-bordered" 
-	     style="margin-top:20px;" filteredValue="#{categorybean.filteredCategoryList}" 
+	     style="margin-top:5px; " filteredValue="#{categorybean.filteredCategoryList}" 
 	     widgetVar="categoryListTable">
 	     
 	     <f:facet name="header">
@@ -92,22 +92,22 @@ function setCategoryHiddenValue(new_value)
 			
 	 
 			<p:column filterBy="#{category.name}" sortBy="#{category.name}" headerText="Category Name"  
-			filterStyle="display:none;" filterMatchMode="contains">
+			filterStyle="display:none;" filterMatchMode="contains"  style="width:3.5cm" >
 				<f:facet name="header">
 					<h:outputText value="Category Name" />
 				</f:facet>
 				<h:outputText value="#{category.name}" />
 			</p:column>
 			
-			<p:column filterBy="#{category.status}" style="width:4.5cm;" sortBy="#{category.status}" 
-			headerText="Status"  filterStyle="display:none;" filterMatchMode="contains">
+			<p:column filterBy="#{category.status}"  sortBy="#{category.status}" 
+			headerText="Status"  filterStyle="display:none;" filterMatchMode="contains"  style="width:2.1cm; text-align:center">
 				<f:facet name="header">
 					<h:outputText value="Status" />
 				</f:facet>
 				<h:outputText value="#{category.status}" />
 			</p:column>
 	        
-	        <p:column  headerText="Modify" exportable="false" style="width:3cm; text-align:center">
+	        <p:column  headerText="Modify" exportable="false" style="width:2.5cm; text-align:center">
 				
 				<p:commandLink id="nonAjax" styleClass="btn btn-primary" 
 				style="color:white;" onclick='setCategoryHiddenValue(#{category.userCategoryId})' 

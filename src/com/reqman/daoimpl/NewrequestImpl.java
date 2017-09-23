@@ -22,6 +22,7 @@ import com.reqman.pojo.Userfriendlist;
 import com.reqman.pojo.Userproject;
 import com.reqman.pojo.Userrequesttype;
 import com.reqman.pojo.Users;
+import com.reqman.vo.CategoryVo;
 import com.reqman.vo.NewrequestVo;
 
 public class NewrequestImpl implements NewrequestInterface {
@@ -424,5 +425,102 @@ public class NewrequestImpl implements NewrequestInterface {
 		}
 		return request;
 	}
+
+	@Override
+	public NewrequestVo getRequestById(String requestId) throws Exception{
+		// TODO Auto-generated method stub
+		
+		    Session session = null;
+		    Transaction tx = null;
+		   NewrequestVo  newrequestVo = new  NewrequestVo();
+		    Request request = null;
+			try
+			{
+	           	session = HibernateUtil.getSession();
+	            tx = session.beginTransaction();
+	            request = ( Request)
+	            			session.createCriteria( Request.class)
+	            			.add(Restrictions.eq("id", Integer.valueOf(requestId)))
+	            			.uniqueResult();
+	            
+	            int counter = 1;
+	            if(request != null){
+	       
+	            	newrequestVo.setTitle(request.getTitle());
+	            	newrequestVo.setNewRequestId(request.getId());
+	            	
+	            	
+	    			if(request.getStatus() == true)
+	    			{
+	    				newrequestVo.setStatus("Active");
+	    			}
+	    			else
+	    			{
+	    				newrequestVo.setStatus("InActive");
+	    			}
+	    			
+	    			tx.commit();
+	            }
+	 		}
+			catch(Exception e)
+			{
+				e.printStackTrace();
+				if(tx != null){
+					tx.rollback();
+				}
+			}
+			finally 
+			{
+	        	if(session != null)
+	            session.close();
+		    }
+
+			return newrequestVo;
+		
+		}
+
+	@Override
+	public int updateRequestById(String requestId, Boolean status,
+			String description) throws Exception{
+		
+		    Session session = null;
+		    Transaction tx = null;
+		    Request request = null;
+		    int result = 0;
+			try
+			{
+	           	session = HibernateUtil.getSession();
+	            tx = session.beginTransaction();
+	            request = (  Request)
+	            			session.createCriteria(  Request.class)
+	            			.add(Restrictions.eq("id", Integer.valueOf(requestId)))
+	            			.uniqueResult();
+	            
+	            if(  request != null){
+	            	request.setStatus(status);
+	            	//request.setDescription(description);
+	            	session.update(request);
+	    			tx.commit();
+	    			result = 1;
+	            }
+	 		}
+			catch(Exception e)
+			{
+				e.printStackTrace();
+				if(tx != null){
+					tx.rollback();
+				}
+				result = 2;
+			}
+			finally 
+			{
+	        	if(session != null)
+	            session.close();
+		    }
+
+			return result;
+		
+		
+		}
 
 }

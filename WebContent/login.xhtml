@@ -2,8 +2,11 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Frameset//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-frameset.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
+       xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
       xmlns:f="http://java.sun.com/jsf/core"  
-      xmlns:ui="http://java.sun.com/jsf/facelets"><h:head>
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+      
+      <h:head>
 <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
@@ -36,17 +39,17 @@
  
     	  <div class="modal-dialog" style=" margin-top: 2.5cm;">
 				<div class="loginmodal-container">
-					<h1>Login to <span style="font-weight: bold;">ReqMan</span> Account</h1><br></br>
+					<h1>Login to <span style="font-weight: bold;">Collabor8</span> Account</h1><br></br>
 				  <h:form >
    <div><h:messages style = "color:red;margin:8px;" /></div>
      <h:outputText>Email Id</h:outputText>
      <h:inputText   value="#{login.user}" id="emailid" required="true" requiredMessage="* Please enter your emaid id" validatorMessage="Invalid email format"> <f:validateRegex
-		pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" /> </h:inputText>
+		pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" p:placeholder="Please enter emailid" /> </h:inputText>
 				 <h:message for="emailid"  style="color:red;margin:8px;"/> 
     
     
     <h:outputText>Password</h:outputText>
-     <h:inputSecret  value="#{login.pwd}" id="password" required="true" requiredMessage="* Please enter your password"></h:inputSecret>
+     <h:inputSecret  value="#{login.pwd}" id="password" required="true" requiredMessage="* Please enter your password" p:placeholder="Please enter password"></h:inputSecret>
 		 <h:message for="password"  style="color:red;margin:8px;"/> 
      
  
@@ -58,16 +61,16 @@
 </h:form>
 					
 				  <div class="login-help">
-					 <a href="#" style="color:blue">Forgot Password</a>
+					 <a href="#" style="color:blue">Forgot Password...</a>
 					 <br></br>
 					
 					  
-					 <a href="faces/register.xhtml" style="color:blue"> Go to Register...</a> 
+					 <a href="faces/register.xhtml" style="color:blue">  Register new user...</a> 
 				  </div>
 				  <div class="or-break">
     <span>or</span>
   </div>
-  <a class="button-full btn btn-primary"  href="#" style="color:#fff;">
+  <a class="button-full btn btn-primary" style="  font-size: 19px; color:#fff;">
     Sign In with Google
 </a>
 				</div>

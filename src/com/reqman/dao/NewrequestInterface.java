@@ -21,4 +21,9 @@ public interface NewrequestInterface {
 	public List<NewrequestVo> getNewrequestDetails(String userName)
 			throws Exception;
 
+	public NewrequestVo getRequestById(String requestId)throws Exception;
+
+	public int updateRequestById(String requestId, Boolean status,
+			String description)throws Exception;
+
 }

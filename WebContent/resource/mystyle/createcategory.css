@@ -3,7 +3,7 @@
 .fixedcontainer{
 	
 	  padding: 30px;
-  max-width: 921px;
+  max-width: 950px;
   width: 100% !important;
   background-color: #fff;
   margin: 0 auto;
@@ -20,7 +20,7 @@
 } 
 
 .fixedcontainer1{  padding: 30px;
-  max-width: 1000px;
+  max-width:600px;
   width: 100% !important;
   background-color: #fff;
   margin: 0 auto;

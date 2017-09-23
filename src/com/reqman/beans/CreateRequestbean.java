@@ -18,6 +18,8 @@ import org.primefaces.model.UploadedFile;
 
 
 
+
+
 import com.reqman.dao.NewrequestInterface;
 import com.reqman.daoimpl.NewrequestImpl;
 import com.reqman.pojo.Request;
@@ -42,9 +44,9 @@ public class CreateRequestbean implements Serializable
 	 private UploadedFile attachment;
 	 private Date completiondate;
 	 private  List<Request> request ;
-	 
+	 private String requestId;
 	 private List<NewrequestVo> newrequestList = new ArrayList<NewrequestVo>();
-	
+		private Boolean status;
 	 private NewrequestInterface newrequestInterface = new NewrequestImpl();	
 	
 	@PostConstruct
@@ -157,28 +159,28 @@ public class CreateRequestbean implements Serializable
 		return "request";
 	}
 	
-/*	
+
 	public void modifyAction() {
 		
-		CategoryVo categoryVo = new CategoryVo();
+		NewrequestVo newrequestVo = new NewrequestVo();
         try
         {
-        	System.out.println("modify action"+categoryId);
+        	System.out.println("modify action"+requestId);
             //addMessage("Welcome to Primefaces!!");
-        	setCategoryId(categoryId);
-        	categoryVo = categoryMasterInterface.getUserCategoryById(categoryId);
-        	if(categoryVo != null && categoryVo.getStatus().trim().equalsIgnoreCase("Active")){
-        		setCategoryName(categoryVo.getName() != null ? categoryVo.getName() : "");
+        	setRequestId(requestId);
+        	newrequestVo = newrequestInterface.getRequestById(requestId);
+        	if(newrequestVo != null && newrequestVo.getStatus().trim().equalsIgnoreCase("Active")){
+        		setTitle(newrequestVo.getTitle() != null ? newrequestVo.getTitle() : "");
         		setStatus(true);
         	}
         	else
         	{
-        		setCategoryName(categoryVo.getName() != null ? categoryVo.getName() : "");
+        		setTitle(newrequestVo.getTitle() != null ? newrequestVo.getTitle(): "");
         		setStatus(false);
         	}
         	
         	FacesContext.getCurrentInstance()
-            .getExternalContext().dispatch("modifycategory.xhtml");
+            .getExternalContext().dispatch("modifyrequest.xhtml");
 
         }
         catch(Exception e){
@@ -186,19 +188,18 @@ public class CreateRequestbean implements Serializable
         }
         
     }
-	
 	public String updateCategory()
 	{
 		int result = 0;
 		try{
 			System.out.println("--updateCategory-status-"+status);
-			System.out.println("--updateCategory-categoryId-"+categoryId);
+			System.out.println("--updateCategory-categoryId-"+requestId);
 			HttpSession session = SessionUtils.getSession();
 			String userName = (String)session.getAttribute("username");
 			
 			System.out.println("--usersession--userName-->"+userName);
 			
-        	result = categoryMasterInterface.updateUserCategoryById(categoryId, status);
+        	result = newrequestInterface.updateRequestById(requestId, status,description);
         	
         	if(result == 2)
         	{
@@ -212,7 +213,7 @@ public class CreateRequestbean implements Serializable
         	
         	if(result == 1)
         	{
-        		categoryList = categoryMasterInterface.getCategoryDetails(userName);
+        		newrequestList = newrequestInterface.getNewrequestDetails(userName);
         	}
         	
 		}
@@ -224,12 +225,12 @@ public class CreateRequestbean implements Serializable
 					new FacesMessage(FacesMessage.SEVERITY_WARN,
 							"Problem while modifying the Category",
 							"Problem while modifying the Category"));
-			return "modifycategory.xhtml";
+			return "modifyrequest.xhtml";
 		}
-		return "category";
+		return "request";
 	}
 	
-	public void postProcessXLS(Object document) {
+/*	public void postProcessXLS(Object document) {
         HSSFWorkbook wb = (HSSFWorkbook) document;
         HSSFSheet sheet = wb.getSheetAt(0);
         HSSFRow header = sheet.getRow(0);
@@ -259,6 +260,11 @@ public class CreateRequestbean implements Serializable
     }*/
 	
 
+	private void setStatus(boolean b) {
+		// TODO Auto-generated method stub
+		
+	}
+
 	public void addMessage(String summary) 
 	{
         FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, summary,  null);
@@ -285,11 +291,13 @@ public class CreateRequestbean implements Serializable
 		this.description = description;
 	}
 
+	public String getRequestId() {
+		return requestId;
+	}
 
-	
-
-	
-
+	public void setRequestId(String requestId) {
+		this.requestId = requestId;
+	}
 
 	public Integer getUsercategory() {
 		return usercategory;
@@ -321,51 +329,15 @@ public class CreateRequestbean implements Serializable
 	}
 
 
-	
-
-
-	
-
-
-
-
-	
-
-	
-
-
-
-
-	
-
-
 	public List<NewrequestVo> getNewrequestList() {
 		return newrequestList;
 	}
-
-
-
-
-
-
-
-
-
 
 	public void setNewrequestList(List<NewrequestVo> newrequestList) {
 		this.newrequestList = newrequestList;
 	}
 
 
-
-
-
-
-
-
-
-
-	
 	public Integer[] getUserfriendlist() {
 		return userfriendlist;
 	}
@@ -373,23 +345,9 @@ public class CreateRequestbean implements Serializable
 
 
 
-
-
-
-
-
-
 	public void setUserfriendlist(Integer[] userfriendlist) {
 		this.userfriendlist = userfriendlist;
 	}
-
-
-
-
-
-
-
-
 
 
 	public UploadedFile getAttachment() {
@@ -413,28 +371,21 @@ public class CreateRequestbean implements Serializable
 
 
 
-
-
-
-
-
-
-
 	public List<Request> getRequest() {
 		return request;
 	}
 
 
-
-
-
-
-
-
-
-
 	public void setRequest(List<Request> request) {
 		this.request = request;
+	}
+
+	public Boolean getStatus() {
+		return status;
+	}
+
+	public void setStatus(Boolean status) {
+		this.status = status;
 	}
 
 
