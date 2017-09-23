@@ -282,6 +282,7 @@ public class NewrequestImpl implements NewrequestInterface {
 										newrequestVo.setStatus("In Active");
 									}
 									
+									newrequestVo.setNewRequestId(requestworkflowDB.getId());
 									
 									
 									requestList.add(newrequestVo);
