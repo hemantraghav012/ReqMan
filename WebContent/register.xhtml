@@ -10,11 +10,11 @@
 <link rel="stylesheet" href="resource/css/bootstrap.css"/>
 <link rel="stylesheet" href="resource/mystyle/home.css"/>
 <link rel="stylesheet" href="resource/mystyle/register.css"/>
-
+ <link rel="stylesheet" href="resource/mystyle/button.css"/>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script type="text/javascript" src="resource/js/bootstrap.js"/>
 <script type="text/javascript" src="resource/js/jquery.js"/>
-<title>Log In</title>
+<title>Register</title>
 </h:head>
 
 <h:body style="background-color:#white">
@@ -29,7 +29,7 @@
 
 <div class="container registerfield " style=" margin-top:1.5cm;" >
 <div class="row " >
-<div class="col-sm-4.col-sm-4" style=" margin-left:0.4cm; ">
+<div class="col-sm-4.col-sm-4" style=" margin-left:1.4cm; ">
 <h2 style="font-weight: bold;  margin-top: 20px;  "> Start your free 30-day trial.</h2>
 
 <h3 >Fully functional. No credit card required.</h3>
@@ -69,12 +69,12 @@
 
  <div class=" row form-group registerfieldname">
 <div class="col-sm-2 control-label"><h:outputLabel>Short Name:</h:outputLabel></div>
-<div class="col-sm-6"><h:inputText value="#{register.shortname}"  maxlength="2" class="form-control" id="shortname" required="true" requiredMessage="* Please enter your last name"></h:inputText><span style="color:red;">*( Only 2 characters)</span></div>
+<div class="col-sm-6"><h:inputText value="#{register.shortname}"  maxlength="4" class="form-control" id="shortname" required="true" requiredMessage="* Please enter your short name"></h:inputText><span style="color:red;">Please enter upto 4 characters</span></div>
  <h:message for="shortname"  style="color:red;margin:8px;"/> 
 </div>
  <div class=" row form-group ">
  <div class="col-sm-2 .col-sm-offset-2"></div>
-<div class="col-sm-6 "><h:commandLink action="#{register.submit()}" value="submit" class="btn btn-lg btn-primary btn-block"></h:commandLink></div>
+<div class="col-sm-6 "><h:commandLink action="#{register.submit()}" value="Submit" class="btn fontsize btn-success btn-block"></h:commandLink></div>
 </div>
 
 </h:form>

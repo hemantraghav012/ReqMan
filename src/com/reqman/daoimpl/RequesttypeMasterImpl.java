@@ -10,7 +10,7 @@ import org.hibernate.Transaction;
 import org.hibernate.criterion.Restrictions;
 
 import com.reqman.common.HibernateUtil;
-import com.reqman.common.HibernateUtilH;
+import com.reqman.common.HibernateUtil;
 import com.reqman.dao.requesttypeMasterInterface;
 import com.reqman.pojo.Category;
 import com.reqman.pojo.Requesttype;
@@ -315,6 +315,126 @@ RequesttypeVo requesttypeVo = new RequesttypeVo();
 		return result;
 	
 	
+	}
+
+	@Override
+	public List<RequesttypeVo> getRequesttypeStatus(String userName)
+			throws Exception {
+		// TODO Auto-generated method stub
+		List<RequesttypeVo> requesttypeList1 = new ArrayList<RequesttypeVo>();
+		Users usersTemp = null;
+	    Session session = null;
+	    Transaction tx = null;
+	    RequesttypeVo requesttypeVo = null;
+		try
+		{
+           	session = HibernateUtil.getSession();
+            tx = session.beginTransaction();
+            usersTemp = (Users)session.createCriteria(Users.class)
+            		.add(Restrictions.eq("emailid", userName.toLowerCase().trim()).ignoreCase())
+            		.uniqueResult();
+            
+            if(usersTemp != null){
+            	
+            	int counter = 1;
+            	if(usersTemp.getUserrequesttypes() != null && usersTemp.getUserrequesttypes().size() != 0)
+            	{
+            		for(Userrequesttype userrequesttypeDB : usersTemp.getUserrequesttypes())
+            		{
+            			if(userrequesttypeDB != null && userrequesttypeDB.getRequesttype() != null 
+            			&& userrequesttypeDB.getRequesttype().getStatus() == true && userrequesttypeDB.getStatus() == true)
+            			{
+            				requesttypeVo = new RequesttypeVo();
+            				//requesttypeVo.setSrNo(counter);
+            				requesttypeVo.setName(userrequesttypeDB.getRequesttype().getName());
+            				requesttypeVo.setUserRequesttypeId(userrequesttypeDB.getId());
+                			if(userrequesttypeDB.getStatus().equals(true))
+                			{
+                				requesttypeVo.setStatus("Active");
+                			}
+                			else
+                			{
+                				requesttypeVo.setStatus("InActive");
+                			}
+                			counter++;
+                			requesttypeList1.add(requesttypeVo);
+            			}
+            		}
+            	}
+            	tx.commit();
+            }
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+		finally 
+		{
+        	if(session != null)
+            session.close();
+	    }
+
+		return requesttypeList1;
+	}
+
+	@Override
+	public List<RequesttypeVo> getRequesttypefalseStatus(String userName)
+			throws Exception {
+		// TODO Auto-generated method stub
+		List<RequesttypeVo> requesttypeList1 = new ArrayList<RequesttypeVo>();
+		Users usersTemp = null;
+	    Session session = null;
+	    Transaction tx = null;
+	    RequesttypeVo requesttypeVo = null;
+		try
+		{
+           	session = HibernateUtil.getSession();
+            tx = session.beginTransaction();
+            usersTemp = (Users)session.createCriteria(Users.class)
+            		.add(Restrictions.eq("emailid", userName.toLowerCase().trim()).ignoreCase())
+            		.uniqueResult();
+            
+            if(usersTemp != null){
+            	
+            	int counter = 1;
+            	if(usersTemp.getUserrequesttypes() != null && usersTemp.getUserrequesttypes().size() != 0)
+            	{
+            		for(Userrequesttype userrequesttypeDB : usersTemp.getUserrequesttypes())
+            		{
+            			if(userrequesttypeDB != null && userrequesttypeDB.getRequesttype() != null 
+            			&& userrequesttypeDB.getRequesttype().getStatus() == true && userrequesttypeDB.getStatus() == false)
+            			{
+            				requesttypeVo = new RequesttypeVo();
+            				//requesttypeVo.setSrNo(counter);
+            				requesttypeVo.setName(userrequesttypeDB.getRequesttype().getName());
+            				requesttypeVo.setUserRequesttypeId(userrequesttypeDB.getId());
+                			if(userrequesttypeDB.getStatus().equals(true))
+                			{
+                				requesttypeVo.setStatus("Active");
+                			}
+                			else
+                			{
+                				requesttypeVo.setStatus("InActive");
+                			}
+                			counter++;
+                			requesttypeList1.add(requesttypeVo);
+            			}
+            		}
+            	}
+            	tx.commit();
+            }
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+		finally 
+		{
+        	if(session != null)
+            session.close();
+	    }
+
+		return requesttypeList1;
 	}
 	
 

@@ -11,7 +11,7 @@ import org.hibernate.Transaction;
 import org.hibernate.criterion.Restrictions;
 
 import com.reqman.common.HibernateUtil;
-import com.reqman.common.HibernateUtilH;
+import com.reqman.common.HibernateUtil;
 import com.reqman.dao.CategoryMasterInterface;
 import com.reqman.pojo.Category;
 import com.reqman.pojo.Usercategory;
@@ -223,6 +223,7 @@ public class CategoryMasterImpl implements CategoryMasterInterface{
 	}
 	
 	
+	
 	public CategoryVo getUserCategoryById(String categoryId) throws Exception
 	{
 	    Session session = null;
@@ -313,8 +314,128 @@ public class CategoryMasterImpl implements CategoryMasterInterface{
 	
 	
 	}
-	
 
+
+	
+	@Override
+	public List<CategoryVo> getCategoryStatus(String userName) throws Exception {
+		// TODO Auto-generated method stub
+		List<CategoryVo> categoryList1 = new ArrayList<CategoryVo>();
+		Users usersTemp = null;
+	    Session session = null;
+	    Transaction tx = null;
+	    CategoryVo categoryVo = null;	
+		try
+		{
+           	session = HibernateUtil.getSession();
+            tx = session.beginTransaction();
+            usersTemp = (Users)session.createCriteria(Users.class)
+            		.add(Restrictions.eq("emailid", userName.toLowerCase().trim()).ignoreCase())
+            		.uniqueResult();
+            
+            if(usersTemp != null  ){   
+
+            
+            	if(usersTemp.getUsercategories() != null && usersTemp.getUsercategories().size() != 0 )
+            	{
+            		for(Usercategory usercategoryDB : usersTemp.getUsercategories())
+            		{
+            			if(usercategoryDB != null && usercategoryDB.getCategory() != null 
+            					&& usercategoryDB.getCategory().getStatus() == true  && usercategoryDB.getStatus() == true)
+            			{
+            				categoryVo = new CategoryVo();                			
+                			categoryVo.setName(usercategoryDB.getCategory().getName());
+                			categoryVo.setUserCategoryId(usercategoryDB.getId());           			
+                			if(usercategoryDB.getStatus().equals(true))
+                			{
+                				categoryVo.setStatus("Active");
+                			}
+                			else
+                			{
+                				categoryVo.setStatus("InActive");
+                			}
+                			
+                			categoryList1.add(categoryVo);
+            			}
+            		}
+            	}
+            	tx.commit();
+            }
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+		finally 
+		{
+        	if(session != null)
+            session.close();
+	    }
+
+		return categoryList1;
+	}
+
+
+	@Override
+	public List<CategoryVo> getCategoryStatusfalse(String userName)
+			throws Exception {
+		// TODO Auto-generated method stub
+		List<CategoryVo> categoryList2 = new ArrayList<CategoryVo>();
+		Users usersTemp = null;
+	    Session session = null;
+	    Transaction tx = null;
+	    CategoryVo categoryVo = null;	
+		try
+		{
+           	session = HibernateUtil.getSession();
+            tx = session.beginTransaction();
+            usersTemp = (Users)session.createCriteria(Users.class)
+            		.add(Restrictions.eq("emailid", userName.toLowerCase().trim()).ignoreCase())
+            		.uniqueResult();
+            
+            if(usersTemp != null  ){   
+
+            
+            	if(usersTemp.getUsercategories() != null && usersTemp.getUsercategories().size() != 0 )
+            	{
+            		for(Usercategory usercategoryDB : usersTemp.getUsercategories())
+            		{
+            			if(usercategoryDB != null && usercategoryDB.getCategory() != null 
+            					&& usercategoryDB.getCategory().getStatus() == true  && usercategoryDB.getStatus() == false)
+            			{
+            				categoryVo = new CategoryVo();                			
+                			categoryVo.setName(usercategoryDB.getCategory().getName());
+                			categoryVo.setUserCategoryId(usercategoryDB.getId());           			
+                			if(usercategoryDB.getStatus().equals(true))
+                			{
+                				categoryVo.setStatus("Active");
+                			}
+                			else
+                			{
+                				categoryVo.setStatus("InActive");
+                			}
+                			
+                			categoryList2.add(categoryVo);
+            			}
+            		}
+            	}
+            	tx.commit();
+            }
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+		finally 
+		{
+        	if(session != null)
+            session.close();
+	    }
+
+		return categoryList2;
+
+	
+	}
 	
 
 }

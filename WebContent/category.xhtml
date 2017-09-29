@@ -16,7 +16,7 @@
 <link rel="stylesheet" href="resource/css/bootstrap.css"/>
 <link rel="stylesheet" href="resource/mystyle/home.css"/>
 <link rel="stylesheet" href="resource/mystyle/createcategory.css"/>
- 
+ <link rel="stylesheet" href="resource/mystyle/button.css"/>
 <script type="text/javascript" src="resource/js/bootstrap.js"/>
 <script type="text/javascript" src="resource/js/jquery.js"/>
 <title>New Category</title>
@@ -62,11 +62,11 @@ function setCategoryHiddenValue(new_value)
       <div class="row">
       
       	<div class="col-sm-6">
-      		<span style=";font-size:25px;margin-left: 3px;">Manage Category List</span>
+      		<span style=";font-size:25px;margin-left: 3px;">Manage Request Category List</span>
       	</div>
       	
      	<div class="col-sm-6">       				
-				<h:commandLink  value="Create Category" action="#{categorybean.newCategory}"  class=" btn btn-primary pull-right"/>				
+				<h:commandLink  value="Create Request Category" action="#{categorybean.newCategory}"  class=" btn btn1  pull-right fontsize"/>				
 				
 			
 		</div>
@@ -83,18 +83,18 @@ function setCategoryHiddenValue(new_value)
 	     style="margin-top:5px; " filteredValue="#{categorybean.filteredCategoryList}" 
 	     widgetVar="categoryListTable">
 	     
-	     <f:facet name="header">
-			<p:outputPanel>
-				<h:outputText value="Search all fields:" />
-				<h:inputText id="globalFilter" onkeyup="PF('categoryListTable').filter()" />
+	     <f:facet name="header" >
+			<p:outputPanel style="text-align:left;">
+				<h:outputText value="Search on any  fields :  "/>
+				<h:inputText id="globalFilter" onkeyup="PF('categoryListTable').filter() " style="width:200px" />
 			</p:outputPanel>
 		</f:facet>
 			
 	 
 			<p:column filterBy="#{category.name}" sortBy="#{category.name}" headerText="Category Name"  
-			filterStyle="display:none;" filterMatchMode="contains"  style="width:3.5cm" >
+			filterStyle="display:none;" filterMatchMode="contains"  style="width:3.5cm; ">
 				<f:facet name="header">
-					<h:outputText value="Category Name" />
+					<h:outputText value="Category Name"  />
 				</f:facet>
 				<h:outputText value="#{category.name}" />
 			</p:column>
@@ -109,7 +109,7 @@ function setCategoryHiddenValue(new_value)
 	        
 	        <p:column  headerText="Modify" exportable="false" style="width:2.5cm; text-align:center">
 				
-				<p:commandLink id="nonAjax" styleClass="btn btn-primary" 
+				<p:commandLink id="nonAjax" styleClass="btn btn-primary fontsize" 
 				style="color:white;" onclick='setCategoryHiddenValue(#{category.userCategoryId})' 
 				action="#{categorybean.modifyAction()}" ajax="false" >
 	        		Update
@@ -123,11 +123,11 @@ function setCategoryHiddenValue(new_value)
 
 	<div>
 		<strong>Export Data &nbsp;</strong>
-	    <h:commandButton id="excel" class="btn btn-info" value="Excel">
+	    <h:commandButton id="excel" class="btn btn-primary fontsize" value="Excel">
 	        <p:dataExporter type="xls" target="categoryTable" fileName="category" postProcessor="#{categorybean.postProcessXLS}" />
 	    </h:commandButton>
 	 	&nbsp;
-	    <h:commandButton id="pdf" class="btn btn-info" value="Pdf">
+	    <h:commandButton id="pdf" class="btn btn-primary fontsize" value="Pdf">
 	        <p:dataExporter type="pdf" target="categoryTable" fileName="category" preProcessor="#{categorybean.preProcessPDF}" />
 	    </h:commandButton>
 	</div>

@@ -2,8 +2,11 @@ package com.reqman.beans;
 
 
 import java.io.ByteArrayInputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -16,14 +19,26 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
 
+import org.apache.poi.hssf.usermodel.HSSFCell;
+import org.apache.poi.hssf.usermodel.HSSFCellStyle;
+import org.apache.poi.hssf.usermodel.HSSFRow;
+import org.apache.poi.hssf.usermodel.HSSFSheet;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.hssf.util.HSSFColor;
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
 import org.primefaces.model.UploadedFile;
 
+import com.lowagie.text.BadElementException;
+import com.lowagie.text.Document;
+import com.lowagie.text.DocumentException;
+import com.lowagie.text.PageSize;
 import com.reqman.dao.NewrequestInterface;
 import com.reqman.daoimpl.NewrequestImpl;
 import com.reqman.pojo.Request;
 import com.reqman.util.SessionUtils;
+import com.reqman.util.UserSession;
+import com.reqman.vo.CategoryVo;
 import com.reqman.vo.NewrequestVo;
 
 @ManagedBean(name="createrequest",eager = true)
@@ -48,7 +63,10 @@ public class CreateRequestbean implements Serializable
 	 private NewrequestInterface newrequestInterface = new NewrequestImpl();
 	 private StreamedContent file;
 	 private NewrequestVo newrequestVo = new NewrequestVo();
+	 private NewrequestVo selectedReuest;
+	 private List<NewrequestVo> filteredRequestList = new ArrayList<NewrequestVo>();
 	
+
 	@PostConstruct
     public void init() 
 	{
@@ -61,7 +79,7 @@ public class CreateRequestbean implements Serializable
 			String userName = (String)session.getAttribute("username");
 			System.out.println("--usersession--userName-->"+userName);
 			newrequestList = newrequestInterface.getNewrequestDetails(userName);
-		
+			setFilteredRequestList(newrequestList);
 		}
 		catch(Exception e)
 		{
@@ -76,7 +94,10 @@ public class CreateRequestbean implements Serializable
 		{
 			newrequestList = new ArrayList<NewrequestVo>();
 			System.out.println("--create new request-->");
-			
+			HttpSession session = SessionUtils.getSession();
+			String userName = (String)session.getAttribute("username");
+			System.out.println("--usersession--userName-->"+userName);
+			newrequestList = newrequestInterface.getNewrequestDetails(userName);
 		
 		}
 		catch(Exception e)
@@ -105,9 +126,8 @@ public class CreateRequestbean implements Serializable
    
 	public String save()
  {
-
-		NewrequestInterface newrequestinterface = new NewrequestImpl();
 		int result = 0;
+		UserSession usersession = new UserSession();
 		try {
 			newrequestList = new ArrayList<NewrequestVo>();
 			HttpSession session = SessionUtils.getSession();
@@ -115,9 +135,8 @@ public class CreateRequestbean implements Serializable
 
 			System.out.println("friendlist" + userfriendlist);
 
-			result = newrequestinterface.save(title, description, usercategory,
-					userproject, userrequesttype, attachment, userName,
-					completiondate, userfriendlist);
+			result = newrequestInterface.save(title, description, usercategory,	userproject, userrequesttype,
+					                                  attachment, userName,	completiondate, userfriendlist);
 
 			if (result == 1) {
 				FacesContext.getCurrentInstance().addMessage(
@@ -139,7 +158,7 @@ public class CreateRequestbean implements Serializable
 				return "newrequestfriend";
 			}
 			if (result == 3) {
-
+				newrequestList = newrequestInterface.getNewrequestDetails(userName);
 				FacesContext.getCurrentInstance().addMessage(
 						null,
 						new FacesMessage(FacesMessage.SEVERITY_WARN,
@@ -168,14 +187,22 @@ public class CreateRequestbean implements Serializable
         	System.out.println("modify action"+requestId);
             //addMessage("Welcome to Primefaces!!");
         	setRequestId(requestId);
-        	newrequestVo = newrequestInterface.getRequestById(requestId);
+        	newrequestVo = newrequestInterface.getRequestById(requestId);      	
+			
         	if(newrequestVo != null && newrequestVo.getStatus().trim().equalsIgnoreCase("Active")){
-        		setTitle(newrequestVo.getTitle() != null ? newrequestVo.getTitle() : "");
+        		setTitle(newrequestVo.getTitle() != null ? newrequestVo.getTitle(): "");
+        		setDescription(newrequestVo.getDescription() != null ? newrequestVo.getDescription() : "");
+        		//setCompletiondate((Date) (newrequestVo.getChangedate() !=null ? newrequestVo.getChangedate() : ""));
+        	
+        		
         		setStatus(true);
+        		
         	}
         	else
         	{
         		setTitle(newrequestVo.getTitle() != null ? newrequestVo.getTitle(): "");
+        		setDescription(newrequestVo.getDescription() != null ? newrequestVo.getDescription() : "");
+        		
         		setStatus(false);
         	}
         	
@@ -188,6 +215,51 @@ public class CreateRequestbean implements Serializable
         }
         
     }
+	
+	public String updateRequest()
+	{
+		int result = 0;
+		try{
+			System.out.println("--updateRequest-status-"+status);
+			System.out.println("--updateRequest-status-"+description);
+			System.out.println("--updateRequest-status-"+completiondate);
+			
+			
+			System.out.println("--updateRequesr requestid-"+requestId);
+			HttpSession session = SessionUtils.getSession();
+			String userName = (String)session.getAttribute("username");			
+			System.out.println("--usersession--userName-->"+userName);
+			
+        	result = newrequestInterface.updateRequestById(requestId,status,description, completiondate,attachment);
+        	
+        	if(result == 2)
+        	{
+        		FacesContext.getCurrentInstance().addMessage(
+						null,
+						new FacesMessage(FacesMessage.SEVERITY_WARN,
+								"Problem while modifying the Category",
+								"Problem while modifying the Category"));
+				return "modifyrequest.xhtml";
+        	}
+        	
+        	if(result == 1)
+        	{
+        		newrequestList = newrequestInterface.getNewrequestDetails(userName);
+        	}
+        	
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+			FacesContext.getCurrentInstance().addMessage(
+					null,
+					new FacesMessage(FacesMessage.SEVERITY_WARN,
+							"Problem while modifying the Category",
+							"Problem while modifying the Category"));
+			return "modifyrequest.xhtml";
+		}
+		return "request";
+	}
 	
 	
 	 public StreamedContent fileDownloadView() { 
@@ -226,82 +298,40 @@ public class CreateRequestbean implements Serializable
 	       return file;
 	    }
 	 
-	public String updateCategory()
-	{
-		int result = 0;
-		try{
-			System.out.println("--updateCategory-status-"+status);
-			System.out.println("--updateCategory-categoryId-"+requestId);
-			HttpSession session = SessionUtils.getSession();
-			String userName = (String)session.getAttribute("username");
-			
-			System.out.println("--usersession--userName-->"+userName);
-			
-        	result = newrequestInterface.updateRequestById(requestId, status,description);
-        	
-        	if(result == 2)
-        	{
-        		FacesContext.getCurrentInstance().addMessage(
-						null,
-						new FacesMessage(FacesMessage.SEVERITY_WARN,
-								"Problem while modifying the Category",
-								"Problem while modifying the Category"));
-				return "modifycategory.xhtml";
-        	}
-        	
-        	if(result == 1)
-        	{
-        		newrequestList = newrequestInterface.getNewrequestDetails(userName);
-        	}
-        	
-		}
-		catch(Exception e)
-		{
-			e.printStackTrace();
-			FacesContext.getCurrentInstance().addMessage(
-					null,
-					new FacesMessage(FacesMessage.SEVERITY_WARN,
-							"Problem while modifying the Category",
-							"Problem while modifying the Category"));
-			return "modifyrequest.xhtml";
-		}
-		return "request";
-	}
 	
-/*	public void postProcessXLS(Object document) {
-        HSSFWorkbook wb = (HSSFWorkbook) document;
-        HSSFSheet sheet = wb.getSheetAt(0);
-        HSSFRow header = sheet.getRow(0);
-         
-        HSSFCellStyle cellStyle = wb.createCellStyle();  
-        cellStyle.setFillForegroundColor(HSSFColor.GREEN.index);
-        cellStyle.setFillPattern(HSSFCellStyle.SOLID_FOREGROUND);
-         
-        for(int i=0; i < header.getPhysicalNumberOfCells();i++) {
-            HSSFCell cell = header.getCell(i);
-             
-            cell.setCellStyle(cellStyle);
-        }
-        
-        
-     }
-     
-    public void preProcessPDF(Object document) throws IOException, BadElementException, DocumentException {
-        Document pdf = (Document) document;
-        pdf.open();
-        pdf.setPageSize(PageSize.A4);
- 
-        //ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
-        //String logo = externalContext.getRealPath("") + File.separator + "resources" + File.separator + "demo" + File.separator + "images" + File.separator + "prime_logo.png";
-         
-        pdf.addTitle("Collabor8");
-    }*/
+	
+	 public void postProcessXLS(Object document) {
+	        HSSFWorkbook wb = (HSSFWorkbook) document;
+	        HSSFSheet sheet = wb.getSheetAt(0);
+	        HSSFRow header = sheet.getRow(0);
+	         
+	        HSSFCellStyle cellStyle = wb.createCellStyle();  
+	        cellStyle.setFillForegroundColor(HSSFColor.GREEN.index);
+	        cellStyle.setFillPattern(HSSFCellStyle.SOLID_FOREGROUND);
+	         
+	        for(int i=0; i < header.getPhysicalNumberOfCells();i++) {
+	            HSSFCell cell = header.getCell(i);
+	             
+	            cell.setCellStyle(cellStyle);
+	        }
+	        
+	        
+	     }
+	     
+	    public void preProcessPDF(Object document) throws IOException, BadElementException, DocumentException {
+	        Document pdf = (Document) document;
+	        pdf.open();
+	        pdf.setPageSize(PageSize.A4);
+	 
+	        //ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
+	        //String logo = externalContext.getRealPath("") + File.separator + "resources" + File.separator + "demo" + File.separator + "images" + File.separator + "prime_logo.png";
+	         
+	        pdf.addTitle("Collabor8");
+	    }
+		
 	
 
-	private void setStatus(boolean b) {
-		// TODO Auto-generated method stub
-		
-	}
+	
 
 	public void addMessage(String summary) 
 	{
@@ -310,25 +340,26 @@ public class CreateRequestbean implements Serializable
     }
 
 
+	
 	public String getTitle() {
 		return title;
 	}
-
 
 	public void setTitle(String title) {
 		this.title = title;
 	}
 
-
+	
+	
 	public String getDescription() {
 		return description;
 	}
-
 
 	public void setDescription(String description) {
 		this.description = description;
 	}
 
+	
 	public String getRequestId() {
 		return requestId;
 	}
@@ -337,16 +368,18 @@ public class CreateRequestbean implements Serializable
 		this.requestId = requestId;
 	}
 
+	
+	
 	public Integer getUsercategory() {
 		return usercategory;
 	}
-
 
 	public void setUsercategory(Integer usercategory) {
 		this.usercategory = usercategory;
 	}
 
 
+	
 	public Integer getUserproject() {
 		return userproject;
 	}
@@ -357,16 +390,17 @@ public class CreateRequestbean implements Serializable
 	}
 
 
+	
 	public Integer getUserrequesttype() {
 		return userrequesttype;
 	}
-
 
 	public void setUserrequesttype(Integer userrequesttype) {
 		this.userrequesttype = userrequesttype;
 	}
 
 
+	
 	public List<NewrequestVo> getNewrequestList() {
 		return newrequestList;
 	}
@@ -376,32 +410,30 @@ public class CreateRequestbean implements Serializable
 	}
 
 
+	
 	public Integer[] getUserfriendlist() {
 		return userfriendlist;
 	}
-
-
-
 
 	public void setUserfriendlist(Integer[] userfriendlist) {
 		this.userfriendlist = userfriendlist;
 	}
 
 
+
 	public UploadedFile getAttachment() {
 		return attachment;
 	}
-
 
 	public void setAttachment(UploadedFile attachment) {
 		this.attachment = attachment;
 	}
 
 
+
 	public Date getCompletiondate() {
 		return completiondate;
 	}
-
 
 	public void setCompletiondate(Date completiondate) {
 		this.completiondate = completiondate;
@@ -418,6 +450,9 @@ public class CreateRequestbean implements Serializable
 		this.request = request;
 	}
 
+	
+	
+	
 	public Boolean getStatus() {
 		return status;
 	}
@@ -426,6 +461,9 @@ public class CreateRequestbean implements Serializable
 		this.status = status;
 	}
 
+	
+	
+	
 	public StreamedContent getFile() {
 		return file;
 	}
@@ -434,6 +472,8 @@ public class CreateRequestbean implements Serializable
 		this.file = file;
 	}
 
+	
+	
 	public NewrequestVo getNewrequestVo() {
 		return newrequestVo;
 	}
@@ -442,6 +482,25 @@ public class CreateRequestbean implements Serializable
 		this.newrequestVo = newrequestVo;
 	}
 
+	
+	public NewrequestVo getSelectedReuest() {
+		return selectedReuest;
+	}
+
+	public void setSelectedReuest(NewrequestVo selectedReuest) {
+		this.selectedReuest = selectedReuest;
+	}
+
+	
+	public List<NewrequestVo> getFilteredRequestList() {
+		return filteredRequestList;
+	}
+
+	public void setFilteredRequestList(List<NewrequestVo> filteredRequestList) {
+		this.filteredRequestList = filteredRequestList;
+	}
+
+	
 
 	
 	

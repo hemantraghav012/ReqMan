@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -17,6 +18,7 @@ import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.hssf.util.HSSFColor;
+import org.primefaces.model.chart.PieChartModel;
 
 import com.lowagie.text.BadElementException;
 import com.lowagie.text.Document;
@@ -40,7 +42,8 @@ public class Requesttypebean implements Serializable{
 	
 
 private  List<RequesttypeVo> requesttypeList = new ArrayList<RequesttypeVo>();
-	
+private  List<RequesttypeVo> requesttypeList1 = new ArrayList<RequesttypeVo>();
+private  List<RequesttypeVo> requesttypeList2 = new ArrayList<RequesttypeVo>();
 	private requesttypeMasterInterface requesttypeMasterInterface = new RequesttypeMasterImpl();
 	
 	private  List<RequesttypeVo> filteredRequesttypeList = new ArrayList<RequesttypeVo>();
@@ -50,6 +53,7 @@ private  List<RequesttypeVo> requesttypeList = new ArrayList<RequesttypeVo>();
 	private Boolean status;
 	private ProjectVo selectedRequesttype;
 	private String requesttypeId;
+	  private PieChartModel piechart;
 	
 	
 	@PostConstruct
@@ -62,12 +66,32 @@ private  List<RequesttypeVo> requesttypeList = new ArrayList<RequesttypeVo>();
 			System.out.println("--usersession--userName-->"+userName);
 			requesttypeList = requesttypeMasterInterface.getRequesttypeDetails(userName);
 			setFilteredRequesttypeList(requesttypeList);
+			requesttypeList1 = requesttypeMasterInterface.getRequesttypeStatus(userName);
+			requesttypeList2 = requesttypeMasterInterface.getRequesttypefalseStatus(userName);
+			 createPieModels();
 		}
 		catch(Exception e)
 		{
 			e.printStackTrace();
 		}
 	}
+	
+	
+	
+	 private void createPieModels() {
+	        piechart = new PieChartModel();
+	     	        
+	    int random1 = requesttypeList2.size(); // Method to get data from db
+	    int random2 = requesttypeList1.size();  // Method to get data from db
+
+	    piechart.getData().put("false status", random1);
+	    piechart.getData().put("true Status", random2);	  
+	    piechart.setTitle("Requesttype Status");
+	    piechart.setLegendPosition("ne");
+	    //piechart.setSeriesColors("green,red");
+	   // piechart.setFill(false);
+	    piechart.setShowDataLabels(true);
+	 }
 	
 	
 	public String requesttypePage()
@@ -333,6 +357,38 @@ private  List<RequesttypeVo> requesttypeList = new ArrayList<RequesttypeVo>();
 
 	public void setSelectedRequesttype(ProjectVo selectedRequesttype) {
 		this.selectedRequesttype = selectedRequesttype;
+	}
+
+
+	public List<RequesttypeVo> getRequesttypeList1() {
+		return requesttypeList1;
+	}
+
+
+	public void setRequesttypeList1(List<RequesttypeVo> requesttypeList1) {
+		this.requesttypeList1 = requesttypeList1;
+	}
+
+
+	public PieChartModel getPiechart() {
+		return piechart;
+	}
+
+
+	public void setPiechart(PieChartModel piechart) {
+		this.piechart = piechart;
+	}
+
+
+
+	public List<RequesttypeVo> getRequesttypeList2() {
+		return requesttypeList2;
+	}
+
+
+
+	public void setRequesttypeList2(List<RequesttypeVo> requesttypeList2) {
+		this.requesttypeList2 = requesttypeList2;
 	}
 	
 	

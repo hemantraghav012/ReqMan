@@ -14,7 +14,7 @@ import org.hibernate.criterion.Restrictions;
 import org.primefaces.model.chart.PieChartModel;
 
 import com.reqman.common.HibernateUtil;
-import com.reqman.common.HibernateUtilH;
+import com.reqman.common.HibernateUtil;
 import com.reqman.dao.FriendMasterInterface;
 import com.reqman.pojo.Category;
 import com.reqman.pojo.Project;
@@ -360,6 +360,135 @@ public class FriendMasterImpl implements FriendMasterInterface {
 	
 	
 	}
+
+
+
+	@Override
+	public List<FriendVo> getUsersStatus(String userName) throws Exception {
+		// TODO Auto-generated method stub
+		List<FriendVo> friendList1 = new ArrayList<FriendVo>();
+		Users usersTemp = null;
+	    Session session = null;
+	    Transaction tx = null;
+	 FriendVo friendVo = null;
+		try
+		{
+           	session = HibernateUtil.getSession();
+            tx = session.beginTransaction();
+            usersTemp = (Users)session.createCriteria(Users.class)
+            		.add(Restrictions.eq("emailid", userName.toLowerCase().trim()).ignoreCase())
+            		.uniqueResult();
+            
+            if(usersTemp != null){
+            	
+            	int counter = 1;
+            	if(usersTemp.getUserfriendlistsForUserid() != null && usersTemp.getUserfriendlistsForUserid().size() != 0)
+            	{
+            		for(Userfriendlist userfriendDB : usersTemp.getUserfriendlistsForUserid())
+            		{
+            			if(userfriendDB != null && userfriendDB.getUsersByFriendid() != null 
+            					&& userfriendDB.getUsersByFriendid().getStatus() == true && userfriendDB.getStatus() == true)
+            			{
+            				friendVo = new FriendVo();
+            			
+            				friendVo.setFirstname(userfriendDB.getUsersByFriendid() .getFirstname());
+            				friendVo.setLastname(userfriendDB.getUsersByFriendid().getLastname());
+            				friendVo.setEmailid(userfriendDB.getUsersByFriendid().getEmailid());
+            				friendVo.setShortname(userfriendDB.getUsersByFriendid().getShortname());
+            				friendVo.setUserFriendId(userfriendDB.getId());
+                			if(userfriendDB.getStatus().equals(true))
+                			{
+                				friendVo.setStatus("Active");
+                			}
+                			else
+                			{
+                				friendVo.setStatus("InActive");
+                			}
+                			counter++;
+                			friendList1.add(friendVo);
+            			}
+            		}
+            	}
+            	tx.commit();
+            }
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+		finally 
+		{
+        	if(session != null)
+            session.close();
+	    }
+
+		return friendList1;
+	}
+
+
+
+	@Override
+	public List<FriendVo> getUsersfasleStatus(String userName) throws Exception {
+		// TODO Auto-generated method stub
+		List<FriendVo> friendList1 = new ArrayList<FriendVo>();
+		Users usersTemp = null;
+	    Session session = null;
+	    Transaction tx = null;
+	 FriendVo friendVo = null;
+		try
+		{
+           	session = HibernateUtil.getSession();
+            tx = session.beginTransaction();
+            usersTemp = (Users)session.createCriteria(Users.class)
+            		.add(Restrictions.eq("emailid", userName.toLowerCase().trim()).ignoreCase())
+            		.uniqueResult();
+            
+            if(usersTemp != null){
+            	
+            	int counter = 1;
+            	if(usersTemp.getUserfriendlistsForUserid() != null && usersTemp.getUserfriendlistsForUserid().size() != 0)
+            	{
+            		for(Userfriendlist userfriendDB : usersTemp.getUserfriendlistsForUserid())
+            		{
+            			if(userfriendDB != null && userfriendDB.getUsersByFriendid() != null 
+            					&& userfriendDB.getUsersByFriendid().getStatus() == true && userfriendDB.getStatus() == false)
+            			{
+            				friendVo = new FriendVo();
+            			
+            				friendVo.setFirstname(userfriendDB.getUsersByFriendid() .getFirstname());
+            				friendVo.setLastname(userfriendDB.getUsersByFriendid().getLastname());
+            				friendVo.setEmailid(userfriendDB.getUsersByFriendid().getEmailid());
+            				friendVo.setShortname(userfriendDB.getUsersByFriendid().getShortname());
+            				friendVo.setUserFriendId(userfriendDB.getId());
+                			if(userfriendDB.getStatus().equals(true))
+                			{
+                				friendVo.setStatus("Active");
+                			}
+                			else
+                			{
+                				friendVo.setStatus("InActive");
+                			}
+                			counter++;
+                			friendList1.add(friendVo);
+            			}
+            		}
+            	}
+            	tx.commit();
+            }
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+		finally 
+		{
+        	if(session != null)
+            session.close();
+	    }
+
+		return friendList1;
+	}
+
 
 
 	

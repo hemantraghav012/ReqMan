@@ -3,6 +3,7 @@ package com.reqman.pojo;
 // Generated 21 Sep, 2017 11:33:25 AM by Hibernate Tools 4.3.1
 
 import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -42,7 +43,13 @@ public class Requestworkflow implements java.io.Serializable {
 	private Date datemodified;
 	private String modifiedby;
 	private Boolean status;
-
+	private String description;
+	private Date completiondate;
+	private byte[] attachment;
+	private String filename;
+	
+	
+	
 	public Requestworkflow() {
 	}
 
@@ -55,7 +62,8 @@ public class Requestworkflow implements java.io.Serializable {
 			String requestby, Integer requeststatus, Date acceptdate,
 			Date updatedate, Integer revisionnumber, String approvedby,
 			Date approveddate, Date datecreated, String createdby,
-			Date datemodified, String modifiedby, Boolean status) {
+			Date datemodified, String modifiedby, Boolean status,String description,
+			Date completiondate, byte[] attachment,String filename) {
 		this.id = id;
 		this.request = request;
 		this.userfriendlist = userfriendlist;
@@ -72,6 +80,10 @@ public class Requestworkflow implements java.io.Serializable {
 		this.datemodified = datemodified;
 		this.modifiedby = modifiedby;
 		this.status = status;
+		this.description = description;
+		this.completiondate = completiondate;
+		this.attachment = attachment;
+		this.filename = filename;
 	}
 
 	@Id
@@ -225,6 +237,42 @@ public class Requestworkflow implements java.io.Serializable {
 
 	public void setStatus(Boolean status) {
 		this.status = status;
+	}
+
+	@Column(name = "description", length = 500)
+	public String getDescription() {
+		return this.description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "completiondate", length = 29)
+	public Date getCompletiondate() {
+		return this.completiondate;
+	}
+
+	public void setCompletiondate(Date completiondate) {
+		this.completiondate = completiondate;
+	}
+
+	@Column(name = "attachment")
+	public byte[] getAttachment() {
+		return this.attachment;
+	}
+
+	public void setAttachment(byte[] attachment) {
+		this.attachment = attachment;
+	}
+	@Column(name = "filename", length = 50)
+	public String getFilename() {
+		return this.filename;
+	}
+
+	public void setFilename(String filename) {
+		this.filename = filename;
 	}
 
 }

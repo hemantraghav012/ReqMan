@@ -11,7 +11,7 @@ import org.hibernate.Transaction;
 import org.hibernate.criterion.Restrictions;
 
 import com.reqman.common.HibernateUtil;
-import com.reqman.common.HibernateUtilH;
+import com.reqman.common.HibernateUtil;
 import com.reqman.dao.ProjectMasterInterface;
 import com.reqman.pojo.Project;
 import com.reqman.pojo.Usercategory;
@@ -324,7 +324,131 @@ public class ProjectMasterImpl implements ProjectMasterInterface{
 	
 	
 	}
-	
+
+
+
+	@Override
+	public List<ProjectVo> getProjectStatus(String userName) throws Exception {
+		// TODO Auto-generated method stub
+		List<ProjectVo> projectList1 = new ArrayList<ProjectVo>();
+		Users usersTemp = null;
+	    Session session = null;
+	    Transaction tx = null;
+	   ProjectVo projectVo = null;
+		try
+		{
+           	session = HibernateUtil.getSession();
+            tx = session.beginTransaction();
+            usersTemp = (Users)session.createCriteria(Users.class)
+            		.add(Restrictions.eq("emailid", userName.toLowerCase().trim()).ignoreCase())
+            		.uniqueResult();
+            
+            if(usersTemp != null){
+            	
+            	int counter = 1;
+            	if(usersTemp.getUserprojects() != null && usersTemp.getUserprojects().size() != 0)
+            	{
+            		for(Userproject userprojectDB : usersTemp.getUserprojects())
+            		{
+            			if(userprojectDB != null && userprojectDB.getProject() != null 
+            					&& userprojectDB.getProject().getStatus() == true && userprojectDB.getStatus() == true)
+            			{
+            				projectVo = new ProjectVo();
+            				//projectVo.setSrNo(counter);
+            				projectVo.setName(userprojectDB.getProject().getName());
+            				projectVo.setUserProjectId(userprojectDB.getId());
+            				
+                			if(userprojectDB.getStatus().equals(true))
+                			{
+                				projectVo.setStatus("Active");
+                			}
+                			else
+                			{
+                				projectVo.setStatus("InActive");
+                			}
+                			counter++;
+                			projectList1.add(projectVo);
+            			}
+            		}
+            	}
+            	tx.commit();
+            }
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+		finally 
+		{
+        	if(session != null)
+            session.close();
+	    }
+
+		return projectList1;
+	}
+
+
+
+	@Override
+	public List<ProjectVo> getProjectfalseStatus(String userName)
+			throws Exception {
+		// TODO Auto-generated method stub
+		List<ProjectVo> projectList1 = new ArrayList<ProjectVo>();
+		Users usersTemp = null;
+	    Session session = null;
+	    Transaction tx = null;
+	   ProjectVo projectVo = null;
+		try
+		{
+           	session = HibernateUtil.getSession();
+            tx = session.beginTransaction();
+            usersTemp = (Users)session.createCriteria(Users.class)
+            		.add(Restrictions.eq("emailid", userName.toLowerCase().trim()).ignoreCase())
+            		.uniqueResult();
+            
+            if(usersTemp != null){
+            	
+            	int counter = 1;
+            	if(usersTemp.getUserprojects() != null && usersTemp.getUserprojects().size() != 0)
+            	{
+            		for(Userproject userprojectDB : usersTemp.getUserprojects())
+            		{
+            			if(userprojectDB != null && userprojectDB.getProject() != null 
+            					&& userprojectDB.getProject().getStatus() == true && userprojectDB.getStatus() == false)
+            			{
+            				projectVo = new ProjectVo();
+            				//projectVo.setSrNo(counter);
+            				projectVo.setName(userprojectDB.getProject().getName());
+            				projectVo.setUserProjectId(userprojectDB.getId());
+            				
+                			if(userprojectDB.getStatus().equals(true))
+                			{
+                				projectVo.setStatus("Active");
+                			}
+                			else
+                			{
+                				projectVo.setStatus("InActive");
+                			}
+                			counter++;
+                			projectList1.add(projectVo);
+            			}
+            		}
+            	}
+            	tx.commit();
+            }
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+		finally 
+		{
+        	if(session != null)
+            session.close();
+	    }
+
+		return projectList1;
+	}
 
 	
 

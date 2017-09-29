@@ -17,7 +17,7 @@
 <script type="text/javascript" src="resource/js/bootstrap.js"/>
 <script type="text/javascript" src="resource/js/jquery.js"/>
 
-	<title>Create New Request On Friends</title>
+	<title>Create New Request On Team Member</title>
 </h:head>
 <h:body>
 	<div id="header">
@@ -36,7 +36,9 @@
 </div>
         
        <!-- -end of categoryheader -->
-        
+        <div class="ui-fluid">
+            <p:panelGrid columns="1"  layout="grid" styleClass="ui-panelgrid-blank ui-fluid" style=" border: 0;">
+               
      
        <h:form enctype="multipart/form-data" class="form-horizontal">
       <div class="container fixedcontainer" style=" margin-top:1cm; ">
@@ -64,18 +66,19 @@
  <h:outputLabel style="white-space:nowrap;">Completion Date:</h:outputLabel>
  </div>
 <div class="col-sm-4"> 
-<p:calendar id="calender" value="#{createrequest.completiondate}"  showOn="both"   mindate="today+7" />
+<p:calendar id="calender" value="#{createrequest.completiondate}" style=" border: 0;" showOn="both"  pattern="dd-MM-yyyy" mindate="today+7" />
 
  </div>
  <h:message   style="color:red;margin:8px;"/>
  
  <div class="col-sm-2 control-label"> 
+
  <h:outputLabel>Category:</h:outputLabel>
  </div>
  <div class=" col-sm-4">
-      <p:selectOneMenu  value="#{createrequest.usercategory}" class="form-control"   >
+      <p:selectOneMenu  value="#{createrequest.usercategory}" class="form-control" style=" border: 0;"  >
             <f:selectItem itemLabel="Select" itemValue="" />
-           <f:selectItems value="#{categorybean.categoryList}"  var="category" itemLabel="#{category.name}"
+           <f:selectItems value="#{categorybean.categoryList1}"  var="category" itemLabel="#{category.name}"
                           itemValue="#{category.userCategoryId}"/>
         </p:selectOneMenu>
 
@@ -89,8 +92,8 @@
 </div>
  <div class="col-sm-10 control-label">
  <p:selectCheckboxMenu id="multiple" value="#{createrequest.userfriendlist}" label="friend add" multiple="true"
-                              filter="true" filterMatchMode="startsWith" class="form-control" >
-                                <f:selectItems value="#{friendbean.friendList}" var="friend" itemLabel="#{friend.emailid}" 
+                              filter="true" filterMatchMode="startsWith" class="form-control" style=" border: 0;"  >
+                                <f:selectItems value="#{friendbean.friendList1}" var="friend" itemLabel="#{friend.emailid}" 
                       itemValue="#{friend.userFriendId}"/>
                                
                                 </p:selectCheckboxMenu>
@@ -106,9 +109,9 @@
 </div>
  <div class=" col-sm-4">
  
- <p:selectOneMenu id="project" value="#{createrequest.userproject}" class="form-control" >
+ <p:selectOneMenu id="project" value="#{createrequest.userproject}" class="form-control" style=" border: 0;" >
             <f:selectItem itemLabel="Select" itemValue="" />
-           <f:selectItems value="#{projectbean.projectList}" var="project" itemLabel="#{project.name}"  itemValue="#{project.userProjectId}"/>
+           <f:selectItems value="#{projectbean.projectList1}" var="project" itemLabel="#{project.name}"  itemValue="#{project.userProjectId}"/>
         </p:selectOneMenu>
 </div>
  <h:message for="project"  style="color:red;margin:8px;"/>
@@ -121,9 +124,9 @@
  <h:outputLabel style="white-space:nowrap;">Request type:</h:outputLabel>
  </div>
  <div class=" col-sm-4">
- <p:selectOneMenu id="requesttype" value="#{createrequest.userrequesttype}" class="form-control">
+ <p:selectOneMenu id="requesttype" value="#{createrequest.userrequesttype}" class="form-control" style=" border: 0;" >
             <f:selectItem itemLabel="Select" itemValue="" />
-            <f:selectItems value="#{requesttypebean.requesttypeList}" var="requesttype" itemLabel="#{requesttype.name}"  itemValue="#{requesttype.userRequesttypeId}"/>
+            <f:selectItems value="#{requesttypebean.requesttypeList1}" var="requesttype" itemLabel="#{requesttype.name}"  itemValue="#{requesttype.userRequesttypeId}"/>
         </p:selectOneMenu>
 </div>
  <h:message for="requesttype"  style="color:red;margin:8px;"/>
@@ -141,7 +144,7 @@
 
 <div class=" row form-group ">
  <div class="col-sm-3 .col-sm-offset-2"></div>
-<div class="col-sm-4"><h:commandLink action="#{createrequest.save()}" value="Submit" class="btn btn-lg btn-success btn-block"></h:commandLink></div>
+<div class="col-sm-4"><h:commandLink action="#{createrequest.save()}" value="Submit" style="text-decoration:none; color:#fff;" class="btn btn-lg btn-success btn-block"></h:commandLink></div>
 <div class="col-sm-4"><h:link value="Back to Request" style="text-decoration:none; color:#fff;" outcome="request" class="btn btn-lg btn-primary btn-block"/></div>
 
 </div>
@@ -155,7 +158,8 @@
    </div><!-- end of container -->
 </h:form>
 
-      
+      </p:panelGrid>
+      </div>
    
       
       

@@ -16,6 +16,7 @@ import com.reqman.pojo.Requestworkflow;
 import com.reqman.pojo.Rolemenus;
 import com.reqman.pojo.RolemenusId;
 import com.reqman.pojo.Roles;
+import com.reqman.pojo.Suggestion;
 import com.reqman.pojo.Usercategory;
 import com.reqman.pojo.Userfriendlist;
 import com.reqman.pojo.Userproject;
@@ -42,7 +43,7 @@ public class HibernateUtil {
     	    configuration.setProperty("hibernate.connection.password", "3394");
     	    configuration.setProperty("hibernate.show_sql", "true");
     	    configuration.setProperty("hibernate.default_schema", "reqman");
-    	//  configuration.setProperty("hibernate.hbm2ddl.auto", "create");
+    	 //   configuration.setProperty("hibernate.hbm2ddl.auto", "create");
     	    
     	    configuration.addAnnotatedClass(Audittrail.class);
     	    configuration.addAnnotatedClass(Category.class);
@@ -64,6 +65,7 @@ public class HibernateUtil {
     	    configuration.addAnnotatedClass(Usertype.class);
     	    configuration.addAnnotatedClass(Userusertype.class);
     	    configuration.addAnnotatedClass(UserusertypeId.class);
+    	    configuration.addAnnotatedClass(Suggestion.class);
             ServiceRegistry serviceRegistry
                 = new StandardServiceRegistryBuilder()
                     .applySettings(configuration.getProperties()).build();

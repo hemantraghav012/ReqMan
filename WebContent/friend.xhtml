@@ -14,7 +14,7 @@
 <link rel="stylesheet" href="resource/css/bootstrap.css"/>
 <link rel="stylesheet" href="resource/mystyle/home.css"/>
 <link rel="stylesheet" href="resource/mystyle/createcategory.css"/>
- 
+ <link rel="stylesheet" href="resource/mystyle/button.css"/>
 <script type="text/javascript" src="resource/js/bootstrap.js"/>
 <script type="text/javascript" src="resource/js/jquery.js"/>
 <title>Friend List</title>
@@ -43,9 +43,9 @@ function setFriendHiddenValue(new_value)
       <!-- -end of header --> 
       
    
-	<div id="userheader">
-	<ui:insert name="userheader">
-		<ui:include src="userheader.xhtml" />
+	<div id="categoryheader">
+	<ui:insert name="categoryheader">
+		<ui:include src="categoryheader.xhtml" />
 	</ui:insert>
 </div>
         
@@ -62,7 +62,7 @@ function setFriendHiddenValue(new_value)
       	</div>
       	
      	<div class="col-sm-6">       				
-				<h:commandLink  value="Add friend" action="#{friendbean.newFriend}" class="btn btn-primary btn-md pull-right"/>				
+				<h:commandLink  value="Add friend" action="#{friendbean.newFriend}" class="btn btn1 fontsize pull-right"/>				
 				
 			
 		</div>
@@ -133,7 +133,7 @@ filterBy="#{friend.status}"  filterStyle="display:none;" filterMatchMode="contai
 	        
 	        <p:column  headerText="Modify" exportable="false" style="width:3cm; text-align:center">
 				
-				<p:commandLink id="nonAjax" styleClass="btn btn-primary " style="color:white;" onclick='setFriendHiddenValue(#{friend.userFriendId})' action="#{friendbean.modifyAction()}" ajax="false" >
+				<p:commandLink id="nonAjax" styleClass="btn btn-primary fontsize" style="color:white;" onclick='setFriendHiddenValue(#{friend.userFriendId})' action="#{friendbean.modifyAction()}" ajax="false" >
 	        		Update
 	    		</p:commandLink>
 	    		 
@@ -145,11 +145,11 @@ filterBy="#{friend.status}"  filterStyle="display:none;" filterMatchMode="contai
 
 	<div>
 		<strong>Export Data &nbsp;</strong>
-	    <h:commandButton id="excel" class="btn btn-info" value="Excel">
+	    <h:commandButton id="excel" class="btn btn-primary fontsize" value="Excel">
 	        <p:dataExporter type="xls" target="friendTable" fileName="friend" />
 	    </h:commandButton>
 	 	&nbsp;
-	    <h:commandButton id="pdf" class="btn btn-info" value="Pdf">
+	    <h:commandButton id="pdf" class="btn btn-primary fontsize" value="Pdf">
 	        <p:dataExporter type="pdf" target="friendTable" fileName="friend" />
 	    </h:commandButton>
 	</div>

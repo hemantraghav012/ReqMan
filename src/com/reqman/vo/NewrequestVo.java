@@ -1,8 +1,10 @@
 package com.reqman.vo;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import org.primefaces.model.StreamedContent;
+import org.primefaces.model.UploadedFile;
 
 public class NewrequestVo implements Serializable
  {
@@ -14,13 +16,28 @@ public class NewrequestVo implements Serializable
 	private String usercategory;
 	private String userproject;
 	private String userrequesttype;
-	private StreamedContent attachment;
+	//private StreamedContent attachment;
 	private String completiondate;
 	private String status;
 	private String friendName;
 	private byte[] file;
 	private String fileName;
+	private UploadedFile attachment;
+
 	
+	private Date changedate;
+	
+	
+	
+	
+	
+	public Date getChangedate() {
+		return changedate;
+	}
+
+	public void setChangedate(Date changedate) {
+		this.changedate = changedate;
+	}
 
 	public byte[] getFile() {
 		return file;
@@ -29,12 +46,24 @@ public class NewrequestVo implements Serializable
 	public void setFile(byte[] file) {
 		this.file = file;
 	}
-
+	
+	
+	
+	
+/*
 	public StreamedContent getAttachment() {
 		return attachment;
 	}
 
 	public void setAttachment(StreamedContent attachment) {
+		this.attachment = attachment;
+	}*/
+
+	public UploadedFile getAttachment() {
+		return attachment;
+	}
+
+	public void setAttachment(UploadedFile attachment) {
 		this.attachment = attachment;
 	}
 

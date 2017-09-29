@@ -6,6 +6,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import javax.enterprise.context.RequestScoped;
+
 import org.hibernate.Criteria;
 import org.hibernate.Hibernate;
 import org.hibernate.Session;
@@ -13,6 +15,7 @@ import org.hibernate.Transaction;
 import org.hibernate.criterion.Restrictions;
 import org.primefaces.model.UploadedFile;
 
+import com.reqman.common.HibernateUtil;
 import com.reqman.common.HibernateUtil;
 import com.reqman.dao.NewrequestInterface;
 import com.reqman.pojo.Request;
@@ -171,6 +174,141 @@ public class NewrequestImpl implements NewrequestInterface {
 		return result;
 	}
 
+	
+	
+	
+	private Request getRequestDetails(String title, String description, Integer usercategory,
+			Integer userproject, Integer userrequesttype,
+			UploadedFile attachment, String userName, Date completiondate,
+			Integer[] userfriendlist, Session session) throws Exception
+	{
+		
+		Transaction tx = null;
+		Users users = null;
+		int result = 0;
+		Userproject userproject1 = null;
+		Usercategory usercategory1 = null;
+		Userrequesttype userrequesttype1 = null;
+		Userfriendlist userfriendlistTemp = null;
+		Requestworkflow requestworkflow = null;
+		Request request = null;
+		Set<Requestworkflow> requestworkflows = new HashSet<Requestworkflow>(0);
+		Requestworkflow requestworkflowTemp = null;
+
+		
+		try
+		{
+			request = new Request();
+			
+			if(userName != null && !userName.trim().equals(""))
+			{
+				users = (Users) session
+						.createCriteria(Users.class)
+						.add(Restrictions.eq("emailid",userName.toLowerCase().trim()).ignoreCase())
+						.uniqueResult();
+				
+				request.setCreatedby(userName.trim());
+			}
+			
+			if(userproject != null)
+			{
+				userproject1 = (Userproject)session.createCriteria(Userproject.class)
+						.add(Restrictions.eq("id", userproject))
+						.uniqueResult();
+				
+				request.setUserproject(userproject1);
+			}
+
+			if(userrequesttype != null)
+			{
+				userrequesttype1 = (Userrequesttype)session.createCriteria(Userrequesttype.class)
+						.add(Restrictions.eq("id", userrequesttype))
+						.uniqueResult();
+				
+				request.setUserrequesttype(userrequesttype1);
+			}
+
+			if(usercategory != null)
+			{
+				usercategory1 = (Usercategory)session.createCriteria(Usercategory.class)
+						.add(Restrictions.eq("id", usercategory))
+						.uniqueResult();
+				
+				request.setUsercategory(usercategory1);
+			}
+
+			request.setTitle(title != null ? title.trim() : "");
+			/*	request.setDescription(description != null ? description.trim() : "");
+			
+			if(attachment != null && attachment.getContents() != null)
+			{
+				request.setAttachment(attachment.getContents());
+			}
+			
+			if(attachment != null && attachment.getFileName() != null)
+			{
+				request.setFilename(attachment.getFileName());
+			}
+			
+			if(completiondate != null)
+			{
+				request.setCompletiondate(completiondate);
+			}*/
+			
+			request.setRequeststatus(1);
+			request.setStatus(true);
+			request.setDatecreated(new Date());
+			
+			if(userfriendlist != null && userfriendlist.length != 0)
+			{
+				for (int friendlist : userfriendlist) {
+					requestworkflowTemp = new Requestworkflow();
+					
+					userfriendlistTemp = (Userfriendlist)session.createCriteria(Userfriendlist.class)
+							.add(Restrictions.eq("id", friendlist))
+							.uniqueResult();
+
+					
+				
+					requestworkflowTemp.setDescription(description != null ? description.trim() : "");
+					
+					if(attachment != null && attachment.getContents() != null)
+					{
+						requestworkflowTemp.setAttachment(attachment.getContents());
+					}
+					
+					if(attachment != null && attachment.getFileName() != null)
+					{
+						requestworkflowTemp.setFilename(attachment.getFileName());
+					}
+					
+					if(completiondate != null)
+					{
+						requestworkflowTemp.setCompletiondate(completiondate);
+					}
+					
+					
+					requestworkflowTemp.setRequest(request);
+					requestworkflowTemp.setUserfriendlist(userfriendlistTemp);
+					requestworkflowTemp.setRequeststatus(1);
+					requestworkflowTemp.setCreatedby(userName.trim());
+					requestworkflowTemp.setDatecreated(new Date());
+					requestworkflowTemp.setStatus(true);
+					requestworkflows.add(requestworkflowTemp);
+				}
+				request.setRequestworkflows(requestworkflows);
+			}
+
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+			throw new Exception(e);
+		}
+		return request;
+	}
+
+	
 	@SuppressWarnings("unchecked")
 	public List<NewrequestVo> getNewrequestDetails(String userName)
 			throws Exception {
@@ -197,7 +335,7 @@ public class NewrequestImpl implements NewrequestInterface {
 								userName.toLowerCase().trim()).ignoreCase())
 						.list();
 				
-				String userCategory = "";
+			    String userCategory = "";
 				String userProject = "";
 				String userRequestType= "";
 				String firstName = "";
@@ -264,8 +402,8 @@ public class NewrequestImpl implements NewrequestInterface {
 									}
 									
 									newrequestVo.setTitle(requestDB.getTitle() != null ? requestDB.getTitle().trim() : "");
-									newrequestVo.setDescription(requestDB.getDescription() != null ? requestDB.getDescription().trim() : "");
-									newrequestVo.setCompletiondate(requestDB.getCompletiondate() != null ? requestDB.getCompletiondate().toString() : "");
+									newrequestVo.setDescription(requestworkflowDB.getDescription() != null ? requestworkflowDB.getDescription().trim() : "");
+									newrequestVo.setCompletiondate(requestworkflowDB.getCompletiondate() != null ? requestworkflowDB.getCompletiondate().toString() : "");
 									newrequestVo.setFriendName(name);
 									newrequestVo.setUsercategory(userCategory);
 									newrequestVo.setUserproject(userProject);
@@ -302,6 +440,7 @@ public class NewrequestImpl implements NewrequestInterface {
 			{
 				tx.rollback();
 			}
+
 			e.printStackTrace();
 			throw new Exception(e);
 		} finally {
@@ -313,119 +452,7 @@ public class NewrequestImpl implements NewrequestInterface {
 	}
 	
 	
-	private Request getRequestDetails(String title, String description, Integer usercategory,
-			Integer userproject, Integer userrequesttype,
-			UploadedFile attachment, String userName, Date completiondate,
-			Integer[] userfriendlist, Session session) throws Exception
-	{
-		
-		Transaction tx = null;
-		Users users = null;
-		int result = 0;
-		Userproject userproject1 = null;
-		Usercategory usercategory1 = null;
-		Userrequesttype userrequesttype1 = null;
-		Userfriendlist userfriendlistTemp = null;
-		Requestworkflow requestworkflow = null;
-		Request request = null;
-		Set<Requestworkflow> requestworkflows = new HashSet<Requestworkflow>(0);
-		Requestworkflow requestworkflowTemp = null;
-
-		
-		try
-		{
-			request = new Request();
-			
-			if(userName != null && !userName.trim().equals(""))
-			{
-				users = (Users) session
-						.createCriteria(Users.class)
-						.add(Restrictions.eq("emailid",userName.toLowerCase().trim()).ignoreCase())
-						.uniqueResult();
-				
-				request.setCreatedby(userName.trim());
-			}
-			
-			if(userproject != null)
-			{
-				userproject1 = (Userproject)session.createCriteria(Userproject.class)
-						.add(Restrictions.eq("id", userproject))
-						.uniqueResult();
-				
-				request.setUserproject(userproject1);
-			}
-
-			if(userrequesttype != null)
-			{
-				userrequesttype1 = (Userrequesttype)session.createCriteria(Userrequesttype.class)
-						.add(Restrictions.eq("id", userrequesttype))
-						.uniqueResult();
-				
-				request.setUserrequesttype(userrequesttype1);
-			}
-
-			if(usercategory != null)
-			{
-				usercategory1 = (Usercategory)session.createCriteria(Usercategory.class)
-						.add(Restrictions.eq("id", usercategory))
-						.uniqueResult();
-				
-				request.setUsercategory(usercategory1);
-			}
-
-			request.setTitle(title != null ? title.trim() : "");
-			request.setDescription(description != null ? description.trim() : "");
-			
-			if(attachment != null && attachment.getContents() != null)
-			{
-				request.setAttachment(attachment.getContents());
-			}
-			
-			if(attachment != null && attachment.getFileName() != null)
-			{
-				request.setFilename(attachment.getFileName());
-			}
-			
-			if(completiondate != null)
-			{
-				request.setCompletiondate(completiondate);
-			}
-			
-			request.setRequeststatus(1);
-			request.setStatus(true);
-			request.setDatecreated(new Date());
-
-
-			
-			if(userfriendlist != null && userfriendlist.length != 0)
-			{
-				for (int friendlist : userfriendlist) {
-					requestworkflowTemp = new Requestworkflow();
-					
-					userfriendlistTemp = (Userfriendlist)session.createCriteria(Userfriendlist.class)
-							.add(Restrictions.eq("id", friendlist))
-							.uniqueResult();
-
-					requestworkflowTemp.setRequest(request);
-					requestworkflowTemp.setUserfriendlist(userfriendlistTemp);
-					requestworkflowTemp.setRequeststatus(1);
-					requestworkflowTemp.setCreatedby(userName.trim());
-					requestworkflowTemp.setDatecreated(new Date());
-					requestworkflowTemp.setStatus(true);
-					requestworkflows.add(requestworkflowTemp);
-				}
-				request.setRequestworkflows(requestworkflows);
-			}
-
-		}
-		catch(Exception e)
-		{
-			e.printStackTrace();
-			throw new Exception(e);
-		}
-		return request;
-	}
-
+	
 	@Override
 	public NewrequestVo getRequestById(String requestId) throws Exception{
 		// TODO Auto-generated method stub
@@ -443,33 +470,61 @@ public class NewrequestImpl implements NewrequestInterface {
 	            			.add(Restrictions.eq("id", Integer.valueOf(requestId)))
 	            			.uniqueResult();
 	            
+	            String userCategory = "";
+				String userProject = "";
+				String userRequestType= "";            
+	          String status="";
 	            Hibernate.initialize(requestworkflow.getRequest());
+	            Request request = null;
 	            if(requestworkflow != null && requestworkflow.getRequest() != null){
-	       
-	            	if(requestworkflow.getRequest().getAttachment() != null && requestworkflow.getRequest().getAttachment().length != 0)
-	            	{
-	            		newrequestVo.setFile(requestworkflow.getRequest().getAttachment());
+	            	request = requestworkflow.getRequest();
+	            	
+	            	if(requestworkflow.getAttachment() != null && requestworkflow.getAttachment().length != 0)
+	            	{	            		
+	            		newrequestVo.setFile(requestworkflow.getAttachment());
 	            	}
 	            	
+
+					if(request != null && request.getUsercategory() != null && request.getUsercategory().getCategory() != null)
+					{
+						userCategory = request.getUsercategory().getCategory().getName() != null 
+								? request.getUsercategory().getCategory().getName() : "" ;
+					}
+					
+					if(request != null && request.getUserproject() != null && request.getUserproject().getProject() != null)
+					{
+						userProject = request.getUserproject().getProject().getName() != null 
+								? request.getUserproject().getProject().getName() : "" ;
+					}
+					
+					if(request != null && request.getUserrequesttype() != null && request.getUserrequesttype().getRequesttype() != null)
+					{
+						userRequestType = request.getUserrequesttype().getRequesttype() != null 
+								? request.getUserrequesttype().getRequesttype().getName() : "" ;
+					}
+	            	if(requestworkflow.getFilename() != null 
+	            			&& !requestworkflow.getFilename().trim().equals(""))
+	            	{
+	            		newrequestVo.setFileName(requestworkflow.getFilename().trim());
+	            	}
 	            	newrequestVo.setTitle(requestworkflow.getRequest().getTitle());
-	            	newrequestVo.setNewRequestId(requestworkflow.getId());
-	            	if(requestworkflow.getRequest().getFilename() != null 
-	            			&& !requestworkflow.getRequest().getFilename().trim().equals(""))
-	            	{
-	            		newrequestVo.setFileName(requestworkflow.getRequest().getFilename().trim());
-	            	}
-	            	
-	            	
-	            	
-	    			if(requestworkflow.getStatus() == true)
-	    			{
-	    				newrequestVo.setStatus("Active");
-	    			}
-	    			else
-	    			{
-	    				newrequestVo.setStatus("InActive");
-	    			}
-	    			
+	            	newrequestVo.setNewRequestId(requestworkflow.getRequest().getId());
+	            	newrequestVo.setUsercategory(userCategory);
+					newrequestVo.setUserproject(userProject);
+					newrequestVo.setUserrequesttype(userRequestType);
+					newrequestVo.setDescription(requestworkflow.getDescription());
+					newrequestVo.setCompletiondate(requestworkflow.getCompletiondate() != null ? requestworkflow.getCompletiondate().toString() : "");
+					//newrequestVo.setAttachment((UploadedFile) (requestworkflow.getAttachment() !=null ? requestworkflow.getAttachment() :""));
+					newrequestVo.setFileName(requestworkflow.getFilename());
+			
+					if(requestworkflow.getStatus() == true)
+					{
+						newrequestVo.setStatus("Active");
+					}
+					else
+					{
+						newrequestVo.setStatus("In Active");
+					}
 	    			tx.commit();
 	            }
 	 		}
@@ -489,49 +544,73 @@ public class NewrequestImpl implements NewrequestInterface {
 			return newrequestVo;
 		
 		}
+	
+	
+	
+	
+	
+	
 
 	@Override
 	public int updateRequestById(String requestId, Boolean status,
-			String description) throws Exception{
-		
-		    Session session = null;
+			String description, Date completiondate, UploadedFile attachment)
+			throws Exception {
+		// TODO Auto-generated method stub
+		 Session session = null;
 		    Transaction tx = null;
-		    Request request = null;
-		    int result = 0;
-			try
-			{
-	           	session = HibernateUtil.getSession();
-	            tx = session.beginTransaction();
-	            request = (  Request)
-	            			session.createCriteria(  Request.class)
-	            			.add(Restrictions.eq("id", Integer.valueOf(requestId)))
-	            			.uniqueResult();
-	            
-	            if(  request != null){
-	            	request.setStatus(status);
-	            	//request.setDescription(description);
-	            	session.update(request);
-	    			tx.commit();
-	    			result = 1;
-	            }
-	 		}
-			catch(Exception e)
-			{
-				e.printStackTrace();
-				if(tx != null){
-					tx.rollback();
+		   NewrequestVo  newrequestVo = new  NewrequestVo();
+		   Requestworkflow requestworkflow = null;
+		   Request request=null;
+		   int result = 0;
+			
+				try
+				{
+					session = HibernateUtil.getSession();
+		            tx = session.beginTransaction();
+		            requestworkflow = (Requestworkflow)
+		            			session.createCriteria(Requestworkflow.class)
+		            			.add(Restrictions.eq("id", Integer.valueOf(requestId)))
+		            			.uniqueResult();
+		          
+		           
+		            if(requestworkflow != null ){
+		            	requestworkflow.setStatus(status);
+		            	requestworkflow.setDescription(description);
+		            	//requestworkflow.setAttachment(attachment.getContents());
+		            	//requestworkflow.setCompletiondate(completiondate);
+		            	//requestworkflow.setFilename(attachment.getFileName());
+		            	
+		            	session.update(requestworkflow);
+		    			tx.commit();;
+    			result = 1;
 				}
-				result = 2;
+ 		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+			if(tx != null){
+				tx.rollback();
 			}
-			finally 
-			{
-	        	if(session != null)
-	            session.close();
-		    }
-
-			return result;
-		
-		
+			result = 2;
 		}
+		finally 
+		{
+        	if(session != null)
+            session.close();
+	    }
+
+		return result;
+	
+	
+
+	}
+
+	
+
+
+		
+	
+
+
 
 }

@@ -17,7 +17,7 @@
 <link rel="stylesheet" href="resource/css/bootstrap.css"/>
 <link rel="stylesheet" href="resource/mystyle/home.css"/>
 <link rel="stylesheet" href="resource/mystyle/createcategory.css"/>
-
+ <link rel="stylesheet" href="resource/mystyle/button.css"/>
 <script type="text/javascript" src="resource/js/bootstrap.js"/>
 <script type="text/javascript" src="resource/js/jquery.js"/>
 <title> Add Friend</title>
@@ -31,9 +31,9 @@
       <!-- end of header -->
       
       
-	<div id="userheader">
-	<ui:insert name="userheader">
-		<ui:include src="userheader.xhtml" />
+	<div id="categoryheader">
+	<ui:insert name="categoryheader">
+		<ui:include src="categoryheader.xhtml" />
 	</ui:insert>
 </div>
         
@@ -106,12 +106,12 @@
 
  <div class=" row form-group ">
  <div class="col-sm-3 .col-sm-offset-2"></div>
- <div class="col-sm-3 "><h:commandButton action="#{friendbean.savefriend}" value="Submit" class="btn btn-lg btn-success btn-block"></h:commandButton></div>
+ <div class="col-sm-3 "><h:commandButton action="#{friendbean.savefriend}" value="Submit" class="btn fontsize btn-success btn-block"></h:commandButton></div>
 
  <div class="col-sm-3 ">
  
 
-<h:link value="Back to Friend List" style="text-decoration:none; color:#fff;" outcome="friend" class="btn btn-lg btn-primary btn-block"/>
+<h:link value="Back to Friend List" style="text-decoration:none; color:#fff;" outcome="friend" class="btn fontsize btn-primary btn-block"/>
 </div>
 </div>
 

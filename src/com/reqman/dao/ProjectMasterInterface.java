@@ -3,6 +3,10 @@ package com.reqman.dao;
 import java.util.List;
 
 
+
+
+
+
 import com.reqman.vo.ProjectVo;
 
 public interface ProjectMasterInterface {
@@ -18,5 +22,9 @@ public interface ProjectMasterInterface {
 	public ProjectVo getUserProjectById(String projectId) throws Exception;
 	
 	public int updateUserprojectById(String projectId, boolean status) throws Exception;
+
+	public List<ProjectVo> getProjectStatus(String userName)throws Exception;
+
+	public List<ProjectVo> getProjectfalseStatus(String userName)throws Exception;
 
 }

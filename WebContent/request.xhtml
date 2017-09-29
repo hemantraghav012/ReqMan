@@ -12,7 +12,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
 <link rel="stylesheet" href="resource/css/bootstrap.css"/>
 <link rel="stylesheet" href="resource/mystyle/home.css"/>
-
+<link rel="stylesheet" href="resource/mystyle/button.css"/>
 <script type="text/javascript" src="resource/js/bootstrap.js"/>
 <script type="text/javascript" src="resource/js/jquery.js"/>
 
@@ -49,20 +49,20 @@ function setRequestHiddenValue(new_value)
        <!-- -end of categoryheader -->
         
 
-     
+     <h:form id="requestForm">
   <div class="container fixedcontainer" style=" margin-top:1cm; ">
       
-         <h:form id="requestForm">
+         
          <h:inputHidden id="requestId" value="#{createrequest.requestId}" ></h:inputHidden>
       <div class="row">
       
       	<div class="col-sm-6">
-      		<span style=";font-size:25px;margin-left: 3px;">Manage New Request</span>
+      		<span style=";font-size:25px;margin-left: 3px;">Manage Request List</span>
       	</div>
     
      	<div class="col-sm-6">    
      			
-			 <h:commandLink  value="Create New Request" action="#{createrequest.createRequest}" class="btn btn-primary btn-md pull-right"/> 
+			 <h:commandLink  value="Create New Request" action="#{createrequest.createRequest}" class="btn1 btn   pull-right fontsize"/> 
 			
 			
 		</div>
@@ -70,42 +70,95 @@ function setRequestHiddenValue(new_value)
 	  </div>
 
 
+<div class="ui-fluid ">
 
-     <div>
+	     <p:dataTable id="requestTable" var="request1" value="#{createrequest.newrequestList}" 
+	     reflow="true" scrollable="true" scrollHeight="250" 
+	     sortBy="#{request1.status},#{request1.title}" 
+	     class="table table-striped table-hover table-bordered" 
+	     style="margin-top:5px; " filteredValue="#{createrequest.filteredRequestList}" 
+	     widgetVar="newrequestListTable">
+	     
+	     <f:facet name="header">
+			<p:outputPanel>
+				<h:outputText value="Search all fields:" />
+				<h:inputText id="globalFilter" onkeyup="PF('newrequestListTable').filter()" />
+			</p:outputPanel>
+		</f:facet> 
 
-<p:dataTable id="requestTable"  var="request1" value="#{createrequest.newrequestList}"  reflow="true" class="table table-striped table-hover table-bordered">
-    <p:column headerText="Title">
-        <h:outputText value="#{request1.title}" />
-    </p:column>
  
- 	<p:column headerText="Description">
-        <h:outputText value="#{request1.description}" />
-    </p:column>
+ <p:column filterBy="#{request1.title}"  sortBy="#{request1.title}" 
+			headerText="Title"  filterStyle="display:none;" filterMatchMode="contains"  style="width:2.8cm; text-align:center">
+				<f:facet name="header">
+					<h:outputText value="Title" />
+				</f:facet>
+				<h:outputText value="#{request1.title}" />
+			</p:column>
+ 
+ 
+ <p:column filterBy="#{request1.description}" headerText="Description" filterStyle="display:none;"  
+			 filterMatchMode="contains"  style="width:3.5cm; text-align:center">
+				<f:facet name="header">
+					<h:outputText value="Description" />
+				</f:facet>
+				<h:outputText value="#{request1.description}" />
+			</p:column>
+ 
+<p:column filterBy="#{request1.completiondate}" headerText="Completion Date"  filterStyle="display:none;"  
+			 filterMatchMode="contains"  style="width:2.5cm; text-align:center">
+				<f:facet name="header">
+					<h:outputText value="Completion Date" />
+				</f:facet>
+				<h:outputText value="#{request1.completiondate}" />
+			</p:column>
     
-    <p:column headerText="Completion Date" style="width:5cm;">
-        <h:outputText value="#{request1.completiondate}" />
-    </p:column>
-    
-    <p:column headerText="Category">
-        <h:outputText value="#{request1.usercategory}" />
-    </p:column>
-    
-    <p:column headerText="Project">
-        <h:outputText value="#{request1.userproject}" />
-    </p:column>
-    
-    <p:column headerText="Requesttype">
-        <h:outputText value="#{request1.userrequesttype}" />
-    </p:column>
-    
-     <p:column headerText="Team Member">
-        <h:outputText value="#{request1.friendName}" />
-    </p:column>
     
     
-    <p:column headerText="Status">
-        <h:outputText value="#{request1.status}" />
-    </p:column>
+    
+   <p:column filterBy="#{request1.usercategory}" headerText="Category"  filterStyle="display:none;"  
+			 filterMatchMode="contains"  style="width:3cm; text-align:center">
+				<f:facet name="header">
+					<h:outputText value="Category" />
+				</f:facet>
+				<h:outputText value="#{request1.usercategory}" />
+			</p:column> 
+    
+     <p:column filterBy="#{request1.userproject}"  headerText="Project"  filterStyle="display:none;"  
+			 filterMatchMode="contains"  style="width:3cm;; text-align:center">
+				<f:facet name="header">
+					<h:outputText value="Project" />
+				</f:facet>
+				<h:outputText value="#{request1.userproject}"  />
+			</p:column> 
+    
+   
+     <p:column filterBy="#{request1.userrequesttype}"   headerText="Requesttype"  filterStyle="display:none;"  
+			 filterMatchMode="contains"  style="width:3cm; text-align:center">
+				<f:facet name="header">
+					<h:outputText value="Requesttype" />
+				</f:facet>
+				<h:outputText value="#{request1.userrequesttype}"   />
+			</p:column> 
+    
+    
+      <p:column filterBy="#{request1.friendName}"   headerText="Team Member"  filterStyle="display:none;"  
+			 filterMatchMode="contains"  style="width:3cm; text-align:center">
+				<f:facet name="header">
+					<h:outputText value="Team Member" />
+				</f:facet>
+				<h:outputText value="#{request1.friendName}"   />
+			</p:column>
+    
+     <p:column filterBy="#{request1.status}"  sortBy="#{request1.status}" 
+			headerText="Status"  filterStyle="display:none;" filterMatchMode="contains"  style="width:2.8cm; text-align:center">
+				<f:facet name="header">
+					<h:outputText value="Status" />
+				</f:facet>
+				<h:outputText value="#{request1.status}" />
+			</p:column>
+    
+    
+   
     
      <p:column headerText="Attachment" style="margin-right:20cm;  width:3.5cm;" >
        <p:dialog modal="true" widgetVar="statusDialog" header="Status" draggable="false" closable="false" resizable="false">
@@ -117,28 +170,30 @@ function setRequestHiddenValue(new_value)
     </p:column>
     
      <p:column headerText="Modify">
-<p:commandLink id="nonAjax" styleClass="btn btn-primary" 
-				style="color:white;" onclick='setRequestHiddenValue(#{request1.newRequestId})' 
+<p:commandLink id="nonAjax" styleClass="btn btn-primary fontsize" 
+				style="color:white; width:3.5;" onclick='setRequestHiddenValue(#{request1.newRequestId})' 
 				action="#{createrequest.modifyAction()}" ajax="false" >
 	        		Update
-	    		</p:commandLink>    </p:column>
-    
-   
-    
-   
-   
-    
+	    		</p:commandLink> 
+	    		
+   </p:column>   
 </p:dataTable>
-
-
-	     
-	     
-			
-	 
-			
 	    
 	</div>
-   </h:form>
+	<div>
+		<strong>Export Data &nbsp;</strong>
+	    <h:commandButton id="excel" class="btn btn-primary fontsize" value="Excel">
+	        <p:dataExporter type="xls" target="requestTable" fileName="request1" postProcessor="#{createrequest.postProcessXLS}" />
+	    </h:commandButton>
+	 	&nbsp;
+	    <h:commandButton id="pdf" class="btn btn-primary fontsize" value="Pdf">
+	        <p:dataExporter type="pdf" target="requestTable" fileName="request1" preProcessor="#{createrequest.preProcessPDF}" />
+	    </h:commandButton>
+	</div>
+ 
+
+
+
 
 <script type="text/javascript">
 function start() {
@@ -149,8 +204,9 @@ function stop() {
     PF('statusDialog').hide();
 }
 </script>
+
       </div><!-- end oc container -->
-      
+        </h:form>
    
       
       

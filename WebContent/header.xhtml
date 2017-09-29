@@ -34,19 +34,39 @@
 <ul class="nav navbar-nav">
 <li> <h:link  style="color:#faebd1; font-weight: bold;   background: rgba(255,255,255,0.1);  border: 0.5px solid;" class="glyphicon glyphicon-home"  id="nav-sign-up" outcome="home" /> </li>
 <li> <h:link value=" Request " style="color:#faebd1; font-weight: bold;" outcome="request" /> </li>
+<li><h:link value="Dashboard " style="color:#faebd1; font-weight: bold;" outcome="dashboard"/> </li>
 <li><h:link value="Users " style="color:#faebd1; font-weight: bold;" outcome="users"/> </li>
-<li> <h:link value="See Status " style="color:#faebd1; font-weight: bold;" outcome="login" /> </li>
-<li> <h:link value="Respond to New Request  " style="color:#faebd1; font-weight: bold;" outcome="login" /> </li>
+<!-- <li> <h:link value="See Status " style="color:#faebd1; font-weight: bold;" outcome="login" /> </li>
+<li> <h:link value="Respond to New Request  " style="color:#faebd1; font-weight: bold;" outcome="login" /> </li> -->
 <li> <h:link value="Improvement Suggestion  " style="color:#faebd1; font-weight: bold;" outcome="suggestion" /> </li>
+
+
+
+ <li class="dropdown " >
+ <a class="dropdown-toggle " data-toggle="dropdown" style="color:#faebd1; font-weight: bold; background-color:#f36c00;">Request Masters
+   <span class="caret">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></a>         
+<ul class="dropdown-menu" style="color:#faebd1; font-weight: bold;background-color:#f36c00; color:#fff;">         
+<h:form >
+<li><h:commandLink value=" Request Category List" style="color:white; font-weight: bold;" class="btn btn-block hover-item" action="#{categorybean.categoryPage}"/></li>
+<li ><h:commandLink value=" Request Project List" style="color:white;font-weight: bold;" class="btn btn-block hover-item" action="#{projectbean.projectPage}" /></li>
+ <li ><h:commandLink value=" Request Type List " style="color:white;font-weight: bold;" class="btn btn-block hover-item" action="#{requesttypebean.requesttypePage}" /></li> 
+  <li ><h:commandLink value=" Team List " style="color:white;font-weight: bold;" class="btn btn-block hover-item" action="#{friendbean.friendPage}" /></li> 
+  </h:form>
+  </ul>        
+</li>      
+
+
+
+
 </ul>
  
 <ul class="nav navbar-nav navbar-right">
- <li class="dropdown " >
+ <li class="dropdown">
  <a class="dropdown-toggle " data-toggle="dropdown" style="color:#faebd1; font-weight: bold; background-color:#f36c00;">#{login.user} <span class="caret"></span></a>         
-<ul class="dropdown-menu" style="color:#faebd1; font-weight: bold;">         
-<li><span class="btn btn-block hover-item" style="color:black; background-color:#808080; text-align:center">#{login.user}</span></li>
-<li> <h:link value="My Profile  " style="color:black " class="btn btn-block hover-item" outcome="myprofile" /> </li>
-<li><h:form><h:commandLink action="#{login.logout}" value="Logout" style="color:black"  class="btn btn-block hover-item"></h:commandLink></h:form></li>
+<ul class="dropdown-menu" style="color:#faebd1; font-weight: bold; background-color:#f36c00;">         
+<li><span class="btn btn-block hover-item disabled" style="color:#fff;font-weight: bold; text-align:center">#{login.user}</span></li>
+<li> <h:link value="My Profile  " style="color:#fff;font-weight: bold; " class="btn btn-block hover-item" outcome="myprofile" /> </li>
+<li><h:form><h:commandLink action="#{login.logout}" value="Logout" style="color:#fff;font-weight: bold;"  class="btn btn-block hover-item"></h:commandLink></h:form></li>
 </ul>        
 </li>      
 </ul>

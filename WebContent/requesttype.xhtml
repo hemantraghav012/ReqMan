@@ -14,7 +14,7 @@
 <link rel="stylesheet" href="resource/css/bootstrap.css"/>
 <link rel="stylesheet" href="resource/mystyle/home.css"/>
 <link rel="stylesheet" href="resource/mystyle/createcategory.css"/>
- 
+ <link rel="stylesheet" href="resource/mystyle/button.css"/>
 <script type="text/javascript" src="resource/js/bootstrap.js"/>
 <script type="text/javascript" src="resource/js/jquery.js"/>
 <title>New Request Type</title>
@@ -55,7 +55,7 @@ function setRequesttypeHiddenValue(new_value)
        
        
    <h:form id="requesttypeForm">
-      <div class="container fixedcontainer" style=" margin-top:1cm; ">
+      <div class="container fixedcontainer fixedcontainer1" style=" margin-top:1cm; ">
  		<h:inputHidden id="requesttypeId" value="#{requesttypebean.requesttypeId}" ></h:inputHidden>
       <div class="row">
       
@@ -64,7 +64,7 @@ function setRequesttypeHiddenValue(new_value)
       	</div>
       	
      	<div class="col-sm-6">       				
-				<h:commandLink  value="Create Request Type" action="#{requesttypebean.newRequesttype}" class="btn btn-primary btn-md pull-right"/>				
+				<h:commandLink  value="Create Request Type" action="#{requesttypebean.newRequesttype}" class="btn btn1 fontsize pull-right"/>				
 				
 			
 		</div>
@@ -112,7 +112,7 @@ function setRequesttypeHiddenValue(new_value)
 	        
 	        <p:column  headerText="Modify" exportable="false" style="width:3cm; text-align:center">
 				
-				<p:commandLink id="nonAjax" styleClass="btn btn-primary " style="color:white;" onclick='setRequesttypeHiddenValue(#{requesttype.userRequesttypeId})' action="#{requesttypebean.modifyAction()}" ajax="false" >
+				<p:commandLink id="nonAjax" styleClass="btn btn-primary fontsize" style="color:white;" onclick='setRequesttypeHiddenValue(#{requesttype.userRequesttypeId})' action="#{requesttypebean.modifyAction()}" ajax="false" >
 	        		Update
 	    		</p:commandLink>
 	    		 
@@ -124,11 +124,11 @@ function setRequesttypeHiddenValue(new_value)
 
 	<div>
 		<strong>Export Data &nbsp;</strong>
-	    <h:commandButton id="excel" class="btn btn-info" value="Excel">
+	    <h:commandButton id="excel" class="btn btn-primary fontsize" value="Excel">
 	        <p:dataExporter type="xls" target="requesttypeTable" fileName="requesttype" postProcessor="#{requesttypebean.postProcessXLS}" />
 	    </h:commandButton>
 	 	&nbsp;
-	    <h:commandButton id="pdf" class="btn btn-info" value="Pdf">
+	    <h:commandButton id="pdf" class="btn btn-primary fontsize" value="Pdf">
 	        <p:dataExporter type="pdf" target="requesttypeTable" fileName="requesttype"  preProcessor="#{requesttypebean.preProcessPDF}"/>
 	    </h:commandButton>
 	</div>

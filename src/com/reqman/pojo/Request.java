@@ -36,17 +36,14 @@ public class Request implements java.io.Serializable {
 	private Usercategory usercategory;	
 	private Userproject userproject;
 	private Userrequesttype userrequesttype;
-	private String title;
-	private String description;
-	private Date completiondate;
-	private byte[] attachment;
+	private String title;	
 	private Integer requeststatus;
 	private Boolean status;
 	private Date datecreated;
 	private String createdby;
 	private Date datemodified;
 	private String modifiedby;
-	private String filename;
+	
 	private Set<Requestworkflow> requestworkflows = new HashSet<Requestworkflow>(
 			0);
 
@@ -58,26 +55,21 @@ public class Request implements java.io.Serializable {
 	}
 
 	public Request(int id, Usercategory usercategory, Userproject userproject,
-			Userrequesttype userrequesttype, String title, String description,
-			Date completiondate, byte[] attachment, Integer requeststatus,
+			Userrequesttype userrequesttype, String title,  Integer requeststatus,
 			Boolean status, Date datecreated, String createdby,
-			Date datemodified, String modifiedby, String filename,
+			Date datemodified, String modifiedby, 
 			Set<Requestworkflow> requestworkflows) {
 		this.id = id;
 		this.usercategory = usercategory;
 		this.userproject = userproject;
 		this.userrequesttype = userrequesttype;
-		this.title = title;
-		this.description = description;
-		this.completiondate = completiondate;
-		this.attachment = attachment;
+		this.title = title;		
 		this.requeststatus = requeststatus;
 		this.status = status;
 		this.datecreated = datecreated;
 		this.createdby = createdby;
 		this.datemodified = datemodified;
-		this.modifiedby = modifiedby;
-		this.filename = filename;
+		this.modifiedby = modifiedby;		
 		this.requestworkflows = requestworkflows;
 	}
 
@@ -131,33 +123,6 @@ public class Request implements java.io.Serializable {
 		this.title = title;
 	}
 
-	@Column(name = "description", length = 500)
-	public String getDescription() {
-		return this.description;
-	}
-
-	public void setDescription(String description) {
-		this.description = description;
-	}
-
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "completiondate", length = 29)
-	public Date getCompletiondate() {
-		return this.completiondate;
-	}
-
-	public void setCompletiondate(Date completiondate) {
-		this.completiondate = completiondate;
-	}
-
-	@Column(name = "attachment")
-	public byte[] getAttachment() {
-		return this.attachment;
-	}
-
-	public void setAttachment(byte[] attachment) {
-		this.attachment = attachment;
-	}
 
 	@Column(name = "requeststatus")
 	public Integer getRequeststatus() {
@@ -215,14 +180,7 @@ public class Request implements java.io.Serializable {
 		this.modifiedby = modifiedby;
 	}
 
-	@Column(name = "filename", length = 50)
-	public String getFilename() {
-		return this.filename;
-	}
-
-	public void setFilename(String filename) {
-		this.filename = filename;
-	}
+	
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "request")
 	public Set<Requestworkflow> getRequestworkflows() {

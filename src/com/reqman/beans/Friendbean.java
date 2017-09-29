@@ -52,6 +52,8 @@ private  List<FriendVo> friendList = new ArrayList<FriendVo>();
 	private FriendMasterInterface  friendMasterInterface = new FriendMasterImpl();
 	
 	private  List<FriendVo> filteredFriendList = new ArrayList<FriendVo>();
+	private  List<FriendVo> friendList1 = new ArrayList<FriendVo>();
+	private  List<FriendVo> friendList2 = new ArrayList<FriendVo>();
 	private String frienduser;
     private Boolean status;	
 	private String userid;
@@ -59,8 +61,8 @@ private  List<FriendVo> friendList = new ArrayList<FriendVo>();
 	private String friendlastname;
 	private String friendshortname;
 	private String friendId;
-	private ProjectVo selectedFriend;
-	
+	private FriendVo selectedFriend;
+	  private PieChartModel piechart;
 	
 	
 	
@@ -76,12 +78,32 @@ private  List<FriendVo> friendList = new ArrayList<FriendVo>();
 			System.out.println("--usersession--userName-->"+userName);
 			friendList = friendMasterInterface.getUsersDetails(userName);
 			setFilteredFriendList(friendList);
+			friendList1 = friendMasterInterface.getUsersStatus(userName);
+			friendList2 = friendMasterInterface.getUsersfasleStatus(userName);
+			 createPieModels();
 		}
 		catch(Exception e)
 		{
 			e.printStackTrace();
 		}
 	}
+	
+	
+	 private void createPieModels() {
+	        piechart = new PieChartModel();
+	     	        
+	    int random1 = friendList2.size(); // Method to get data from db
+	    int random2 = friendList1.size();  // Method to get data from db
+
+	    piechart.getData().put("false status", random1);
+	    piechart.getData().put("true Status", random2);	  
+	    piechart.setTitle("Friend Status");
+	    piechart.setLegendPosition("ne");
+	    //piechart.setSeriesColors("green,red");
+	   // piechart.setFill(false);
+	    piechart.setShowDataLabels(true);
+	 }
+	
 	
 	
 	public String friendPage()
@@ -384,15 +406,47 @@ public void modifyAction() {
 	}
 
 
-	public ProjectVo getSelectedFriend() {
+	public List<FriendVo> getFriendList1() {
+		return friendList1;
+	}
+
+
+	public void setFriendList1(List<FriendVo> friendList1) {
+		this.friendList1 = friendList1;
+	}
+
+
+	public FriendVo getSelectedFriend() {
 		return selectedFriend;
 	}
 
 
-	public void setSelectedFriend(ProjectVo selectedFriend) {
+	public void setSelectedFriend(FriendVo selectedFriend) {
 		this.selectedFriend = selectedFriend;
 	}
 
+
+	public PieChartModel getPiechart() {
+		return piechart;
+	}
+
+
+	public void setPiechart(PieChartModel piechart) {
+		this.piechart = piechart;
+	}
+
+
+	public List<FriendVo> getFriendList2() {
+		return friendList2;
+	}
+
+
+	public void setFriendList2(List<FriendVo> friendList2) {
+		this.friendList2 = friendList2;
+	}
+
+
+	
 
 
 	

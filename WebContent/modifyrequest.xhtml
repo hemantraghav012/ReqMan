@@ -2,6 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
+       xmlns:p="http://primefaces.org/ui"
       xmlns:ui="http://java.sun.com/jsf/facelets">
 
 
@@ -13,7 +14,7 @@
 <link rel="stylesheet" href="resource/css/bootstrap.css"/>
 <link rel="stylesheet" href="resource/mystyle/home.css"/>
 <link rel="stylesheet" href="resource/mystyle/createcategory.css"/>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+   <link rel="stylesheet" href="resource/mystyle/button.css"/>
 <script type="text/javascript" src="resource/js/bootstrap.js"/>
 <script type="text/javascript" src="resource/js/jquery.js"/>
 <title>Modify  request</title>
@@ -48,9 +49,50 @@
  <h:inputHidden value = "#{createrequest.requestId}" id = "hiddenField" /> 
  
  <div class="col-sm-2 control-label"><h:outputLabel  >Title:</h:outputLabel></div>
-<div class=" col-sm-6"> <h:inputText value="#{createrequest.title}" readonly="true" class="  form-control"  id="title"  required="true" requiredMessage="* Please enter Title"/></div>
+<div class=" col-sm-4"> <h:inputText value="#{createrequest.title}" readonly="true" class="  form-control"  id="title"   requiredMessage="* Please enter Title"/></div>
  <h:message for="title"  style="color:red;margin:8px;"/> 
+
+ 
+ <div class="col-sm-2 control-label"><h:outputLabel  >User Category:</h:outputLabel></div>
+<div class=" col-sm-4"> <h:inputText value="#{createrequest.newrequestVo.usercategory}" readonly="true" class="  form-control"  id="usercategory"  required="true" requiredMessage="* Please enter Title"/></div>
+ <h:message for="usercategory"  style="color:red;margin:8px;"/> 
 </div><br></br>
+
+<div class=" row form-group ">
+ 
+ <div class="col-sm-2 control-label"><h:outputLabel  >User Project:</h:outputLabel></div>
+<div class=" col-sm-4"> <h:inputText value="#{createrequest.newrequestVo.userproject}" readonly="true" class="  form-control"  id="userproject"   requiredMessage="* Please enter Title"/></div>
+ <h:message for="userproject"  style="color:red;margin:8px;"/> 
+
+
+ <div class="col-sm-2 control-label"><h:outputLabel>User Requesttype:</h:outputLabel></div>
+<div class=" col-sm-4"> <h:inputText value="#{createrequest.newrequestVo.userrequesttype}" readonly="true" class="  form-control"  id="userrequesttype"   requiredMessage="* Please enter Title"/></div>
+ <h:message for="userrequesttype"  style="color:red;margin:8px;"/> 
+</div><br></br>
+
+
+<div class=" row form-group ">
+
+ <div class="col-sm-2 control-label"><h:outputLabel>Descriptioh:</h:outputLabel></div>
+<div class=" col-sm-10"> <h:inputTextarea value="#{createrequest.description}"  class="  form-control"  id="discription"  requiredMessage="* Please enter Title"/></div>
+ <h:message for="description"  style="color:red;margin:8px;"/> 
+</div><br></br>
+
+
+<div class=" row form-group ">
+ 
+ <div class="col-sm-2 control-label"><h:outputLabel  >Completion Date:</h:outputLabel></div>
+<div class=" col-sm-4"> <h:inputText value="#{createrequest.newrequestVo.completiondate}"  class="  form-control"  id="completiondate"   requiredMessage="* Please enter Title"/></div>
+ <h:message for="completiondate"  style="color:red;margin:8px;"/> 
+
+
+ <div class="col-sm-2 control-label"><h:outputLabel>Attached File:</h:outputLabel></div>
+<div class=" col-sm-4"> <p:fileUpload  mode="simple"  value="#{createrequest.attachment}"    id="AttachedFile"   requiredMessage="* Please enter Title"/></div>
+ <h:message for="AttachedFile"  style="color:red;margin:8px;"/> 
+</div><br></br>
+
+
+
 
  <div class=" row form-group ">
  <div class="col-sm-2 control-label"><h:outputLabel  >Status: </h:outputLabel></div>
@@ -66,13 +108,13 @@
 
  <div class=" row form-group ">
  <div class="col-sm-2 .col-sm-offset-2"></div>
- <div class="col-sm-3 "><h:commandButton action="#{create}" value="Update" class="btn btn-lg btn-success btn-block"></h:commandButton></div>
+ <div class="col-sm-3 "><h:commandButton action="#{createrequest.updateRequest}" value="Update" class="btn fontsize btn-success btn-block"></h:commandButton></div>
 
  <div class="col-sm-3 ">
  
 
 
-<h:link value="Back to Request List" style="text-decoration:none; color:#fff;" outcome="request" class="btn btn-lg btn-primary btn-block"/>
+<h:link value="Back to Request List" style="text-decoration:none; color:#fff;" outcome="request" class="btn fontsize btn-primary btn-block"/>
 </div>
 </div>
 

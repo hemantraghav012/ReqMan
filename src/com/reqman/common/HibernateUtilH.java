@@ -18,6 +18,7 @@ import com.reqman.pojo.Requestworkflow;
 import com.reqman.pojo.Rolemenus;
 import com.reqman.pojo.RolemenusId;
 import com.reqman.pojo.Roles;
+import com.reqman.pojo.Suggestion;
 import com.reqman.pojo.Usercategory;
 import com.reqman.pojo.Userfriendlist;
 import com.reqman.pojo.Userproject;
@@ -73,6 +74,7 @@ public class HibernateUtilH {
         	    configuration.addAnnotatedClass(Usertype.class);
         	    configuration.addAnnotatedClass(Userusertype.class);
         	    configuration.addAnnotatedClass(UserusertypeId.class);
+        	    configuration.addAnnotatedClass(Suggestion.class);
                 ServiceRegistry serviceRegistry
                     = new StandardServiceRegistryBuilder()
                         .applySettings(configuration.getProperties()).build();

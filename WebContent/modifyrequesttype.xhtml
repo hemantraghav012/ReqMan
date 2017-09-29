@@ -12,6 +12,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
 <link rel="stylesheet" href="resource/css/bootstrap.css"/>
 <link rel="stylesheet" href="resource/mystyle/home.css"/>
+ <link rel="stylesheet" href="resource/mystyle/button.css"/>
 <link rel="stylesheet" href="resource/mystyle/createcategory.css"/>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script type="text/javascript" src="resource/js/bootstrap.js"/>
@@ -33,13 +34,13 @@
       
       
       
-      <div class="container" style=" margin-top:3cm; ">
-  <h2>  Modify RequestType</h2>
+      <div class="container" >
   
-  <div  style="margin-top:1.5cm;"> 
+  
+  <div  style="margin-top:3.5cm;"> 
   <h:form class="form-horizontal fixedcontainer " >
-
-<div><h:messages style = "color:red;margin:8px;" /></div>
+ <h2 style="text-align:center;">  Modify RequestType</h2>
+<div style=" margin-top:1cm; "><h:messages style = "color:red;margin:8px;" /></div>
 
 
 
@@ -48,13 +49,13 @@
  <h:inputHidden value = "#{requesttypebean.requesttypeId}" id = "hiddenField" /> 
  
  <div class="col-sm-2 control-label"><h:outputLabel  >Request Type Name:</h:outputLabel></div>
-<div class=" col-sm-6"> <h:inputText value="#{requesttypebean.requesttypeName}" readonly="true" class="  form-control"  id="requesttypename"  required="true" requiredMessage="* Please enter Useertype name"/></div>
+<div class=" col-sm-8"> <h:inputText value="#{requesttypebean.requesttypeName}"  disabled="true" readonly="true" class="  form-control"  id="requesttypename"  required="true" requiredMessage="* Please enter Useertype name"/></div>
  <h:message for="requesttypename"  style="color:red;margin:8px;"/> 
 </div><br></br>
 
  <div class=" row form-group ">
  <div class="col-sm-2 control-label"><h:outputLabel  >Status: </h:outputLabel></div>
-<div class=" col-sm-6"> 
+<div class=" col-sm-8"> 
 <h:selectOneRadio value = "#{requesttypebean.status}" id="status" required="true"    requiredMessage="* Please enter status"> 
    <f:selectItem itemValue = "true" itemLabel = " Active &nbsp; &nbsp;&nbsp; &nbsp;"  />   
    <f:selectItem itemValue = "false" itemLabel = "In Active"  />
@@ -66,12 +67,12 @@
 
  <div class=" row form-group ">
  <div class="col-sm-2 .col-sm-offset-2"></div>
- <div class="col-sm-3 "><h:commandButton action="#{requesttypebean.updateRequesttype}" value="Update" class="btn btn-lg btn-success btn-block"></h:commandButton></div>
+ <div class="col-sm-4 "><h:commandButton action="#{requesttypebean.updateRequesttype}" value="Update" class="btn fontsize btn-success btn-block"></h:commandButton></div>
 
- <div class="col-sm-3 ">
+ <div class="col-sm-4 ">
  
 
-<h:link value="Back to Request Type" style="text-decoration:none; color:#fff;" outcome="requesttype" class="btn btn-lg btn-primary btn-block"/>
+<h:link value="Back to Request Type" style="text-decoration:none; color:#fff;" outcome="requesttype" class="btn fontsize btn-primary btn-block"/>
 </div>
 </div>
 

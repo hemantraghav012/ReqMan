@@ -18,13 +18,13 @@ import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.hssf.util.HSSFColor;
+import org.primefaces.model.chart.PieChartModel;
 
 import com.lowagie.text.BadElementException;
 import com.lowagie.text.Document;
 import com.lowagie.text.DocumentException;
 import com.lowagie.text.PageSize;
 import com.reqman.dao.ProjectMasterInterface;
-
 import com.reqman.daoimpl.ProjectMasterImpl;
 import com.reqman.util.SessionUtils;
 import com.reqman.util.UserSession;
@@ -41,7 +41,8 @@ public class Projectbean implements Serializable{
 
 	
 	private ProjectMasterInterface  projectMasterInterface = new ProjectMasterImpl();
-	
+	private  List<ProjectVo> projectList1 = new ArrayList<ProjectVo>();
+	private  List<ProjectVo> projectList2 = new ArrayList<ProjectVo>();
 	private  List<ProjectVo> projectList = new ArrayList<ProjectVo>();
 	private List<ProjectVo> filteredProjectList = new ArrayList<ProjectVo>();
 	
@@ -49,6 +50,8 @@ public class Projectbean implements Serializable{
 	private Boolean status;	
 	private String projectId;
 	private ProjectVo selectedProject;
+	  private PieChartModel piechart;
+	
 	
 	@PostConstruct
     public void init() {
@@ -60,6 +63,9 @@ public class Projectbean implements Serializable{
 			System.out.println("--usersession--userName-->"+userName);
 			projectList = projectMasterInterface.getProjectDetails(userName);
 			setFilteredProjectList(projectList);
+			projectList1 = projectMasterInterface.getProjectStatus(userName);
+			projectList2 = projectMasterInterface.getProjectfalseStatus(userName);
+			 createPieModels();
 		}
 		catch(Exception e)
 		{
@@ -68,6 +74,36 @@ public class Projectbean implements Serializable{
 	}
 	
 	
+	
+	 private void createPieModels() {
+	        piechart = new PieChartModel();
+	     	        
+	    int random1 = projectList2.size(); // Method to get data from db
+	    int random2 = projectList1.size();  // Method to get data from db
+
+	    piechart.getData().put("false status", random1);
+	    piechart.getData().put("true Status", random2);	  
+	    piechart.setTitle("Project Status");
+	    piechart.setLegendPosition("ne");
+	    //piechart.setSeriesColors("green,red");
+	   // piechart.setFill(false);
+	    piechart.setShowDataLabels(true);
+	 }
+	
+	
+	
+	public List<ProjectVo> getProjectList2() {
+		return projectList2;
+	}
+
+
+
+	public void setProjectList2(List<ProjectVo> projectList2) {
+		this.projectList2 = projectList2;
+	}
+
+
+
 	public String projectPage()
 	{
 		try
@@ -324,6 +360,26 @@ public class Projectbean implements Serializable{
 
 	public void setSelectedProject(ProjectVo selectedProject) {
 		this.selectedProject = selectedProject;
+	}
+
+
+	public List<ProjectVo> getProjectList1() {
+		return projectList1;
+	}
+
+
+	public void setProjectList1(List<ProjectVo> projectList1) {
+		this.projectList1 = projectList1;
+	}
+
+
+	public PieChartModel getPiechart() {
+		return piechart;
+	}
+
+
+	public void setPiechart(PieChartModel piechart) {
+		this.piechart = piechart;
 	}
 
 	

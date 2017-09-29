@@ -59,11 +59,13 @@ public class Login implements Serializable {
 			if (result == 1) {
 				HttpSession session = SessionUtils.getSession();
 				session.setAttribute("username", user);
-				FacesContext context=FacesContext.getCurrentInstance();
-				Update update=context.getApplication().evaluateExpressionGet(context, "#{update}", Update.class);
-				update.setEmailid(this.user);
+				//FacesContext context=FacesContext.getCurrentInstance();
+				//Update update=context.getApplication().evaluateExpressionGet(context, "#{update}", Update.class);
+				//update.setEmailid(this.user);
 				return "home";
-			} else {
+			} 
+			
+			else {
 				FacesContext.getCurrentInstance().addMessage(
 						null,
 						new FacesMessage(FacesMessage.SEVERITY_WARN,

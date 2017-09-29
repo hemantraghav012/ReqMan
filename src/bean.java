@@ -11,18 +11,50 @@ import org.primefaces.model.StreamedContent;
 
 
 
-@ManagedBean(name="bean",eager = true)
-@RequestScoped
-@ViewScoped
-public class bean {
-	 private StreamedContent file;
+
+
+import javax.annotation.PostConstruct;
+import java.io.Serializable;
+import javax.faces.bean.ManagedBean;
+import org.primefaces.model.chart.PieChartModel;
+ 
+@ManagedBean
+public class bean implements Serializable {
+ 
+    private PieChartModel pieModel1;
+  
+ 
+    @PostConstruct
+    public void init() {
+        createPieModels();
+    }    
+   
+    
+ 
+    private void createPieModels() {
+        pieModel1 = new PieChartModel();
+         
+        pieModel1.set("Brand 1", 540);
+        pieModel1.set("Brand 2", 325);
+        pieModel1.set("Brand 3", 702);
+        pieModel1.set("Brand 4", 421);
+         
+        pieModel1.setTitle("Simple Pie");
+        pieModel1.setLegendPosition("w");
+    }
+
+
+
+	public PieChartModel getPieModel1() {
+		return pieModel1;
+	}
+
+
+
+	public void setPieModel1(PieChartModel pieModel1) {
+		this.pieModel1 = pieModel1;
+	}
      
-	    public bean() {        
-	        InputStream stream = FacesContext.getCurrentInstance().getExternalContext().getResourceAsStream("/resource/mystyle/mystyle.css");
-	        file = new DefaultStreamedContent(stream, "image/jpg", "Attachment");
-	    }
-	 
-	    public StreamedContent getFile() {
-	        return file;
-	    }
+   
+     
 }
