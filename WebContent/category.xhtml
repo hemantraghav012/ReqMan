@@ -84,15 +84,21 @@ function setCategoryHiddenValue(new_value)
 	     widgetVar="categoryListTable">
 	     
 	     <f:facet name="header" >
-			<p:outputPanel style="text-align:left;">
-				<h:outputText value="Search on any  fields :  "/>
-				<h:inputText id="globalFilter" onkeyup="PF('categoryListTable').filter() " style="width:200px" />
+			<p:outputPanel>
+			<div class="row">
+			<div class= "col-sm-5">
+				<h:outputText value="Search on any fields:  "/>
+				</div>
+				<div class= "col-sm-7">
+				<h:inputText id="globalFilter" onkeyup="PF('categoryListTable').filter() "   class="form-control" />
+				</div>
+				</div>
 			</p:outputPanel>
 		</f:facet>
 			
 	 
 			<p:column filterBy="#{category.name}" sortBy="#{category.name}" headerText="Category Name"  
-			filterStyle="display:none;" filterMatchMode="contains"  style="width:3.5cm; ">
+			filterStyle="display:none;" filterMatchMode="contains"  >
 				<f:facet name="header">
 					<h:outputText value="Category Name"  />
 				</f:facet>
@@ -100,7 +106,7 @@ function setCategoryHiddenValue(new_value)
 			</p:column>
 			
 			<p:column filterBy="#{category.status}"  sortBy="#{category.status}" 
-			headerText="Status"  filterStyle="display:none;" filterMatchMode="contains"  style="width:2.1cm; text-align:center">
+			headerText="Status"  filterStyle="display:none;" filterMatchMode="contains"  style="width:2.5cm; text-align:center">
 				<f:facet name="header">
 					<h:outputText value="Status" />
 				</f:facet>

@@ -58,11 +58,11 @@ function setFriendHiddenValue(new_value)
       <div class="row">
       
       	<div class="col-sm-6">
-      		<span style=";font-size:25px;margin-left: 3px;">Manage Friend List</span>
+      		<span style=";font-size:25px;margin-left: 3px;">Manage Team Member List</span>
       	</div>
       	
      	<div class="col-sm-6">       				
-				<h:commandLink  value="Add friend" action="#{friendbean.newFriend}" class="btn btn1 fontsize pull-right"/>				
+				<h:commandLink  value="Add Team Member" action="#{friendbean.newFriend}" class="btn btn1 fontsize pull-right"/>				
 				
 			
 		</div>
@@ -80,8 +80,14 @@ function setFriendHiddenValue(new_value)
    
    <f:facet name="header">
 			<p:outputPanel>
-				<h:outputText value="Search all fields:" />
-				<h:inputText id="globalFilter" onkeyup="PF('friendListTable').filter()" />
+			<div class="row">
+			<div class= "col-sm-3">
+				<h:outputText value="  Search on any fields:" />
+				</div>
+				<div class= "col-sm-9">
+				<h:inputText id="globalFilter" onkeyup="PF('friendListTable').filter()"  class="form-control "/>
+				</div>
+				</div>
 			</p:outputPanel>
 		</f:facet>
 			
@@ -98,7 +104,7 @@ filterBy="#{friend.shortname}"  filterStyle="display:none;" filterMatchMode="con
         <p:column headerText="First Name" style="width:3cm;" sortBy="#{friend.firstname}"
         filterBy="#{friend.firstname}"  filterStyle="display:none;" filterMatchMode="contains">
  <f:facet name="header">
-					<h:outputText value="Frist Name" />
+					<h:outputText value="First Name" />
 				</f:facet>
         		
         		<h:outputText value="#{friend.firstname}" />    		
@@ -122,8 +128,8 @@ filterBy="#{friend.emailid}"  filterStyle="display:none;" filterMatchMode="conta
          <h:outputText value="#{friend.emailid}"   /> 
             	</p:column>        
 	 
-	        <p:column headerText="Status" style="width:3cm;" sortBy="#{friend.status}" 
-filterBy="#{friend.status}"  filterStyle="display:none;" filterMatchMode="contains">
+	        <p:column headerText="Status"  sortBy="#{friend.status}" 
+filterBy="#{friend.status}"  filterStyle="display:none;" filterMatchMode="contains" style="width:2.5cm;"> 
  <f:facet name="header">
 					<h:outputText value="Status" />
 				</f:facet>

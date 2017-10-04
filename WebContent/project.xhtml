@@ -58,11 +58,11 @@ function setProjectHiddenValue(new_value)
       <div class="row">
       
       	<div class="col-sm-6">
-      		<span style=";font-size:25px;margin-left: 3px;">Manage Project List</span>
+      		<span style=";font-size:25px;margin-left: 3px;">Manage Request Project List</span>
       	</div>
       	
      	<div class="col-sm-6">       				
-				<h:commandLink  value="Create Project" action="#{projectbean.newProject}" class="btn btn1  pull-right fontsize"/>				
+				<h:commandLink  value="Create Request Project" action="#{projectbean.newProject}" class="btn btn1  pull-right fontsize"/>				
 				
 			
 		</div>
@@ -81,9 +81,15 @@ function setProjectHiddenValue(new_value)
 	      
 	        	     
 	     <f:facet name="header">
-			<p:outputPanel>
-				<h:outputText value="Search all fields:" />
-				<h:inputText id="globalFilter" onkeyup="PF('projectListTable').filter()" />
+			<p:outputPanel >
+			<div class="row">
+			<div class= "col-sm-5">
+				<h:outputText value="Search on any fields:" />	
+				</div>
+				<div class= "col-sm-7">
+				<h:inputText id="globalFilter" onkeyup="PF('projectListTable').filter()" class="form-control "/>
+			</div>
+			</div>
 			</p:outputPanel>
 		</f:facet>
 			
@@ -100,7 +106,7 @@ function setProjectHiddenValue(new_value)
 	 
 	 
 	 
-	  <p:column headerText="Project Status" sortBy="#{project.status}" filterBy="#{project.status}" filterStyle="display:none;" filterMatchMode="contains">
+	  <p:column headerText="Project Status" sortBy="#{project.status}" filterBy="#{project.status}" filterStyle="display:none;" filterMatchMode="contains" style="width:2.5cm;">
 	        <f:facet name="header">
 				 <h:outputText value="Status" />
 				</f:facet>
@@ -136,11 +142,11 @@ function setProjectHiddenValue(new_value)
 	<div>
 		<strong>Export Data &nbsp;</strong>
 	    <h:commandButton id="excel" class="btn btn-primary fontsize" value="Excel">
-	        <p:dataExporter type="xls" target="categoryTable" fileName="category"   postProcessor="#{projectbean.postProcessXLS}"/>
+	        <p:dataExporter type="xls" target="projectTable" fileName="project"   postProcessor="#{projectbean.postProcessXLS}"/>
 	    </h:commandButton>
 	 	&nbsp;
 	    <h:commandButton id="pdf" class="btn btn-primary fontsize" value="Pdf">
-	        <p:dataExporter type="pdf" target="categoryTable" fileName="category"  preProcessor="#{projectbean.preProcessPDF}"/>
+	        <p:dataExporter type="pdf" target="projectTable" fileName="project"  preProcessor="#{projectbean.preProcessPDF}"/>
 	    </h:commandButton>
 	</div>
 

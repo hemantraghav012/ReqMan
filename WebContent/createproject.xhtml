@@ -47,14 +47,14 @@
   <div  style="margin-top:1cm;"> 
   <h:form class="form-horizontal fixedcontainer " >
   
-<h2 style="  margin-bottom:2cm; margin-top:0px; text-align:center" > Create Project</h2>
+<h2 style="  margin-bottom:2cm; margin-top:0px; text-align:center" > Create Request Project</h2>
 
 <div><h:messages style = "color:red;margin:8px;" /></div>
 
  <div class=" row form-group ">
  <div class="col-sm-3 control-label"><h:outputLabel  >Project Name:</h:outputLabel></div>
 <div class=" col-sm-6"> <h:inputText value="#{projectbean.projectName}" maxlength="20" class="  form-control"  id="projectname"  required="true" requiredMessage="* Please enter project Name">
- </h:inputText><span style="color:red;">*( Max.-20 characters)</span></div>
+ </h:inputText><span style="color:red;">Please enter upto 20 characters.</span></div>
  <h:message for="projectname"  style="color:red;margin:8px;"/> 
  
 </div><br></br>
@@ -79,7 +79,7 @@
  
 
 
-<h:link value="Back to Project" style="text-decoration:none; color:#fff;" outcome="project" class="btn fontsize btn-primary btn-block"/>
+<h:link value="Back to  Project List" style="text-decoration:none; color:#fff;" outcome="project" class="btn fontsize btn-primary btn-block"/>
 </div>
 </div>
 

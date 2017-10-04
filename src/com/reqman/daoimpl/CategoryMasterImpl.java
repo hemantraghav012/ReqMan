@@ -11,7 +11,7 @@ import org.hibernate.Transaction;
 import org.hibernate.criterion.Restrictions;
 
 import com.reqman.common.HibernateUtil;
-import com.reqman.common.HibernateUtil;
+
 import com.reqman.dao.CategoryMasterInterface;
 import com.reqman.pojo.Category;
 import com.reqman.pojo.Usercategory;

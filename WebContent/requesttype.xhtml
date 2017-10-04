@@ -60,7 +60,7 @@ function setRequesttypeHiddenValue(new_value)
       <div class="row">
       
       	<div class="col-sm-6">
-      		<span style=";font-size:25px;margin-left: 3px;">Manage RequestType</span>
+      		<span style=";font-size:25px;margin-left: 3px;">Manage Request Type List</span>
       	</div>
       	
      	<div class="col-sm-6">       				
@@ -85,8 +85,14 @@ function setRequesttypeHiddenValue(new_value)
 	      
 	        <f:facet name="header">
 			<p:outputPanel>
-				<h:outputText value="Search all fields:" />
-				<h:inputText id="globalFilter" onkeyup="PF('requesttypeListTable').filter()" />
+			<div class="row">
+			<div class= "col-sm-5">
+				<h:outputText value="Search on any fields:" />
+				</div>
+					<div class= "col-sm-7">
+				<h:inputText id="globalFilter" onkeyup="PF('requesttypeListTable').filter()"  class="form-control "/>
+				</div>
+				</div>
 			</p:outputPanel>
 		</f:facet>
 			
@@ -102,7 +108,7 @@ function setRequesttypeHiddenValue(new_value)
 	 
 	 
 	 
-	        <p:column headerText="Status" style="width:4.5cm;" sortBy="#{requesttype.status}" filterBy="#{requesttype.status}"  filterStyle="display:none;" filterMatchMode="contains">
+	        <p:column headerText="Status"  sortBy="#{requesttype.status}" filterBy="#{requesttype.status}"  filterStyle="display:none;" filterMatchMode="contains" style="width:2.5cm;">
 	        
 	        <f:facet name="header">
 			<h:outputText value="Status" />

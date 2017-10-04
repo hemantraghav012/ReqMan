@@ -15,7 +15,7 @@ import org.hibernate.Transaction;
 import org.hibernate.criterion.Restrictions;
 import org.primefaces.model.UploadedFile;
 
-import com.reqman.common.HibernateUtil;
+
 import com.reqman.common.HibernateUtil;
 import com.reqman.dao.NewrequestInterface;
 import com.reqman.pojo.Request;

@@ -13,7 +13,7 @@ import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.primefaces.model.chart.PieChartModel;
 
-import com.reqman.common.HibernateUtil;
+
 import com.reqman.common.HibernateUtil;
 import com.reqman.dao.FriendMasterInterface;
 import com.reqman.pojo.Category;

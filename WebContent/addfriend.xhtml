@@ -50,7 +50,7 @@
      
   <h:form class="form-horizontal fixedcontainer " >
   
-<h2 style="  margin-bottom:1cm; margin-top:0px; text-align:center " > Add Friend</h2>
+<h2 style="  margin-bottom:1cm; margin-top:0px; text-align:center " > Add Team Member</h2>
 
 <div><h:messages style = "color:red;margin:8px;" /></div>
 
@@ -87,7 +87,7 @@
 <div class=" row form-group ">
  <div class="col-sm-3 control-label"><h:outputLabel  >Short Name:</h:outputLabel></div>
 <div class=" col-sm-6"> <h:inputText value="#{friendbean.friendshortname}" maxlength="2" class="  form-control"  id="shortname"  required="true" requiredMessage="* Please enter project Name">
- </h:inputText><span style="color:red;">*( Only 2 characters)</span></div>
+ </h:inputText><span style="color:red;">Please enter upto 4 characters</span></div>
  <h:message for="shortname"  style="color:red;margin:8px;"/> 
  
 </div><br></br>
@@ -111,7 +111,7 @@
  <div class="col-sm-3 ">
  
 
-<h:link value="Back to Friend List" style="text-decoration:none; color:#fff;" outcome="friend" class="btn fontsize btn-primary btn-block"/>
+<h:link value="Back to Team List" style="text-decoration:none; color:#fff;" outcome="friend" class="btn fontsize btn-primary btn-block"/>
 </div>
 </div>
 
