@@ -1,6 +1,6 @@
 package com.reqman.pojo;
 
-// Generated 5 Sep, 2017 6:45:26 PM by Hibernate Tools 4.3.1
+// Generated 6 Oct, 2017 6:32:56 PM by Hibernate Tools 4.3.1
 
 import java.util.Date;
 import java.util.HashSet;
@@ -35,8 +35,7 @@ public class Userfriendlist implements java.io.Serializable {
 	private Boolean status;
 	private Date datecreated;
 	private String createdby;
-	private Set<Requestworkflow> requestworkflows = new HashSet<Requestworkflow>(
-			0);
+	private Set<Request> requests = new HashSet<Request>(0);
 
 	public Userfriendlist() {
 	}
@@ -47,14 +46,14 @@ public class Userfriendlist implements java.io.Serializable {
 
 	public Userfriendlist(int id, Users usersByUserid, Users usersByFriendid,
 			Boolean status, Date datecreated, String createdby,
-			Set<Requestworkflow> requestworkflows) {
+			Set<Request> requests) {
 		this.id = id;
 		this.usersByUserid = usersByUserid;
 		this.usersByFriendid = usersByFriendid;
 		this.status = status;
 		this.datecreated = datecreated;
 		this.createdby = createdby;
-		this.requestworkflows = requestworkflows;
+		this.requests = requests;
 	}
 
 	@Id
@@ -117,12 +116,12 @@ public class Userfriendlist implements java.io.Serializable {
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "userfriendlist")
-	public Set<Requestworkflow> getRequestworkflows() {
-		return this.requestworkflows;
+	public Set<Request> getRequests() {
+		return this.requests;
 	}
 
-	public void setRequestworkflows(Set<Requestworkflow> requestworkflows) {
-		this.requestworkflows = requestworkflows;
+	public void setRequests(Set<Request> requests) {
+		this.requests = requests;
 	}
 
 }

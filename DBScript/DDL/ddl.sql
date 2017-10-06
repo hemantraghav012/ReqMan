@@ -116,6 +116,13 @@ CREATE TABLE reqman.request
     datemodified timestamp without time zone,
     modifiedby character varying(50) COLLATE "default".pg_catalog,
     filename character varying(50) COLLATE "default".pg_catalog,
+    friendid integer,
+    completionpercentage real,
+    acceptdate timestamp without time zone,
+    updatedate timestamp without time zone,
+    revisionnumber integer,
+    approvedby character varying(50) COLLATE "default".pg_catalog,
+    approveddate timestamp without time zone,
     CONSTRAINT pk_request_id PRIMARY KEY (id),
     CONSTRAINT uni_request_key UNIQUE (title, userprojectid, usercategoryid, userrequesttypeid),
     CONSTRAINT fk_request_usercategory_id FOREIGN KEY (usercategoryid)
@@ -128,6 +135,10 @@ CREATE TABLE reqman.request
         ON DELETE NO ACTION,
     CONSTRAINT fk_request_userrequesttype_id FOREIGN KEY (userrequesttypeid)
         REFERENCES reqman.userrequesttype (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT fk_workflow_friendid FOREIGN KEY (friendid)
+        REFERENCES reqman.userfriendlist (id) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION
 )
@@ -165,47 +176,6 @@ ALTER TABLE reqman.requesttype
 
 GRANT ALL ON TABLE reqman.requesttype TO postgres WITH GRANT OPTION;
 
--- Table: reqman.requestworkflow
-
--- DROP TABLE reqman.requestworkflow;
-
-CREATE TABLE reqman.requestworkflow
-(
-    id integer NOT NULL DEFAULT nextval('reqman.requestworkflow_id_seq'::regclass),
-    requestid integer,
-    friendid integer,
-    completionpercentage real,
-    requestby character varying(50) COLLATE pg_catalog."default",
-    requeststatus integer,
-    acceptdate timestamp without time zone,
-    updatedate timestamp without time zone,
-    revisionnumber integer,
-    approvedby character varying(50) COLLATE pg_catalog."default",
-    approveddate timestamp without time zone,
-    datecreated timestamp without time zone,
-    createdby character varying COLLATE pg_catalog."default",
-    datemodified timestamp without time zone,
-    modifiedby character varying(50) COLLATE pg_catalog."default",
-    status boolean DEFAULT true,
-    CONSTRAINT pk_requestworkflow_id PRIMARY KEY (id),
-    CONSTRAINT fk_workflow_friendid FOREIGN KEY (friendid)
-        REFERENCES reqman.userfriendlist (id) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
-    CONSTRAINT fk_workflow_requestid FOREIGN KEY (requestid)
-        REFERENCES reqman.request (id) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION
-)
-WITH (
-    OIDS = FALSE
-)
-TABLESPACE pg_default;
-
-ALTER TABLE reqman.requestworkflow
-    OWNER to postgres;
-
-GRANT ALL ON TABLE reqman.requestworkflow TO postgres WITH GRANT OPTION;
 
 -- Table: reqman.rolemenus
 

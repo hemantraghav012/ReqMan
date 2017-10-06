@@ -14,7 +14,6 @@ import com.reqman.pojo.Menu;
 import com.reqman.pojo.Project;
 import com.reqman.pojo.Request;
 import com.reqman.pojo.Requesttype;
-import com.reqman.pojo.Requestworkflow;
 import com.reqman.pojo.Rolemenus;
 import com.reqman.pojo.RolemenusId;
 import com.reqman.pojo.Roles;
@@ -60,7 +59,7 @@ public class HibernateUtilH {
         	    configuration.addAnnotatedClass(Project.class);
         	    configuration.addAnnotatedClass(Request.class);
         	    configuration.addAnnotatedClass(Requesttype.class);
-        	    configuration.addAnnotatedClass(Requestworkflow.class);
+        	    //configuration.addAnnotatedClass(Requestworkflow.class);
         	    configuration.addAnnotatedClass(Rolemenus.class);
         	    configuration.addAnnotatedClass(RolemenusId.class);
         	    configuration.addAnnotatedClass(Roles.class);
