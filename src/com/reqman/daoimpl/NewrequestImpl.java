@@ -39,7 +39,6 @@ public class NewrequestImpl implements NewrequestInterface {
 		try {
 			
 			session = HibernateUtil.getSession();
-			tx = session.beginTransaction();
 			
 			//prepare the request list object
 			requestList = getRequestDetails(title, description, usercategory,
@@ -48,6 +47,8 @@ public class NewrequestImpl implements NewrequestInterface {
 			
 			if(requestList != null && requestList.size() != 0)
 			{
+				tx = session.beginTransaction();
+
 				for(Request request : requestList)
 				{
 					//checking the request object
@@ -90,9 +91,11 @@ public class NewrequestImpl implements NewrequestInterface {
 					{
 						session.save(request);
 						result = 3;
-						tx.commit();
+						
 					}
 				}
+				
+				tx.commit();
 			}
 
 
@@ -118,9 +121,7 @@ public class NewrequestImpl implements NewrequestInterface {
 			Integer[] userfriendlist, Session session) throws Exception
 	{
 		
-		Transaction tx = null;
 		Users users = null;
-		int result = 0;
 		Userproject userproject1 = null;
 		Usercategory usercategory1 = null;
 		Userrequesttype userrequesttype1 = null;
