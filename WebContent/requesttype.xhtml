@@ -86,7 +86,7 @@ function setRequesttypeHiddenValue(new_value)
 	        <f:facet name="header">
 			<p:outputPanel>
 			<div class="row">
-			<div class= "col-sm-5">
+			<div class= "col-sm-5" style="padding: 5px 0px 0px 3px; font-size:14px">
 				<h:outputText value="Search on any fields:" />
 				</div>
 					<div class= "col-sm-7">
@@ -99,7 +99,7 @@ function setRequesttypeHiddenValue(new_value)
 			
 	      
 	 
-	        <p:column headerText="Requesttype Name" sortBy="#{requesttype.name}" filterBy="#{requesttype.name}" filterStyle="display:none;" filterMatchMode="contains">
+	        <p:column headerText="Requesttype Name" sortBy="#{requesttype.name}" filterBy="#{requesttype.name}" filterStyle="display:none;" filterMatchMode="contains" style="padding: 0px 0px 0px 3px;">
 	         <f:facet name="header">
 				<h:outputText value="Requesttype Name" />
 				</f:facet>
@@ -108,7 +108,7 @@ function setRequesttypeHiddenValue(new_value)
 	 
 	 
 	 
-	        <p:column headerText="Status"  sortBy="#{requesttype.status}" filterBy="#{requesttype.status}"  filterStyle="display:none;" filterMatchMode="contains" style="width:2.5cm;">
+	        <p:column headerText="Status"  sortBy="#{requesttype.status}" filterBy="#{requesttype.status}"  filterStyle="display:none;" filterMatchMode="contains" style="width:80px;padding: 0px 0px 0px 3px; ">
 	        
 	        <f:facet name="header">
 			<h:outputText value="Status" />
@@ -116,9 +116,9 @@ function setRequesttypeHiddenValue(new_value)
 	            <h:outputText value="#{requesttype.status}" />
 	        </p:column>
 	        
-	        <p:column  headerText="Modify" exportable="false" style="width:3cm; text-align:center">
+	        <p:column  headerText="Modify" exportable="false"  style="width:80px;padding: 0px 0px 0px 0px;">
 				
-				<p:commandLink id="nonAjax" styleClass="btn btn-primary fontsize" style="color:white;" onclick='setRequesttypeHiddenValue(#{requesttype.userRequesttypeId})' action="#{requesttypebean.modifyAction()}" ajax="false" >
+				<p:commandLink id="nonAjax" styleClass="btn btn-primary fontsize" style="color:white;width:80px;padding: 0px 0px 0px 0px;" onclick='setRequesttypeHiddenValue(#{requesttype.userRequesttypeId})' action="#{requesttypebean.modifyAction()}" ajax="false" >
 	        		Update
 	    		</p:commandLink>
 	    		 

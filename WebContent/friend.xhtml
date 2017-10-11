@@ -53,7 +53,7 @@ function setFriendHiddenValue(new_value)
 
 
  <h:form id="friendForm">
-      <div class="container fixedcontainer" style=" margin-top:1cm; ">
+      <div class="container fixedcontainer-2" style=" margin-top:1cm; ">
  		<h:inputHidden id="friendId" value="#{friendbean.friendId}" ></h:inputHidden>
       <div class="row">
       
@@ -81,7 +81,7 @@ function setFriendHiddenValue(new_value)
    <f:facet name="header">
 			<p:outputPanel>
 			<div class="row">
-			<div class= "col-sm-3">
+			<div class= "col-sm-3" style="padding: 5px 0px 0px 3px; font-size:14px">
 				<h:outputText value="  Search on any fields:" />
 				</div>
 				<div class= "col-sm-9">
@@ -93,7 +93,7 @@ function setFriendHiddenValue(new_value)
 			
 			
 	 
-	       <p:column headerText="Short Name" style="width:3cm;"
+	       <p:column headerText="Short Name" style="width:99px;padding: 0px 0px 0px 2px;"
 filterBy="#{friend.shortname}"  filterStyle="display:none;" filterMatchMode="contains">
  <f:facet name="header">
 					<h:outputText value="Short Name" />
@@ -101,7 +101,7 @@ filterBy="#{friend.shortname}"  filterStyle="display:none;" filterMatchMode="con
         <h:outputText value="#{friend.shortname}" />
          </p:column>
         
-        <p:column headerText="First Name" style="width:3cm;" sortBy="#{friend.firstname}"
+        <p:column headerText="First Name" style="width:105px;padding:0px 0px 0px 3px;" sortBy="#{friend.firstname}"
         filterBy="#{friend.firstname}"  filterStyle="display:none;" filterMatchMode="contains">
  <f:facet name="header">
 					<h:outputText value="First Name" />
@@ -110,7 +110,7 @@ filterBy="#{friend.shortname}"  filterStyle="display:none;" filterMatchMode="con
         		<h:outputText value="#{friend.firstname}" />    		
         </p:column>
  
-        <p:column headerText="Last Name" style="width:3cm;"
+        <p:column headerText="Last Name" style="width:105px;padding: 0px 0px 0px 3px;"
         filterBy="#{friend.lastname}"  filterStyle="display:none;" filterMatchMode="contains">
  <f:facet name="header">
 					<h:outputText value="Last Name" />
@@ -119,7 +119,7 @@ filterBy="#{friend.shortname}"  filterStyle="display:none;" filterMatchMode="con
        	<h:outputText value="#{friend.lastname}" />    		
         </p:column>
  
-         <p:column headerText="Email Id" style="width:7cm;"  
+         <p:column headerText="Email Id" style="padding: 0px 0px 0px 3px;"  
 filterBy="#{friend.emailid}"  filterStyle="display:none;" filterMatchMode="contains">
  <f:facet name="header">
 					<h:outputText value="Email Id" />
@@ -129,7 +129,7 @@ filterBy="#{friend.emailid}"  filterStyle="display:none;" filterMatchMode="conta
             	</p:column>        
 	 
 	        <p:column headerText="Status"  sortBy="#{friend.status}" 
-filterBy="#{friend.status}"  filterStyle="display:none;" filterMatchMode="contains" style="width:2.5cm;"> 
+filterBy="#{friend.status}"  filterStyle="display:none;" filterMatchMode="contains" style="width:80px;padding: 0px 0px 0px 5px;"> 
  <f:facet name="header">
 					<h:outputText value="Status" />
 				</f:facet>
@@ -137,14 +137,17 @@ filterBy="#{friend.status}"  filterStyle="display:none;" filterMatchMode="contai
 	            <h:outputText value="#{friend.status}" />
 	        </p:column>
 	        
-	        <p:column  headerText="Modify" exportable="false" style="width:3cm; text-align:center">
+	      <p:column  headerText="Modify" exportable="false" style="width:80px; padding: 0px 0px 0px 0px;">
 				
-				<p:commandLink id="nonAjax" styleClass="btn btn-primary fontsize" style="color:white;" onclick='setFriendHiddenValue(#{friend.userFriendId})' action="#{friendbean.modifyAction()}" ajax="false" >
+				<p:commandLink id="nonAjax" styleClass="btn btn-primary fontsize"  onclick='setFriendHiddenValue(#{friend.userFriendId})'
+				style="color:white;width:80px; padding: 0px 0px 0px 0px;" action="#{friendbean.modifyAction()}" ajax="false" >
 	        		Update
 	    		</p:commandLink>
 	    		 
 	        </p:column>
-	       
+	        
+				
+				
 	    </p:dataTable>
 	    
 	</div>

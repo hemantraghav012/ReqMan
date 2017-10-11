@@ -124,7 +124,7 @@ CREATE TABLE reqman.request
     approvedby character varying(50) COLLATE "default".pg_catalog,
     approveddate timestamp without time zone,
     CONSTRAINT pk_request_id PRIMARY KEY (id),
-    CONSTRAINT uni_request_key UNIQUE (title, userprojectid, usercategoryid, userrequesttypeid),
+   -- CONSTRAINT uni_request_key UNIQUE (title, userprojectid, usercategoryid, userrequesttypeid),
     CONSTRAINT fk_request_usercategory_id FOREIGN KEY (usercategoryid)
         REFERENCES reqman.usercategory (id) MATCH SIMPLE
         ON UPDATE NO ACTION

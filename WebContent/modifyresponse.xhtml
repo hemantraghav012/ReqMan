@@ -1,0 +1,122 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+
+
+<h:head>
+
+<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<link rel="stylesheet" href="resource/css/bootstrap.css"/>
+<link rel="stylesheet" href="resource/mystyle/home.css"/>
+ <link rel="stylesheet" href="resource/mystyle/button.css"/>
+<link rel="stylesheet" href="resource/mystyle/createcategory.css"/>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script type="text/javascript" src="resource/js/bootstrap.js"/>
+<script type="text/javascript" src="resource/js/jquery.js"/>
+<title>update Response</title>
+
+</h:head>
+
+<h:body>
+<div id="header">
+	<ui:insert name="header">
+		<ui:include src="header.xhtml" />
+	</ui:insert>
+</div>
+       
+      <!-- -end of header --> 
+      
+      
+      
+      <div class="container" style=" margin-top:2cm; ">
+ 
+  
+  <div  style="margin-top:1cm;"> 
+  <h:form class="form-horizontal fixedcontainer " >
+ <h2 style=" margin-bottom:1cm; text-align:center">  View/Modify Response</h2>
+<div><h:messages style = "color:red;margin:8px;" /></div>
+
+
+
+ <div class=" row form-group ">
+ 
+ <h:inputHidden value = "#{responsebean.requestId}" id = "hiddenField" /> 
+ 
+ <div class="col-sm-2 control-label"><h:outputLabel  >Title:</h:outputLabel></div>
+<div class=" col-sm-10"> <h:inputText value="#{responsebean.title}" readonly="true" disabled="true"  style="background-color:lightgrey;" class="  form-control"  id="title"   requiredMessage="* Please enter Title"/></div>
+ <h:message for="title"  style="color:red;margin:8px;"/> 
+</div>
+ 
+ 
+
+<div class=" row form-group ">
+ <div class="col-sm-2 control-label"><h:outputLabel  >Completion Date:</h:outputLabel></div>
+<div class=" col-sm-4"> <h:inputText value="#{responsebean.responseVo.completiondate}"  class="  form-control"  id="completiondate"   requiredMessage="* Please enter Title"/></div>
+ <h:message for="completiondate"  style="color:red;margin:8px;"/> 
+ <div class="col-sm-2 control-label"><h:outputLabel  >Category:</h:outputLabel></div>
+<div class=" col-sm-4"> <h:inputText value="#{responsebean.responseVo.usercategory}" readonly="true"  disabled="true" class="  form-control"  style="background-color:lightgrey;" id="usercategory"  required="true" requiredMessage="* Please enter Title"/></div>
+ <h:message for="usercategory"  style="color:red;margin:8px;"/> 
+</div><br></br>
+
+<div class=" row form-group ">
+ 
+ <div class="col-sm-2 control-label"><h:outputLabel  > Project:</h:outputLabel></div>
+<div class=" col-sm-4"> <h:inputText value="#{responsebean.responseVo.userproject}" readonly="true" disabled="true" class="  form-control"  id="userproject"  style="background-color:lightgrey;"  requiredMessage="* Please enter Title"/></div>
+ <h:message for="userproject"  style="color:red;margin:8px;"/> 
+
+
+ <div class="col-sm-2 control-label"><h:outputLabel>Type:</h:outputLabel></div>
+<div class=" col-sm-4"> <h:inputText value="#{responsebean.responseVo.userrequesttype}" readonly="true"  disabled="true" class="  form-control"  id="userrequesttype"  style="background-color:lightgrey;"  requiredMessage="* Please enter Title"/></div>
+ <h:message for="userrequesttype"  style="color:red;margin:8px;"/> 
+</div><br></br>
+
+
+
+
+<div class=" row form-group ">
+ <div class="col-sm-2 control-label" style="padding-top:0cm;"><h:outputLabel>Stage: </h:outputLabel></div>
+<div class=" col-sm-6"> 
+<h:selectOneRadio value = "#{responsebean.stage}" id="stage" required="true"    requiredMessage="* Please enter stage"> 
+  
+   <f:selectItem itemValue = "2" itemLabel = "Accepts &nbsp; &nbsp;&nbsp; &nbsp;" /> 
+   <f:selectItem itemValue = "3" itemLabel = "Sent Back"  />
+</h:selectOneRadio> </div>
+ <h:message for="stage"  style="color:red;margin:8px;"/> 
+ </div><br></br>
+
+
+
+
+
+
+
+
+ <div class=" row form-group ">
+ <div class="col-sm-3 .col-sm-offset-3"></div>
+ <div class="col-sm-4 "><h:commandButton action="#{responsebean.updateResponse}" value="Update" class="btn fontsize btn-success btn-block"></h:commandButton></div>
+
+ <div class="col-sm-4 ">
+ 
+
+
+<h:link value="Back to Response List" style="text-decoration:none; color:#fff;" outcome="responsetonewrequest" class="btn fontsize btn-primary btn-block"/>
+</div>
+</div>
+
+
+
+</h:form>
+  
+  </div>
+      
+  </div>
+
+
+
+
+</h:body>
+</html>

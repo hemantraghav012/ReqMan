@@ -19,7 +19,7 @@
  <link rel="stylesheet" href="resource/mystyle/button.css"/>
 <script type="text/javascript" src="resource/js/bootstrap.js"/>
 <script type="text/javascript" src="resource/js/jquery.js"/>
-<title>suggestion</title>
+<title>User</title>
 
 
 
@@ -48,14 +48,14 @@
        <!-- -end of categoryheader -->
       
        <h:form id="categoryForm">
-      <div class="container fixedcontainer1" style=" margin-top:1cm; ">
+      <div class="container fixedcontainer" style=" margin-top:1cm; ">
  		<h:inputHidden id="categoryId" value="#{categorybean.categoryId}" ></h:inputHidden>
       <div class="row">
       
       	<div class="col-sm-6">
       		<span style=";font-size:25px;margin-left: 3px;">Working in this page</span>
       		
-      		
+      		<p:chart type="bar" model="#{bean.barModel}" style="height:300px;width:100%"/>
       		
       		
       	</div>

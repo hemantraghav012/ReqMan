@@ -82,10 +82,10 @@ function setRequestHiddenValue(new_value)
 	     <f:facet name="header">
 			<p:outputPanel>
 				<div class="row">
-			<div class= "col-sm-2">
+			<div class= "col-sm-2" style="padding: 5px 0px 0px 3px; font-size:16px">
 				<h:outputText value="Search on any fields:  "/>
 				</div>
-				<div class= "col-sm-7">
+				<div class= "col-sm-7" style="padding: 0px 0px 0px 3px;">
 				<h:inputText id="globalFilter" onkeyup="PF('newrequestListTable').filter()" class="form-control"  />
 				</div>
 				
@@ -95,7 +95,7 @@ function setRequestHiddenValue(new_value)
 
  
  <p:column filterBy="#{request1.title}"  sortBy="#{request1.title}" headerText="Title"  filterStyle="display:none;"
-			 filterMatchMode="contains"  style="text-overflow: ellipsis; white-space: nowrap;">			 
+			 filterMatchMode="contains"  style="text-overflow: ellipsis; white-space: nowrap; width:99px;padding: 0px 0px 0px 3px;">			 
 				<f:facet name="header" >
 					 <h:outputText value="Title"/>
 				</f:facet>
@@ -104,17 +104,17 @@ function setRequestHiddenValue(new_value)
  
  
  <p:column filterBy="#{request1.description}" headerText="Description" filterStyle="display:none;"  
-			 filterMatchMode="contains"   style="text-overflow: ellipsis; white-space: nowrap;">
+			 filterMatchMode="contains"   style="text-overflow: ellipsis; white-space: nowrap;width:110px;padding: 0px 0px 0px 3px;">
 				<f:facet name="header">
 					 <h:outputText value="Description" />
 				</f:facet>
 				<h:outputText value="#{request1.description}" style="display: inline;"   />
 </p:column>
  
-<p:column filterBy="#{request1.completiondate}" headerText="Completion Date"  filterStyle="display:none;"  
-			 filterMatchMode="contains"   pattern="dd-MMM-yyyy"  style="text-overflow: ellipsis; white-space: nowrap;">
+<p:column filterBy="#{request1.completiondate}" headerText="Due Date"  filterStyle="display:none;"  
+			 filterMatchMode="contains"   pattern="dd-MMM-yyyy"  style="text-overflow: ellipsis; white-space: nowrap;width:99px;padding: 0px 0px 0px 3px;">
 				<f:facet name="header">
-					<h:outputText value="Completion Date" />
+					<h:outputText value="Due Date" />
 				</f:facet>
 				<h:outputText value="#{request1.completiondate}" pattern="dd-MMM-yyyy" />
 			</p:column>
@@ -123,7 +123,7 @@ function setRequestHiddenValue(new_value)
     
     
    <p:column filterBy="#{request1.usercategory}" headerText="Category"  filterStyle="display:none;"  
-			 filterMatchMode="contains"  style="text-overflow: ellipsis; white-space: nowrap;">
+			 filterMatchMode="contains"  style="text-overflow: ellipsis; white-space: nowrap;width:99px;padding: 0px 0px 0px 3px;">
 				<f:facet name="header">
 					<h:outputText value="Category" />
 				</f:facet>
@@ -131,7 +131,7 @@ function setRequestHiddenValue(new_value)
 			</p:column> 
     
      <p:column filterBy="#{request1.userproject}"  headerText="Project"  filterStyle="display:none;"  
-			 filterMatchMode="contains" style="text-overflow: ellipsis; white-space: nowrap;">
+			 filterMatchMode="contains" style="text-overflow: ellipsis; white-space: nowrap;width:99px;padding: 0px 0px 0px 3px;">
 				<f:facet name="header">
 					<h:outputText value="Project" />
 				</f:facet>
@@ -140,7 +140,7 @@ function setRequestHiddenValue(new_value)
     
    
      <p:column filterBy="#{request1.userrequesttype}"   headerText="Type"  filterStyle="display:none;"  
-			 filterMatchMode="contains" style="text-overflow: ellipsis; white-space: nowrap;">
+			 filterMatchMode="contains" style="text-overflow: ellipsis; white-space: nowrap;width:99px;padding: 0px 0px 0px 3px;">
 				<f:facet name="header">
 					<h:outputText value="Type" />
 				</f:facet>
@@ -149,15 +149,32 @@ function setRequestHiddenValue(new_value)
     
     
       <p:column filterBy="#{request1.friendName}"   headerText="Team Member"  filterStyle="display:none;"  
-			 filterMatchMode="contains"  style="text-overflow: ellipsis; white-space: nowrap;">
+			 filterMatchMode="contains"  style="text-overflow: ellipsis; white-space: nowrap;width:110px;padding: 0px 0px 0px 3px;">
 				<f:facet name="header">
 					<h:outputText value="Team Member" />
 				</f:facet>
 				<h:outputText value="#{request1.friendName}" style="display: inline;"   />
 			</p:column>
     
+     <p:column filterBy="#{request1.completionpercentage}"   headerText="% Age Completion"  filterStyle="display:none;"  
+			 filterMatchMode="contains"  style="text-overflow: ellipsis; white-space: nowrap;width:175px;padding: 0px 0px 0px 3px;">
+				<f:facet name="header">
+					<h:outputText value="% Age Completion" />
+				</f:facet>
+				<h:outputText value="#{request1.completionpercentage}%" style="display: inline;"   />
+			</p:column>
+    
+    
+       <p:column filterBy="#{request1.completionpercentage}"   headerText="Stage"  filterStyle="display:none;"  
+			 filterMatchMode="contains"  style="text-overflow: ellipsis; white-space: nowrap;width:90px;padding: 0px 0px 0px 3px;">
+				<f:facet name="header">
+					<h:outputText value="stage" />
+				</f:facet>
+				<h:outputText value="#{request1.stage}" style="display: inline;"   />
+			</p:column>
+    
      <p:column filterBy="#{request1.status}"  sortBy="#{request1.status}" 
-			headerText="Status"  filterStyle="display:none;" filterMatchMode="contains"  style="width:2; text-align:center">
+			headerText="Status"  filterStyle="display:none;" filterMatchMode="contains"  style="width:89px; text-align:center">
 				<f:facet name="header">
 					<h:outputText value="Status" />
 				</f:facet>
@@ -167,20 +184,20 @@ function setRequestHiddenValue(new_value)
     
    
     
-     <p:column headerText="Attachment" style="margin-right:20cm;  width:3.5cm;" >
+     <p:column headerText="Attachment" exportable="false" style="width:120px;padding: 0px 0px 0px 0px;" >
        <p:dialog modal="true" widgetVar="statusDialog" header="Status" draggable="false" closable="false" resizable="false">
     <p:graphicImage name="/demo/images/ajaxloadingbar.gif" />
 </p:dialog>
-<p:commandButton value="Download" ajax="false" onclick="PrimeFaces.monitorDownload(start, stop);setRequestHiddenValue(#{request1.newRequestId})" >
+<p:commandButton value="Download" ajax="false" onclick="PrimeFaces.monitorDownload(start, stop);setRequestHiddenValue(#{request1.newRequestId})" style="padding: 0px 2px 2px 0px; font-size:14px;" >
         <p:fileDownload value="#{createrequest.fileDownloadView()}" />
     </p:commandButton>
     </p:column>
     
-     <p:column headerText="View/Modify">
+     <p:column headerText="View / Modify" exportable="false" style="width:120px;padding: 0px 0px 0px 0px;">
 <p:commandLink id="nonAjax" styleClass="btn btn-primary fontsize" 
-				style="color:white; width:8;" onclick='setRequestHiddenValue(#{request1.newRequestId})' 
+				style="color:white; width:120px;padding: 2px 2px 2px 2px; " onclick='setRequestHiddenValue(#{request1.newRequestId})' 
 				action="#{createrequest.modifyAction()}" ajax="false" >
-	        		View/Update
+	        		View / Update
 	    		</p:commandLink> 
 	    		
    </p:column>   

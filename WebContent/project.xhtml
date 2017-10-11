@@ -83,7 +83,7 @@ function setProjectHiddenValue(new_value)
 	     <f:facet name="header">
 			<p:outputPanel >
 			<div class="row">
-			<div class= "col-sm-5">
+			<div class= "col-sm-5" style="padding: 5px 0px 0px 3px; font-size:14px">
 				<h:outputText value="Search on any fields:" />	
 				</div>
 				<div class= "col-sm-7">
@@ -95,7 +95,7 @@ function setProjectHiddenValue(new_value)
 			
 			
 			
-			  <p:column headerText="Project Name" sortBy="#{project.name}" filterBy="#{project.name}" filterStyle="display:none;" filterMatchMode="contains">
+			  <p:column headerText="Project Name" sortBy="#{project.name}" filterBy="#{project.name}" filterStyle="display:none;" filterMatchMode="contains" style="padding: 0px 0px 0px 3px;">
 	        <f:facet name="header">
 					<h:outputText value="Project Name" />
 				</f:facet>
@@ -106,7 +106,7 @@ function setProjectHiddenValue(new_value)
 	 
 	 
 	 
-	  <p:column headerText="Project Status" sortBy="#{project.status}" filterBy="#{project.status}" filterStyle="display:none;" filterMatchMode="contains" style="width:2.5cm;">
+	  <p:column headerText="Project Status" sortBy="#{project.status}" filterBy="#{project.status}" filterStyle="display:none;" filterMatchMode="contains" style="width:80px;padding: 0px 0px 0px 3px; ">
 	        <f:facet name="header">
 				 <h:outputText value="Status" />
 				</f:facet>
@@ -117,9 +117,9 @@ function setProjectHiddenValue(new_value)
 	 
 	        
 	        
-	        <p:column  headerText="Modify" exportable="false" style="width:3cm; text-align:center">
+	        <p:column  headerText="Modify" exportable="false" style="width:80px;padding: 0px 0px 0px 0px;">
 				
-				<p:commandLink id="nonAjax" styleClass="btn btn-primary fontsize" style="color:white;"
+				<p:commandLink id="nonAjax" styleClass="btn btn-primary fontsize" style="color:white;width:80px;padding: 0px 0px 0px 0px;"
 				 onclick='setProjectHiddenValue(#{project.userProjectId})' action="#{projectbean.modifyAction()}" ajax="false" >
 	        		Update
 	    		</p:commandLink>

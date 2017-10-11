@@ -36,9 +36,9 @@ import com.lowagie.text.PageSize;
 import com.reqman.dao.NewrequestInterface;
 import com.reqman.daoimpl.NewrequestImpl;
 import com.reqman.pojo.Request;
+import com.reqman.util.Dateconverter;
 import com.reqman.util.SessionUtils;
 import com.reqman.util.UserSession;
-import com.reqman.vo.CategoryVo;
 import com.reqman.vo.NewrequestVo;
 
 @ManagedBean(name="createrequest",eager = true)
@@ -66,6 +66,8 @@ public class CreateRequestbean implements Serializable
 	 private NewrequestVo selectedReuest;
 	 private List<NewrequestVo> filteredRequestList = new ArrayList<NewrequestVo>();
 	
+	 
+	 private Float completionpercentage;
 
 	@PostConstruct
     public void init() 
@@ -192,7 +194,8 @@ public class CreateRequestbean implements Serializable
         	if(newrequestVo != null && newrequestVo.getStatus().trim().equalsIgnoreCase("Active")){
         		setTitle(newrequestVo.getTitle() != null ? newrequestVo.getTitle(): "");
         		setDescription(newrequestVo.getDescription() != null ? newrequestVo.getDescription() : "");
-        		//setCompletiondate((Date) (newrequestVo.getChangedate() !=null ? newrequestVo.getChangedate() : ""));
+        		//Dateconverter.convertDateToStringDDMMDDYYYY(completiondate);
+        		//setCompletiondate( (Date) (newrequestVo.getChangedate() !=null ? newrequestVo.getChangedate() : ""));
         	
         		
         		setStatus(true);
@@ -230,7 +233,7 @@ public class CreateRequestbean implements Serializable
 			String userName = (String)session.getAttribute("username");			
 			System.out.println("--usersession--userName-->"+userName);
 			
-        	result = newrequestInterface.updateRequestById(requestId,status,description, completiondate,attachment);
+        	result = newrequestInterface.updateRequestById(requestId,status,description, completiondate,attachment,   completionpercentage);
         	
         	if(result == 2)
         	{
@@ -498,6 +501,14 @@ public class CreateRequestbean implements Serializable
 
 	public void setFilteredRequestList(List<NewrequestVo> filteredRequestList) {
 		this.filteredRequestList = filteredRequestList;
+	}
+
+	public Float getCompletionpercentage() {
+		return completionpercentage;
+	}
+
+	public void setCompletionpercentage(Float completionpercentage) {
+		this.completionpercentage = completionpercentage;
 	}
 
 	

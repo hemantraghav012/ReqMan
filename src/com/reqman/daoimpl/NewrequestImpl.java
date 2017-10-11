@@ -19,6 +19,7 @@ import com.reqman.pojo.Userfriendlist;
 import com.reqman.pojo.Userproject;
 import com.reqman.pojo.Userrequesttype;
 import com.reqman.pojo.Users;
+import com.reqman.util.Dateconverter;
 import com.reqman.vo.NewrequestVo;
 
 public class NewrequestImpl implements NewrequestInterface {
@@ -178,7 +179,7 @@ public class NewrequestImpl implements NewrequestInterface {
 					}
 		
 					request.setTitle(title != null ? title.trim() : "");
-					
+					request.setCompletionpercentage(0.0f);
 					request.setRequeststatus(1);
 					request.setStatus(true);
 					request.setDatecreated(new Date());
@@ -306,12 +307,24 @@ public class NewrequestImpl implements NewrequestInterface {
 						
 						newrequestVo.setTitle(requestDB.getTitle() != null ? requestDB.getTitle().trim() : "");
 						newrequestVo.setDescription(requestDB.getDescription() != null ? requestDB.getDescription().trim() : "");
-						newrequestVo.setCompletiondate(requestDB.getCompletiondate() != null ? requestDB.getCompletiondate().toString() : "");
+						newrequestVo.setCompletiondate(requestDB.getCompletiondate() != null ?  Dateconverter.convertDateToStringDDMMDDYYYY(requestDB.getCompletiondate()) : "");
 						newrequestVo.setFriendName(name);
 						newrequestVo.setUsercategory(userCategory);
 						newrequestVo.setUserproject(userProject);
 						newrequestVo.setUserrequesttype(userRequestType);
-
+						newrequestVo.setCompletionpercentage(requestDB.getCompletionpercentage());
+						if(requestDB.getRequeststatus()==2)
+						{
+							newrequestVo.setStage("Accepted");
+						}
+					 else if(requestDB.getRequeststatus()==3)
+						{
+						 newrequestVo.setStage("Sent Back");
+						}
+					 else if(requestDB.getRequeststatus()==1){
+						 newrequestVo.setStage("Request");
+					 }
+						
 						if(requestDB != null && requestDB.getStatus() != null 
 								&& requestDB.getStatus().booleanValue() == true)
 						{
@@ -371,6 +384,9 @@ public class NewrequestImpl implements NewrequestInterface {
 				String userProject = "";
 				String userRequestType= "";            
 	          String status="";
+	          String firstName = "";
+				String lastName = "";
+				String name = "";
 	            Hibernate.initialize(request);
 	            if(request != null){
 	            	if(request.getAttachment() != null && request.getAttachment().length != 0)
@@ -401,16 +417,36 @@ public class NewrequestImpl implements NewrequestInterface {
 	            	{
 	            		newrequestVo.setFileName(request.getFilename().trim());
 	            	}
+	            	if(request != null && request.getUserfriendlist() != null 
+							&& request.getUserfriendlist().getUsersByFriendid() != null)
+					{
+						firstName = request.getUserfriendlist().getUsersByFriendid().getFirstname() != null 
+								? request.getUserfriendlist().getUsersByFriendid().getFirstname() : "";
+								
+						lastName = request.getUserfriendlist().getUsersByFriendid().getLastname() != null 
+								? request.getUserfriendlist().getUsersByFriendid().getLastname() : "";
+								
+						if(firstName != null && !firstName.trim().equals(""))
+						{
+							name = firstName.trim();
+						}
+						
+						if(lastName != null && !lastName.trim().equals(""))
+						{
+							name = name + " " +lastName.trim();
+						}
+					}
 	            	newrequestVo.setTitle(request.getTitle());
 	            	newrequestVo.setNewRequestId(request.getId());
 	            	newrequestVo.setUsercategory(userCategory);
 					newrequestVo.setUserproject(userProject);
 					newrequestVo.setUserrequesttype(userRequestType);
 					newrequestVo.setDescription(request.getDescription());
-					newrequestVo.setCompletiondate(request.getCompletiondate() != null ? request.getCompletiondate().toString() : "");
+					newrequestVo.setCompletiondate(request.getCompletiondate() != null ? Dateconverter.convertDateToStringDDMMDDYYYY(request.getCompletiondate()) : "");
 					//newrequestVo.setAttachment((UploadedFile) (requestworkflow.getAttachment() !=null ? requestworkflow.getAttachment() :""));
 					newrequestVo.setFileName(request.getFilename());
-			
+					newrequestVo.setFriendName(name);
+					newrequestVo.setCompletionpercentage(request.getCompletionpercentage());
 					if(request.getStatus() == true)
 					{
 						newrequestVo.setStatus("Active");
@@ -447,7 +483,7 @@ public class NewrequestImpl implements NewrequestInterface {
 
 	@Override
 	public int updateRequestById(String requestId, Boolean status,
-			String description, Date completiondate, UploadedFile attachment)
+			String description, Date completiondate, UploadedFile attachment, Float completionpercentage)
 			throws Exception {
 		// TODO Auto-generated method stub
 		 Session session = null;
@@ -473,7 +509,7 @@ public class NewrequestImpl implements NewrequestInterface {
 		            	//requestworkflow.setAttachment(attachment.getContents());
 		            	//requestworkflow.setCompletiondate(completiondate);
 		            	//requestworkflow.setFilename(attachment.getFileName());
-		            	
+		            	requestworkflow.setCompletionpercentage(completionpercentage);
 		            	session.update(requestworkflow);
 		    			tx.commit();;
     			result = 1;
@@ -498,6 +534,8 @@ public class NewrequestImpl implements NewrequestInterface {
 	
 
 	}
+
+
 
 	
 
