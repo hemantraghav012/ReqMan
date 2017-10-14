@@ -31,6 +31,7 @@ import com.reqman.pojo.Users;
 //import com.reqman.vo.EmailUtility;
 import com.reqman.util.SessionUtils;
 import com.reqman.util.UserSession;
+import com.reqman.util.sendEmail1;
 import com.reqman.vo.FriendVo;
 import com.reqman.vo.ProjectVo;
 
@@ -61,6 +62,7 @@ private  List<FriendVo> friendList = new ArrayList<FriendVo>();
 	private String friendlastname;
 	private String friendshortname;
 	private String friendId;
+	private String password;
 	private FriendVo selectedFriend;
 	  private PieChartModel piechart;
 	
@@ -152,8 +154,7 @@ private  List<FriendVo> friendList = new ArrayList<FriendVo>();
 			String userName = (String)session.getAttribute("username");
 			System.out.println("--usersession--userName-->"+userName);
 			
-		
-			result = friendMasterInterface.savefriend(frienduser,status, friendfirstname, friendlastname, friendshortname,userName);
+				result = friendMasterInterface.savefriend(frienduser,status, friendfirstname, friendlastname,password, friendshortname,userName);
 			
 			if(result == 1)
 			{
@@ -443,6 +444,16 @@ public void modifyAction() {
 
 	public void setFriendList2(List<FriendVo> friendList2) {
 		this.friendList2 = friendList2;
+	}
+
+
+	public String getPassword() {
+		return password;
+	}
+
+
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
 
