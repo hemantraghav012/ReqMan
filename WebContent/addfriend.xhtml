@@ -60,7 +60,7 @@
 
 
  <div class=" row form-group ">
- <div class="col-sm-3 control-label"><h:outputLabel  >Friend Email Id:</h:outputLabel></div>
+ <div class="col-sm-3 control-label"><h:outputLabel  > Email Id:</h:outputLabel></div>
 <div class=" col-sm-6"> <h:inputText value="#{friendbean.frienduser}" class="  form-control" validatorMessage="Invalid email format" id="friendemailid"  required="true" requiredMessage="* Please enter Email id">
   <f:validateRegex
 		pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
@@ -78,15 +78,15 @@
  
 </div><br></br>
 <div class=" row form-group ">
- <div class="col-sm-3 control-label"><h:outputLabel  >Last Name:</h:outputLabel></div>
+ <div class="col-sm-3 control-label"><h:outputLabel> Last Name:</h:outputLabel></div>
 <div class=" col-sm-6"> <h:inputText value="#{friendbean.friendlastname}"  class="  form-control"  id="lasttname"  required="true" requiredMessage="* Please enterLast Name">
  </h:inputText></div>
  <h:message for="lastname"  style="color:red;margin:8px;"/> 
  
 </div><br></br>
 <div class=" row form-group ">
- <div class="col-sm-3 control-label"><h:outputLabel  >Short Name:</h:outputLabel></div>
-<div class=" col-sm-6"> <h:inputText value="#{friendbean.friendshortname}" maxlength="2" class="  form-control"  id="shortname"  required="true" requiredMessage="* Please enter project Name">
+ <div class="col-sm-3 control-label"><h:outputLabel> Short Name:</h:outputLabel></div>
+<div class=" col-sm-6"> <h:inputText value="#{friendbean.friendshortname}" maxlength="4" class="  form-control"  id="shortname"  required="true" requiredMessage="* Please enter project Name">
  </h:inputText><span style="color:red;">Please enter upto 4 characters</span></div>
  <h:message for="shortname"  style="color:red;margin:8px;"/> 
  

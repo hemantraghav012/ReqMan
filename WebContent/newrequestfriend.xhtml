@@ -36,17 +36,17 @@
      
        <h:form enctype="multipart/form-data" class="form-horizontal">
       <div class="container fixedcontainer" style=" margin-top:3cm; ">
-  <h2 style=" text-align: center;">    Create New Request </h2><br></br>
+ <span style="color:red;">* fields are mandatory</span> <h2 style=" text-align: center;">    Create New Request </h2><br></br>
       
 
  <div class=" row form-group ">
- <div class="col-sm-2 control-label"><h:outputLabel> <span style="background-color:orange;" >Title:</span></h:outputLabel></div>
-<div class=" col-sm-10"> <h:inputText value="#{createrequest.title}" class="  form-control"  id="emailid" required="true" requiredMessage="* Please enter your email id" /></div>
- <h:message for="emailid"  style="color:red;margin:8px;"/> 
+ <div class="col-sm-2 control-label"><h:outputLabel><span style="color:red;">* </span> Title:</h:outputLabel></div>
+<div class=" col-sm-10"> <h:inputText value="#{createrequest.title}"   class="  form-control"  id="title" required="true" requiredMessage="* Please enter Title" /></div>
+ <h:message for="title"  style="color:red;margin:8px;"/> 
 
 </div>
 
- <div class=" row form-group " style="text-align: center;">
+ <div class=" row form-group " >
  <div class="col-sm-2 control-label"><h:outputLabel>Description:</h:outputLabel></div>
 <div class=" col-sm-10"><h:inputTextarea id="address" value="#{createrequest.description}"    
  cols="19" rows="3" class="  form-control" /></div>
@@ -56,15 +56,15 @@
  
  
  <div class="row form-grop">
- <div class="col-sm-2 control-label">
- <h:outputLabel><span style="background-color:orange;">Team Member(s):</span><br></br><span style="color:red;">P/s select 1 or more</span></h:outputLabel>
+ <div class="col-sm-2 control-label" style="padding-left: 0px;">
+ <h:outputLabel><span style="color:red;">*</span>Team Member(s):<br></br><span style="color:red;">P/s select 1 or more</span></h:outputLabel>
 </div>
- <div class="col-sm-10 control-label">
+ <div class="col-sm-10 control-label" >
  <p:selectCheckboxMenu id="multiple" value="#{createrequest.userfriendlist}" label="friend add" multiple="true"
-                              filter="true" filterMatchMode="startsWith"  style=" border-style: none;" >
-                                <f:selectItems value="#{friendbean.friendList1}" var="friend" itemLabel="#{friend.emailid}"  itemValue="#{friend.userFriendId}" />                               
+     filter="true" filterMatchMode="startsWith"  style=" border-style: none;"  required="true" requiredMessage="* Please Select Team Member" >
+                                <f:selectItems value="#{friendbean.friendList1}" var="friend" itemLabel="#{friend.emailid}"  itemValue="#{friend.userFriendId}"  />                               
                                 </p:selectCheckboxMenu>
-                              
+                              <h:message for="multiple"  style="color:red;margin:6px;"/>
  </div>
  </div>
 

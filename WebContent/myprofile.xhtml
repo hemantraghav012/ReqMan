@@ -45,33 +45,40 @@
     
     <hr></hr>
     
-    <h:outputLabel value="#{update.emailid}"></h:outputLabel>
+
      
 
     
     <h:form class="form-horizontal " >
  <div class=" row form-group registerfieldname">
  <div class="col-sm-2 control-label"><h:outputLabel  >Email Id:</h:outputLabel></div>
-<div class=" col-sm-6"> <h:inputText value="#{update.emailid}" class="  form-control"  id="emailid" required="true" requiredMessage="* Please enter your email id"/></div>
+<div class=" col-sm-6"> <h:inputText value="#{userupdate.userupdateVo.emailid}" class="  form-control"  id="emailid" required="true" requiredMessage="* Please enter your email id"/></div>
  <h:message for="emailid"  style="color:red;margin:8px;"/> 
 
 </div>
 
  <div class=" row form-group ">
+<div class="col-sm-2 control-label"><h:outputLabel>Password:</h:outputLabel></div>
+<div class=" col-sm-6"><h:inputText value="#{userupdate.userupdateVo.password}"  class="form-control" id="password" required="true" requiredMessage="* Please enter your first name"></h:inputText></div>
+ <h:message for="password"  style="color:red;margin:8px;"/> 
+</div>
+
+
+ <div class=" row form-group ">
 <div class="col-sm-2 control-label"><h:outputLabel>First Name:</h:outputLabel></div>
-<div class=" col-sm-6"><h:inputText value="#{update.firstname}"  class="form-control" id="firstname" required="true" requiredMessage="* Please enter your first name"></h:inputText></div>
+<div class=" col-sm-6"><h:inputText value="#{userupdate.userupdateVo.firstname}"  class="form-control" id="firstname" required="true" requiredMessage="* Please enter your first name"></h:inputText></div>
  <h:message for="firstname"  style="color:red;margin:8px;"/> 
 </div>
 
  <div class=" row form-group ">
 <div class="col-sm-2 control-label"><h:outputLabel>Last Name:</h:outputLabel></div>
-<div class="col-sm-6"><h:inputText value="#{update.lastname}"  class="form-control" id="lastname" required="true" requiredMessage="* Please enter your last name"></h:inputText></div>
+<div class="col-sm-6"><h:inputText value="#{userupdate.userupdateVo.lastname}"  class="form-control" id="lastname" required="true" requiredMessage="* Please enter your last name"></h:inputText></div>
  <h:message for="lastname"  style="color:red;margin:8px;"/> 
 </div>
 
  <div class=" row form-group ">
 <div class="col-sm-2 control-label"><h:outputLabel>Short Name:</h:outputLabel></div>
-<div class="col-sm-6"><h:inputText value="#{update.shortname}"  class="form-control" id="shortname" required="true" requiredMessage="* Please enter your last name"></h:inputText></div>
+<div class="col-sm-6"><h:inputText value="#{userupdate.userupdateVo.shortname}"  class="form-control" id="shortname" required="true" requiredMessage="* Please enter your last name"></h:inputText></div>
  <h:message for="shortname"  style="color:red;margin:8px;"/> 
 </div>
  <div class=" row form-group ">

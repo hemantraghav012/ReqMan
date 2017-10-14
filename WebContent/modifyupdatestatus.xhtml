@@ -46,16 +46,16 @@
 
  <div class=" row form-group ">
  
- <h:inputHidden value = "#{updatestatus.requestId}" id = "hiddenField" /> 
+ <h:inputHidden value = "#{updatestatusbean.requestId}" id = "hiddenField" /> 
  
  <div class="col-sm-2 control-label"><h:outputLabel  >Title:</h:outputLabel></div>
-<div class=" col-sm-10"> <h:inputText value="#{updatestatus.title}" readonly="true" disabled="true"  style="background-color:lightgrey;" class="  form-control"  id="title"   requiredMessage="* Please enter Title"/></div>
+<div class=" col-sm-10"> <h:inputText value="#{updatestatusbean.title}" readonly="true" disabled="true"  style="background-color:lightgrey;" class="  form-control"  id="title"   requiredMessage="* Please enter Title"/></div>
  <h:message for="title"  style="color:red;margin:8px;"/> 
 </div>
  <div class=" row form-group ">
 
  <div class="col-sm-2 control-label"><h:outputLabel>Description:</h:outputLabel></div>
-<div class=" col-sm-10"> <h:inputTextarea value="#{updatestatus.description}"  readonly="true" disabled="true"   class="  form-control"  id="discription" style="background-color:lightgrey;"  requiredMessage="* Please enter Title"/></div>
+<div class=" col-sm-10"> <h:inputTextarea value="#{updatestatusbean.description}"  readonly="true" disabled="true"   class="  form-control"  id="discription" style="background-color:lightgrey;"  requiredMessage="* Please enter Title"/></div>
  <h:message for="description"  style="color:red;margin:8px;"/> 
 </div><br></br>
 
@@ -63,29 +63,29 @@
 <div class="col-sm-2 control-label"><h:outputLabel  >Percentage Completion:</h:outputLabel></div>
 <div class=" col-sm-10">    
  
-  <p:inputText id="txt1" value="#{updatestatus.completionpercentage}" style="width:50px;"/>
-        <p:slider for="txt1" style="background-color:skyblue;"   minValue="0.2" maxValue="100.0" step="0.1"/></div>
+  <p:inputText id="txt1" value="#{updatestatusbean.completionpercentage}" style="width:70px; "/>
+        <p:slider for="txt1" style="background-color:green;"   minValue="0.2" maxValue="100.0" step="0.1"/></div>
  <h:message for="title"  style="color:red;margin:8px;" /> 
 </div>
 
 <div class=" row form-group ">
  <div class="col-sm-2 control-label"><h:outputLabel  >Completion Date:</h:outputLabel></div>
-<div class=" col-sm-4"> <h:inputText value="#{updatestatus.updatestatusVo.completiondate}"   class="  form-control"  id="completiondate"   requiredMessage="* Please enter Title"/></div>
+<div class=" col-sm-4"> <h:inputText value="#{updatestatusbean.updatestatusVo.completiondate}"   class="  form-control"  id="completiondate"   requiredMessage="* Please enter Title"/></div>
  <h:message for="completiondate"  style="color:red;margin:8px;"/> 
  <div class="col-sm-2 control-label"><h:outputLabel  >Category:</h:outputLabel></div>
-<div class=" col-sm-4"> <h:inputText value="#{updatestatus.updatestatusVo.usercategory}" readonly="true"  disabled="true" class="  form-control"  style="background-color:lightgrey;" id="usercategory"  required="true" requiredMessage="* Please enter Title"/></div>
+<div class=" col-sm-4"> <h:inputText value="#{updatestatusbean.updatestatusVo.usercategory}" readonly="true"  disabled="true" class="  form-control"  style="background-color:lightgrey;" id="usercategory"  required="true" requiredMessage="* Please enter Title"/></div>
  <h:message for="usercategory"  style="color:red;margin:8px;"/> 
 </div><br></br>
 
 <div class=" row form-group ">
  
  <div class="col-sm-2 control-label"><h:outputLabel  > Project:</h:outputLabel></div>
-<div class=" col-sm-4"> <h:inputText value="#{updatestatus.updatestatusVo.userproject}" readonly="true" disabled="true" class="  form-control"  id="userproject"  style="background-color:lightgrey;"  requiredMessage="* Please enter Title"/></div>
+<div class=" col-sm-4"> <h:inputText value="#{updatestatusbean.updatestatusVo.userproject}" readonly="true" disabled="true" class="  form-control"  id="userproject"  style="background-color:lightgrey;"  requiredMessage="* Please enter Title"/></div>
  <h:message for="userproject"  style="color:red;margin:8px;"/> 
 
 
  <div class="col-sm-2 control-label"><h:outputLabel>Type:</h:outputLabel></div>
-<div class=" col-sm-4"> <h:inputText value="#{updatestatus.updatestatusVo.userrequesttype}" readonly="true"  disabled="true" class="  form-control"  id="userrequesttype"  style="background-color:lightgrey;"  requiredMessage="* Please enter Title"/></div>
+<div class=" col-sm-4"> <h:inputText value="#{updatestatusbean.updatestatusVo.userrequesttype}" readonly="true"  disabled="true" class="  form-control"  id="userrequesttype"  style="background-color:lightgrey;"  requiredMessage="* Please enter Title"/></div>
  <h:message for="userrequesttype"  style="color:red;margin:8px;"/> 
 </div><br></br>
 
@@ -95,7 +95,7 @@
 
  <div class=" row form-group ">
  <div class="col-sm-3 .col-sm-offset-3"></div>
- <div class="col-sm-4 "><h:commandButton action="#{updatestatus.updateRequest}" value="Update" class="btn fontsize btn-success btn-block"></h:commandButton></div>
+ <div class="col-sm-4 "><h:commandButton action="#{updatestatusbean.updateRequest}" value="Update" class="btn fontsize btn-success btn-block"></h:commandButton></div>
 
  <div class="col-sm-4 ">
  

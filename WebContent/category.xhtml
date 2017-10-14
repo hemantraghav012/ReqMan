@@ -2,12 +2,15 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <!-- <html xmlns="http://www.w3.org/1999/xhtml"	xmlns:h="http://java.sun.com/jsf/html"	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough" 
-	   xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core" xmlns:p="http://primefaces.org/ui">
+	   xmlns:ui="http://java.sun.com/jsf/facelets" 
+	      xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
+	   xmlns:f="http://java.sun.com/jsf/core" xmlns:p="http://primefaces.org/ui">
  -->	   
  <html lang="en"
       xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html"
 	  xmlns:f="http://java.sun.com/jsf/core" xmlns:ui="http://java.sun.com/jsf/facelets"
-	   xmlns:p="http://primefaces.org/ui" > 
+	   xmlns:p="http://primefaces.org/ui"
+	   xmlns:a="http://xmlns.jcp.org/jsf/passthrough" > 
   
 <h:head>
 <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
@@ -86,11 +89,10 @@ function setCategoryHiddenValue(new_value)
 	     <f:facet name="header" >
 			<p:outputPanel>
 			<div class="row">
-			<div class= "col-sm-5" style="padding: 5px 0px 0px 3px; font-size:14px">
-				<h:outputText value="Search on any fields:  "/>
-				</div>
-				<div class= "col-sm-7">
-				<h:inputText id="globalFilter" onkeyup="PF('categoryListTable').filter() "   class="form-control" />
+			
+				<div class= "col-sm-12">
+				<h:inputText id="globalFilter" onkeyup="PF('categoryListTable').filter() "   class="form-control"  />
+				 <p:watermark for="globalFilter"  value="Search with a keyword"  />
 				</div>
 				</div>
 			</p:outputPanel>

@@ -28,30 +28,22 @@
     <div class="containerfluid">
       
 	  <div class="container homecontainer "  style="   margin-top:3cm; ">      
-     <h1 style="padding-left: 10px;"> Welcome to ReqMan, #{login.user}!</h1>
+     <p style="padding-left: 10px;font-size:20px;color:black"> Welcome to ReqMan, #{login.user} !</p>
       <h3 style="color:#808080; padding-left: 10px;">Here’s how to get started:</h3>  
       <div class="container containerforbutton " >
-  
+
+			
    
-      <p  class="btn btn-default btn-md btn-block homeiconbutton">    <span class="glyphicon glyphicon-play-circle"></span> Learn the basics of time tracking</p>
-        
-    
-
-     <p  class="btn btn-default btn-md btn-block homeiconbutton">     <span class="glyphicon">&#xe022;</span> Create New Request On Friends</p>
-    
-        
-       
-   <p  class="btn btn-default btn-md btn-block homeiconbutton">  <span class="glyphicon">&#xe022;</span> Respond to New Request  From Friends</p>
+<h:form >
+<p class="btn btn-default btn-md btn-block homeiconbutton"><span class="glyphicon">&#xe022;</span><h:commandLink value=" Create New Request On Friend" style="color:black; "  action="#{createrequest.createRequest}"/>
+</p>
+<p class="btn btn-default btn-md btn-block homeiconbutton"><span class="glyphicon">&#xe022;</span><h:link value=" Response to Request From Team Member" style="color:black; " outcome="responsetonewrequest" /></p>
+<p class="btn btn-default btn-md btn-block homeiconbutton"><span class="glyphicon">&#xe022;</span><h:link value=" See Status Of Your Requests" style="color:black;" outcome="request" /></p>
+<p class="btn btn-default btn-md btn-block homeiconbutton"><span class="glyphicon">&#xe022;</span><h:link value=" Update Your Task  Progress" style="color:black; " outcome="updatestatustask" /> </p>
+  </h:form>
+   
+   
       
-        
-
-    <p  class="btn btn-default btn-md btn-block homeiconbutton">      <span class="glyphicon">&#xe022;</span> Respond to New Request  From Friends</p>
-      
-        
-      
-   <p  class="btn btn-default btn-md btn-block homeiconbutton">   <span class="glyphicon">&#xe022;</span> See Status Of Your Requests</p>
-     
-    
     <!-- end of button -->
     
     <div class="row" style="margin-top:1cm;">

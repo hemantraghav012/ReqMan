@@ -4,6 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
  xmlns:ui="http://java.sun.com/jsf/facelets" 
   xmlns:f="http://java.sun.com/jsf/core"
+   xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
     xmlns:p="http://primefaces.org/ui"
  	xmlns:h="http://java.sun.com/jsf/html">
 <h:head>
@@ -53,7 +54,7 @@ function setRequestHiddenValue(new_value)
   <div class="container-fluid " style=" margin-top:2.5cm; ">
       
          
-         <h:inputHidden id="requestId" value="#{updatestatus.requestId}" ></h:inputHidden>
+         <h:inputHidden id="requestId" value="#{updatestatusbean.requestId}" ></h:inputHidden>
       <div class="row">
       
       	<div class="col-sm-6">
@@ -71,21 +72,20 @@ function setRequestHiddenValue(new_value)
 
 <div class="ui-fluid ">
 
-	     <p:dataTable id="requestTable" var="request1" value="#{updatestatus.updatestatusList}" 
+	     <p:dataTable id="requestTable" var="update1" value="#{updatestatusbean.updatestatusList}" 
 	     reflow="true" scrollable="true" scrollHeight="310" 
-	     sortBy="#{request1.status},#{request1.title}" 
+	     sortBy="#{update1.status},#{update1.title}" 
 	     class="table table-striped table-hover table-bordered" 
-	     style="margin-top:5px;  " filteredValue="#{updatestatus.filteredUpdatestatusList}" 
+	     style="margin-top:5px;  " filteredValue="#{updatestatusbean.filteredUpdateList}" 
 	     widgetVar="updatestatusListTable">
 	     
 	     <f:facet name="header">
 			<p:outputPanel>
 				<div class="row">
-			<div class= "col-sm-2" style="padding: 5px 0px 0px 3px; font-size:16px">
-				<h:outputText value="Search on any fields:  "/>
-				</div>
-				<div class= "col-sm-7" style="padding: 0px 0px 0px 3px;">
-				<h:inputText id="globalFilter" onkeyup="PF('updatestatusListTable').filter()" class="form-control"  />
+			
+				<div class= "col-sm-2" ></div>
+				<div class= "col-sm-8" >
+				<h:inputText id="globalFilter" onkeyup="PF('updatestatusbeanListTable').filter()" a:placeholder="Search on any field (s) " class="form-control"  />
 				</div>
 				
 				</div>
@@ -93,77 +93,77 @@ function setRequestHiddenValue(new_value)
 		</f:facet> 
 
  
- <p:column filterBy="#{request1.title}"  sortBy="#{request1.title}" headerText="Title"  filterStyle="display:none;"
+ <p:column filterBy="#{update1.title}"  sortBy="#{update1.title}" headerText="Title"  filterStyle="display:none;"
 			 filterMatchMode="contains"  style="text-overflow: ellipsis; white-space: nowrap; width:150px;padding: 0px 0px 0px 3px;">			 
 				<f:facet name="header" >
 					 <h:outputText value="Title"/>
 				</f:facet>
-				<h:outputText value="#{request1.title}" style="display: inline;"/>
+				<h:outputText value="#{update1.title}" style="display: inline;"/>
 </p:column>
  
  
- <p:column filterBy="#{request1.description}" headerText="Description" filterStyle="display:none;"  
+ <p:column filterBy="#{update1.description}" headerText="Description" filterStyle="display:none;"  
 			 filterMatchMode="contains"   style="text-overflow: ellipsis; white-space: nowrap;width:250px;padding: 0px 0px 0px 3px;">
 				<f:facet name="header">
 					 <h:outputText value="Description" />
 				</f:facet>
-				<h:outputText value="#{request1.description}" style="display: inline;"   />
+				<h:outputText value="#{update1.description}" style="display: inline;"   />
 </p:column>
  
-<p:column filterBy="#{request1.completiondate}" headerText="Due Date"  filterStyle="display:none;"  
+<p:column filterBy="#{update1.completiondate}" headerText="Due Date"  filterStyle="display:none;"  
 			 filterMatchMode="contains"   pattern="dd-MMM-yyyy"  style="text-overflow: ellipsis; white-space: nowrap;width:150px;padding: 0px 0px 0px 3px;">
 				<f:facet name="header">
 					<h:outputText value="Due Date" />
 				</f:facet>
-				<h:outputText value="#{request1.completiondate}" pattern="dd-MMM-yyyy" />
+				<h:outputText value="#{update1.completiondate}" pattern="dd-MMM-yyyy" />
 			</p:column>
     
     
     
     
-   <p:column filterBy="#{request1.usercategory}" headerText="Category"  filterStyle="display:none;"  
+   <p:column filterBy="#{update1.usercategory}" headerText="Category"  filterStyle="display:none;"  
 			 filterMatchMode="contains"  style="text-overflow: ellipsis; white-space: nowrap;width:130px;padding: 0px 0px 0px 3px;">
 				<f:facet name="header">
 					<h:outputText value="Category" />
 				</f:facet>
-				<h:outputText value="#{request1.usercategory}" style="display: inline;" />
+				<h:outputText value="#{update1.usercategory}" style="display: inline;" />
 			</p:column> 
     
-     <p:column filterBy="#{request1.userproject}"  headerText="Project"  filterStyle="display:none;"  
+     <p:column filterBy="#{update1.userproject}"  headerText="Project"  filterStyle="display:none;"  
 			 filterMatchMode="contains" style="text-overflow: ellipsis; white-space: nowrap;width:130px;padding: 0px 0px 0px 3px;">
 				<f:facet name="header">
 					<h:outputText value="Project" />
 				</f:facet>
-				<h:outputText value="#{request1.userproject}" style="display: inline;"  />
+				<h:outputText value="#{update1.userproject}" style="display: inline;"  />
 			</p:column> 
     
    
-     <p:column filterBy="#{request1.userrequesttype}"   headerText="Type"  filterStyle="display:none;"  
+     <p:column filterBy="#{update1.userrequesttype}"   headerText="Type"  filterStyle="display:none;"  
 			 filterMatchMode="contains" style="text-overflow: ellipsis; white-space: nowrap;width:130px;padding: 0px 0px 0px 3px;">
 				<f:facet name="header">
 					<h:outputText value="Type" />
 				</f:facet>
-				<h:outputText value="#{request1.userrequesttype}"  style="display: inline;"  />
+				<h:outputText value="#{update1.userrequesttype}"  style="display: inline;"  />
 			</p:column> 
     
 
     
-     <p:column filterBy="#{request1.completionpercentage}"   headerText="% Age Completion"  filterStyle="display:none;"  
+     <p:column filterBy="#{update1.completionpercentage}"   headerText="% Age Completion"  filterStyle="display:none;"  
 			 filterMatchMode="contains"  style="text-overflow: ellipsis; white-space: nowrap;width:65px;padding: 0px 0px 0px 3px;">
 				<f:facet name="header">
 					<h:outputText value="% Age
 					                  Completion" />
 				</f:facet>
-				<h:outputText value="#{request1.completionpercentage}%" style="display: inline;"   />
+				<h:outputText value="#{update1.completionpercentage}%" style="display: inline;"   />
 			</p:column>
     
   
-     <p:column filterBy="#{request1.createdby}"   headerText="Task From"  filterStyle="display:none;"  
+     <p:column filterBy="#{update1.createdby}"   headerText="Task From"  filterStyle="display:none;"  
 			 filterMatchMode="contains"  style="text-overflow: ellipsis; white-space: nowrap;padding: 0px 0px 0px 3px;">
 				<f:facet name="header">
 					<h:outputText value="Task From" />
 				</f:facet>
-				<h:outputText value="#{request1.createdby}" style="display: inline;"   />
+				<h:outputText value="#{update1.createdby}" style="display: inline;"   />
 			</p:column>
     
    
@@ -175,8 +175,8 @@ function setRequestHiddenValue(new_value)
     
      <p:column headerText="View / Modify" exportable="false" style="width:120px;padding: 0px 0px 0px 0px;">
 <p:commandLink id="nonAjax" styleClass="btn btn-primary fontsize" 
-				style="color:white; width:120px;padding: 2px 2px 2px 2px; " onclick='setRequestHiddenValue(#{request1.newRequestId})' 
-				action="#{updatestatus.modifyAction()}" ajax="false" >
+				style="color:white; width:120px;padding: 2px 2px 2px 2px; " onclick='setRequestHiddenValue(#{update1.newRequestId})' 
+				action="#{updatestatusbean.modifyAction()}" ajax="false" >
 	        		View / Update
 	    		</p:commandLink> 
 	    		
@@ -187,11 +187,11 @@ function setRequestHiddenValue(new_value)
 	<div>
 		<strong>Export Data &nbsp;</strong>
 	    <h:commandButton id="excel" class="btn btn-primary fontsize" value="Excel">
-	        <p:dataExporter type="xls" target="requestTable" fileName="request1" postProcessor="#{updatestatus.postProcessXLS}" />
+	        <p:dataExporter type="xls" target="requestTable" fileName="update1" postProcessor="#{updatestatusbean.postProcessXLS}" />
 	    </h:commandButton>
 	 	&nbsp;
 	    <h:commandButton id="pdf" class="btn btn-primary fontsize" value="Pdf">
-	        <p:dataExporter type="pdf" target="requestTable" fileName="request1" preProcessor="#{updatestatus.preProcessPDF}" />
+	        <p:dataExporter type="pdf" target="requestTable" fileName="update1" preProcessor="#{updatestatusbean.preProcessPDF}" />
 	    </h:commandButton>
 	</div>
  
