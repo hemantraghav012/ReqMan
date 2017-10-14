@@ -7,11 +7,19 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.Restrictions;
 
-import com.reqman.beans.Update;
+
+
+
+
 
 import com.reqman.common.HibernateUtil;
 import com.reqman.dao.UserDetailsInterface;
+import com.reqman.pojo.Usercategory;
 import com.reqman.pojo.Users;
+import com.reqman.util.sendEmail1;
+import com.reqman.util.sendEmailonfriend;
+import com.reqman.vo.CategoryVo;
+import com.reqman.vo.UserupdateVo;
 
 public class UserDetailsImpl implements UserDetailsInterface {
 
@@ -84,6 +92,11 @@ public class UserDetailsImpl implements UserDetailsInterface {
             }
             else
             {
+            	//sendEmailonfriend sef=new sendEmailonfriend();
+            	//sef.friendemail(emailid, firstname,);
+            	
+            	 password = new sendEmail1().createAccount(emailid, firstname);
+     			System.out.println("-password--"+password);
             	users = new Users();
             	users.setEmailid(emailid);
             	users.setFirstname(firstname != null ? firstname.trim() : "");
@@ -111,14 +124,58 @@ public class UserDetailsImpl implements UserDetailsInterface {
 		return result;
  	}
 
+	
+	
+	
+	@Override
+	public UserupdateVo getUseremailid(String userName) throws Exception {
+		// TODO Auto-generated method stub
+	    Session session = null;
+	    Transaction tx = null;
+	    UserupdateVo userupdateVo = new UserupdateVo();
+	    Users users = null;
+		try
+		{
+           	session = HibernateUtil.getSession();
+            tx = session.beginTransaction();
+            users = (Users)session.createCriteria(Users.class)
+            		.add(Restrictions.eq("emailid", userName.toLowerCase().trim()).ignoreCase())
+            		.uniqueResult();
+            if(users != null){
+            userupdateVo.setEmailid(users.getEmailid());
+            userupdateVo.setFirstname(users.getFirstname());
+            userupdateVo.setLastname(users.getLastname());
+            userupdateVo.setShortname(users.getShortname());
+            userupdateVo.setPassword(users.getPassword());
+    			tx.commit();
+            }
+ 		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+			if(tx != null){
+				tx.rollback();
+			}
+		}
+		finally 
+		{
+        	if(session != null)
+            session.close();
+	    }
+
+		return userupdateVo;
+	
+	}
+	
+	
+	
+	
 
 	public int updateUsers(String emailid, String firstname, String lastname, String shortname) throws Exception{
 	 Session session = null; 
     Transaction tx = null;
     Users users = null;
-    int result = 0;
-    
-    
+    int result = 0;    
    
     try {
     	session = HibernateUtil.getSession();
@@ -126,15 +183,10 @@ public class UserDetailsImpl implements UserDetailsInterface {
         users = (Users)session.createCriteria(Users.class,emailid)
         		.add(Restrictions.eq("emailid", emailid.toLowerCase().trim()).ignoreCase())
         		.uniqueResult();
-        
-       
-  
-        	
         	
         	session.update(users);
         	tx.commit();
-        	result = 3;
-        
+        	result = 3;        
         
     } catch (Exception e) {
     	if(tx != null)
@@ -151,4 +203,6 @@ public class UserDetailsImpl implements UserDetailsInterface {
 	
 	
 }
+
+	
 	}

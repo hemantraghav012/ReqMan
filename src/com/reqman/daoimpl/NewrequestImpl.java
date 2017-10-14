@@ -20,6 +20,8 @@ import com.reqman.pojo.Userproject;
 import com.reqman.pojo.Userrequesttype;
 import com.reqman.pojo.Users;
 import com.reqman.util.Dateconverter;
+import com.reqman.util.requestsendEmail;
+import com.reqman.util.sendEmailonfriend;
 import com.reqman.vo.NewrequestVo;
 
 public class NewrequestImpl implements NewrequestInterface {
@@ -90,6 +92,8 @@ public class NewrequestImpl implements NewrequestInterface {
 					// if request not exist then insert the request object
 					else
 					{
+						
+						
 						session.save(request);
 						result = 3;
 						
@@ -178,6 +182,8 @@ public class NewrequestImpl implements NewrequestInterface {
 						request.setUsercategory(usercategory1);
 					}
 		
+					
+					
 					request.setTitle(title != null ? title.trim() : "");
 					request.setCompletionpercentage(0.0f);
 					request.setRequeststatus(1);
@@ -205,6 +211,11 @@ public class NewrequestImpl implements NewrequestInterface {
 							.uniqueResult();
 					
 					request.setUserfriendlist(userfriendlistTemp);
+					
+				
+					
+					
+					
 					requestList.add(request);
 				}
 			}
@@ -319,7 +330,7 @@ public class NewrequestImpl implements NewrequestInterface {
 						}
 					 else if(requestDB.getRequeststatus()==3)
 						{
-						 newrequestVo.setStage("Sent Back");
+						 newrequestVo.setStage("Send Back");
 						}
 					 else if(requestDB.getRequeststatus()==1){
 						 newrequestVo.setStage("Request");

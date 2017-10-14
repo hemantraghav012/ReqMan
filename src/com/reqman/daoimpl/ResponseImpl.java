@@ -234,7 +234,7 @@ public class ResponseImpl implements responseInterface {
 					}
 				 else if(request.getRequeststatus()==3)
 					{
-						responseVo.setStage("Sent Back");
+						responseVo.setStage("Send Back");
 					}
 				 else if(request.getRequeststatus()==1){
 					 responseVo.setStage("Request");

@@ -14,6 +14,10 @@ import org.hibernate.criterion.Restrictions;
 import org.primefaces.model.chart.PieChartModel;
 
 
+
+
+
+
 import com.reqman.common.HibernateUtil;
 import com.reqman.dao.FriendMasterInterface;
 import com.reqman.pojo.Category;
@@ -22,6 +26,8 @@ import com.reqman.pojo.Usercategory;
 import com.reqman.pojo.Userfriendlist;
 import com.reqman.pojo.Userproject;
 import com.reqman.pojo.Users;
+import com.reqman.util.sendEmail1;
+import com.reqman.util.sendEmailonfriend;
 import com.reqman.vo.CategoryVo;
 import com.reqman.vo.FriendVo;
 import com.reqman.vo.ProjectVo;
@@ -31,7 +37,7 @@ public class FriendMasterImpl implements FriendMasterInterface {
 	
 
 	@Override
-	public int savefriend(String firstname, String lastname, String emailid,String shortname) throws Exception {
+	public int savefriend(String firstname, String lastname, String emailid,String password,String shortname) throws Exception {
 		// TODO Auto-generated method stub
 		
 		 Session session = null;
@@ -54,9 +60,11 @@ public class FriendMasterImpl implements FriendMasterInterface {
 	            }
 	            else
 	            {
+	            	
 	            	  users=new Users();
 	            	  users.setFirstname(firstname);
 	            	  users.setLastname(lastname);
+	            	 // users.setPassword(password);
 	            	  users.setEmailid(emailid);
 	            	  users.setShortname(shortname);	            	              
 	            	  users.setCreatedby("SYSTEM");	            
@@ -84,7 +92,7 @@ public class FriendMasterImpl implements FriendMasterInterface {
 	
 	@Override
 	public int savefriend(String frienduser, Boolean status,String friendfirstname, String friendlastname,
-			String friendshortname, String userName) throws Exception {
+			String password,String friendshortname, String userName) throws Exception {
 		
 		// TODO Auto-generated method stub
 		 Session session = null;
@@ -100,6 +108,8 @@ public class FriendMasterImpl implements FriendMasterInterface {
 	            users = (Users)session.createCriteria(Users.class)
 	            		.add(Restrictions.eq("emailid", userName.toLowerCase().trim()).ignoreCase())
 	            		.uniqueResult();
+	            
+	            String usename=users.getFirstname();
 	       
 	            users = (Users)session.createCriteria(Users.class)
 	            		.add(Restrictions.eq("emailid", frienduser.toLowerCase().trim()).ignoreCase())
@@ -133,7 +143,9 @@ public class FriendMasterImpl implements FriendMasterInterface {
 	            	}
 	            	else
 	            	{
-	            		
+	            		sendEmailonfriend sef=new sendEmailonfriend();
+	                	sef.friendemail(frienduser, friendfirstname,usename);
+	                	
 	            		userfriendlist = new Userfriendlist();
 	            		userfriendlist.setUsersByFriendid(users);
 	            users = (Users)session.createCriteria(Users.class)
@@ -151,12 +163,19 @@ public class FriendMasterImpl implements FriendMasterInterface {
 	            }
 	            else
 	            {
+	            	sendEmailonfriend sef=new sendEmailonfriend();
+                	sef.friendemail(frienduser, friendfirstname,usename);
+	            	
+	            	 password = new sendEmail1().createAccount(frienduser, friendfirstname);
+	 				System.out.println("-password--"+password);
+	 		
 	            	users = new Users();
 	            	users.setEmailid(frienduser.trim());
 	            	users.setFirstname(friendfirstname);
 	            	users.setLastname(friendlastname);
 	            	users.setShortname(friendshortname);
 	            	users.setStatus(true);
+	            	users.setPassword(password);
 	            	users.setCreatedby(userName);
 	            	users.setCreatedon(new Date());
 	            	
