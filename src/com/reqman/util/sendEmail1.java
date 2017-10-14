@@ -17,19 +17,19 @@ public class sendEmail1 {
 		String content = "";
 		String temp ="\"";
 		try{
-			sb.append("Welcome to Req Man,"+ firstName + "!");
+			sb.append("Welcome to Collabor8,"+ firstName + "!");
 			sb.append("<br>");
 			sb.append("Your account has been created! You can find the members' login URL as well as your account username and password below in this e-mail. To keep your account safe,");
 			sb.append("<br>");
 			sb.append("we recommend changing your password by going to "+temp+"Account"+temp+" after logging in. ");
 			sb.append("<br>");
 			sb.append("<br>");
-			sb.append("If you encounter any problems logging in to your account or require any technical help using Req Man, contact us at support@reqman.com and we'll be in");
-			sb.append("touch to assist you as soon as we can. For subscription, billing or training matters, reach out to Venkata@reqman.com for assistance.");
+			sb.append("If you encounter any problems logging in to your account or require any technical help using Collabor8, contact us at support@Collabor8.com and we'll be in");
+			sb.append("touch to assist you as soon as we can. For subscription, billing or training matters, reach out to Venkata@Collabor8.com for assistance.");
 			sb.append("<br>");
 			sb.append("Login URL");
 			sb.append("<br>");
-			sb.append("http://members.reqman.com");
+			sb.append("http://updatecollabor8.herokuapp.com");
 			sb.append("<br>");
 			sb.append("Username");
 			sb.append("<br>");
@@ -47,7 +47,7 @@ public class sendEmail1 {
 			sb.append("<br>");
 			sb.append("reqman.com");
 			sb.append("<br>");
-			sb.append("© reqman.com | support@reqman.com");
+			sb.append("© reqman.com | support@Collabor8.com");
 			
 			content = sb.toString();
 		}
@@ -68,7 +68,7 @@ public class sendEmail1 {
 			password = RandomPasswordGenerator.getPassword();
 			   //SendGrid sg = new SendGrid("SXoOwlD1RJ2kbfiCfYuR4A");
 		    Email from = new Email(SearchConstants.FROM_ADD);
-		    String subject = firstName+" Welcome to Req Man!";
+		    String subject = firstName+" Welcome to Collabor8!";
 		    Email to = new Email(To);
 		    //Content content = getContent(To, firstName, password);
 		    Content content = new Content("text/html", createPasswordContent(To, firstName, password));
@@ -189,8 +189,8 @@ public class sendEmail1 {
 	public static void main(String[] args) throws IOException 
 	{
 		try{
-		String password = new sendEmail1().createAccount("naveen.namburu@gmail.com", "Naveen");
-		System.out.println("-password--"+password);
+		////String password = new sendEmail1().createAccount("hemantraghav012@gmail.com", "Sumit");
+		//System.out.println("-password--"+password);
 		
 		/*String password1 = new sendEmail1().resetAccount("naveen.namburu@gmail.com", "Naveen Namburu");
 		System.out.println("-password1--"+password1);*/
