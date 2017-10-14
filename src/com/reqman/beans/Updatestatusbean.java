@@ -33,17 +33,15 @@ import com.lowagie.text.BadElementException;
 import com.lowagie.text.Document;
 import com.lowagie.text.DocumentException;
 import com.lowagie.text.PageSize;
-
 import com.reqman.dao.UpdatestatusInterface;
-
 import com.reqman.daoimpl.UpdatestatusImpl;
-
 import com.reqman.util.SessionUtils;
+import com.reqman.vo.NewrequestVo;
 import com.reqman.vo.UpdatestatusVo;
 
 
 
-@ManagedBean(name="updatestatus",eager = true)
+@ManagedBean(name="updatestatusbean",eager = true)
 @RequestScoped
 @ViewScoped
 public class Updatestatusbean implements Serializable {
@@ -64,7 +62,7 @@ public class Updatestatusbean implements Serializable {
 	 private Boolean status;
 	 private StreamedContent file;
 	 private List<UpdatestatusVo> updatestatusList = new ArrayList<UpdatestatusVo>();
-	 private List<UpdatestatusVo> filteredUpdatestatusList = new ArrayList<UpdatestatusVo>();
+	 private List<UpdatestatusVo> filteredUpdateList = new ArrayList<UpdatestatusVo>();
 	 private UpdatestatusInterface updatestatusInterface = new UpdatestatusImpl();
 	
 	 private UpdatestatusVo updatestatusVo = new UpdatestatusVo();
@@ -91,7 +89,7 @@ public class Updatestatusbean implements Serializable {
 				String userName = (String)session.getAttribute("username");
 				System.out.println("--usersession--userName-->"+userName);
 				updatestatusList = updatestatusInterface.getupdatestatusDetails(userName);
-				setFilteredUpdatestatusList(updatestatusList);
+				setFilteredUpdateList(updatestatusList);
 			}
 			catch(Exception e)
 			{
@@ -99,6 +97,28 @@ public class Updatestatusbean implements Serializable {
 			}
 			
 		}
+	 
+	 
+	 
+	 public String updatestatusPage()
+		{
+			try
+			{
+				updatestatusList = new ArrayList<UpdatestatusVo>();
+				System.out.println("--create new request-->");
+				HttpSession session = SessionUtils.getSession();
+				String userName = (String)session.getAttribute("username");
+				System.out.println("--usersession--userName-->"+userName);
+				updatestatusList= updatestatusInterface.getupdatestatusDetails(userName);
+			
+			}
+			catch(Exception e)
+			{
+				e.printStackTrace();
+			}
+			return "updatestatustask";
+		}
+		
 	 
 	 
 	 public void modifyAction() {
@@ -341,18 +361,16 @@ public class Updatestatusbean implements Serializable {
 		}
 
 
-		
+	
 
-		
 
-		public List<UpdatestatusVo> getFilteredUpdatestatusList() {
-			return filteredUpdatestatusList;
+		public List<UpdatestatusVo> getFilteredUpdateList() {
+			return filteredUpdateList;
 		}
 
 
-		public void setFilteredUpdatestatusList(
-				List<UpdatestatusVo> filteredUpdatestatusList) {
-			this.filteredUpdatestatusList = filteredUpdatestatusList;
+		public void setFilteredUpdateList(List<UpdatestatusVo> filteredUpdateList) {
+			this.filteredUpdateList = filteredUpdateList;
 		}
 
 

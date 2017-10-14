@@ -33,6 +33,7 @@ import com.reqman.dao.responseInterface;
 import com.reqman.daoimpl.ResponseImpl;
 import com.reqman.util.SessionUtils;
 import com.reqman.vo.ResponseVo;
+import com.reqman.vo.UpdatestatusVo;
 
 
 
@@ -82,7 +83,25 @@ public class Responsebean implements Serializable{
 		
 	}
 	
-	
+	 public String responsePage()
+		{
+			try
+			{
+				responseList = new ArrayList<ResponseVo>();
+				System.out.println("--create new request-->");
+				HttpSession session = SessionUtils.getSession();
+				String userName = (String)session.getAttribute("username");
+				System.out.println("--usersession--userName-->"+userName);
+				responseList = responseInterface.getresponseDetails(userName);
+			
+			}
+			catch(Exception e)
+			{
+				e.printStackTrace();
+			}
+			return "responsetonewrequest";
+		}
+		
 	
 	
 	

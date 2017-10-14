@@ -6,16 +6,11 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
-import javax.servlet.http.HttpSession;
 
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-
-import com.reqman.common.HibernateUtil;
 import com.reqman.dao.UserDetailsInterface;
 import com.reqman.daoimpl.UserDetailsImpl;
-import com.reqman.pojo.Users;
-import com.reqman.util.SessionUtils;
+import com.reqman.util.sendEmail1;
+
 
 @ManagedBean(name = "register", eager = true)
 @SessionScoped
@@ -27,7 +22,7 @@ public class Register implements Serializable{
 	private static final long serialVersionUID = 4003590909487243150L;
 
 	private String emailid;
-	private String password;
+   private String password;
 	private String firstname;
 	private String lastname;
 	private String msg;
@@ -42,7 +37,9 @@ public class Register implements Serializable{
 		UserDetailsInterface userImpl = new UserDetailsImpl();
 		int result = 0;
 		try{
+		
 			result = userImpl.saveUser(emailid, password, firstname, lastname, shortname);
+			
 			//boolean valid = LoginDAO.validate(user, pwd);
 			if (result == 1) {
 				FacesContext.getCurrentInstance().addMessage(
@@ -104,12 +101,18 @@ public class Register implements Serializable{
 	public void setEmailid(String emailid) {
 		this.emailid = emailid;
 	}
+	
+	
 	public String getPassword() {
 		return password;
 	}
 	public void setPassword(String password) {
 		this.password = password;
 	}
+	
+	
+	
+	
 	public String getFirstname() {
 		return firstname;
 	}
