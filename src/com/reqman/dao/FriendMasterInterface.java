@@ -14,10 +14,10 @@ import com.reqman.vo.ProjectVo;
 public interface FriendMasterInterface {
 
 	
-	public int savefriend(String firstname, String lastname, String emailid, String shortname) throws Exception;
+	public int savefriend(String firstname, String lastname, String emailid,String password, String shortname) throws Exception;
 	
 	
-	public int savefriend(String frienduser, Boolean status, String userName,String friendfirstname,String friendlastname,String friendshortname)throws Exception;
+	public int savefriend(String frienduser, Boolean status, String userName,String friendfirstname,String friendlastname,String password,String friendshortname)throws Exception;
 
 	public	List<FriendVo>getUsersDetails(String userName)throws Exception;
 	

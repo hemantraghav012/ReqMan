@@ -1,5 +1,7 @@
 package com.reqman.dao;
 
+import com.reqman.vo.UserupdateVo;
+
 
 
 
@@ -10,6 +12,8 @@ public interface UserDetailsInterface
 	public int saveUser(String emailid, String password, String firstname, String lastname, String shortname) throws Exception;
 
 	public int updateUsers(String emailid,String firstname, String lastname, String shortname) throws Exception;
+
+	public UserupdateVo getUseremailid(String userName)throws Exception;
 
 	
 }
