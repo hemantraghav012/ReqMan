@@ -12,6 +12,12 @@ import org.hibernate.criterion.Restrictions;
 
 
 
+
+
+
+
+
+
 import com.reqman.common.HibernateUtil;
 import com.reqman.dao.UserDetailsInterface;
 import com.reqman.pojo.Usercategory;
@@ -168,41 +174,58 @@ public class UserDetailsImpl implements UserDetailsInterface {
 	}
 	
 	
+
+	
+	@Override
+	public int updateUsers(String emailid, String firstname, String lastname,
+			String shortname, String password) throws Exception {
+		// TODO Auto-generated method stub
+		 Session session = null; 
+		    Transaction tx = null;
+		    Users users = null;
+		    int result = 0;    
+		   
+		    try {
+		    	session = HibernateUtil.getSession();
+		    
+		        users = (Users)session.createCriteria(Users.class)
+		        		.add(Restrictions.eq("emailid", emailid.toLowerCase().trim()).ignoreCase())
+		        		.uniqueResult();
+		        	
+		        
+	            if(users != null){
+	            users.setFirstname(firstname);
+	            users.setLastname(lastname);
+	            users.setShortname(shortname);
+	            users.setPassword(password);
+	            
+	            	session.update(users);
+	    			tx.commit();
+	    			result = 1;
+	            }     
+		        
+		    } catch (Exception e) {
+		    	if(tx != null)
+		        tx.rollback();
+		        e.printStackTrace();
+		        result = 3;
+		        throw new Exception(e);
+		    } finally {
+		    	if(session != null)
+		        session.close();
+		    }
+			return result;
+			
+	}
+
 	
 	
 
-	public int updateUsers(String emailid, String firstname, String lastname, String shortname) throws Exception{
-	 Session session = null; 
-    Transaction tx = null;
-    Users users = null;
-    int result = 0;    
-   
-    try {
-    	session = HibernateUtil.getSession();
-    
-        users = (Users)session.createCriteria(Users.class,emailid)
-        		.add(Restrictions.eq("emailid", emailid.toLowerCase().trim()).ignoreCase())
-        		.uniqueResult();
-        	
-        	session.update(users);
-        	tx.commit();
-        	result = 3;        
-        
-    } catch (Exception e) {
-    	if(tx != null)
-        tx.rollback();
-        e.printStackTrace();
-        result = 3;
-        throw new Exception(e);
-    } finally {
-    	if(session != null)
-        session.close();
-    }
-	return result;
 	
+
 	
+
 	
-}
 
 	
 	}
