@@ -3,6 +3,7 @@ package com.reqman.beans;
 import java.io.IOException;
 import java.io.Serializable;
 
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
@@ -43,7 +44,12 @@ public class Userupdate implements Serializable{
 	           
 	        	userupdateVo = userImpl.getUseremailid(userName);
 	        	
-
+	        	setFirstname(userupdateVo.getFirstname());
+	        	setLastname(userupdateVo.getLastname());
+	        	setPassword(userupdateVo.getPassword());
+	        	setShortname(userupdateVo.getShortname());
+	        	FacesContext.getCurrentInstance()
+	            .getExternalContext().dispatch("myprofile.xhtml");
 	        	
 
 	        }
@@ -51,9 +57,54 @@ public class Userupdate implements Serializable{
 	        	e.printStackTrace();
 	        	
 	        }
-	        FacesContext.getCurrentInstance()
-            .getExternalContext().dispatch("myprofile.xhtml");
+	        
 	    }
+		
+		
+		
+		public String updateUserdetail()
+		{
+			int result = 0;
+			try{
+				
+				System.out.println("--usersession--userName-->"+userName);
+				HttpSession session = SessionUtils.getSession();
+				String userName = (String)session.getAttribute("username");
+				
+				System.out.println("--usersession--userName-->"+userName);
+				
+	        
+	        	result = userImpl.updateUsers(userName,firstname,lastname,shortname,password);
+	        	
+	        	if(result == 2)
+	        	{
+	        		FacesContext.getCurrentInstance().addMessage(
+							null,
+							new FacesMessage(FacesMessage.SEVERITY_WARN,
+									"Problem while modifying the Category",
+									"Problem while modifying the Category"));
+					return "myprofile.xhtml";
+	        	}
+	        	
+	        	
+			}
+			catch(Exception e)
+			{
+				e.printStackTrace();
+				FacesContext.getCurrentInstance().addMessage(
+						null,
+						new FacesMessage(FacesMessage.SEVERITY_WARN,
+								"Problem while modifying the Category",
+								"Problem while modifying the Category"));
+				return "myprofile.xhtml";
+			}
+			return "home";
+		}
+		
+		
+		
+		
+		
 		
 		
 		
