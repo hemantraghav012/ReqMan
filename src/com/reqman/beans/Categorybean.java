@@ -123,7 +123,7 @@ public class Categorybean implements Serializable
 		{
 			e.printStackTrace();
 		}
-		return "createcategory";
+		return "category";
 	}
 	
 	
@@ -150,7 +150,7 @@ public class Categorybean implements Serializable
 						new FacesMessage(FacesMessage.SEVERITY_WARN,
 								"Category already exist",
 								"Category already exist"));
-				return "createcategory";
+				return "category";
 			}
 			if(result == 2)
 			{
@@ -159,7 +159,7 @@ public class Categorybean implements Serializable
 						new FacesMessage(FacesMessage.SEVERITY_WARN,
 								"Category already exist and in active, please activate by using modify category ",
 								"Category already exist and in active, please activate by using modify category"));
-				return "createcategory";
+				return "category";
 			}
 			if(result == 3)
 			{
@@ -183,7 +183,7 @@ public class Categorybean implements Serializable
 					new FacesMessage(FacesMessage.SEVERITY_WARN,
 							"Server Error "+e.getMessage(),
 							"Server Error "+e.getMessage()));
-			return "createcategory";
+			return "category";
 		}
 		return "category";
 	}
