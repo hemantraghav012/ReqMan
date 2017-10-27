@@ -53,20 +53,55 @@ function setProjectHiddenValue(new_value)
         
        <!-- -end of categoryheader -->
           
+          
+  <div class="row">
+      <div class="col-sm-9">
+       <div class="container  fixedcontainer "  style="margin-left: 0px; border-top:none;">
+  
+  
+  <div  style="margin-top:10px;"> 
+  <h:form class="form-horizontal" >
+  
+<h2 style="  margin-bottom:30px; margin-top:0px; text-align:center" > Create New Request Project</h2>
+
+<div><h:messages style = "color:red;margin:8px;" /></div>
+
+ <div class=" row form-group ">
+ <div class="col-sm-3 control-label"><h:outputLabel  >Project Name:</h:outputLabel></div>
+<div class=" col-sm-6"> <h:inputText value="#{projectbean.projectName}" maxlength="20" class="  form-control"  id="projectname"  required="true" requiredMessage="* Please enter project Name">
+ </h:inputText><span style="color:red;">Please enter upto 20 characters.</span></div>
+ <h:message for="projectname"  style="color:red;margin:8px;"/> 
+ 
+</div><br></br>
+
+
+
+
+ <div class=" row form-group ">
+ <div class="col-sm-3 .col-sm-offset-2"></div>
+ <div class="col-sm-6 "><h:commandButton action="#{projectbean.saveProject}" value="Submit" class="btn fontsize btn-success btn-block"></h:commandButton></div>
+
+ 
+</div>
+
+
+
+</h:form>
+  
+  </div>
+            <hr ></hr>
+          
     <h:form id="projectForm">
-      <div class="container fixedcontainer1" style=" margin-top:1cm; ">
+      <div class="container fixedcontainer1" >
  		<h:inputHidden id="projectId" value="#{projectbean.projectId}" ></h:inputHidden>
       <div class="row">
       
-      	<div class="col-sm-6">
+      	<div class="col-sm-12">
       		<span style=";font-size:25px;margin-left: 3px;">Manage Request Project List</span>
+      			<br></br>	(Only active project will be available for transaction)
       	</div>
       	
-     	<div class="col-sm-6">       				
-				<h:commandLink  value="Create Request Project" action="#{projectbean.newProject}" class="btn btn1  pull-right fontsize"/>				
-				
-			
-		</div>
+     	
 
 	  </div>
 
@@ -152,9 +187,15 @@ function setProjectHiddenValue(new_value)
 </div><!-- end oc container -->
       
       </h:form>
-      
-      
-      
+      </div>
+      </div>
+        <div class="col-sm-3" style="background-color:#fff;margin-top:0px;">
+       
+       <p style="width:250px; padding-top:30px; text-align: center; font-size:30px;">Active request projects can be use for  classifying requests.
+                           These projects can be used to filter your requests and managed them effective.</p>
+    
+        </div>
+        </div>
       
       </h:body>
 

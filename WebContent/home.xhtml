@@ -13,9 +13,9 @@
 <script type="text/javascript" src="resource/js/bootstrap.js"/>
 <script type="text/javascript" src="resource/js/jquery.js"/>
 
-	<title>Reqman Home</title>
+	<title>Collabor8 Home</title>
 </h:head>
-<h:body style="background-color:#fff">
+<h:body >
 	
 <div id="header">
 	<ui:insert name="header">
@@ -27,35 +27,41 @@
       
     <div class="containerfluid">
       
-	  <div class="container homecontainer "  style="   margin-top:3cm; ">      
+	  <div class="container homecontainer"  style="margin-top:3cm;">    
+	  
+	 <div class="row">
+	   <div class="col-sm-7">
      <p style="padding-left: 10px;font-size:20px;color:black"> Welcome to ReqMan, #{login.user} !</p>
       <h3 style="color:#808080; padding-left: 10px;">Here’s how to get started:</h3>  
-      <div class="container containerforbutton " >
-
-			
+     
+      <div class="container containerforbutton " >			
    
 <h:form >
-<p class="btn btn-default btn-md btn-block homeiconbutton"><span class="glyphicon">&#xe022;</span><h:commandLink value=" Create New Request On Friend" style="color:black; "  action="#{createrequest.createRequest}"/>
+<p class="btn btn-default btn-md btn-block homeiconbutton"><span class="glyphicon">&#xe022;</span><h:commandLink value=" Create New Request " style="color:black; "  action="#{createrequest.createRequest}"/>
 </p>
-<p class="btn btn-default btn-md btn-block homeiconbutton"><span class="glyphicon">&#xe022;</span><h:link value=" Response to Request From Team Member" style="color:black; " outcome="responsetonewrequest" /></p>
+<p class="btn btn-default btn-md btn-block homeiconbutton"><span class="glyphicon">&#xe022;</span><h:link value=" Response to Request " style="color:black; " outcome="responsetonewrequest" /></p>
 <p class="btn btn-default btn-md btn-block homeiconbutton"><span class="glyphicon">&#xe022;</span><h:link value=" See Status Of Your Requests" style="color:black;" outcome="request" /></p>
 <p class="btn btn-default btn-md btn-block homeiconbutton"><span class="glyphicon">&#xe022;</span><h:link value=" Update Your Task  Progress" style="color:black; " outcome="updatestatustask" /> </p>
   </h:form>
-   
-   
+   </div>
+      
       
     <!-- end of button -->
     
-    <div class="row" style="margin-top:1cm;">
+  
+       </div>
+       <div class="col-sm-5">
+ <img src="resource/image/CC.jpg" class="img-responsive" alt="collabor8" style="width:100%; "></img>
+      </div>
+      </div>
+       <div class="row" style="margin-top:1cm;">
     <div class="col-sm-4"><h:link value="Webinars" outcome="index" class="downlink"></h:link><br></br> <p>Live online classes. Pick the brains of our experts.</p> </div>
      <div class="col-sm-4"><h:link value="Help Center" outcome="index" class="downlink"></h:link><br></br><p> Our knowledge base and FAQs.</p></div>
      <div class="col-sm-4"><h:link value="Support" outcome="index" class="downlink"></h:link><br></br> <p>Friendly experts, always ready to help.</p></div>
     </div>
+	</div>
+	 
     
-    
-      </div>
-      </div>
-	
 	</div>  
 </h:body>
 </html>

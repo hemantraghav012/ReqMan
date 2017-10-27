@@ -72,11 +72,14 @@ function setRequestHiddenValue(new_value)
 
 <div class="ui-fluid ">
 
-	     <p:dataTable id="requestTable" var="update1" value="#{updatestatusbean.updatestatusList}" 
+	     <p:dataTable id="requestTable" var="update1" value="#{updatestatusbean.updatestatusList}" draggableColumns="true" resizableColumns="true"
 	     reflow="true" scrollable="true" scrollHeight="310" 
+	      rows="5"  paginator="true"   
+	      paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rowsPerPageTemplate="5,10,15"
+	    
 	     sortBy="#{update1.status},#{update1.title}" 
 	     class="table table-striped table-hover table-bordered" 
-	     style="margin-top:5px;  " filteredValue="#{updatestatusbean.filteredUpdateList}" 
+	     style="margin-top:10px;  " filteredValue="#{updatestatusbean.filteredUpdateList}" 
 	     widgetVar="updatestatusListTable">
 	     
 	     <f:facet name="header">
@@ -85,16 +88,20 @@ function setRequestHiddenValue(new_value)
 			
 				<div class= "col-sm-2" ></div>
 				<div class= "col-sm-8" >
-				<h:inputText id="globalFilter" onkeyup="PF('updatestatusbeanListTable').filter()" a:placeholder="Search on any field (s) " class="form-control"  />
+				<h:inputText id="globalFilter" onkeyup="PF('updatestatusListTable').filter()" a:placeholder="Search on any field (s) " class="form-control"  />
 				</div>
 				
 				</div>
 			</p:outputPanel>
+			
+			<p:commandButton id="toggler" type="button" value="Click to choose columns as per requirement"    />
+        <p:columnToggler datasource="requestTable" trigger="toggler" />
+	     
 		</f:facet> 
 
  
  <p:column filterBy="#{update1.title}"  sortBy="#{update1.title}" headerText="Title"  filterStyle="display:none;"
-			 filterMatchMode="contains"  style="text-overflow: ellipsis; white-space: nowrap; width:150px;padding: 0px 0px 0px 3px;">			 
+			 filterMatchMode="contains"  style="text-overflow: ellipsis; white-space: nowrap; padding: 0px 0px 0px 3px;">			 
 				<f:facet name="header" >
 					 <h:outputText value="Title"/>
 				</f:facet>
@@ -102,16 +109,16 @@ function setRequestHiddenValue(new_value)
 </p:column>
  
  
- <p:column filterBy="#{update1.description}" headerText="Description" filterStyle="display:none;"  
-			 filterMatchMode="contains"   style="text-overflow: ellipsis; white-space: nowrap;width:250px;padding: 0px 0px 0px 3px;">
+ <p:column filterBy="#{update1.description}"  sortBy="#{update1.description}" headerText="Description" filterStyle="display:none;"  
+			 filterMatchMode="contains"   style="text-overflow: ellipsis; white-space: nowrap;padding: 0px 0px 0px 3px;">
 				<f:facet name="header">
 					 <h:outputText value="Description" />
 				</f:facet>
 				<h:outputText value="#{update1.description}" style="display: inline;"   />
 </p:column>
  
-<p:column filterBy="#{update1.completiondate}" headerText="Due Date"  filterStyle="display:none;"  
-			 filterMatchMode="contains"   pattern="dd-MMM-yyyy"  style="text-overflow: ellipsis; white-space: nowrap;width:150px;padding: 0px 0px 0px 3px;">
+<p:column filterBy="#{update1.completiondate}" sortBy="#{update1.completiondate}" headerText="Due Date"  filterStyle="display:none;"  
+			 filterMatchMode="contains"   pattern="dd-MMM-yyyy"  style="text-overflow: ellipsis; white-space: nowrap;padding: 0px 0px 0px 3px;">
 				<f:facet name="header">
 					<h:outputText value="Due Date" />
 				</f:facet>
@@ -121,16 +128,16 @@ function setRequestHiddenValue(new_value)
     
     
     
-   <p:column filterBy="#{update1.usercategory}" headerText="Category"  filterStyle="display:none;"  
-			 filterMatchMode="contains"  style="text-overflow: ellipsis; white-space: nowrap;width:130px;padding: 0px 0px 0px 3px;">
+   <p:column filterBy="#{update1.usercategory}" sortBy="#{update1.usercategory}" headerText="Category"  filterStyle="display:none;"  
+			 filterMatchMode="contains"  style="text-overflow: ellipsis; white-space: nowrap;padding: 0px 0px 0px 3px;">
 				<f:facet name="header">
 					<h:outputText value="Category" />
 				</f:facet>
 				<h:outputText value="#{update1.usercategory}" style="display: inline;" />
 			</p:column> 
     
-     <p:column filterBy="#{update1.userproject}"  headerText="Project"  filterStyle="display:none;"  
-			 filterMatchMode="contains" style="text-overflow: ellipsis; white-space: nowrap;width:130px;padding: 0px 0px 0px 3px;">
+     <p:column filterBy="#{update1.userproject}" sortBy="#{update1.userproject}"  headerText="Project"  filterStyle="display:none;"  
+			 filterMatchMode="contains" style="text-overflow: ellipsis; white-space: nowrap;padding: 0px 0px 0px 3px;">
 				<f:facet name="header">
 					<h:outputText value="Project" />
 				</f:facet>
@@ -138,8 +145,8 @@ function setRequestHiddenValue(new_value)
 			</p:column> 
     
    
-     <p:column filterBy="#{update1.userrequesttype}"   headerText="Type"  filterStyle="display:none;"  
-			 filterMatchMode="contains" style="text-overflow: ellipsis; white-space: nowrap;width:130px;padding: 0px 0px 0px 3px;">
+     <p:column filterBy="#{update1.userrequesttype}" sortBy="#{update1.userrequesttype}"  headerText="Type"  filterStyle="display:none;"  
+			 filterMatchMode="contains" style="text-overflow: ellipsis; white-space: nowrap;padding: 0px 0px 0px 3px;">
 				<f:facet name="header">
 					<h:outputText value="Type" />
 				</f:facet>
@@ -148,8 +155,8 @@ function setRequestHiddenValue(new_value)
     
 
     
-     <p:column filterBy="#{update1.completionpercentage}"   headerText="% Age Completion"  filterStyle="display:none;"  
-			 filterMatchMode="contains"  style="text-overflow: ellipsis; white-space: nowrap;width:65px;padding: 0px 0px 0px 3px;">
+     <p:column filterBy="#{update1.completionpercentage}" sortBy="#{update1.completionpercentage}"  headerText="% Age Completion"  filterStyle="display:none;"  
+			 filterMatchMode="contains"  style="text-overflow: ellipsis; white-space: nowrap;padding: 0px 0px 0px 3px;">
 				<f:facet name="header">
 					<h:outputText value="% Age
 					                  Completion" />
@@ -158,7 +165,7 @@ function setRequestHiddenValue(new_value)
 			</p:column>
     
   
-     <p:column filterBy="#{update1.createdby}"   headerText="Task From"  filterStyle="display:none;"  
+     <p:column filterBy="#{update1.createdby}" sortBy="#{update1.createdby}"  headerText="Task From"  filterStyle="display:none;"  
 			 filterMatchMode="contains"  style="text-overflow: ellipsis; white-space: nowrap;padding: 0px 0px 0px 3px;">
 				<f:facet name="header">
 					<h:outputText value="Task From" />
@@ -173,9 +180,9 @@ function setRequestHiddenValue(new_value)
     
     
     
-     <p:column headerText="View / Modify" exportable="false" style="width:120px;padding: 0px 0px 0px 0px;">
+     <p:column headerText="View / Modify" exportable="false" style="padding: 0px 0px 0px 0px; ">
 <p:commandLink id="nonAjax" styleClass="btn btn-primary fontsize" 
-				style="color:white; width:120px;padding: 2px 2px 2px 2px; " onclick='setRequestHiddenValue(#{update1.newRequestId})' 
+				style="color:white; width:145px; border-radius: none;font-size:12px;" onclick='setRequestHiddenValue(#{update1.newRequestId})' 
 				action="#{updatestatusbean.modifyAction()}" ajax="false" >
 	        		View / Update
 	    		</p:commandLink> 

@@ -65,12 +65,12 @@ function setRequestHiddenValue(new_value)
 
 
 <div class="ui-fluid ">
-
-	   
-	     
 	    
-	     <p:dataTable id="responseTable" var="response" value="#{responsebean.responseList}"  
+	     <p:dataTable id="responseTable" var="response" value="#{responsebean.responseList}"  draggableColumns="true" resizableColumns="true"
 	     reflow="true" scrollable="true" scrollHeight="310" 
+	      rows="10"  paginator="true"   
+	      paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rowsPerPageTemplate="5,10,15"
+	    
 	     sortBy="#{response.status},#{response.title}" 
 	     class="table table-striped table-hover table-bordered" 
 	     style="margin-top:5px;  " filteredValue="#{responsebean.filteredResponseList}" 
@@ -83,10 +83,13 @@ function setRequestHiddenValue(new_value)
 				<div class= "col-sm-2" ></div>
 				<div class= "col-sm-8" >
 				<h:inputText id="globalFilter" onkeyup="PF('responseListTable').filter()" a:placeholder="Search on any field (s) " class="form-control"  />
-				</div>
-				
+				</div>				
 				</div>
 			</p:outputPanel>
+			<p:commandButton id="toggler" type="button" value="Click to choose columns as per requirement"    />
+        <p:columnToggler datasource="responseTable" trigger="toggler" />
+	     
+			
 		</f:facet> 
 	    
 	    
@@ -95,7 +98,7 @@ function setRequestHiddenValue(new_value)
 
  
  <p:column filterBy="#{response.title}"  sortBy="#{response.title}" headerText="Title"  filterStyle="display:none;"
-			 filterMatchMode="contains"  style="text-overflow: ellipsis; white-space: nowrap; width:150px;padding: 0px 0px 0px 3px;">			 
+			 filterMatchMode="contains"  style="text-overflow: ellipsis; white-space: nowrap; padding: 0px 0px 0px 3px; ">			 
 				<f:facet name="header" >
 					 <h:outputText value="Title"/>
 				</f:facet>
@@ -103,16 +106,16 @@ function setRequestHiddenValue(new_value)
 </p:column>
  
  
- <p:column filterBy="#{response.description}" headerText="Description" filterStyle="display:none;"  
-			 filterMatchMode="contains"   style="text-overflow: ellipsis; white-space: nowrap;width:250px;padding: 0px 0px 0px 3px;">
+ <p:column filterBy="#{response.description}"  sortBy="#{response.description}"  headerText="Description" filterStyle="display:none;"  
+			 filterMatchMode="contains"   style="text-overflow: ellipsis; white-space: nowrap;padding: 0px 0px 0px 3px;">
 				<f:facet name="header">
 					 <h:outputText value="Description" />
 				</f:facet>
 				<h:outputText value="#{response.description}" style="display: inline;"   />
 </p:column>
  
-<p:column filterBy="#{response.completiondate}" headerText="Due Date"  filterStyle="display:none;"  
-			 filterMatchMode="contains"   pattern="dd-MMM-yyyy"  style="text-overflow: ellipsis; white-space: nowrap;width:105px;padding: 0px 0px 0px 3px;">
+<p:column filterBy="#{response.completiondate}"  sortBy="#{response.completiondate}"  headerText="Due Date"  filterStyle="display:none;"  
+			 filterMatchMode="contains"   pattern="dd-MMM-yyyy"  style="text-overflow: ellipsis; white-space: nowrap;padding: 0px 0px 0px 3px; ">
 				<f:facet name="header">
 					<h:outputText value="Due Date" />
 				</f:facet>
@@ -122,16 +125,16 @@ function setRequestHiddenValue(new_value)
     
     
     
-   <p:column filterBy="#{response.usercategory}" headerText="Category"  filterStyle="display:none;"  
-			 filterMatchMode="contains"  style="text-overflow: ellipsis; white-space: nowrap;width:130px;padding: 0px 0px 0px 3px;">
+   <p:column filterBy="#{response.usercategory}"  sortBy="#{response.usercategory}"  headerText="Category"  filterStyle="display:none;"  
+			 filterMatchMode="contains"  style="text-overflow: ellipsis; white-space: nowrap;padding: 0px 0px 0px 3px;">
 				<f:facet name="header">
 					<h:outputText value="Category" />
 				</f:facet>
 				<h:outputText value="#{response.usercategory}" style="display: inline;" />
 			</p:column> 
     
-     <p:column filterBy="#{response.userproject}"  headerText="Project"  filterStyle="display:none;"  
-			 filterMatchMode="contains" style="text-overflow: ellipsis; white-space: nowrap;width:130px;padding: 0px 0px 0px 3px;">
+     <p:column filterBy="#{response.userproject}"  sortBy="#{response.userproject}"  headerText="Project"  filterStyle="display:none;"  
+			 filterMatchMode="contains" style="text-overflow: ellipsis; white-space: nowrap;padding: 0px 0px 0px 3px;">
 				<f:facet name="header">
 					<h:outputText value="Project" />
 				</f:facet>
@@ -139,8 +142,8 @@ function setRequestHiddenValue(new_value)
 			</p:column> 
     
    
-     <p:column filterBy="#{response.userrequesttype}"   headerText="Type"  filterStyle="display:none;"  
-			 filterMatchMode="contains" style="text-overflow: ellipsis; white-space: nowrap;width:130px;padding: 0px 0px 0px 3px;">
+     <p:column filterBy="#{response.userrequesttype}"  sortBy="#{response.userrequesttype}"   headerText="Type"  filterStyle="display:none;"  
+			 filterMatchMode="contains" style="text-overflow: ellipsis; white-space: nowrap;padding: 0px 0px 0px 3px;">
 				<f:facet name="header">
 					<h:outputText value="Type" />
 				</f:facet>
@@ -148,8 +151,8 @@ function setRequestHiddenValue(new_value)
 			</p:column> 
     
     
-      <p:column filterBy="#{response.createdby}"   headerText="Task From"  filterStyle="display:none;"  
-			 filterMatchMode="contains"  style="text-overflow: ellipsis; white-space: nowrap;padding: 0px 0px 0px 3px;">
+      <p:column filterBy="#{response.createdby}"  sortBy="#{response.createdby}"   headerText="Task From"  filterStyle="display:none;"  
+			 filterMatchMode="contains"  style="text-overflow: ellipsis; white-space: nowrap; padding: 0px 0px 0px 3px; ">
 				<f:facet name="header">
 					<h:outputText value="Task From" />
 				</f:facet>
@@ -161,18 +164,18 @@ function setRequestHiddenValue(new_value)
     
    
     
-     <p:column headerText="Attachment" exportable="false" style="width:120px;padding: 0px 0px 0px 0px;" >
+     <p:column headerText="Attachment" exportable="false" style="padding: 0px 0px 0px 0px;" >
        <p:dialog modal="true" widgetVar="statusDialog" header="Status" draggable="false" closable="false" resizable="false">
     <p:graphicImage name="/demo/images/ajaxloadingbar.gif" />
 </p:dialog>
-<p:commandButton value="Download" ajax="false" onclick="PrimeFaces.monitorDownload(start, stop);setRequestHiddenValue(#{response.newRequestId})" style="padding: 0px 2px 2px 0px; font-size:14px;" >
+<p:commandButton value="Download" ajax="false" onclick="PrimeFaces.monitorDownload(start, stop);setRequestHiddenValue(#{response.newRequestId})" style="padding: 0px 0px 0px 0px; font-size:13px; width:144px;" >
         <p:fileDownload value="#{responsebean.fileDownloadView()}" />
     </p:commandButton>
     </p:column>
     
-     <p:column headerText="View / Modify" exportable="false" style="width:120px;padding: 0px 0px 0px 0px;">
+     <p:column headerText="View / Modify" exportable="false" style="padding: 0px 0px 0px 0px; ">
 <p:commandLink id="nonAjax" styleClass="btn btn-primary fontsize" 
-				style="color:white; width:120px;padding: 2px 2px 2px 2px; " onclick='setRequestHiddenValue(#{response.newRequestId})' 
+				style="color:white; width:143px; border-radius: none;font-size:12px;" onclick='setRequestHiddenValue(#{response.newRequestId})' 
 				action="#{responsebean.modifyAction()}" ajax="false" >
 	        		View / Update
 	    		</p:commandLink>  

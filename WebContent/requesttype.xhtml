@@ -55,20 +55,59 @@ function setRequesttypeHiddenValue(new_value)
        <!-- -end of categoryheader -->
        
        
+        <div class="row">
+      <div class="col-sm-9">
+       <div class="container  fixedcontainer "  style="margin-left: 0px; border-top:none;">
+  
+  
+  <div  style="margin-top:10px;"> 
+  <h:form class="form-horizontal" >
+  
+  
+<h2 style="  margin-bottom:30px; margin-top:0px; text-align:center" >Create New Request Type</h2>
+
+
+<div><h:messages style = "color:red;margin:8px;" /></div>
+
+ <div class=" row form-group ">
+ <div class="col-sm-3 control-label"><h:outputLabel  >RequestType Name:</h:outputLabel></div>
+<div class=" col-sm-6"> <h:inputText value="#{requesttypebean.requesttypeName}" maxlength="20" class="  form-control"  id="requesttypename"  required="true" requiredMessage="* Please enter user type "/><span style="color:red;">Please enter upto 20 characters.</span></div>
+ <h:message for="requesttypename"  style="color:red;margin:8px;"/> 
+</div><br></br>
+
+
+
+
+ <div class=" row form-group ">
+ <div class="col-sm-3 .col-sm-offset-2"></div>
+ <div class="col-sm-6 "><h:commandButton action="#{requesttypebean.saveRequesttype}" value="Submit" class="btn  btn-success btn-block fontsize"></h:commandButton></div>
+
+
+</div>
+
+
+
+</h:form>
+  
+  </div>
+      
+ 
+       
+   <hr ></hr>       
+       
+       
+       
    <h:form id="requesttypeForm">
-      <div class="container fixedcontainer fixedcontainer1" style=" margin-top:1cm; ">
+      <div class="container  fixedcontainer1" >
  		<h:inputHidden id="requesttypeId" value="#{requesttypebean.requesttypeId}" ></h:inputHidden>
       <div class="row">
       
-      	<div class="col-sm-6">
+      	<div class="col-sm-12">
       		<span style=";font-size:25px;margin-left: 3px;">Manage Request Type List</span>
+      			<br></br>	(Only active type will be available for transaction)
       	</div>
       	
-     	<div class="col-sm-6">       				
-				<h:commandLink  value="Create Request Type" action="#{requesttypebean.newRequesttype}" class="btn btn1 fontsize pull-right"/>				
-				
-			
-		</div>
+     	
 
 	  </div>
 
@@ -141,10 +180,17 @@ function setRequesttypeHiddenValue(new_value)
 </div><!-- end oc container -->
       
       </h:form>
+      </div>
       
+      </div>
+      <div class="col-sm-3" style="background-color:#fff;margin-top:0px;">
+       
+       <p style="width:250px; padding-top:30px; text-align: center; font-size:30px;">Active request types can be use for classifying requests.
+                           These  types can be used to filter your request and managed them effective.</p>
+    
+        </div>
       
-      
-      
+       </div>
       </h:body>
 
 
