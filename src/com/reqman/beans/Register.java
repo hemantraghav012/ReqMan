@@ -27,7 +27,8 @@ public class Register implements Serializable{
 	private String lastname;
 	private String msg;
 	private String shortname;
-	
+	private String hashkey;
+	private String emailstatus;
 	
 	public String submit()
 	{
@@ -38,7 +39,7 @@ public class Register implements Serializable{
 		int result = 0;
 		try{
 		
-			result = userImpl.saveUser(emailid, password, firstname, lastname, shortname);
+			result = userImpl.saveUser(emailid, password, firstname, lastname, shortname,hashkey);
 			
 			//boolean valid = LoginDAO.validate(user, pwd);
 			if (result == 1) {
@@ -131,6 +132,28 @@ public class Register implements Serializable{
 	public void setShortname(String shortname) {
 		this.shortname = shortname;
 	}
+
+
+	public String getHashkey() {
+		return hashkey;
+	}
+
+
+	public void setHashkey(String hashkey) {
+		this.hashkey = hashkey;
+	}
+
+
+	public String getEmailstatus() {
+		return emailstatus;
+	}
+
+
+	public void setEmailstatus(String emailstatus) {
+		this.emailstatus = emailstatus;
+	}
+	
+	
 	
 	}
 	
