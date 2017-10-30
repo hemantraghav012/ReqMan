@@ -18,6 +18,8 @@ import org.hibernate.criterion.Restrictions;
 
 
 
+
+
 import com.reqman.common.HibernateUtil;
 import com.reqman.dao.UserDetailsInterface;
 import com.reqman.pojo.Usercategory;
@@ -76,7 +78,7 @@ public class UserDetailsImpl implements UserDetailsInterface {
     	
     }
 	
-	public int saveUser(String emailid, String password, String firstname, String lastname, String shortname) throws Exception
+	public int saveUser(String emailid, String password, String firstname, String lastname, String shortname,String hashkey) throws Exception
 	{
         Session session = null;
         SessionFactory hsf = null;
@@ -98,10 +100,11 @@ public class UserDetailsImpl implements UserDetailsInterface {
             }
             else
             {
-            	//sendEmailonfriend sef=new sendEmailonfriend();
-            	//sef.friendemail(emailid, firstname,);
             	
-            	 password = new sendEmail1().createAccount(emailid, firstname);
+            	hashkey = new sendEmail1().createAccount(emailid, firstname);
+     			System.out.println("-password--"+hashkey);
+            
+            	
      			System.out.println("-password--"+password);
             	users = new Users();
             	users.setEmailid(emailid);
@@ -112,6 +115,7 @@ public class UserDetailsImpl implements UserDetailsInterface {
             	users.setCreatedby("SYSTEM");
             	users.setCreatedon(new Date());
             	users.setStatus(true);
+            	users.setHashkey(hashkey);
             	session.save(users);
             	tx.commit();
             	result = 3;
@@ -217,6 +221,52 @@ public class UserDetailsImpl implements UserDetailsInterface {
 			return result;
 			
 	}
+
+	@Override
+	public int updatepasswordByHashkey(String hash, String emailid,
+			String password) throws Exception {
+		// TODO Auto-generated method stub
+		
+		 Session session = null;
+		    Transaction tx = null;
+		    Users users = null;
+		    int result = 0;
+			try
+			{
+	           	session = HibernateUtil.getSession();
+	            tx = session.beginTransaction();
+	            users = (Users)
+	            			session.createCriteria(Users.class)
+	            			.add(Restrictions.eq("hashkey", hash))
+	            			.uniqueResult();
+	            
+	            if(users != null){
+	            	users.setPassword(password);
+	            	
+	            	session.update(users);
+	    			tx.commit();
+	    			result = 1;
+	            }
+	 		}
+			catch(Exception e)
+			{
+				e.printStackTrace();
+				if(tx != null){
+					tx.rollback();
+				}
+				result = 2;
+			}
+			finally 
+			{
+	        	if(session != null)
+	            session.close();
+		    }
+
+			return result;
+		
+		
+		}
+
 
 	
 	
