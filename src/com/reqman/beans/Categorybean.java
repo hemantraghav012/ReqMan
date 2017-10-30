@@ -21,6 +21,7 @@ import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.hssf.util.HSSFColor;
 import org.apache.poi.ss.usermodel.Row;
+import org.primefaces.event.CellEditEvent;
 import org.primefaces.model.chart.PieChartModel;
 
 import com.lowagie.text.BadElementException;
@@ -187,6 +188,19 @@ public class Categorybean implements Serializable
 		}
 		return "category";
 	}
+	
+	
+	 public void onCellEdit(CellEditEvent event) {
+	        Object oldValue = event.getOldValue();
+	        Object newValue = event.getNewValue();
+	         
+	        if(newValue != null && !newValue.equals(oldValue)) {
+	            FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Cell Changed", "Old: " + oldValue + ", New:" + newValue);
+	            FacesContext.getCurrentInstance().addMessage(null, msg);
+	        }
+	    }
+	
+	
 	
 	
 	public void modifyAction() {
