@@ -1,6 +1,7 @@
 package com.reqman.util;
 
 import java.io.IOException;
+import java.util.Random;
 
 import com.sendgrid.Content;
 import com.sendgrid.Email;
@@ -10,12 +11,16 @@ import com.sendgrid.Request;
 import com.sendgrid.Response;
 import com.sendgrid.SendGrid;
 
+
+
 public class sendEmail1 { 
 	
-	public String createPasswordContent(String To, String firstName, String password){
+	public String createPasswordContent(String To, String firstName, String hashkey){
 		StringBuffer sb = new StringBuffer();
 		String content = "";
 		String temp ="\"";
+		String link = MAIL_REGISTRATION_SITE_LINK+"?emailid="+To+"&hash="+hashkey;
+		
 		try{
 			sb.append("Welcome to Collabor8,"+ firstName + "!");
 			sb.append("<br>");
@@ -29,17 +34,26 @@ public class sendEmail1 {
 			sb.append("<br>");
 			sb.append("Login URL");
 			sb.append("<br>");
-			sb.append("http://updatecollabor8.herokuapp.com");
+			sb.append("http://localhost:9002/ReqMan/faces/faces/eregisters.xhtml");
 			sb.append("<br>");
 			sb.append("Username");
 			sb.append("<br>");
 			sb.append(To);
+			
 			sb.append("<br>");
-			sb.append("Password");
+			sb.append("hashkey");
 			sb.append("<br>");
-			sb.append(password);
+			sb.append(hashkey);
 			sb.append("<br>");
-			sb.append("<br>");
+			
+			
+			
+			sb.append("  Thank you for registration. Your mail ("+To+") is under verification<br/>");
+		     sb.append("  Please click <a href=\""+link+"\">here</a> or open below link in browser<br/>");
+		    	
+			
+			
+			
 			sb.append("Thank You, "+firstName+".");
 			sb.append("<br>");
 			sb.append("<br>");
@@ -62,16 +76,18 @@ public class sendEmail1 {
 	
 	public String createAccount(String To, String firstName) throws Exception {
 		
-		String password = "";
+		String hashkey = "";
+			
 		StringBuffer sb = new StringBuffer();
 		try{
-			password = RandomPasswordGenerator.getPassword();
+			 hashkey = prepareRandomString(30);
+			//password = RandomPasswordGenerator.getPassword();
 			   //SendGrid sg = new SendGrid("SXoOwlD1RJ2kbfiCfYuR4A");
 		    Email from = new Email(SearchConstants.FROM_ADD);
 		    String subject = firstName+" Welcome to Collabor8!";
 		    Email to = new Email(To);
 		    //Content content = getContent(To, firstName, password);
-		    Content content = new Content("text/html", createPasswordContent(To, firstName, password));
+		    Content content = new Content("text/html", createPasswordContent(To, firstName, hashkey));
 		    //Content content = new Content("hello password");
 		    Mail mail = new Mail(from, subject, to, content);
 		    SendGrid sg = new SendGrid(SearchConstants.EMAIL_KEY);
@@ -88,12 +104,38 @@ public class sendEmail1 {
 		      
 		}
 		catch(Exception e){
-			password = "";
+			hashkey= "";
 			throw new Exception(e);
 		}
 		
-		return password;
+		return hashkey;
     }  
+	
+	  public static final String MAIL_REGISTRATION_SITE_LINK = "http://localhost:9002/ReqMan/faces/faces/eregisters.xhtml";
+
+	  private static final char[] symbols;
+	  static {
+		    StringBuilder tmp = new StringBuilder();
+		    for (char ch = '0'; ch <= '9'; ++ch)
+		      tmp.append(ch);
+		    for (char ch = 'a'; ch <= 'z'; ++ch)
+		      tmp.append(ch);
+		    symbols = tmp.toString().toCharArray();
+		  }   
+	  private static final Random random = new Random();
+
+	  public static String prepareRandomString(int len) {
+		char[] buf = new char[len];
+	    for (int idx = 0; idx < buf.length; ++idx) 
+	      buf[idx] = symbols[random.nextInt(symbols.length)];
+	    return new String(buf);
+	  }
+	
+	
+	
+	
+	
+	
 	
 	
 	
