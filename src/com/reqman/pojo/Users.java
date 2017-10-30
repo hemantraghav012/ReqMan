@@ -1,5 +1,7 @@
 package com.reqman.pojo;
 
+import java.util.Arrays;
+
 // Generated 5 Sep, 2017 6:45:26 PM by Hibernate Tools 4.3.1
 
 import java.util.Date;
@@ -39,6 +41,9 @@ public class Users implements java.io.Serializable {
 	private Date createdon;
 	private Date lastlogin;
 	private byte[] photo;
+	
+	private String hashkey;
+	private String emailstatus;
 	private Set<Userroles> userroleses = new HashSet<Userroles>(0);
 	private Set<Userfriendlist> userfriendlistsForUserid = new HashSet<Userfriendlist>(
 			0);
@@ -57,15 +62,18 @@ public class Users implements java.io.Serializable {
 		this.id = id;
 	}
 
-	public Users(int id, String emailid, String password, String firstname,
-			String lastname, String shortname, Boolean status,
-			String createdby, Date createdon, Date lastlogin, byte[] photo,
-			Set<Userroles> userroleses,
-			Set<Userfriendlist> userfriendlistsForUserid,
-			Set<Userusertype> userusertypes,
-			Set<Userrequesttype> userrequesttypes,
-			Set<Userfriendlist> userfriendlistsForFriendid,
-			Set<Userproject> userprojects, Set<Usercategory> usercategories) {
+	
+	
+	
+	
+
+	public Users(int id, String emailid, String password, String firstname, String lastname, String shortname,
+			Boolean status, String createdby, Date createdon, Date lastlogin, byte[] photo, String hashkey,
+			String emailstatus, Set<Userroles> userroleses, Set<Userfriendlist> userfriendlistsForUserid,
+			Set<Userusertype> userusertypes, Set<Userrequesttype> userrequesttypes,
+			Set<Userfriendlist> userfriendlistsForFriendid, Set<Userproject> userprojects,
+			Set<Usercategory> usercategories) {
+		super();
 		this.id = id;
 		this.emailid = emailid;
 		this.password = password;
@@ -77,6 +85,8 @@ public class Users implements java.io.Serializable {
 		this.createdon = createdon;
 		this.lastlogin = lastlogin;
 		this.photo = photo;
+		this.hashkey = hashkey;
+		this.emailstatus = emailstatus;
 		this.userroleses = userroleses;
 		this.userfriendlistsForUserid = userfriendlistsForUserid;
 		this.userusertypes = userusertypes;
@@ -254,4 +264,24 @@ public class Users implements java.io.Serializable {
 		this.usercategories = usercategories;
 	}
 
+	@Column(name = "hashkey")
+	public String getHashkey() {
+		return hashkey;
+	}
+
+	public void setHashkey(String hashkey) {
+		this.hashkey = hashkey;
+	}
+	@Column(name = "emailstatus")
+	public String getEmailstatus() {
+		return emailstatus;
+	}
+
+	public void setEmailstatus(String emailstatus) {
+		this.emailstatus = emailstatus;
+	}
+
+	
+	
+	
 }
