@@ -163,7 +163,7 @@ public void modifyAction() {
 			String userName = (String)session.getAttribute("username");			
 			System.out.println("--usersession--userName-->"+userName);
 			
-        	result = responseInterface.updateResponsetById(requestId,stage, completiondate);
+        	result = responseInterface.updateResponsetById(requestId,stage, completiondate,userName);
         	
         	if(result == 2)
         	{
