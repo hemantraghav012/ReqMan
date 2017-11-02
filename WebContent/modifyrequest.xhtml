@@ -67,7 +67,9 @@
 
 <div class=" row form-group ">
  <div class="col-sm-2 control-label"><h:outputLabel  >Completion Date:</h:outputLabel></div>
-<div class=" col-sm-4"> <h:inputText value="#{createrequest.newrequestVo.completiondate}"  class="  form-control"  id="completiondate"   requiredMessage="* Please enter Title"/></div>
+<div class=" col-sm-4">
+<p:calendar id="completiondate" value="#{createrequest.completiondate}" style=" border: 0;"   pattern="dd/MM/yyyy HH:mm:ss"   />
+</div>
  <h:message for="completiondate"  style="color:red;margin:8px;"/> 
  <div class="col-sm-2 control-label"><h:outputLabel  >Category:</h:outputLabel></div>
 <div class=" col-sm-4"> <h:inputText value="#{createrequest.newrequestVo.usercategory}" readonly="true"  disabled="true" class="  form-control"  style="background-color:lightgrey;" id="usercategory"  required="true" requiredMessage="* Please enter Title"/></div>
@@ -112,7 +114,16 @@
 </h:selectOneRadio> </div>
  <h:message for="status"  style="color:red;margin:8px;"/> 
  </div><br></br>
-
+ <div class=" row form-group ">
+ <div class="col-sm-2 control-label" style="padding-top:0cm;"><h:outputLabel>Stage: </h:outputLabel></div>
+<div class=" col-sm-6"> 
+<h:selectOneRadio value = "#{createrequest.stage}" id="stage"> 
+   <f:selectItem itemValue = "6" itemLabel = "Cancelled &nbsp; &nbsp;&nbsp; &nbsp;" /> 
+    <f:selectItem itemValue = "7" itemLabel = "Hold &nbsp; &nbsp;&nbsp; &nbsp;" /> 
+   <f:selectItem itemValue = "8" itemLabel = "Close"  />
+</h:selectOneRadio> </div>
+ <h:message for="stage"  style="color:red;margin:8px;"/> 
+ </div><br></br>
 
 
  <div class=" row form-group ">

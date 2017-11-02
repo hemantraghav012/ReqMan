@@ -86,9 +86,13 @@ function setRequestHiddenValue(new_value)
 				</div>				
 				</div>
 			</p:outputPanel>
-			<p:commandButton id="toggler" type="button" value="Click to choose columns as per requirement"    />
+			<div class="row">
+				<div class= "col-sm-2" ></div>
+			
+			<div class= "col-sm-8" ><p:commandButton id="toggler" value="Click here to chooses columns to viewed as per your requirement"  style="background-color:skyblue;"  />
         <p:columnToggler datasource="responseTable" trigger="toggler" />
-	     
+	     </div>
+			</div>
 			
 		</f:facet> 
 	    

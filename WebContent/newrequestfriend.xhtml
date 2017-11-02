@@ -79,10 +79,10 @@
  <h:outputLabel style="white-space:nowrap;">Completion Date:</h:outputLabel>
  </div>
 <div class="col-sm-4"> 
-<p:calendar id="calender" value="#{createrequest.completiondate}" style=" border: 0;"   pattern="dd/MM/yyyy HH:mm:ss"   />
+<p:calendar id="completiondate" value="#{createrequest.completiondate}" style=" border: 0;"   pattern="dd/MM/yyyy HH:mm:ss"  required="true" requiredMessage="* Please enter completion Date"  />
 
  </div>
- <h:message   style="color:red;margin:8px;"/>
+ <h:message for="completiondate"  style="color:red;margin:8px;"/>
  
  <div class="col-sm-2 control-label"> 
 

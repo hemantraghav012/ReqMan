@@ -79,16 +79,24 @@ function setRequestHiddenValue(new_value)
 	     
 			<p:outputPanel>
 				<div class="row">
-			<div class= "col-sm-2" ></div>
+			<div class= "col-sm-2" >
+	     </div>
 				<div class= "col-sm-8" >
 				<h:inputText id="globalFilter" onkeyup="PF('newrequestListTable').filter()" a:placeholder="Search on any field (s) " class="form-control"  />
 				</div>
 				
 				</div>
-			</p:outputPanel>
-			<p:commandButton id="toggler" type="button" value="Click to choose columns as per requirement"    />
+				
+				<div class="row">
+				<div class= "col-sm-2" ></div>
+			
+			<div class= "col-sm-8" ><p:commandButton id="toggler" value="Click here to chooses columns to viewed as per your requirement"  style="background-color:skyblue;"  />
         <p:columnToggler datasource="requestTable" trigger="toggler" />
-	     
+	     </div>
+			</div>
+			</p:outputPanel>
+			
+		
 		</f:facet> 
 
  
@@ -109,12 +117,12 @@ function setRequestHiddenValue(new_value)
 				<h:outputText value="#{request1.description}" style="display: inline;"   />
 </p:column>
  
-<p:column filterBy="#{request1.completiondate}" sortBy="#{request1.completiondate}" headerText="Due Date"  filterStyle="display:none;"  
+<p:column filterBy="#{request1.changedate}" sortBy="#{request1.changedate}" headerText="Due Date"  filterStyle="display:none;"  
 			 filterMatchMode="contains"   pattern="dd-MMM-yyyy"  style="text-overflow: ellipsis; white-space: nowrap;padding: 0px 0px 0px 3px;">
 				<f:facet name="header">
 					<h:outputText value="Due Date" />
 				</f:facet>
-				<h:outputText value="#{request1.completiondate}" pattern="dd-MMM-yyyy" />
+				<h:outputText value="#{request1.changedate}" pattern="dd-MMM-yyyy" />
 			</p:column>
     
     
