@@ -393,6 +393,8 @@ CREATE TABLE reqman.users
     lastname character varying(50) COLLATE "default".pg_catalog,
     shortname character varying(100) COLLATE "default".pg_catalog,
     status boolean,
+     hashkey character varying(255) COLLATE "default".pg_catalog,
+      emailstatus character varying(255) COLLATE "default".pg_catalog,
     createdby character varying(50) COLLATE "default".pg_catalog,
     createdon timestamp without time zone,
     lastlogin timestamp without time zone,
