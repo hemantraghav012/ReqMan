@@ -121,7 +121,8 @@ public class UpdatestatusImpl implements UpdatestatusInterface {
 								name = name + " " +lastName.trim();
 							}
 						}
-						if(requestDB.getStatus()==true && requestDB.getRequeststatus() == 2 ){
+						if(requestDB.getStatus()==true && (requestDB.getRequeststatus() == 2 ||requestDB.getRequeststatus()==4
+								||requestDB.getRequeststatus()==5 ||requestDB.getRequeststatus()==8)){
 						updatestatusVo.setTitle(requestDB.getTitle() != null ? requestDB.getTitle().trim() : "");
 						updatestatusVo.setDescription(requestDB.getDescription() != null ? requestDB.getDescription().trim() : "");
 						updatestatusVo.setCompletiondate(requestDB.getCompletiondate() != null ?  Dateconverter.convertDateToStringDDMMDDYYYY(requestDB.getCompletiondate()) : "");
@@ -255,7 +256,7 @@ public class UpdatestatusImpl implements UpdatestatusInterface {
 
 	@Override
 	public int updateRequestById(String requestId, Date completiondate,
-			Float completionpercentage) {
+			Float completionpercentage,Integer stage) {
 		// TODO Auto-generated method stub
 		 Session session = null;
 		    Transaction tx = null;
@@ -278,6 +279,20 @@ public class UpdatestatusImpl implements UpdatestatusInterface {
 		            	
 		           //	requestworkflow.setDescription(description);
 		            	requestworkflow.setCompletionpercentage(completionpercentage);
+		            	if(completionpercentage>0 && completionpercentage<99.9){
+		            		stage=4;
+		            		requestworkflow.setRequeststatus(stage);
+		            	}
+		            		else if(completionpercentage == 0){
+		            			stage=2;
+		            			requestworkflow.setRequeststatus(stage);		            		
+		            	}
+		            		else if(completionpercentage == 100){
+		            			stage=5;
+		            			requestworkflow.setRequeststatus(stage);		            		
+		            	}
+		            		
+		            	
 		            	session.update(requestworkflow);
 		    			tx.commit();;
 			result = 1;

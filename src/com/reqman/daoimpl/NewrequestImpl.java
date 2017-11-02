@@ -318,7 +318,7 @@ public class NewrequestImpl implements NewrequestInterface {
 						
 						newrequestVo.setTitle(requestDB.getTitle() != null ? requestDB.getTitle().trim() : "");
 						newrequestVo.setDescription(requestDB.getDescription() != null ? requestDB.getDescription().trim() : "");
-						newrequestVo.setCompletiondate(requestDB.getCompletiondate() != null ?  Dateconverter.convertDateToStringDDMMDDYYYY(requestDB.getCompletiondate()) : "");
+						newrequestVo.setChangedate(requestDB.getCompletiondate() != null ?  Dateconverter.convertDateToStringDDMMDDYYYY(requestDB.getCompletiondate()) : "");
 						newrequestVo.setFriendName(name);
 						newrequestVo.setUsercategory(userCategory);
 						newrequestVo.setUserproject(userProject);
@@ -334,6 +334,22 @@ public class NewrequestImpl implements NewrequestInterface {
 						}
 					 else if(requestDB.getRequeststatus()==1){
 						 newrequestVo.setStage("Request");
+					 }
+					 else if(requestDB.getRequeststatus()==4){
+						 newrequestVo.setStage("In-progress");
+					 }
+						
+					 else if(requestDB.getRequeststatus()==5){
+						 newrequestVo.setStage("Completed");
+					 }
+					 else if(requestDB.getRequeststatus()==6){
+						 newrequestVo.setStage("Cancelled");
+					 }
+					 else if(requestDB.getRequeststatus()==7){
+						 newrequestVo.setStage("Hold");
+					 }
+					 else if(requestDB.getRequeststatus()==8){
+						 newrequestVo.setStage("Close");
 					 }
 						
 						if(requestDB != null && requestDB.getStatus() != null 
@@ -453,7 +469,7 @@ public class NewrequestImpl implements NewrequestInterface {
 					newrequestVo.setUserproject(userProject);
 					newrequestVo.setUserrequesttype(userRequestType);
 					newrequestVo.setDescription(request.getDescription());
-					newrequestVo.setCompletiondate(request.getCompletiondate() != null ? Dateconverter.convertDateToStringDDMMDDYYYY(request.getCompletiondate()) : "");
+					newrequestVo.setCompletiondate(request.getCompletiondate() );
 					//newrequestVo.setAttachment((UploadedFile) (requestworkflow.getAttachment() !=null ? requestworkflow.getAttachment() :""));
 					newrequestVo.setFileName(request.getFilename());
 					newrequestVo.setFriendName(name);
@@ -494,7 +510,7 @@ public class NewrequestImpl implements NewrequestInterface {
 
 	@Override
 	public int updateRequestById(String requestId, Boolean status,
-			String description, Date completiondate, UploadedFile attachment, Float completionpercentage)
+			String description, Date completiondate, UploadedFile attachment, Float completionpercentage,Integer stage)
 			throws Exception {
 		// TODO Auto-generated method stub
 		 Session session = null;
@@ -516,11 +532,12 @@ public class NewrequestImpl implements NewrequestInterface {
 		           
 		            if(requestworkflow != null ){
 		            	requestworkflow.setStatus(status);
-		            	requestworkflow.setDescription(description);
-		            	//requestworkflow.setAttachment(attachment.getContents());
-		            	//requestworkflow.setCompletiondate(completiondate);
-		            	//requestworkflow.setFilename(attachment.getFileName());
-		            	requestworkflow.setCompletionpercentage(completionpercentage);
+		            	requestworkflow.setDescription(description);		            	
+		            	requestworkflow.setCompletiondate(completiondate);		            	
+		         
+		            	
+		            	//requestworkflow.setRequeststatus(stage);
+		            	
 		            	session.update(requestworkflow);
 		    			tx.commit();;
     			result = 1;

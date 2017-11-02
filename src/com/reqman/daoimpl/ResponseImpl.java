@@ -121,7 +121,7 @@ public class ResponseImpl implements responseInterface {
 								name = name + " " +lastName.trim();
 							}
 						}
-						if(requestDB.getStatus()==true ){
+						if(requestDB.getStatus()==true && requestDB.getRequeststatus()==1){
 						responseVo.setTitle(requestDB.getTitle() != null ? requestDB.getTitle().trim() : "");
 						responseVo.setDescription(requestDB.getDescription() != null ? requestDB.getDescription().trim() : "");
 						responseVo.setCompletiondate(requestDB.getCompletiondate() != null ?  Dateconverter.convertDateToStringDDMMDDYYYY(requestDB.getCompletiondate()) : "");
@@ -262,7 +262,7 @@ public class ResponseImpl implements responseInterface {
 
 	@Override
 	public int updateResponsetById(String requestId, Integer stage,
-			Date completiondate) throws Exception {
+			Date completiondate,String userName) throws Exception {
 		// TODO Auto-generated method stub
 		 Session session = null;
 		    Transaction tx = null;
@@ -284,7 +284,13 @@ public class ResponseImpl implements responseInterface {
 		            if(requestworkflow != null ){
 		            	
 		           //	requestworkflow.setDescription(description);
+		            	
 		            	requestworkflow.setRequeststatus(stage);
+                     if(stage==2){
+                    	 requestworkflow.setAcceptdate(new Date());
+                    	
+		            		
+		            	}
 		            	session.update(requestworkflow);
 		    			tx.commit();;
  			result = 1;

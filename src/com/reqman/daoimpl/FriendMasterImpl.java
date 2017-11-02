@@ -166,7 +166,7 @@ public class FriendMasterImpl implements FriendMasterInterface {
 	            	sendEmailonfriend sef=new sendEmailonfriend();
                 	sef.friendemail(frienduser, friendfirstname,usename);
 	            	
-	            	 password = new sendEmail1().createAccount(frienduser, friendfirstname);
+	            	// password = new sendEmail1().createAccount(frienduser, friendfirstname);
 	 				System.out.println("-password--"+password);
 	 		
 	            	users = new Users();
