@@ -24,7 +24,7 @@ public interface NewrequestInterface {
 	public NewrequestVo getRequestById(String requestId)throws Exception;
 
 	public int updateRequestById(String requestId, Boolean status,
-			String description, Date completiondate, UploadedFile attachment, Float completionpercentage)throws Exception;
+			String description, Date completiondate, UploadedFile attachment, Float completionpercentage, Integer stage)throws Exception;
 
 	
 

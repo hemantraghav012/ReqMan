@@ -11,6 +11,6 @@ public interface UpdatestatusInterface {
 
 	UpdatestatusVo getRequestById(String requestId) throws Exception;
 
-	int updateRequestById(String requestId, Date completiondate,Float completionpercentage) throws Exception;
+	int updateRequestById(String requestId, Date completiondate,Float completionpercentage, Integer stage) throws Exception;
 
 }

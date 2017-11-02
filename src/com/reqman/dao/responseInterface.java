@@ -11,6 +11,6 @@ public interface responseInterface {
 
 	ResponseVo getResponseById(String requestId)throws Exception;
 
-	int updateResponsetById(String requestId, Integer stage,Date completiondate)throws Exception;
+	int updateResponsetById(String requestId, Integer stage,Date completiondate, String userName)throws Exception;
 
 }
