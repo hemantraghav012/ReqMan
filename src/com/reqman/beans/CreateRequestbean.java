@@ -65,9 +65,11 @@ public class CreateRequestbean implements Serializable
 	 private NewrequestVo newrequestVo = new NewrequestVo();
 	 private NewrequestVo selectedReuest;
 	 private List<NewrequestVo> filteredRequestList = new ArrayList<NewrequestVo>();
-	
+	private Integer stage;
 	 
-	 private Float completionpercentage;
+	
+
+	private Float completionpercentage;
 
 	@PostConstruct
     public void init() 
@@ -195,9 +197,8 @@ public class CreateRequestbean implements Serializable
         		setTitle(newrequestVo.getTitle() != null ? newrequestVo.getTitle(): "");
         		setDescription(newrequestVo.getDescription() != null ? newrequestVo.getDescription() : "");
         		//Dateconverter.convertDateToStringDDMMDDYYYY(completiondate);
-        		//setCompletiondate( (Date) (newrequestVo.getChangedate() !=null ? newrequestVo.getChangedate() : ""));
-        	
-        		
+        	setCompletiondate(newrequestVo.getCompletiondate());
+        		 
         		setStatus(true);
         		
         	}
@@ -233,7 +234,7 @@ public class CreateRequestbean implements Serializable
 			String userName = (String)session.getAttribute("username");			
 			System.out.println("--usersession--userName-->"+userName);
 			
-        	result = newrequestInterface.updateRequestById(requestId,status,description, completiondate,attachment,   completionpercentage);
+        	result = newrequestInterface.updateRequestById(requestId,status,description, completiondate,attachment,   completionpercentage,stage);
         	
         	if(result == 2)
         	{
@@ -512,7 +513,13 @@ public class CreateRequestbean implements Serializable
 	}
 
 	
+	 public Integer getStage() {
+			return stage;
+		}
 
+		public void setStage(Integer stage) {
+			this.stage = stage;
+		}
 	
 	
 	
