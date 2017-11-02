@@ -17,7 +17,7 @@ public class NewrequestVo implements Serializable
 	private String userproject;
 	private String userrequesttype;
 	//private StreamedContent attachment;
-	private String completiondate;
+	private Date completiondate;
 	private String status;
 	private String friendName;
 	private byte[] file;
@@ -25,7 +25,7 @@ public class NewrequestVo implements Serializable
 	private UploadedFile attachment;
 	private Float completionpercentage;
 	private String stage;
-	private Date changedate;
+	private String changedate;
 	
 	
 	
@@ -39,11 +39,13 @@ public class NewrequestVo implements Serializable
 		this.stage = stage;
 	}
 
-	public Date getChangedate() {
+	
+
+	public String getChangedate() {
 		return changedate;
 	}
 
-	public void setChangedate(Date changedate) {
+	public void setChangedate(String changedate) {
 		this.changedate = changedate;
 	}
 
@@ -139,11 +141,13 @@ public class NewrequestVo implements Serializable
 		this.friendName = friendName;
 	}
 
-	public String getCompletiondate() {
+	
+
+	public Date getCompletiondate() {
 		return completiondate;
 	}
 
-	public void setCompletiondate(String completiondate) {
+	public void setCompletiondate(Date completiondate) {
 		this.completiondate = completiondate;
 	}
 
