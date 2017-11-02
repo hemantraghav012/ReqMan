@@ -161,7 +161,7 @@ public class Updatestatusbean implements Serializable {
 				String userName = (String)session.getAttribute("username");			
 				System.out.println("--usersession--userName-->"+userName);
 				
-	        	result = updatestatusInterface.updateRequestById(requestId, completiondate, completionpercentage);
+	        	result = updatestatusInterface.updateRequestById(requestId, completiondate, completionpercentage,stage);
 	        	
 	        	if(result == 2)
 	        	{
