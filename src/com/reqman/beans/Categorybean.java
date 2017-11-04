@@ -191,13 +191,30 @@ public class Categorybean implements Serializable
 	
 	
 	 public void onCellEdit(CellEditEvent event) {
-	        Object oldValue = event.getOldValue();
-	        Object newValue = event.getNewValue();
-	         
-	        if(newValue != null && !newValue.equals(oldValue)) {
+	     int result = 0;
+	     String oldValue = "";
+	     String newValue = "";
+	     Integer updatecategoryId = 0;
+		 try
+		 {
+			 oldValue = (String)event.getOldValue();
+		     newValue = (String)event.getNewValue();
+		     updatecategoryId = (Integer) event.getComponent().getAttributes().get("updateCategoryId");
+	         System.out.println("updatecategoryId"+updatecategoryId);
+	        if(newValue != null && !newValue.equals(oldValue)) 
+	        {
+	        	result = categoryMasterInterface.updateCategory(oldValue, newValue, updatecategoryId);
 	            FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Cell Changed", "Old: " + oldValue + ", New:" + newValue);
 	            FacesContext.getCurrentInstance().addMessage(null, msg);
 	        }
+		 }
+		 catch(Exception e)
+		 {
+			 e.printStackTrace();
+			 FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Internal Error", e.getMessage().toString());
+	            FacesContext.getCurrentInstance().addMessage(null, msg);
+		 }
+	       
 	    }
 	
 	
@@ -213,6 +230,7 @@ public class Categorybean implements Serializable
         	setCategoryId(categoryId);
         	categoryVo = categoryMasterInterface.getUserCategoryById(categoryId);
         	if(categoryVo != null && categoryVo.getStatus().trim().equalsIgnoreCase("Active")){
+        		
         		setCategoryName(categoryVo.getName() != null ? categoryVo.getName() : "");
         		setStatus(true);
         	}

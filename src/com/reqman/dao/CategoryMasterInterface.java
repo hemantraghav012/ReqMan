@@ -27,6 +27,8 @@ public interface CategoryMasterInterface {
 	public List<CategoryVo> getCategoryStatus(String userName)throws Exception;
 
 	public List<CategoryVo> getCategoryStatusfalse(String userName)throws Exception;
+	
+	public int updateCategory(String oldValue, String newValue, Integer updatecategoryId) throws Exception;
 	 
 	
 }

@@ -11,7 +11,6 @@ import org.hibernate.Transaction;
 import org.hibernate.criterion.Restrictions;
 
 import com.reqman.common.HibernateUtil;
-
 import com.reqman.dao.CategoryMasterInterface;
 import com.reqman.pojo.Category;
 import com.reqman.pojo.Usercategory;
@@ -435,6 +434,55 @@ public class CategoryMasterImpl implements CategoryMasterInterface{
 		return categoryList2;
 
 	
+	}
+	
+	public int updateCategory(String oldValue, String newValue, Integer updatecategoryId) throws Exception
+	{
+
+		Usercategory usercategoryTemp = null;
+	    Session session = null;
+	    Transaction tx = null;
+	    int result = 0;
+		try
+		{
+           	session = HibernateUtil.getSession();
+            tx = session.beginTransaction();
+            usercategoryTemp = (Usercategory)session.createCriteria(Usercategory.class)
+            		.add(Restrictions.eq("id", updatecategoryId))
+            		.uniqueResult();
+            
+            if(usercategoryTemp != null)
+            {   
+            	if(oldValue != null && oldValue.trim().equalsIgnoreCase("InActive") 
+            			&& newValue != null && newValue.trim().equalsIgnoreCase("Active"))
+            	{
+            		usercategoryTemp.setStatus(true);
+            		
+            	}
+            	
+            	if(oldValue != null && oldValue.trim().equalsIgnoreCase("Active") 
+            			&& newValue != null && newValue.trim().equalsIgnoreCase("InActive"))
+            	{
+            		usercategoryTemp.setStatus(false);
+            	}
+            	session.update(usercategoryTemp);
+            	tx.commit();
+            	result = 1;
+            	
+            }
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+			result = 2;
+		}
+		finally 
+		{
+        	if(session != null)
+            session.close();
+	    }
+
+		return result;
 	}
 	
 

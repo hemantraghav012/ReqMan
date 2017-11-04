@@ -111,16 +111,16 @@ function setCategoryHiddenValue(new_value)
 
 
 <div class="ui-fluid">
-
-	     <p:dataTable id="categoryTable" var="category" value="#{categorybean.categoryList}" editable="true" editMode="cell"
+<p:growl id="msgs" showDetail="true"/>
+	     <p:dataTable id="categoryTable" var="category" value="#{categorybean.categoryList}" editable="true" editMode="cell" 
 	     reflow="true" scrollable="true" scrollHeight="250" 
 	     sortBy="#{category.status},#{category.name}" 
 	     class="table table-striped table-hover table-bordered" 
 	     style="margin-top:5px; " filteredValue="#{categorybean.filteredCategoryList}" 
 	     widgetVar="categoryListTable">
 	     
-	     
-	      <p:ajax event="cellEdit" listener="#{categorybean.onCellEdit}" update=":categoryForm:categoryTable" />
+	     <f:attribute name="updateCategoryId" value="#{category.userCategoryId}" />
+	      <p:ajax event="cellEdit" listener="#{categorybean.onCellEdit}" update=":categoryForm:msgs" />
  
 	     
 	     
@@ -149,7 +149,7 @@ function setCategoryHiddenValue(new_value)
               <p:cellEditor>
                  <f:facet name="output"><h:outputText value="#{category.status}" /></f:facet>
                <f:facet name="input">
-                   <p:selectOneMenu value="#{category.status}" style="width:125px">
+                   <p:selectOneMenu value="#{category.status}" onclick='setCategoryHiddenValue(#{category.userCategoryId})' style="width:125px">
                        <f:selectItem   itemLabel="Active" itemValue="Active" />
                         <f:selectItem  itemLabel="InActive" itemValue="InActive" />
                    </p:selectOneMenu>
@@ -161,6 +161,10 @@ function setCategoryHiddenValue(new_value)
 	       
 	    </p:dataTable>
 	    
+	    <p:contextMenu for="categoryTable" widgetVar="cMenu">   
+       <p:menuitem value="Edit Cell" icon="ui-icon-search" onclick="PF('categoryListTable').showCellEditor();return false;"/>  
+       <p:menuitem value="Hide Menu" icon="ui-icon-close" onclick="PF('cMenu').hide()"/>  
+   </p:contextMenu> 
 	</div>
 
 	<div>
