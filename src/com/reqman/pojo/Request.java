@@ -1,8 +1,10 @@
 package com.reqman.pojo;
 
-// Generated 6 Oct, 2017 6:32:56 PM by Hibernate Tools 4.3.1
+// Generated 6 Nov, 2017 3:40:52 PM by Hibernate Tools 4.3.1
 
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -11,6 +13,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -49,6 +52,7 @@ public class Request implements java.io.Serializable {
 	private Integer revisionnumber;
 	private String approvedby;
 	private Date approveddate;
+	private Set<Requestnotes> requestnoteses = new HashSet<Requestnotes>(0);
 
 	public Request() {
 	}
@@ -64,7 +68,8 @@ public class Request implements java.io.Serializable {
 			Boolean status, Date datecreated, String createdby,
 			Date datemodified, String modifiedby, String filename,
 			Float completionpercentage, Date acceptdate, Date updatedate,
-			Integer revisionnumber, String approvedby, Date approveddate) {
+			Integer revisionnumber, String approvedby, Date approveddate,
+			Set<Requestnotes> requestnoteses) {
 		this.id = id;
 		this.usercategory = usercategory;
 		this.userfriendlist = userfriendlist;
@@ -87,6 +92,7 @@ public class Request implements java.io.Serializable {
 		this.revisionnumber = revisionnumber;
 		this.approvedby = approvedby;
 		this.approveddate = approveddate;
+		this.requestnoteses = requestnoteses;
 	}
 
 	@Id
@@ -297,6 +303,15 @@ public class Request implements java.io.Serializable {
 
 	public void setApproveddate(Date approveddate) {
 		this.approveddate = approveddate;
+	}
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "request")
+	public Set<Requestnotes> getRequestnoteses() {
+		return this.requestnoteses;
+	}
+
+	public void setRequestnoteses(Set<Requestnotes> requestnoteses) {
+		this.requestnoteses = requestnoteses;
 	}
 
 }
