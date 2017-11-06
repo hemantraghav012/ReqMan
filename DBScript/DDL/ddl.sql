@@ -461,3 +461,30 @@ ALTER TABLE reqman.userusertype
     OWNER to postgres;
 
 GRANT ALL ON TABLE reqman.userusertype TO postgres WITH GRANT OPTION;
+
+-- Table: reqman.requestnotes
+
+-- DROP TABLE reqman.requestnotes;
+
+CREATE TABLE reqman.requestnotes
+(
+    id integer NOT NULL DEFAULT nextval('reqman.requestnotes_id_seq'::regclass),
+    requestid integer,
+    description text COLLATE "default".pg_catalog,
+    createdby character varying(50) COLLATE "default".pg_catalog,
+    createdon timestamp without time zone,
+    CONSTRAINT pk_requestnotes_id PRIMARY KEY (id),
+    CONSTRAINT pk_requestnotes_id_fk FOREIGN KEY (requestid)
+        REFERENCES reqman.request (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+)
+WITH (
+    OIDS = FALSE
+)
+TABLESPACE pg_default;
+
+ALTER TABLE reqman.requestnotes
+    OWNER to postgres;
+
+GRANT ALL ON TABLE reqman.requestnotes TO postgres WITH GRANT OPTION;
