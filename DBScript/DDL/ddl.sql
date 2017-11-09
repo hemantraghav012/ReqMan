@@ -393,14 +393,19 @@ CREATE TABLE reqman.users
     lastname character varying(50) COLLATE "default".pg_catalog,
     shortname character varying(100) COLLATE "default".pg_catalog,
     status boolean,
-     hashkey character varying(255) COLLATE "default".pg_catalog,
-      emailstatus character varying(255) COLLATE "default".pg_catalog,
     createdby character varying(50) COLLATE "default".pg_catalog,
     createdon timestamp without time zone,
     lastlogin timestamp without time zone,
     photo bytea,
+    hashkey character varying(255) COLLATE "default".pg_catalog,
+    emailstatus character varying(255) COLLATE "default".pg_catalog,
+    accountid integer,
     CONSTRAINT pk_users_id PRIMARY KEY (id),
-    CONSTRAINT uniq_user_id UNIQUE (emailid)
+    CONSTRAINT uniq_user_id UNIQUE (emailid),
+    CONSTRAINT account_users_fk FOREIGN KEY (accountid)
+        REFERENCES reqman.account (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
 )
 WITH (
     OIDS = FALSE
@@ -488,3 +493,25 @@ ALTER TABLE reqman.requestnotes
     OWNER to postgres;
 
 GRANT ALL ON TABLE reqman.requestnotes TO postgres WITH GRANT OPTION;
+
+-- Table: reqman.account
+
+-- DROP TABLE reqman.account;
+
+CREATE TABLE reqman.account
+(
+    id integer NOT NULL DEFAULT nextval('reqman.account_id_seq'::regclass),
+    name character varying(100) COLLATE "default".pg_catalog,
+    status boolean,
+    datecreated timestamp without time zone,
+    createdby character varying(100) COLLATE "default".pg_catalog,
+    CONSTRAINT id_account_pk PRIMARY KEY (id),
+    CONSTRAINT account_name_unique UNIQUE (name)
+)
+WITH (
+    OIDS = FALSE
+)
+TABLESPACE pg_default;
+
+ALTER TABLE reqman.account
+    OWNER to postgres;
