@@ -57,10 +57,13 @@ public class ResponseImpl implements responseInterface {
                                     .add(Projections.property("id"))));
             friendList = (List<Integer>) crit1.list();
 	
-		
-			
-				List<Request> requesPojoList = (List<Request>) session.createCriteria(Request.class)
+            List<Request> requesPojoList =  null;
+			if(friendList != null && friendList.size() != 0)
+			{
+				requesPojoList = (List<Request>) session.createCriteria(Request.class)
 						.add(Restrictions.in("userfriendlist.id",friendList)).list();
+
+			}
 			
 			    String userCategory = "";
 				String userProject = "";

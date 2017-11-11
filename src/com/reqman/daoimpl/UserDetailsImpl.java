@@ -7,26 +7,11 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.Restrictions;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
 import com.reqman.common.HibernateUtil;
 import com.reqman.dao.UserDetailsInterface;
-import com.reqman.pojo.Usercategory;
+import com.reqman.pojo.Account;
 import com.reqman.pojo.Users;
 import com.reqman.util.sendEmail1;
-import com.reqman.util.sendEmailonfriend;
-import com.reqman.vo.CategoryVo;
 import com.reqman.vo.UserupdateVo;
 
 public class UserDetailsImpl implements UserDetailsInterface {
@@ -85,6 +70,9 @@ public class UserDetailsImpl implements UserDetailsInterface {
         Transaction tx = null;
         Users users = null;
         int result = 0;
+        String emailArr[] = {};
+        String account = "";
+        Account accountDetails = new Account();
         try {
         	session = HibernateUtil.getSession();
             tx = session.beginTransaction();
@@ -117,6 +105,29 @@ public class UserDetailsImpl implements UserDetailsInterface {
             	users.setStatus(true);
             	users.setHashkey(hashkey);
             	session.save(users);
+            	
+            	emailArr = emailid.split("@");
+            	if(emailArr != null && emailArr.length >= 2)
+            	{
+                	accountDetails = (Account)session.createCriteria(Account.class)
+            		.add(Restrictions.eq("name", emailArr[1].toLowerCase().trim()).ignoreCase())
+            		.add(Restrictions.eq("status", true))
+            		.uniqueResult();
+                	
+                	if(accountDetails == null)
+                	{
+                		accountDetails = new Account();
+                		accountDetails.setName(emailArr[1].trim());
+                		accountDetails.setStatus(true);
+                		accountDetails.setCreatedby("SYSTEM");
+                		accountDetails.setDatecreated(new Date());
+                		session.save(accountDetails);
+                	}
+
+            	}
+            	
+            	
+            	
             	tx.commit();
             	result = 3;
             }
