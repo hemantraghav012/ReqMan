@@ -1,6 +1,8 @@
 package com.reqman.util;
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.util.Properties;
 import java.util.Random;
 
 import com.sendgrid.Content;
@@ -14,6 +16,61 @@ import com.sendgrid.SendGrid;
 
 
 public class sendEmail1 { 
+	
+	  private static String MAIL_REGISTRATION_SITE_LINK = "";
+	  private static char[] symbols = null;
+	  
+	  private static Random random = new Random();
+
+
+	  static {
+			Properties myResources = new Properties();
+			InputStream propertiesStream;
+			try {
+				
+			    StringBuilder tmp = new StringBuilder();
+			    for (char ch = '0'; ch <= '9'; ++ch)
+			      tmp.append(ch);
+			    for (char ch = 'a'; ch <= 'z'; ++ch)
+			      tmp.append(ch);
+			    symbols = tmp.toString().toCharArray();
+
+			    Thread currentThread = Thread.currentThread();
+			    ClassLoader contextClassLoader = currentThread.getContextClassLoader();
+			    propertiesStream = contextClassLoader.getResourceAsStream("ReqManConfig.properties");
+			    if (propertiesStream != null) {
+			    	myResources.load(propertiesStream);
+			    } else {
+			      // Properties file not found!
+			    }
+			
+				if(propertiesStream != null){
+					myResources.load(propertiesStream);
+					MAIL_REGISTRATION_SITE_LINK = myResources.getProperty("AppUrl");
+				}
+
+				
+				
+			}
+			catch (IOException e) {
+				e.printStackTrace();
+			}
+			 catch (Throwable e) {
+					e.printStackTrace();
+				}
+			
+			
+	  }
+	  
+
+	  public static String prepareRandomString(int len) {
+		char[] buf = new char[len];
+	    for (int idx = 0; idx < buf.length; ++idx) 
+	      buf[idx] = symbols[random.nextInt(symbols.length)];
+	    return new String(buf);
+	  }
+	
+
 	
 	public String createPasswordContent(String To, String firstName, String hashkey){
 		StringBuffer sb = new StringBuffer();
@@ -110,34 +167,6 @@ public class sendEmail1 {
 		
 		return hashkey;
     }  
-	
-	  public static final String MAIL_REGISTRATION_SITE_LINK = "http://localhost:9002/ReqMan/faces/faces/eregisters.xhtml";
-
-	  private static final char[] symbols;
-	  static {
-		    StringBuilder tmp = new StringBuilder();
-		    for (char ch = '0'; ch <= '9'; ++ch)
-		      tmp.append(ch);
-		    for (char ch = 'a'; ch <= 'z'; ++ch)
-		      tmp.append(ch);
-		    symbols = tmp.toString().toCharArray();
-		  }   
-	  private static final Random random = new Random();
-
-	  public static String prepareRandomString(int len) {
-		char[] buf = new char[len];
-	    for (int idx = 0; idx < buf.length; ++idx) 
-	      buf[idx] = symbols[random.nextInt(symbols.length)];
-	    return new String(buf);
-	  }
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	public String resetPasswordContent(String To, String password, String userName){
 		StringBuffer sb = new StringBuffer();
