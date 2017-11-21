@@ -6,11 +6,13 @@ import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.service.ServiceRegistry;
 
+import com.reqman.pojo.Account;
 import com.reqman.pojo.Audittrail;
 import com.reqman.pojo.Category;
 import com.reqman.pojo.Menu;
 import com.reqman.pojo.Project;
 import com.reqman.pojo.Request;
+import com.reqman.pojo.Requestnotes;
 import com.reqman.pojo.Requesttype;
 import com.reqman.pojo.Rolemenus;
 import com.reqman.pojo.RolemenusId;
@@ -39,10 +41,10 @@ public class HibernateUtil {
     	    configuration.setProperty("hibernate.connection.driver_class", "org.postgresql.Driver");
     	    configuration.setProperty("hibernate.connection.url", "jdbc:postgresql://localhost:5432/reqman");
     	    configuration.setProperty("hibernate.connection.username", "postgres");
-    	    configuration.setProperty("hibernate.connection.password", "3394");
+    	    configuration.setProperty("hibernate.connection.password", "admin123");
     	    configuration.setProperty("hibernate.show_sql", "true");
     	    configuration.setProperty("hibernate.default_schema", "reqman");
-    	 // configuration.setProperty("hibernate.hbm2ddl.auto", "create");
+    	  // configuration.setProperty("hibernate.hbm2ddl.auto", "create");
     	    
     	    configuration.addAnnotatedClass(Audittrail.class);
     	    configuration.addAnnotatedClass(Category.class);
@@ -65,6 +67,8 @@ public class HibernateUtil {
     	    configuration.addAnnotatedClass(Userusertype.class);
     	    configuration.addAnnotatedClass(UserusertypeId.class);
     	    configuration.addAnnotatedClass(Suggestion.class);
+    	    configuration.addAnnotatedClass(Account.class);
+    	    configuration.addAnnotatedClass(Requestnotes.class);
             ServiceRegistry serviceRegistry
                 = new StandardServiceRegistryBuilder()
                     .applySettings(configuration.getProperties()).build();
