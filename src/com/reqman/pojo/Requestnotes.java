@@ -3,9 +3,12 @@ package com.reqman.pojo;
 // Generated 6 Nov, 2017 3:40:52 PM by Hibernate Tools 4.3.1
 
 import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -26,7 +29,7 @@ public class Requestnotes implements java.io.Serializable {
 	private static final long serialVersionUID = -2996722310879521420L;
 	private int id;
 	private Request request;
-	private String description;
+	private String message;
 	private String createdby;
 	private Date createdon;
 
@@ -37,16 +40,17 @@ public class Requestnotes implements java.io.Serializable {
 		this.id = id;
 	}
 
-	public Requestnotes(int id, Request request, String description,
+	public Requestnotes(int id, Request request, String message,
 			String createdby, Date createdon) {
 		this.id = id;
 		this.request = request;
-		this.description = description;
+		this.message = message;
 		this.createdby = createdby;
 		this.createdon = createdon;
 	}
 
 	@Id
+	 @GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name = "id", unique = true, nullable = false)
 	public int getId() {
 		return this.id;
@@ -66,13 +70,13 @@ public class Requestnotes implements java.io.Serializable {
 		this.request = request;
 	}
 
-	@Column(name = "description")
-	public String getDescription() {
-		return this.description;
+	@Column(name = "message")
+	public String getMessage() {
+		return this.message;
 	}
 
-	public void setDescription(String description) {
-		this.description = description;
+	public void setMessage(String message) {
+		this.message = message;
 	}
 
 	@Column(name = "createdby", length = 50)

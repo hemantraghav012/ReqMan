@@ -33,6 +33,7 @@ public class Userproject implements java.io.Serializable {
 	private Project project;
 	private Users users;
 	private Boolean status;
+	private Boolean projectaccess;
 	private Set<Request> requests = new HashSet<Request>(0);
 
 	public Userproject() {
@@ -42,12 +43,15 @@ public class Userproject implements java.io.Serializable {
 		this.id = id;
 	}
 
+	
 	public Userproject(int id, Project project, Users users, Boolean status,
-			Set<Request> requests) {
+			Boolean projectaccess, Set<Request> requests) {
+		super();
 		this.id = id;
 		this.project = project;
 		this.users = users;
 		this.status = status;
+		this.projectaccess = projectaccess;
 		this.requests = requests;
 	}
 
@@ -90,6 +94,15 @@ public class Userproject implements java.io.Serializable {
 	public void setStatus(Boolean status) {
 		this.status = status;
 	}
+		
+	@Column(name = "projectaccess")
+	public Boolean getProjectaccess() {
+		return projectaccess;
+	}
+
+	public void setProjectaccess(Boolean projectaccess) {
+		this.projectaccess = projectaccess;
+	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "userproject")
 	public Set<Request> getRequests() {
@@ -100,4 +113,5 @@ public class Userproject implements java.io.Serializable {
 		this.requests = requests;
 	}
 
+	
 }

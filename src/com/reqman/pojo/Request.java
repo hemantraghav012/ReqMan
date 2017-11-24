@@ -46,7 +46,7 @@ public class Request implements java.io.Serializable {
 	private Date datemodified;
 	private String modifiedby;
 	private String filename;
-	private Float completionpercentage;
+	private int completionpercentage;
 	private Date acceptdate;
 	private Date updatedate;
 	private Integer revisionnumber;
@@ -67,7 +67,7 @@ public class Request implements java.io.Serializable {
 			Date completiondate, byte[] attachment, Integer requeststatus,
 			Boolean status, Date datecreated, String createdby,
 			Date datemodified, String modifiedby, String filename,
-			Float completionpercentage, Date acceptdate, Date updatedate,
+			int completionpercentage, Date acceptdate, Date updatedate,
 			Integer revisionnumber, String approvedby, Date approveddate,
 			Set<Requestnotes> requestnoteses) {
 		this.id = id;
@@ -249,11 +249,11 @@ public class Request implements java.io.Serializable {
 	}
 
 	@Column(name = "completionpercentage", precision = 8, scale = 8)
-	public Float getCompletionpercentage() {
+	public int getCompletionpercentage() {
 		return this.completionpercentage;
 	}
 
-	public void setCompletionpercentage(Float completionpercentage) {
+	public void setCompletionpercentage(int completionpercentage) {
 		this.completionpercentage = completionpercentage;
 	}
 
