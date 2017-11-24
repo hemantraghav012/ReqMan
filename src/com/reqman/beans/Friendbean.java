@@ -18,6 +18,7 @@ import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.hssf.util.HSSFColor;
+import org.primefaces.event.CellEditEvent;
 import org.primefaces.model.chart.PieChartModel;
 
 import com.lowagie.text.BadElementException;
@@ -63,6 +64,7 @@ private  List<FriendVo> friendList = new ArrayList<FriendVo>();
 	private String friendshortname;
 	private String friendId;
 	private String password;
+	private String hashkey;
 	private FriendVo selectedFriend;
 	  private PieChartModel piechart;
 	
@@ -154,7 +156,7 @@ private  List<FriendVo> friendList = new ArrayList<FriendVo>();
 			String userName = (String)session.getAttribute("username");
 			System.out.println("--usersession--userName-->"+userName);
 			
-				result = friendMasterInterface.savefriend(frienduser,status, friendfirstname, friendlastname,password, friendshortname,userName);
+				result = friendMasterInterface.savefriend(frienduser,status, friendfirstname, friendlastname,password, friendshortname,userName, hashkey );
 			
 			if(result == 1)
 			{
@@ -200,6 +202,39 @@ private  List<FriendVo> friendList = new ArrayList<FriendVo>();
 		}
 		return "friend";
 	}
+	
+	
+	
+	
+
+	 public void onCellEdit(CellEditEvent event) {
+	     int result = 0;
+	     String oldValue = "";
+	     String newValue = "";
+	     Integer updatefriendId = 0;
+		 try
+		 {
+			 oldValue = (String)event.getOldValue();
+		     newValue = (String)event.getNewValue();
+		     updatefriendId = (Integer) event.getComponent().getAttributes().get("updateFriendId");
+	         System.out.println("updatefriendId"+updatefriendId);
+	        if(newValue != null && !newValue.equals(oldValue)) 
+	        {
+	        	result = friendMasterInterface.updateFriend(oldValue, newValue, updatefriendId);
+	            FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Cell Changed", "Old: " + oldValue + ", New:" + newValue);
+	            FacesContext.getCurrentInstance().addMessage(null, msg);
+	        }
+		 }
+		 catch(Exception e)
+		 {
+			 e.printStackTrace();
+			 FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Internal Error", e.getMessage().toString());
+	            FacesContext.getCurrentInstance().addMessage(null, msg);
+		 }
+	       
+	    }
+	
+	
 	
 	
 	
@@ -454,6 +489,16 @@ public void modifyAction() {
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+
+
+	public String getHashkey() {
+		return hashkey;
+	}
+
+
+	public void setHashkey(String hashkey) {
+		this.hashkey = hashkey;
 	}
 
 

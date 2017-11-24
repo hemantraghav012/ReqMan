@@ -34,6 +34,9 @@ private String emailid;
 	 @ManagedProperty(value = "#{param.hash}")
 private String hash;
 private String password;
+private String firstname;
+private String lastname;	
+private String shortname;
 private UserDetailsInterface userImpl = new UserDetailsImpl();
 
 
@@ -72,6 +75,39 @@ public String setandupdate(){
 }
 
 
+public String setinformationupdate(){
+	int result = 0;
+	try{
+		System.out.println("--emailid--"+emailid);
+		System.out.println("--hashkey-"+hash);
+		
+    	result = userImpl.updateinformationByHashkey(hash, emailid,password,firstname,lastname,shortname);
+    	
+    	if(result == 2)
+    	{
+    		FacesContext.getCurrentInstance().addMessage(
+					null,
+					new FacesMessage(FacesMessage.SEVERITY_WARN,
+							"Problem while modifying the Category",
+							"Problem while modifying the Category"));
+			return "setinformation.xhtml";
+    	}
+    	
+    	
+    	
+	}
+	catch(Exception e)
+	{
+		e.printStackTrace();
+		FacesContext.getCurrentInstance().addMessage(
+				null,
+				new FacesMessage(FacesMessage.SEVERITY_WARN,
+						"Problem while modifying the Category",
+						"Problem while modifying the Category"));
+		return "setinformation.xhtml";
+	}
+	return "login";
+}
 
 
 
@@ -98,6 +134,36 @@ public String getPassword() {
 }
 public void setPassword(String password) {
 	this.password = password;
+}
+
+
+public String getFirstname() {
+	return firstname;
+}
+
+
+public void setFirstname(String firstname) {
+	this.firstname = firstname;
+}
+
+
+public String getLastname() {
+	return lastname;
+}
+
+
+public void setLastname(String lastname) {
+	this.lastname = lastname;
+}
+
+
+public String getShortname() {
+	return shortname;
+}
+
+
+public void setShortname(String shortname) {
+	this.shortname = shortname;
 }
 
 	

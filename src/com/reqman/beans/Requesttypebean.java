@@ -9,6 +9,7 @@ import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
+import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
 
@@ -18,6 +19,7 @@ import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.hssf.util.HSSFColor;
+import org.primefaces.event.CellEditEvent;
 import org.primefaces.model.chart.PieChartModel;
 
 import com.lowagie.text.BadElementException;
@@ -32,7 +34,7 @@ import com.reqman.vo.ProjectVo;
 import com.reqman.vo.RequesttypeVo;
 
 @ManagedBean(name="requesttypebean",eager = true)
-@RequestScoped
+@ViewScoped
 public class Requesttypebean implements Serializable{
 
 	/**
@@ -45,7 +47,7 @@ private  List<RequesttypeVo> requesttypeList = new ArrayList<RequesttypeVo>();
 private  List<RequesttypeVo> requesttypeList1 = new ArrayList<RequesttypeVo>();
 private  List<RequesttypeVo> requesttypeList2 = new ArrayList<RequesttypeVo>();
 	private requesttypeMasterInterface requesttypeMasterInterface = new RequesttypeMasterImpl();
-	
+	private	RequesttypeVo requesttypeVo = new RequesttypeVo();
 	private  List<RequesttypeVo> filteredRequesttypeList = new ArrayList<RequesttypeVo>();
 	
 	private String requesttypeName;
@@ -122,7 +124,7 @@ private  List<RequesttypeVo> requesttypeList2 = new ArrayList<RequesttypeVo>();
 		{
 			e.printStackTrace();
 		}
-		return "createrequesttype";
+		return "requesttype";
 	}
 	
 	
@@ -148,16 +150,16 @@ private  List<RequesttypeVo> requesttypeList2 = new ArrayList<RequesttypeVo>();
 						new FacesMessage(FacesMessage.SEVERITY_WARN,
 								"requesttype already exist",
 								"requesttype already exist"));
-				return "createrequesttype";
+				return "requesttype";
 			}
 			if(result == 2)
 			{
 				FacesContext.getCurrentInstance().addMessage(
 						null,
 						new FacesMessage(FacesMessage.SEVERITY_WARN,
-								"requesttype already exist and in active, please activate by using modify category ",
-								"requesttypeList already exist and in active, please activate by using modify category"));
-				return "createrequesttype";
+								"requesttype already exist and in active, please activate by using modify requesttype ",
+								"requesttypeList already exist and in active, please activate by using modify requesttype"));
+				return "requesttype";
 			}
 			if(result == 3)
 			{
@@ -181,10 +183,42 @@ private  List<RequesttypeVo> requesttypeList2 = new ArrayList<RequesttypeVo>();
 					new FacesMessage(FacesMessage.SEVERITY_WARN,
 							"Server Error "+e.getMessage(),
 							"Server Error "+e.getMessage()));
-			return "createrequesttype";
+			return "requesttype";
 		}
 		return "requesttype";
 	}
+	
+	public void onCellEdit(CellEditEvent event) {
+	     int result = 0;
+	     String oldValue = "";
+	     String newValue = "";
+	     Integer updaterequesttypeId = 0;
+		 try
+		 {
+			 oldValue = (String)event.getOldValue();
+		     newValue = (String)event.getNewValue();
+		     updaterequesttypeId = (Integer) event.getComponent().getAttributes().get("updateRequesttypeId");
+	         System.out.println("updaterequesttypeId"+updaterequesttypeId);
+	        if(newValue != null && !newValue.equals(oldValue)) 
+	        {
+	        	result = requesttypeMasterInterface.updateRequesttype(oldValue, newValue, updaterequesttypeId);
+	            FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Cell Changed", "Old: " + oldValue + ", New:" + newValue);
+	            FacesContext.getCurrentInstance().addMessage(null, msg);
+	        }
+		 }
+		 catch(Exception e)
+		 {
+			 e.printStackTrace();
+			 FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Internal Error", e.getMessage().toString());
+	            FacesContext.getCurrentInstance().addMessage(null, msg);
+		 }
+	       
+	    }
+	
+	
+	
+	
+	
 	
 	
 	public void modifyAction() {
@@ -220,7 +254,7 @@ private  List<RequesttypeVo> requesttypeList2 = new ArrayList<RequesttypeVo>();
 		int result = 0;
 		try{
 			System.out.println("--updateRequesttype-status-"+status);
-			System.out.println("--updateRequesttypeCategory-requesttypeId-"+requesttypeId);
+			System.out.println("--updateRequesttypeRequesttype-requesttypeId-"+requesttypeId);
 			HttpSession session = SessionUtils.getSession();
 			String userName = (String)session.getAttribute("username");
 			System.out.println("--usersession--userName-->"+userName);
@@ -389,6 +423,18 @@ private  List<RequesttypeVo> requesttypeList2 = new ArrayList<RequesttypeVo>();
 
 	public void setRequesttypeList2(List<RequesttypeVo> requesttypeList2) {
 		this.requesttypeList2 = requesttypeList2;
+	}
+
+
+
+	public RequesttypeVo getRequesttypeVo() {
+		return requesttypeVo;
+	}
+
+
+
+	public void setRequesttypeVo(RequesttypeVo requesttypeVo) {
+		this.requesttypeVo = requesttypeVo;
 	}
 	
 	

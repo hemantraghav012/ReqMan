@@ -9,6 +9,7 @@ import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
+import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
 
@@ -18,6 +19,7 @@ import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.hssf.util.HSSFColor;
+import org.primefaces.event.CellEditEvent;
 import org.primefaces.model.chart.PieChartModel;
 
 import com.lowagie.text.BadElementException;
@@ -32,7 +34,8 @@ import com.reqman.vo.CategoryVo;
 import com.reqman.vo.ProjectVo;
 
 @ManagedBean(name="projectbean",eager = true)
-@RequestScoped
+
+@ViewScoped
 public class Projectbean implements Serializable{
 
 	
@@ -44,14 +47,14 @@ public class Projectbean implements Serializable{
 	private  List<ProjectVo> projectList1 = new ArrayList<ProjectVo>();
 	private  List<ProjectVo> projectList2 = new ArrayList<ProjectVo>();
 	private  List<ProjectVo> projectList = new ArrayList<ProjectVo>();
-	private List<ProjectVo> filteredProjectList = new ArrayList<ProjectVo>();
-	
+	private List<ProjectVo> filteredProjectList = new ArrayList<ProjectVo>();	
 	private String projectName;	
 	private Boolean status;	
 	private String projectId;
 	private ProjectVo selectedProject;
 	  private PieChartModel piechart;
-	
+	  private  ProjectVo projectVo = new ProjectVo();
+	private Boolean projectaccess;
 	
 	@PostConstruct
     public void init() {
@@ -66,6 +69,7 @@ public class Projectbean implements Serializable{
 			projectList1 = projectMasterInterface.getProjectStatus(userName);
 			projectList2 = projectMasterInterface.getProjectfalseStatus(userName);
 			 createPieModels();
+			 projectaccess = true;
 		}
 		catch(Exception e)
 		{
@@ -92,16 +96,7 @@ public class Projectbean implements Serializable{
 	
 	
 	
-	public List<ProjectVo> getProjectList2() {
-		return projectList2;
-	}
-
-
-
-	public void setProjectList2(List<ProjectVo> projectList2) {
-		this.projectList2 = projectList2;
-	}
-
+	
 
 
 	public String projectPage()
@@ -132,7 +127,7 @@ public class Projectbean implements Serializable{
 		{
 			e.printStackTrace();
 		}
-		return "createproject";
+		return "project";
 	}
 	
 	
@@ -149,7 +144,7 @@ public class Projectbean implements Serializable{
 			HttpSession session = SessionUtils.getSession();
 			String userName = (String)session.getAttribute("username");
 			System.out.println("--usersession--userName-->"+userName);
-			result = projectMasterInterface.saveproject(projectName, status, userName);
+			result = projectMasterInterface.saveproject(projectName, status, userName,projectaccess);
 			
 			if(result == 1)
 			{
@@ -158,7 +153,7 @@ public class Projectbean implements Serializable{
 						new FacesMessage(FacesMessage.SEVERITY_WARN,
 								"Project already exist",
 								"Project already exist"));
-				return "createproject";
+				return "project";
 			}
 			if(result == 2)
 			{
@@ -167,7 +162,7 @@ public class Projectbean implements Serializable{
 						new FacesMessage(FacesMessage.SEVERITY_WARN,
 								"project already exist and in active, please activate by using modify project ",
 								"Project already exist and in active, please activate by using modify projec"));
-				return "createproject";
+				return "project";
 			}
 			if(result == 3)
 			{
@@ -191,11 +186,42 @@ public class Projectbean implements Serializable{
 					new FacesMessage(FacesMessage.SEVERITY_WARN,
 							"Server Error "+e.getMessage(),
 							"Server Error "+e.getMessage()));
-			return "createproject";
+			return "project";
 		}
 		return "project";
 	}
 	
+	
+	
+	 public void onCellEdit(CellEditEvent event) {
+	     int result = 0;
+	     String oldValue = "";
+	     String newValue = "";
+	     Integer updateprojectId = 0;
+		 try
+		 {
+			 oldValue = (String)event.getOldValue();
+		     newValue = (String)event.getNewValue();
+		     updateprojectId = (Integer) event.getComponent().getAttributes().get("updateProjectId");
+	         System.out.println("updateprojectId"+updateprojectId);
+	        if(newValue != null && !newValue.equals(oldValue)) 
+	        {
+	        	result = projectMasterInterface.updateProject(oldValue, newValue, updateprojectId);
+	            FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Cell Changed", "Old: " + oldValue + ", New:" + newValue);
+	            FacesContext.getCurrentInstance().addMessage(null, msg);
+	        }
+		 }
+		 catch(Exception e)
+		 {
+			 e.printStackTrace();
+			 FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Internal Error", e.getMessage().toString());
+	            FacesContext.getCurrentInstance().addMessage(null, msg);
+		 }
+	       
+	    }
+	
+	
+	/*
 	
 	public void modifyAction() {
 		
@@ -264,7 +290,7 @@ public class Projectbean implements Serializable{
 		return "project";
 	}
 
-	
+	*/
 	
 	public void postProcessXLS(Object document) {
         HSSFWorkbook wb = (HSSFWorkbook) document;
@@ -382,6 +408,43 @@ public class Projectbean implements Serializable{
 		this.piechart = piechart;
 	}
 
+
+
+	public ProjectVo getProjectVo() {
+		return projectVo;
+	}
+
+
+
+	public void setProjectVo(ProjectVo projectVo) {
+		this.projectVo = projectVo;
+	}
+
+	public List<ProjectVo> getProjectList2() {
+		return projectList2;
+	}
+
+
+
+	public void setProjectList2(List<ProjectVo> projectList2) {
+		this.projectList2 = projectList2;
+	}
+
+
+
+	public Boolean getProjectaccess() {
+		return projectaccess;
+	}
+
+
+
+	public void setProjectaccess(Boolean projectaccess) {
+		this.projectaccess = projectaccess;
+	}
+
+
+
 	
+
 
 }

@@ -78,8 +78,72 @@ public class Register implements Serializable{
 			return "register";
 		}
 	
-		return "login";
+		return "sendemailbutton";
 	}
+	
+	
+	
+	
+	
+	public String linksubmit()
+	{
+		System.out.println("--emailid--"+emailid);
+		
+
+		UserDetailsInterface userImpl = new UserDetailsImpl();
+		int result = 0;
+		try{
+		
+			result = userImpl.savesocialUser(emailid, password, firstname, lastname, shortname,hashkey);
+			
+			//boolean valid = LoginDAO.validate(user, pwd);
+			if (result == 1) {
+				FacesContext.getCurrentInstance().addMessage(
+						null,
+						new FacesMessage(FacesMessage.SEVERITY_WARN,
+								"User Exit",
+								"User already created, please login with your credentials"));
+				return "registeraddlink";
+			}
+			if (result == 2) {
+				FacesContext.getCurrentInstance().addMessage(
+						null,
+						new FacesMessage(FacesMessage.SEVERITY_WARN,
+								"User Inactive",
+								"User already created, please activate the user credentials before login the sytem"));
+				return "registeraddlink";
+			}
+			if (result == 4) {
+				FacesContext.getCurrentInstance().addMessage(
+						null,
+						new FacesMessage(FacesMessage.SEVERITY_WARN,
+								"Internal Error",
+								"Please check the server logs"));
+				return "registeraddlink";
+			}
+			
+		}
+		catch(Exception e){
+			e.printStackTrace();
+			FacesContext.getCurrentInstance().addMessage(
+					null,
+					new FacesMessage(FacesMessage.SEVERITY_WARN,
+							"Internal Error",
+							"Please check the server logs"));
+			return "registeraddlink";
+		}
+	
+		return "sendemailbutton";
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	public void addMessage(String summary) {

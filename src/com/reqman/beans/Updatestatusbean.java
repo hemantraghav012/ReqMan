@@ -56,15 +56,16 @@ public class Updatestatusbean implements Serializable {
 	 private String title;
 	 private String description;
 	 private UploadedFile attachment;
-	 private Float completionpercentage;
+	 private int completionpercentage;
 	 private Date completiondate;	
 	 private String requestId;
 	 private Boolean status;
 	 private StreamedContent file;
 	 private List<UpdatestatusVo> updatestatusList = new ArrayList<UpdatestatusVo>();
+	 private List<UpdatestatusVo> updatestatusList3 = new ArrayList<UpdatestatusVo>();
 	 private List<UpdatestatusVo> filteredUpdateList = new ArrayList<UpdatestatusVo>();
 	 private UpdatestatusInterface updatestatusInterface = new UpdatestatusImpl();
-	
+	 private  String message;
 	 private UpdatestatusVo updatestatusVo = new UpdatestatusVo();
 
 	
@@ -89,6 +90,7 @@ public class Updatestatusbean implements Serializable {
 				String userName = (String)session.getAttribute("username");
 				System.out.println("--usersession--userName-->"+userName);
 				updatestatusList = updatestatusInterface.getupdatestatusDetails(userName);
+				updatestatusList3 = updatestatusInterface.getallProject(userName);
 				setFilteredUpdateList(updatestatusList);
 			}
 			catch(Exception e)
@@ -161,7 +163,7 @@ public class Updatestatusbean implements Serializable {
 				String userName = (String)session.getAttribute("username");			
 				System.out.println("--usersession--userName-->"+userName);
 				
-	        	result = updatestatusInterface.updateRequestById(requestId, completiondate, completionpercentage,stage);
+	        	result = updatestatusInterface.updateRequestById(requestId, completiondate, completionpercentage,stage,message,userName);
 	        	
 	        	if(result == 2)
 	        	{
@@ -301,14 +303,19 @@ public class Updatestatusbean implements Serializable {
 		}
 
 
-		public Float getCompletionpercentage() {
+		
+
+
+		public int getCompletionpercentage() {
 			return completionpercentage;
 		}
 
 
-		public void setCompletionpercentage(Float completionpercentage) {
+
+		public void setCompletionpercentage(int completionpercentage) {
 			this.completionpercentage = completionpercentage;
 		}
+
 
 
 		public Date getCompletiondate() {
@@ -391,6 +398,30 @@ public class Updatestatusbean implements Serializable {
 
 		public void setStage(Integer stage) {
 			this.stage = stage;
+		}
+
+
+
+		public String getMessage() {
+			return message;
+		}
+
+
+
+		public void setMessage(String message) {
+			this.message = message;
+		}
+
+
+
+		public List<UpdatestatusVo> getUpdatestatusList3() {
+			return updatestatusList3;
+		}
+
+
+
+		public void setUpdatestatusList3(List<UpdatestatusVo> updatestatusList3) {
+			this.updatestatusList3 = updatestatusList3;
 		}
 
 
