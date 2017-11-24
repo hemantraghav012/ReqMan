@@ -25,24 +25,24 @@
        
       <!-- -end of header --> 
       
-   <h:form >
+    <div class="containerfluid">
       
-	  <div class="container-fluid homecontainer"  style="margin-top:2cm;">    
-	  <h:commandLink action="#{userupdate.modifyAction()}" value="myprofile" style="color:black;font-weight: bold;"  class="btn1 btn  pull-right fontsize"></h:commandLink>
+	  <div class="container homecontainer"  style="margin-top:3cm;">    
 	  
 	 <div class="row">
-	   <div class="col-sm-6" >
+	   <div class="col-sm-7">
      <p style="padding-left: 10px;font-size:20px;color:black"> Welcome to ReqMan, #{login.user} !</p>
       <h3 style="color:#808080; padding-left: 10px;">Here’s how to get started:</h3>  
      
-      <div style="font-size:20px;  LINE-HEIGHT:50px;" class="honelink">			
+      <div class="container containerforbutton " >			
    
-
-<p  style="border:2px;text-align:center; border-style:solid; background-color:#4682B4; " ><h:commandLink value=" Create New Request " style="color:white;text-decoration:none; "  action="#{createrequest.createRequest}"/></p>
-<p  style="border:2px;text-align:center; border-style:solid;background-color:#4682B4  " ><h:link value=" Response to Request " style="color:white;text-decoration:none; " outcome="responsetonewrequest" /></p>
-<p  style="border:2px;text-align:center; border-style:solid; background-color:#4682B4 " ><h:link value=" See Status Of Your Requests" style="color:white;text-decoration:none;" outcome="request" /></p>
-<p  style="border:2px;text-align:center; border-style:solid; background-color:#4682B4 " ><h:link value=" Update Your Task  Progress" style="color:white;text-decoration:none; " outcome="updatestatustask" /> </p>
-
+<h:form >
+<p class="btn btn-default btn-md btn-block homeiconbutton"><span class="glyphicon">&#xe022;</span><h:commandLink value=" Create New Request " style="color:black; "  action="#{createrequest.createRequest}"/>
+</p>
+<p class="btn btn-default btn-md btn-block homeiconbutton"><span class="glyphicon">&#xe022;</span><h:link value=" Response to Request " style="color:black; " outcome="responsetonewrequest" /></p>
+<p class="btn btn-default btn-md btn-block homeiconbutton"><span class="glyphicon">&#xe022;</span><h:link value=" See Status Of Your Requests" style="color:black;" outcome="request" /></p>
+<p class="btn btn-default btn-md btn-block homeiconbutton"><span class="glyphicon">&#xe022;</span><h:link value=" Update Your Task  Progress" style="color:black; " outcome="updatestatustask" /> </p>
+  </h:form>
    </div>
       
       
@@ -50,25 +50,18 @@
     
   
        </div>
-    
-       <div class="col-sm-6">
- <img  src="https://i.imgur.com/6LE6VeO.jpg" class="img-responsive img-thumbnail" alt="collabor8" style="width:100%;height: 340px; " ></img>
-     </div>
+       <div class="col-sm-5">
+ <img src="resource/image/CC.jpg" class="img-responsive" alt="collabor8" style="width:100%; "></img>
       </div>
-      
+      </div>
        <div class="row" style="margin-top:1cm;">
     <div class="col-sm-4"><h:link value="Webinars" outcome="index" class="downlink"></h:link><br></br> <p>Live online classes. Pick the brains of our experts.</p> </div>
      <div class="col-sm-4"><h:link value="Help Center" outcome="index" class="downlink"></h:link><br></br><p> Our knowledge base and FAQs.</p></div>
      <div class="col-sm-4"><h:link value="Support" outcome="index" class="downlink"></h:link><br></br> <p>Friendly experts, always ready to help.</p></div>
     </div>
 	</div>
-	   </h:form>
-	<div id="footer">
-	<ui:insert name="footer">
-		<ui:include src="footerpage.xhtml" />
-	</ui:insert>
-</div>
-       
-      <!-- -end of footer --> 
+	 
+    
+	</div>  
 </h:body>
 </html>

@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Frameset//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-frameset.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"  
+         xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+      <h:head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<link rel="stylesheet" href="resource/css/bootstrap.css"/>
+<link rel="stylesheet" href="resource/mystyle/home.css"/>
+<link rel="stylesheet" href="resource/mystyle/onlyhome.css"/>
+ <link rel="stylesheet" href="resource/mystyle/register.css"/>
+ <link rel="stylesheet" href="resource/mystyle/button.css"/>
+  <link rel="stylesheet" href="resource/mystyle/registerlink.css"/>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script type="text/javascript" src="resource/js/bootstrap.js"/>
+<script type="text/javascript" src="resource/js/jquery.js"/>
+<title>Register</title>
+</h:head>
+
+<h:body >
+
+<div class="navbar  navbar-default navbar-fixed-top top_menu" >
+<div class="container-fluid ">
+<div class="navbar-header">
+<a class= "navbar-brand " href="index.xhtml" style="color:#FFF; font-size:32px; font-weight: bold; ">Collabor8</a>
+
+
+
+</div>
+
+<div class="collapse navbar-collapse margin_menu pull-right" >
+<!-- 
+<ul class="nav navbar-nav" >
+<li ><a href="#" style="color:#fff; font-weight: bold;" >Features</a></li>
+<li><a href="#" style="color:#fff; font-weight: bold;" class="hover1">Pricing</a></li>
+<li><a href="#" style="color:#fff; font-weight: bold;" >Customers</a></li>
+<li><a href="#" style="color:#fff; font-weight: bold;">Blog</a></li>
+<li><a href="faces/login.xhtml"  style="color:#fff; font-weight: bold;">Sign in</a></li>
+</ul>
+ -->
+ <p style="color:#FFF; font-size:32px; font-weight: bold;  text-decoration:none; margin-right:10px; font-style:oblique" >Work smart, Save time</p>
+ 
+</div>
+</div>
+</div>
+<!-- top menu -->
+<h:form class="form-horizontal"  >
+<div  class="navbar-fixed-top" style=" margin-top:50px;" >
+<div class="row secondtop" style="padding: 40px 40px 40px 40px ;  LINE-HEIGHT:30px;" >
+<div><h:messages style = "color:red;margin:8px;" /></div>
+ <div class="col-sm-1 .col-sm-offset-1"></div>
+<div class="col-sm-3"  style="font-size: 26px; color: #fff;">Start your free trial</div>
+<div class="col-sm-4" >
+
+ <h:inputText value="#{register.emailid}" class="  form-control"   p:placeholder=" Please Enter Email Id"  id="emailid" required="true" requiredMessage="* Please enter your email id" validatorMessage="Invalid email format"> <f:validateRegex
+		pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" /></h:inputText>
+
+</div>
+
+<div class="col-sm-2" style="padding-bottom:25px;padding-bottom:5px;">
+
+
+<h:commandLink action="#{register.linksubmit()}" value="Register" class="btn fontsize btn-success btn-block" ></h:commandLink></div>
+ <div class="col-sm-1 .col-sm-offset-1"></div>
+</div>
+</div>
+
+<div class="row" style="margin-top:156px;">
+<div class="col-sm-6" style="margin-top:15px;">
+      <img  src="https://i.imgur.com/cBU8Qh2.jpg" class="img-responsive img-thumbnail" alt="collabor8" style="width:100%;" ></img>
+      </div>
+      
+      <div class="col-sm-5" style="text-align:justify;margin-left:25px;background-color:#fff;">
+      <br></br>
+      <h2 style="color: #03b4f2;;font-style:bold;text-align: center;">Use to Collabor8 </h2>
+<ui style="font-style:bold; font-size:27px; LINE-HEIGHT:50px;  ">
+<li>Assign Tasks Among team member.</li>
+<li>Send automatic follow-up.</li>
+<li>Monitor progress.</li>
+<li>Automatic reminder for priority tasks.</li>
+<li>Keep record of work done.</li>
+<li>Analyze performance.</li>
+<li>Improve planning.</li>
+</ui>
+<br></br><br></br>
+
+      </div>
+      </div>
+    <br></br>
+
+</h:form>
+
+
+
+
+
+ <section class="pricing bx" style=" background-image: url(resource/image/23.jpeg);  ">
+        <div class="container" >
+            <p style="text-align:center;padding:40px 40px 40px 40px; font-size:42px;">Free onboarding. Scalable plans. Simple rules.</p>
+            <div class="offer-list ">
+                <div class="offer allcommonclass" >
+                    <div class="about">
+                        <div class="package">
+                        <br></br> <br></br>
+                            <h3>Email</h3>
+                            <p>Perfect for email<br/> marketing beginners</p>
+                            <div class="price">
+                                from <span><sup>&#36;</sup>15</span>/mo
+                            </div>
+                        </div>
+                       
+                    </div>
+                    <div class="details">
+                        <ul>
+                            <li><strong>Email Marketing</strong></li>
+<li>Autoresponders</li>
+<li>Landing pages (Basic)</li>
+<li>Multi-user: 1 user</li>
+                        </ul>
+                        <ul class="automation">
+                            <li>
+    <strong>Marketing Automation</strong><br/> (Basic)
+</li>
+                        </ul>
+                        <ul class="crm">
+                            <li>&nbsp;</li>
+                        </ul>
+                    </div>
+                </div>
+               
+                <div class="offer pro active allcommonclass">
+                    <div class="about">
+                        <div class="package">
+                        <br></br>
+                            <span class="popular">MOST POPULAR</span>
+                            <h3>Pro</h3>
+                            <p>For growth-focused<br/> marketers and SMBs</p>
+                            <div class="price">
+                                from <span><sup>&#36;</sup>49</span>/mo
+                            </div>
+                        </div>
+                        
+                    </div>
+                    <div class="details">
+                        <ul>
+                            <li><strong>Email Marketing</strong></li>
+<li>Autoresponders</li>
+<li>Landing pages (Advanced)</li>
+<li>Webinars 100 attendees</li>
+<li>Multi-user: 3 users</li>
+                        </ul>
+                        <ul class="automation">
+                            <li>
+    <strong>Marketing Automation</strong><br/> (Advanced)
+</li>
+                        </ul>
+                        <ul class="crm">
+                            <li><strong>CRM</strong></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="offer allcommonclass">
+                    <div class="about">
+                        <div class="package">
+                         <br></br> <br></br>
+                            <h3>Max</h3>
+                            <p>For marketing pros with<br/> advanced needs</p>
+                            <div class="price">
+                                from <span><sup>&#36;</sup>165</span>/mo
+                            </div>
+                        </div>
+                        
+                    </div>
+                    <div class="details">
+                        <ul>
+                            <li>
+    <strong>All Pro features plus:</strong>
+</li>
+<li>Custom DKIM</li>
+<li>Campaign consulting</li>
+<li>Webinars 500 attendees</li>
+<li>Salesforce integration</li>
+<li>Multi-user: 5 users</li>
+                        </ul>
+                        <ul class="automation">
+                            <li>
+    <strong>Marketing Automation</strong><br/> (Advanced)
+</li>
+                        </ul>
+                        <ul class="crm">
+                            <li><strong>CRM</strong></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="offer allcommonclass">
+                    <div class="about">
+                        <div class="package">
+                        <br></br> <br></br>
+                            <h3>Enterprise</h3>
+                            <p>For businesses seeking scalable,<br/> high-performance solutions</p>
+                            <div class="price">
+                                from <span><sup>&#36;</sup>1,199</span>/mo
+                            </div>
+                        </div>
+                    </div>
+                    <div class="details">
+                        <ul>
+                            <li>
+    <strong>All Max features plus:</strong>
+</li>
+<li>Account manager</li>
+<li>Dedicated infrastructure</li>
+<li>Dedicated IP address</li>
+<li>Max mailout performance</li>
+<li>Deliverability consulting</li>
+<li>Multi-user: 10 users</li>
+                        </ul>
+                        <ul class="automation">
+                            <li>
+    <strong>Marketing Automation</strong><br/> (Advanced)
+</li>
+                        </ul>
+                        <ul class="crm">
+                            <li>&nbsp;</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+             <br></br>   <br></br>   <br></br>   <br></br>
+                                </div>
+    </section>
+   <br></br>
+  <div id="footer">
+	<ui:insert name="footer">
+		<ui:include src="footerpage.xhtml" />
+	</ui:insert>
+</div>
+       
+      <!-- -end of footer --> 
+</h:body>
+</html>

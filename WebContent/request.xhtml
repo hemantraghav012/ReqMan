@@ -48,30 +48,35 @@ function setRequestHiddenValue(new_value)
          
          <h:inputHidden id="requestId" value="#{createrequest.requestId}" ></h:inputHidden>
       <div class="row">
+       <div class="col-sm-12">    
+     			<h:link value=" See progress of your friends  " style="color:#fff; font-weight: bold;text-align:left;" class="btn1 btn  pull-right fontsize" outcome="commonproject" /> <br></br>
+
+			
+		</div>
       
       	<div class="col-sm-6">
       		<span style=";font-size:25px;margin-left: 3px;">Manage Request List</span>
       	</div>
-    
+   
      	<div class="col-sm-6">    
-     			
-			 <h:commandLink  value="Create New Request" action="#{createrequest.createRequest}" class="btn1 btn   pull-right fontsize"/> 
+     			 <h:commandLink  value="Create New Request" action="#{createrequest.createRequest}" class="btn1 btn pull-right fontsize"/> 
 			
 			
 		</div>
-
+			
 	  </div>
 
 
 <div class="ui-fluid ">
 
 	     <p:dataTable id="requestTable" var="request1" value="#{createrequest.newrequestList}" draggableColumns="true" resizableColumns="true"
-	     reflow="true" scrollable="true" scrollHeight="310" 
+	     reflow="true" scrollable="true" scrollHeight="300" 
 	      rows="10"  paginator="true"   
 	      paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rowsPerPageTemplate="5,10,15"
 	     sortBy="#{request1.status},#{request1.title}" 
 	     class="table table-striped table-hover table-bordered" 
 	     style="margin-top:5px;  " filteredValue="#{createrequest.filteredRequestList}" 
+	     rowStyleClass="#{request1.changedate le createrequest.currentDate ? 'red':  null}"
 	     widgetVar="newrequestListTable">
 	     
 	     <f:facet name="header">
@@ -90,7 +95,7 @@ function setRequestHiddenValue(new_value)
 				<div class="row">
 				<div class= "col-sm-2" ></div>
 			
-			<div class= "col-sm-8" ><p:commandButton id="toggler" value="Click here to chooses columns to viewed as per your requirement"  style="background-color:skyblue;"  />
+			<div class= "col-sm-8" ><p:commandButton id="toggler" value="Click here to choose columns to view as per your requirement"  style="background-color:skyblue;"  />
         <p:columnToggler datasource="requestTable" trigger="toggler" />
 	     </div>
 			</div>
@@ -189,27 +194,87 @@ function setRequestHiddenValue(new_value)
 				</f:facet>
 				<h:outputText value="#{request1.status}"  />
 			</p:column>
-    
-    
+			
+
    
     
-     <p:column headerText="Attachment" exportable="false" style="padding: 0px 0px 0px 0px;" >
+ <p:column headerText="Attachment" exportable="false" style="padding: 0px 0px 0px 0px;" >
        <p:dialog modal="true" widgetVar="statusDialog" header="Status" draggable="false" closable="false" resizable="false">
-    <p:graphicImage name="/demo/images/ajaxloadingbar.gif" />
+       <p:graphicImage name="/demo/images/ajaxloadingbar.gif" />
 </p:dialog>
-<p:commandButton value="Download"  ajax="false" onclick="PrimeFaces.monitorDownload(start, stop);setRequestHiddenValue(#{request1.newRequestId})" style="padding: 0px 0px 0px 0px; font-size:13px; width:109px;" >
+<p:commandButton value="Download"  ajax="false"
+ onclick="PrimeFaces.monitorDownload(start, stop);setRequestHiddenValue(#{request1.newRequestId})"
+style="padding: 3px 0px 4px 0px; font-size:12px; " >
         <p:fileDownload value="#{createrequest.fileDownloadView()}" />
     </p:commandButton>
     </p:column>
     
-     <p:column headerText="View / Modify" exportable="false" style="padding: 0px 0px 0px 0px; ">
-<p:commandLink id="nonAjax" styleClass="btn btn-primary fontsize" 
-				style="color:white; width:108px; border-radius: none;font-size:12px;" onclick='setRequestHiddenValue(#{request1.newRequestId})' 
-				action="#{createrequest.modifyAction()}" ajax="false" >
-	        		View / Update
-	    		</p:commandLink> 
+    
+  
 	    		
-   </p:column>   
+  
+   <p:column headerText="View Notes" exportable="false"  style="padding: 0px 0px 0px 0px; ">
+    <p:commandButton  id="nonAjax12" value="View Notes" styleClass="buttoncolor1" 
+    style=" font-size:12px;padding: 3px 0px 4px 0px;"
+     onclick="PF('#{request1.newRequestId}').show();setRequestHiddenValue(#{request1.newRequestId}) "
+        />
+
+ <p:dialog  header="View Notes" widgetVar="#{request1.newRequestId}" varStatus="status" modal="true" responsive = "true">
+      
+      
+       <div class="container">
+        <h:form  id="requestForm">   
+         
+<p:dataTable id="noteTable" var="noteview"  value = "#{request1.noteList}" scrollable="true" scrollHeight="300"    >
+    
+ <p:column headerText="id" style="width:200px">
+
+  
+        <h:outputText value="#{noteview.noteId}"/>
+    </p:column>
+    <p:column headerText="Date/Time" style="width:200px">
+
+  
+        <h:outputText value="#{noteview.time}"/>
+    </p:column>
+
+    <p:column headerText="createdby" style="width:250px">
+        <h:outputText value="#{noteview.createdby}"/>
+    </p:column>
+
+    <p:column headerText="Message">
+        <h:outputText value="#{noteview.message}" class="dd"/>
+    </p:column>
+</p:dataTable>
+         <div>
+		<strong>Export Data &nbsp;</strong>
+	    <h:commandButton id="excel" class="btn btn-primary fontsize" value="Excel">
+	        <p:dataExporter type="xls" target="noteTable" fileName="noteview" postProcessor="#{createrequest.postProcessXLS}" />
+	    </h:commandButton>
+	 	&nbsp;
+	    <h:commandButton id="pdf" class="btn btn-primary fontsize" value="Pdf">
+	        <p:dataExporter type="pdf" target="noteTable" fileName="noteview" preProcessor="#{createrequest.preProcessPDF}" />
+	    </h:commandButton>
+	</div> 
+       </h:form>    
+       </div>
+</p:dialog> 
+
+     </p:column>
+     
+     
+     
+     
+ <p:column headerText="View / Modify" exportable="false" style="padding: 0px 0px 0px 0px; ">
+         <p:commandButton id="nonAjax" value="View / Update" styleClass="buttoncolor1"
+				style=" font-size:12px;padding: 3px 0px 4px 0px;"
+				 onclick='setRequestHiddenValue(#{request1.newRequestId})' 
+				action="#{createrequest.modifyAction()}" ajax="false" >
+	        		
+	    	</p:commandButton> 
+	    		
+   </p:column>
+          
 </p:dataTable>
 	    
 	</div>

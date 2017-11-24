@@ -51,20 +51,21 @@ function setRequestHiddenValue(new_value)
       		<span style=";font-size:25px;margin-left: 3px;">Manage Update Status Of Task List</span>
       	</div>
     
-     	<div class="col-sm-6">    
-     			
-			
-			
-		</div>
+     
 
-	  </div>
+ <div class="col-sm-6 ">
+<h:link value="Back to Request List" style="text-decoration:none; color:#fff;" outcome="request" class="btn fontsize btn-primary pull-right"/>
+</div>
+</div>
+	
+
 
 
 <div class="ui-fluid ">
 
-	     <p:dataTable id="requestTable" var="update1" value="#{updatestatusbean.updatestatusList}" draggableColumns="true" resizableColumns="true"
+	     <p:dataTable id="requestTable" var="update1" value="#{updatestatusbean.updatestatusList3}" draggableColumns="true" resizableColumns="true"
 	     reflow="true" scrollable="true" scrollHeight="310" 
-	      rows="5"  paginator="true"   
+	      rows="10"  paginator="true"   
 	      paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rowsPerPageTemplate="5,10,15"
 	    rowStyleClass="#{update1.completionpercentage eq 100 ? 'red' : update1.completionpercentage gt 0 ? 'green': update1.completionpercentage eq 0 ? 'white': null}"
 	     sortBy="#{update1.status},#{update1.title}" 
@@ -167,52 +168,17 @@ function setRequestHiddenValue(new_value)
 				<h:outputText value="#{update1.createdby}" style="display: inline;"   />
 			</p:column>
     
-   
-     <p:column headerText="View Notes" exportable="false"  style="padding: 0px 0px 0px 0px; ">
-    <p:commandButton  id="nonAjax12" value="View Notes" styleClass="buttoncolor1" 
-    style=" font-size:12px;padding: 3px 0px 4px 0px;"
-     onclick="PF('#{update1.newRequestId}').show(); "
-        />
-
- <p:dialog  header="View Notes" widgetVar="#{update1.newRequestId}" varStatus="status" modal="true" responsive = "true">
-      
-      
-       <div class="container">
-        <h:form>   
-        
-<p:dataTable var="noteview"  value = "#{update1.noteList}" scrollable="true" scrollHeight="300"    >
+   <p:column filterBy="#{update1.friendName}" sortBy="#{update1.friendName}"  headerText="friendName"  filterStyle="display:none;"  
+			 filterMatchMode="contains"  style="text-overflow: ellipsis; white-space: nowrap;padding: 0px 0px 0px 3px;">
+				<f:facet name="header">
+					<h:outputText value="friendName" />
+				</f:facet>
+				<h:outputText value="#{update1.friendName}" style="display: inline;"   />
+			</p:column>
     
- <p:column headerText="Id" style="width:200px">  
-        <h:outputText value="#{noteview.noteId}"/>
-    </p:column>
-    <p:column headerText="Date/Time" style="width:200px">  
-        <h:outputText value="#{noteview.time}"/>
-    </p:column>
-
-    <p:column headerText="createdby" style="width:250px">
-        <h:outputText value="#{noteview.createdby}"/>
-    </p:column>
-
-    <p:column headerText="Message">
-        <h:outputText value="#{noteview.message}" class="dd"/>
-    </p:column>
-</p:dataTable>
-          
-       </h:form>    
-       </div>
-</p:dialog> 
-
-     </p:column>
      
     
-     <p:column headerText="View / Modify" exportable="false" style="padding: 0px 0px 0px 0px; ">
-<p:commandLink id="nonAjax" styleClass="btn btn-primary fontsize" 
-				style="color:white; width:145px; border-radius: none;font-size:12px;" onclick='setRequestHiddenValue(#{update1.newRequestId})' 
-				action="#{updatestatusbean.modifyAction()}" ajax="false" >
-	        		View / Update
-	    		</p:commandLink> 
-	    		
-   </p:column>   
+    
 </p:dataTable>
 	    
 	</div>
@@ -226,7 +192,7 @@ function setRequestHiddenValue(new_value)
 	        <p:dataExporter type="pdf" target="requestTable" fileName="update1" preProcessor="#{updatestatusbean.preProcessPDF}" />
 	    </h:commandButton>
 	</div>
- 
+
 
 
 

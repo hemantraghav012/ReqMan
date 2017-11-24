@@ -18,6 +18,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
 <link rel="stylesheet" href="resource/css/bootstrap.css"/>
 <link rel="stylesheet" href="resource/mystyle/home.css"/>
+<link rel="stylesheet" href="resource/mystyle/friendmaster.css"/>
 <link rel="stylesheet" href="resource/mystyle/createcategory.css"/>
  <link rel="stylesheet" href="resource/mystyle/button.css"/>
 <script type="text/javascript" src="resource/js/bootstrap.js"/>
@@ -61,54 +62,44 @@ function setCategoryHiddenValue(new_value)
        
        
        
-      <div class="row">
-      <div class="col-sm-9">
-       <div class="container  fixedcontainer "  style="margin-left: 0px;   border-top:none; ">
+   <div class="row">
   
   
-  <div  style="margin-top:10px;"> 
+      <div class="col-sm-7  addteammember" >
+
   <h:form class="form-horizontal" >
-  
-<h2 style="  margin-bottom:30px; margin-top:0px; text-align:center" >   Create New Request Category</h2>
+  <h2 style="  margin-bottom:30px; margin-top:0px; text-align:center" > Create New Category</h2>
 
 <div><h:messages style = "color:red;margin:8px;" /></div>
 
  <div class=" row form-group ">
- <div class="col-sm-3 control-label"><h:outputLabel  >Category Name :</h:outputLabel></div>
-<div class=" col-sm-6"> <h:inputText value="#{categorybean.categoryName}" maxlength="20" class="  form-control"  id="categoryname"  required="true" requiredMessage="* Please enter category name"/><span style="color:red;">Please enter upto 20 characters.</span></div>
+  <div class="col-sm-3 control-label"><h:outputLabel  >Category Name :</h:outputLabel></div>
+<div class=" col-sm-9"> <h:inputText value="#{categorybean.categoryName}" maxlength="20" class="  form-control"  id="categoryname"  required="true" requiredMessage="* Please enter category name"/><span style="color:red;">Please enter upto 20 characters.</span></div>
  <h:message for="categoryname"  style="color:red;margin:8px;"/> 
 </div><br></br>
 
 
-
  <div class=" row form-group ">
  <div class="col-sm-3 .col-sm-offset-2"></div>
- <div class="col-sm-6 "><h:commandButton action="#{categorybean.saveCategory}" value="Submit" class="btn fontsize btn-success btn-block"></h:commandButton></div>
+ <div class="col-sm-9 "><h:commandButton action="#{categorybean.saveCategory}" value="Submit" class="btn fontsize btn-success btn-block"></h:commandButton></div>
 
 </div>
 
+
+
 </h:form>
   
-  </div>
-      
-
-     <hr ></hr>
-      
-      
-       <h:form id="categoryForm">
-      <div class="container fixedcontainer1">
+ 
+            <hr ></hr>
+<h:form id="categoryForm">
+      <div  class="gridmargin">
  		<h:inputHidden id="categoryId" value="#{categorybean.categoryId}" ></h:inputHidden>
-      <div class="row">
       
-      	<div class="col-sm-12">
-      		<span style=";font-size:25px;margin-left: 3px;">Manage Request Category List</span>
+      
+      		<h3 style="text-align:center;">Manage Request Category List</h3>
       	<br></br>	(Only active category will be available for transaction)
-      	</div>
+      
       	
-  
-
-	  </div>
-
 
 <div class="ui-fluid">
 <p:growl id="msgs" showDetail="true"/>
@@ -182,17 +173,25 @@ function setCategoryHiddenValue(new_value)
       
       </h:form>
       
+      
       </div>
-        </div>
-        <div class="col-sm-3" style="background-color:#fff;margin-top:0px;">
-       
-       <p style="width:250px; padding-top:30px; text-align: center; font-size:30px;">Active request categories can be use for classifying the requests.
+      
+      
+        <div class="col-sm-5" style="background-color:#fff;margin-top:0px;">
+       <div class="textbox">
+       <p style=" ">Active request categories can be use for classifying the requests.
                            These categories can be used to filter your requests and managed them effective.</p>
-    
+    </div>
+    <br></br>
+    <div>
+<img  src="resource/image/24.jpg" class="img-responsive img-thumbnail" alt="collabor8" style="width:100%;height:520px;" ></img>
+
+</div>
+      
         </div>
-        
-        
-      </div>
+
+       </div>
+      
       </h:body>
 
 </html>

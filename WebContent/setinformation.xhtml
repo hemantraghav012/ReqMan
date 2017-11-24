@@ -11,8 +11,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
 <link rel="stylesheet" href="resource/css/bootstrap.css"/>
 <link rel="stylesheet" href="resource/mystyle/home.css"/>
+<link rel="stylesheet" href="resource/mystyle/onlyhome.css"/>
  <link rel="stylesheet" href="resource/mystyle/register.css"/>
- <link rel="stylesheet" href="resource/mystyle/onlyhome.css"/>
  <link rel="stylesheet" href="resource/mystyle/button.css"/>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script type="text/javascript" src="resource/js/bootstrap.js"/>
@@ -21,7 +21,7 @@
 </h:head>
 
 <h:body >
-<div class="navbar  navbar-default navbar-fixed-top top_menu" >
+ <div class="navbar  navbar-default navbar-fixed-top top_menu" >
 <div class="container-fluid ">
 <div class="navbar-header">
 <a class= "navbar-brand " href="index.xhtml" style="color:#f4df41; font-size:32px; font-weight: bold; ">Collabor8</a>
@@ -42,47 +42,59 @@
 
        
       <!-- -end of header --> 
-  
 
 <div class="container registerfield" style="margin-top:30px;" >
 
 <div class="row">
 <div class=" col-sm-6" >
-<h2 style="font-weight: bold;  text-align:center; "> Start your free 30-day trial.</h2>
-<br></br>
-<img  src="resource/image/addregister.jpeg" class="img-responsive img-thumbnail" alt="collabor8" style="width:100%;" ></img>
+<br></br><br></br><br></br>
+<img  src="resource/image/addfriend.jpeg" class="img-responsive img-thumbnail" alt="collabor8" style="width:100%;height: 450px; " ></img>
      
 </div>
 
+
+
 <div class=" col-sm-6" style="LINE-HEIGHT:40px;">
-<h2 style="font-weight: bold; padding-left:25px; "> Create an account</h2>
-<h3 style="padding-left:25px;">Fully functional. No credit card required.</h3>
+<h2 style="font-weight: bold; padding-left:15px; ">Please Fill Your Details</h2>
+<h4 style="padding-left:15px;">All Fields are required.</h4>
 <br></br>
 <h:form class="form-horizontal" >
-<br></br>
-<div><h:messages style = "color:red;margin:8px;" /></div>
 
+<div><h:messages style = "color:red;margin:8px;" /></div>
+<h:inputHidden   value="#{setpassword.hash}"/>
  <div class=" row form-group registerfieldname">
  <div class="col-sm-2 control-label"><h:outputLabel  >Email Id:</h:outputLabel></div>
-<div class=" col-sm-6"> <h:inputText  class="  form-control" value="#{setpassword.emailid}" disabled="true" readonly="true" required="true" p:placeholder="Email Id"  id="emailid" requiredMessage="* Please enter your email id" validatorMessage="Invalid email format"> <f:validateRegex
+<div class=" col-sm-6"> <h:inputText value="#{setpassword.emailid}" class="  form-control"  disabled="true" readonly="true" p:placeholder="Email Id"  id="emailid" required="true" requiredMessage="* Please enter your email id" validatorMessage="Invalid email format"> <f:validateRegex
 		pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" /></h:inputText></div>
  <h:message for="emailid"  style="color:red;margin:8px;"/> 
 
 </div>
-
- <div class=" row form-group registerfieldname">
+<div class=" row form-group registerfieldname">
 <div class="col-sm-2 control-label"><h:outputLabel>Password:</h:outputLabel></div>
-<div class=" col-sm-6"><h:inputText value="#{setpassword.password}"  p:placeholder="password" class="form-control" id="password" required="true" requiredMessage="* Please enter your first name"></h:inputText></div>
+<div class="col-sm-6"><h:inputText value="#{setpassword.password}" p:placeholder="Password" class="form-control" id="password" required="true" requiredMessage="* Please enter your password"></h:inputText></div>
  <h:message for="password"  style="color:red;margin:8px;"/> 
 </div>
- 
-
-  <div class=" row form-group ">
- <div class="col-sm-2 .col-sm-offset-2"></div>
-<div class="col-sm-6 "><h:commandLink action="#{setpassword.setandupdate}" value="Submit" class="btn fontsize btn-success btn-block"></h:commandLink></div>
+ <div class=" row form-group registerfieldname">
+<div class="col-sm-2 control-label"><h:outputLabel>First Name:</h:outputLabel></div>
+<div class=" col-sm-6"><h:inputText value="#{setpassword.firstname}"  p:placeholder="First Name" class="form-control" id="firstname" required="true" requiredMessage="* Please enter your first name"></h:inputText></div>
+ <h:message for="firstname"  style="color:red;margin:8px;"/> 
 </div>
 
+ <div class=" row form-group registerfieldname">
+<div class="col-sm-2 control-label"><h:outputLabel>Last Name:</h:outputLabel></div>
+<div class="col-sm-6"><h:inputText value="#{setpassword.lastname}"  p:placeholder="Last Name" class="form-control" id="lastname" required="true" requiredMessage="* Please enter your last name"></h:inputText></div>
+ <h:message for="lastname"  style="color:red;margin:8px;"/> 
+</div>
 
+ <div class=" row form-group registerfieldname">
+<div class="col-sm-2 control-label"><h:outputLabel>Short Name:</h:outputLabel></div>
+<div class="col-sm-6"><h:inputText value="#{setpassword.shortname}" p:placeholder="Short Name"  maxlength="4" class="form-control" id="shortname" required="true" requiredMessage="* Please enter your short name"></h:inputText><span style="color:red;">Please enter upto 4 characters</span></div>
+ <h:message for="shortname"  style="color:red;margin:8px;"/> 
+</div>
+ <div class=" row form-group ">
+ <div class="col-sm-2 .col-sm-offset-2"></div>
+<div class="col-sm-6 "><h:commandLink action="#{setpassword.setinformationupdate()}" value="Register" class="btn fontsize btn-success btn-block"></h:commandLink></div>
+</div>
 
 </h:form>
 

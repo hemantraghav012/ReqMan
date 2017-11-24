@@ -95,13 +95,20 @@
 <div class=" row form-group ">
  
 
-
+ 
 
  <div class="col-sm-2 control-label"><h:outputLabel>Attached File:</h:outputLabel></div>
 <div class=" col-sm-4">  <h:inputText value="#{createrequest.newrequestVo.fileName}" readonly="true" class="  form-control" disabled="true" id="userrequesttype12"  style="background-color:lightgrey;"  requiredMessage="* Please enter Title"/></div>
  <h:message for="AttachedFile"  style="color:red;margin:8px;"/> 
 </div><br></br>
 
+    <div class=" row form-group " >
+<div class="col-sm-2 control-label" style="padding-top:0cm;"><h:outputLabel>Notes: </h:outputLabel></div>
+<div class=" col-sm-10"><h:inputTextarea id="message" value="#{createrequest.message}"    
+ cols="19" rows="3" class="  form-control" /></div>
+<h:message for="message"  style="color:red;margin:6px;"/>
+
+ </div>
 
 
 
@@ -114,16 +121,7 @@
 </h:selectOneRadio> </div>
  <h:message for="status"  style="color:red;margin:8px;"/> 
  </div><br></br>
- <div class=" row form-group ">
- <div class="col-sm-2 control-label" style="padding-top:0cm;"><h:outputLabel>Stage: </h:outputLabel></div>
-<div class=" col-sm-6"> 
-<h:selectOneRadio value = "#{createrequest.stage}" id="stage"> 
-   <f:selectItem itemValue = "6" itemLabel = "Cancelled &nbsp; &nbsp;&nbsp; &nbsp;" /> 
-    <f:selectItem itemValue = "7" itemLabel = "Hold &nbsp; &nbsp;&nbsp; &nbsp;" /> 
-   <f:selectItem itemValue = "8" itemLabel = "Close"  />
-</h:selectOneRadio> </div>
- <h:message for="stage"  style="color:red;margin:8px;"/> 
- </div><br></br>
+ 
 
 
  <div class=" row form-group ">
@@ -131,13 +129,19 @@
  <div class="col-sm-4 "><h:commandButton action="#{createrequest.updateRequest}" value="Update" class="btn fontsize btn-success btn-block"></h:commandButton></div>
 
  <div class="col-sm-4 ">
- 
-
-
 <h:link value="Back to Request List" style="text-decoration:none; color:#fff;" outcome="request" class="btn fontsize btn-primary btn-block"/>
 </div>
 </div>
 
+
+   <h3 style="margin-top:0">JFreeChart</h3>
+<p:graphicImage value="#{createrequest.newrequestVo.file}" /> 
+
+  
+
+ 
+ 
+    
 
 
 </h:form>
