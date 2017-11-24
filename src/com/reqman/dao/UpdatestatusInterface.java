@@ -3,6 +3,7 @@ package com.reqman.dao;
 import java.util.Date;
 import java.util.List;
 
+
 import com.reqman.vo.UpdatestatusVo;
 
 public interface UpdatestatusInterface {
@@ -11,6 +12,8 @@ public interface UpdatestatusInterface {
 
 	UpdatestatusVo getRequestById(String requestId) throws Exception;
 
-	int updateRequestById(String requestId, Date completiondate,Float completionpercentage, Integer stage) throws Exception;
+	int updateRequestById(String requestId, Date completiondate,int completionpercentage, Integer stage,String message, String userName) throws Exception;
+
+	List<UpdatestatusVo> getallProject(String userName)throws Exception;
 
 }

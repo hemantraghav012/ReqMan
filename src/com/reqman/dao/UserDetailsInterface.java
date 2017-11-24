@@ -17,6 +17,14 @@ public interface UserDetailsInterface
 
 	public int updatepasswordByHashkey(String hash, String emailid,	String password)throws Exception;
 
+	public int updateinformationByHashkey(String hash, String emailid,
+			String password, String firstname, String lastname, String shortname)throws Exception;
+
+	public int savesocialUser(String emailid, String password,
+			String firstname, String lastname, String shortname, String hashkey)throws Exception;
+
+
+
 
 
 	

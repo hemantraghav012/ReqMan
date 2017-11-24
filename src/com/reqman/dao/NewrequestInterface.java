@@ -3,11 +3,13 @@ package com.reqman.dao;
 import java.io.IOException;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import org.primefaces.model.UploadedFile;
 
 import com.reqman.pojo.Request;
 import com.reqman.vo.NewrequestVo;
+
 
 public interface NewrequestInterface {
 
@@ -24,7 +26,21 @@ public interface NewrequestInterface {
 	public NewrequestVo getRequestById(String requestId)throws Exception;
 
 	public int updateRequestById(String requestId, Boolean status,
-			String description, Date completiondate, UploadedFile attachment, Float completionpercentage, Integer stage)throws Exception;
+			String description, Date completiondate, UploadedFile attachment, Float completionpercentage, Integer stage,String message, String userName)throws Exception;
+
+	public Map barchart(String userName)throws Exception;
+
+	public List<NewrequestVo> getallproject(String userName)throws Exception;
+
+
+
+
+
+	
+
+	
+
+	
 
 	
 
