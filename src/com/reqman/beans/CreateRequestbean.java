@@ -9,7 +9,10 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
@@ -28,6 +31,11 @@ import org.apache.poi.hssf.util.HSSFColor;
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
 import org.primefaces.model.UploadedFile;
+import org.primefaces.model.chart.Axis;
+import org.primefaces.model.chart.AxisType;
+import org.primefaces.model.chart.BarChartModel;
+import org.primefaces.model.chart.ChartSeries;
+import org.primefaces.model.chart.HorizontalBarChartModel;
 
 import com.lowagie.text.BadElementException;
 import com.lowagie.text.Document;
@@ -40,6 +48,7 @@ import com.reqman.util.Dateconverter;
 import com.reqman.util.SessionUtils;
 import com.reqman.util.UserSession;
 import com.reqman.vo.NewrequestVo;
+
 
 @ManagedBean(name="createrequest",eager = true)
 @RequestScoped
@@ -59,18 +68,22 @@ public class CreateRequestbean implements Serializable
 	 private  List<Request> request ;
 	 private String requestId;
 	 private List<NewrequestVo> newrequestList = new ArrayList<NewrequestVo>();
+	 
+	 private List<NewrequestVo> newrequestList3 = new ArrayList<NewrequestVo>();
+	 
 	 private Boolean status;
 	 private NewrequestInterface newrequestInterface = new NewrequestImpl();
 	 private StreamedContent file;
 	 private NewrequestVo newrequestVo = new NewrequestVo();
+	
 	 private NewrequestVo selectedReuest;
 	 private List<NewrequestVo> filteredRequestList = new ArrayList<NewrequestVo>();
-	private Integer stage;
-	 
-	
-
-	private Float completionpercentage;
-
+	 private Integer stage;
+	 private BarChartModel barModel;
+	 private HorizontalBarChartModel horizontalBarModel;
+     private String currentDate;
+	 private Float completionpercentage;
+     private  String message;
 	@PostConstruct
     public void init() 
 	{
@@ -78,12 +91,16 @@ public class CreateRequestbean implements Serializable
 		{
 			 	
 			System.out.println("--create request-->");
-			newrequestList = new ArrayList<NewrequestVo>();
+			newrequestList = new ArrayList<NewrequestVo>();			
 			HttpSession session = SessionUtils.getSession();
 			String userName = (String)session.getAttribute("username");
 			System.out.println("--usersession--userName-->"+userName);
 			newrequestList = newrequestInterface.getNewrequestDetails(userName);
+			newrequestList3 = newrequestInterface.getallproject(userName);
+			 
 			setFilteredRequestList(newrequestList);
+			createBarModels();
+			 currentDate =  Dateconverter.convertDateToStringDDMMDDYYYY(new Date());
 		}
 		catch(Exception e)
 		{
@@ -91,6 +108,136 @@ public class CreateRequestbean implements Serializable
 		}
 		
 	}
+	
+	
+	 private void createBarModels() {
+	        createBarModel();
+	      //  createHorizontalBarModel();
+	    }
+	
+	/* private void createHorizontalBarModel() {
+	        horizontalBarModel = new HorizontalBarChartModel();
+	 
+	        ChartSeries boys = new ChartSeries();
+	        boys.setLabel("Request");
+	       
+	        Map<String, Integer> requestmap = new HashMap<String, Integer>();
+			 try {
+			       
+			        
+			 HttpSession session = SessionUtils.getSession();
+				String userName = (String)session.getAttribute("username");			
+				System.out.println("--usersession--userNam122e-->"+userName);
+	        	
+				requestmap = newrequestInterface.barchart(userName );
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+	      
+
+		        for(Map.Entry m:requestmap.entrySet()){  
+		        	
+		        	String requestnumber= (String) m.getKey();
+		        	Integer friendemailid= (Integer) m.getValue();
+		        	
+		        	   System.out.println(requestnumber+" "+friendemailid);  
+		        	   boys.set(requestnumber,friendemailid);
+		        	  }  
+		      
+				
+		   	       
+		
+		        horizontalBarModel.addSeries(boys);
+		      
+		        horizontalBarModel.addSeries(boys);
+	        horizontalBarModel.addSeries(boys);
+	      
+	         
+	        horizontalBarModel.setTitle("Request on Team Member");
+	        horizontalBarModel.setLegendPosition("e");
+	        horizontalBarModel.setStacked(true);
+	         
+	        Axis xAxis = horizontalBarModel.getAxis(AxisType.X);
+	        xAxis.setLabel("request");
+	        
+	        xAxis.setMin(0);
+	        xAxis.setMax(20);
+	         
+	        Axis yAxis = horizontalBarModel.getAxis(AxisType.Y);
+	        yAxis.setLabel("team member");        
+	    }
+	
+	*/
+	
+	 private void createBarModel() {
+			// TODO Auto-generated method stub
+		 barModel = initBarModel();
+	        
+	        barModel.setTitle("Task in Progress");
+	        barModel.setLegendPosition("ne");
+	       
+	        Axis xAxis = barModel.getAxis(AxisType.X);
+	        xAxis.setLabel("Team member");
+	         
+	        Axis yAxis = barModel.getAxis(AxisType.Y);
+	        yAxis.setLabel("Number of Request");
+	        yAxis.setMin(0);
+	       // yAxis.setMax(20);
+		}
+
+	 
+
+		@SuppressWarnings({ "unchecked", "rawtypes" })
+		private BarChartModel initBarModel() {
+		 Map<String, Integer> requestmap = new HashMap<String, Integer>();
+			 try {
+			       
+			        
+			 HttpSession session = SessionUtils.getSession();
+				String userName = (String)session.getAttribute("username");			
+				System.out.println("--usersession--userNam122e-->"+userName);
+	        	
+				requestmap = newrequestInterface.barchart(userName );
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			
+			
+			// TODO Auto-generated method stub BarChartModel model = new BarChartModel();
+			 BarChartModel model = new BarChartModel();
+			 
+			
+			 
+	       ChartSeries boys = new ChartSeries();
+	        boys.setLabel("Request");
+	    
+	        for(Map.Entry m:requestmap.entrySet()){  
+	        	
+	        	String requestnumber= (String) m.getKey();
+	        	Integer friendemailid= (Integer) m.getValue();
+	        	
+	        	   System.out.println(requestnumber+" "+friendemailid);  
+	        	   boys.set(requestnumber,friendemailid);
+	        	  }  
+	      
+			
+	   	       
+	
+	        model.addSeries(boys);
+	      
+	         
+	        return model;
+		}
+
+		
+	
+	
+	
+	
+	
+	
 	
 	public String createRequestPage()
 	{
@@ -183,9 +330,7 @@ public class CreateRequestbean implements Serializable
 	}
 	
 
-	public void modifyAction() {
-		
-		
+	public void modifyAction() {		
         try
         {
         	System.out.println("modify action"+requestId);
@@ -234,7 +379,7 @@ public class CreateRequestbean implements Serializable
 			String userName = (String)session.getAttribute("username");			
 			System.out.println("--usersession--userName-->"+userName);
 			
-        	result = newrequestInterface.updateRequestById(requestId,status,description, completiondate,attachment,   completionpercentage,stage);
+        	result = newrequestInterface.updateRequestById(requestId,status,description, completiondate,attachment,   completionpercentage,stage,message,userName);
         	
         	if(result == 2)
         	{
@@ -264,6 +409,9 @@ public class CreateRequestbean implements Serializable
 		}
 		return "request";
 	}
+	
+	
+	
 	
 	
 	 public StreamedContent fileDownloadView() { 
@@ -303,6 +451,15 @@ public class CreateRequestbean implements Serializable
 	    }
 	 
 	
+	 
+	
+	 
+	 
+	 
+	 
+	 
+	 
+	 
 	
 	 public void postProcessXLS(Object document) {
 	        HSSFWorkbook wb = (HSSFWorkbook) document;
@@ -521,7 +678,59 @@ public class CreateRequestbean implements Serializable
 			this.stage = stage;
 		}
 	
-	
+		public BarChartModel getBarModel() {
+			return barModel;
+		}
+
+		public void setBarModel(BarChartModel barModel) {
+			this.barModel = barModel;
+		}
+
+		public HorizontalBarChartModel getHorizontalBarModel() {
+			return horizontalBarModel;
+		}
+
+		public void setHorizontalBarModel(HorizontalBarChartModel horizontalBarModel) {
+			this.horizontalBarModel = horizontalBarModel;
+		}
+
+
+		public String getCurrentDate() {
+			return currentDate;
+		}
+
+
+		public void setCurrentDate(String currentDate) {
+			this.currentDate = currentDate;
+		}
+
+
+		
+
+
+		public String getMessage() {
+			return message;
+		}
+
+
+		public void setMessage(String message) {
+			this.message = message;
+		}
+
+
+		public List<NewrequestVo> getNewrequestList3() {
+			return newrequestList3;
+		}
+
+
+		public void setNewrequestList3(List<NewrequestVo> newrequestList3) {
+			this.newrequestList3 = newrequestList3;
+		}
+
+
+		
+
+		
 	
 	
 }
