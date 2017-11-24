@@ -8,9 +8,17 @@ private String name;
 
 private String status;
 private Integer userProjectId;
-
+private String projectaccess;
 
 	
+
+	public String getProjectaccess() {
+	return projectaccess;
+}
+
+public void setProjectaccess(String projectaccess) {
+	this.projectaccess = projectaccess;
+}
 
 	public Integer getUserProjectId() {
 		return userProjectId;

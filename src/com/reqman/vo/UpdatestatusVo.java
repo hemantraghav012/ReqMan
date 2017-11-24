@@ -1,6 +1,7 @@
 package com.reqman.vo;
 
 import java.util.Date;
+import java.util.List;
 
 import org.primefaces.model.UploadedFile;
 
@@ -19,9 +20,21 @@ public class UpdatestatusVo {
 	private byte[] file;
 	private String fileName;
 	private UploadedFile attachment;
-	private Float completionpercentage;
+	private int completionpercentage;
 	private String createdby;
 	private Date changedate;
+	private List<requestNoteVo> noteList;
+	
+	
+	
+	
+	
+	public List<requestNoteVo> getNoteList() {
+		return noteList;
+	}
+	public void setNoteList(List<requestNoteVo> noteList) {
+		this.noteList = noteList;
+	}
 	public Integer getNewRequestId() {
 		return newRequestId;
 	}
@@ -100,10 +113,11 @@ public class UpdatestatusVo {
 	public void setAttachment(UploadedFile attachment) {
 		this.attachment = attachment;
 	}
-	public Float getCompletionpercentage() {
+	
+	public int getCompletionpercentage() {
 		return completionpercentage;
 	}
-	public void setCompletionpercentage(Float completionpercentage) {
+	public void setCompletionpercentage(int completionpercentage) {
 		this.completionpercentage = completionpercentage;
 	}
 	public String getCreatedby() {

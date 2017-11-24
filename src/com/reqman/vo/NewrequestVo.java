@@ -1,10 +1,14 @@
 package com.reqman.vo;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import org.primefaces.model.StreamedContent;
 import org.primefaces.model.UploadedFile;
+
+
 
 public class NewrequestVo implements Serializable
  {
@@ -16,23 +20,30 @@ public class NewrequestVo implements Serializable
 	private String usercategory;
 	private String userproject;
 	private String userrequesttype;
-	//private StreamedContent attachment;
 	private Date completiondate;
 	private String status;
 	private String friendName;
 	private byte[] file;
 	private String fileName;
 	private UploadedFile attachment;
-	private Float completionpercentage;
+	private int completionpercentage;
 	private String stage;
 	private String changedate;
+	private List<requestNoteVo> noteList;
 	
-	
-	
+	//private List<requestNoteVo> requestnoteList = new ArrayList<requestNoteVo>();
 	
 	
 	public String getStage() {
 		return stage;
+	}
+
+	public List<requestNoteVo> getNoteList() {
+		return noteList;
+	}
+
+	public void setNoteList(List<requestNoteVo> noteList) {
+		this.noteList = noteList;
 	}
 
 	public void setStage(String stage) {
@@ -159,13 +170,15 @@ public class NewrequestVo implements Serializable
 		this.fileName = fileName;
 	}
 
-	public Float getCompletionpercentage() {
+	public int getCompletionpercentage() {
 		return completionpercentage;
 	}
 
-	public void setCompletionpercentage(Float completionpercentage) {
+	public void setCompletionpercentage(int completionpercentage) {
 		this.completionpercentage = completionpercentage;
 	}
+
+	
 	
 	
 
