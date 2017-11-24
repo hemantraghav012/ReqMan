@@ -1,0 +1,673 @@
+
+
+
+.secondtop{backface-visibility: hidden;
+    overflow: initial;
+    background: #03b4f2;
+    padding: 10px 0;
+    position: relative;
+    z-index: 995;
+}
+
+.allcommonclass{
+	  border: .5px solid rgba(0, 0, 0, 0.1);
+	    box-shadow: 4px 4px 3px rgba(0, 0, 0, 0.5);
+	background-color: #fff;
+	text-align:center;
+	border-radius: 15px;
+	max-width: 260px;
+	 width: 100% !important;
+ 
+	overflow: hidden;
+}
+
+
+
+
+
+
+
+
+
+@media only screen and (max-width: 767px)
+main.min.e3cc4afa.css:1
+.bx {
+    padding: 5rem 0;
+}
+main.min.e3cc4afa.css:1
+.pricing {
+ 
+    background-size: cover;
+    padding-bottom: 7rem;
+}
+main.min.e3cc4afa.css:1
+.bx {
+    padding: 8rem 0;
+}
+globals.min.8cc2b7fc.css:1
+article, aside, details, figcaption, figure, footer, header, hgroup, main, menu, nav, section, summary {
+    display: block;
+}
+
+globals.min.8cc2b7fc.css:1
+article, aside, details, figcaption, figure, footer, header, hgroup, main, menu, nav, section, summary {
+    display: block;
+}
+user agent stylesheet
+article, aside, footer, header, hgroup, main, nav, section {
+    display: block;
+}
+ .container {
+    max-width: 1170px;
+    margin: 0 auto;
+}
+grid.min.a17cf113.css:6
+.container {
+    margin-right: auto;
+    margin-left: auto;
+    padding-right: 15px;
+    padding-left: 15px;
+}
+user agent stylesheet
+div {
+    display: block;
+}
+.clearfix:after, .clearfix:before, .container-fluid:after, .container-fluid:before, .container:after, .container:before, .row:after, .row:before {
+    display: table;
+    content: ' ';
+}
+@media only screen and (max-width: 767px)
+main.min.e3cc4afa.css:1
+.pricing h2 {
+    font-size: 3.5rem;
+    margin-bottom: 5rem;
+}
+main.min.e3cc4afa.css:1
+.pricing h2 {
+    font-family: RobotoBasic,Roboto,Helvetica,Arial,sans-serif;
+    font-weight: 100;
+    font-size: 4.5rem;
+    color: #003c54;
+    line-height: 1.1;
+    letter-spacing: -1px;
+    margin: 0 0 8rem 0;
+    text-align: center;
+}
+user agent stylesheet
+h2 {
+    display: block;
+    font-size: 1.5em;
+    -webkit-margin-before: 0.83em;
+    -webkit-margin-after: 0.83em;
+    -webkit-margin-start: 0px;
+    -webkit-margin-end: 0px;
+    font-weight: bold;
+}
+.pricing .offer-list {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: row;
+    flex-direction: row;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    max-width: 104rem;
+    margin: 0 auto;
+}
+user agent stylesheet
+div {
+    display: block;
+}
+@media only screen and (max-width: 767px)
+main.min.e3cc4afa.css:1
+.pricing .offer-list .offer {
+    -ms-flex-preferred-size: 100%;
+    flex-basis: 100%;
+    width: 100%;
+    padding: 1.5rem 0;
+}
+@media only screen and (max-width: 979px)
+main.min.e3cc4afa.css:1
+.pricing .offer-list .offer {
+    -ms-flex-preferred-size: 50%;
+    flex-basis: 50%;
+    width: 50%;
+}
+main.min.e3cc4afa.css:1
+.pricing .offer-list .offer {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    -webkit-box-flex: 1;
+    -ms-flex-positive: 1;
+    flex-grow: 1;
+    -ms-flex-preferred-size: 25%;
+    flex-basis: 25%;
+    background: #fff;
+    border: 1px solid #edf0f3;
+    box-shadow: 3px 3px 10px 0 rgba(50,50,50,.15);
+    padding: 2.5rem 0 1.5rem;
+    text-align: center;
+    margin: 0 -1px;
+}
+user agent stylesheet
+div {
+    display: block;
+}
+.pricing .offer-list .offer .about {
+    
+    -webkit-box-flex: 0;
+    -ms-flex: 0 0 27rem;
+    flex: 0 0 27rem;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    box-sizing: border-box;
+}
+user agent stylesheet
+div {
+    display: block;
+}
+.pricing .offer-list .offer .about {
+    padding: 0 3rem 2.5rem;
+    -webkit-box-flex: 0;
+    -ms-flex: 0 0 27rem;
+    flex: 0 0 27rem;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    box-sizing: border-box;
+}
+Inherited from div.offer
+main.min.e3cc4afa.css:1
+.pricing .offer-list .offer {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    -webkit-box-flex: 1;
+    -ms-flex-positive: 1;
+    flex-grow: 1;
+    -ms-flex-preferred-size: 25%;
+    flex-basis: 25%;
+    background: #fff;
+    border: 1px solid #edf0f3;
+    box-shadow: 3px 3px 10px 0 rgba(50,50,50,.15);
+    padding: 2.5rem 0 1.5rem;
+    text-align: center;
+    margin: 0 -1px;
+}
+Inherited from div.offer-list
+main.min.e3cc4afa.css:1
+.pricing .offer-list {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: row;
+    flex-direction: row;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    max-width: 104rem;
+    margin: 0 auto;
+}
+Inherited from body.en
+main.min.e3cc4afa.css:1
+
+.pricing .offer-list .offer .about h3 {
+    font-family: RobotoBasic,Roboto,Helvetica,Arial,sans-serif;
+    font-weight: 300;
+    font-size: 3.5rem;
+    color: #00afec;
+    margin: 0 0 1rem;
+}
+user agent stylesheet
+h3 {
+    display: block;
+    font-size: 1.17em;
+    -webkit-margin-before: 1em;
+    -webkit-margin-after: 1em;
+    -webkit-margin-start: 0px;
+    -webkit-margin-end: 0px;
+    font-weight: bold;
+}
+.pricing .offer-list .offer .about p {
+    font-family: RobotoBasic,Roboto,Helvetica,Arial,sans-serif;
+    font-weight: 300;
+    font-size: 1.3rem;
+    color: #737373;
+    margin: 0;
+}
+user agent stylesheet
+p {
+    display: block;
+    -webkit-margin-before: 1em;
+    -webkit-margin-after: 1em;
+    -webkit-margin-start: 0px;
+    -webkit-margin-end: 0px;
+}
+@media only screen and (max-width: 979px)
+globals.min.8cc2b7fc.css:1
+.mobile-nobreak br {
+    display: none;
+}
+@media only screen and (max-width: 979px)
+globals.min.8cc2b7fc.css:1
+.mobile-nobreak br {
+    display: none;
+}
+Inherited from p
+main.min.e3cc4afa.css:1
+.pricing .offer-list .offer .about p {
+    font-family: RobotoBasic,Roboto,Helvetica,Arial,sans-serif;
+    font-weight: 300;
+    font-size: 1.3rem;
+    color: #737373;
+    margin: 0;
+}
+pricing .offer-list .offer .about .price {
+    font-family: RobotoBasic,Roboto,Helvetica,Arial,sans-serif;
+    font-weight: 300;
+    font-size: 2.2rem;
+    color: #373737;
+    margin-top: .5rem;
+}
+user agent stylesheet
+div {
+    display: block;
+}
+.pricing .offer-list .offer .about .price span {
+    font-size: 4rem;
+}
+Inherited from div.price
+main.min.e3cc4afa.css:1
+.pricing .offer-list .offer .about .price {
+    font-family: RobotoBasic,Roboto,Helvetica,Arial,sans-serif;
+    font-weight: 300;
+    font-size: 2.2rem;
+    color: #373737;
+    margin-top: .5rem;
+}
+.pricing .offer-list .offer .about .price sup {
+    font-size: 2.5rem;
+}
+globals.min.8cc2b7fc.css:1
+sup {
+    top: -.5em;
+}
+globals.min.8cc2b7fc.css:1
+sub, sup {
+    font-size: 75%;
+    line-height: 0;
+    position: relative;
+    vertical-align: baseline;
+}
+globals.min.8cc2b7fc.css:1
+sup {
+    top: -.5em;
+}
+globals.min.8cc2b7fc.css:1
+sub, sup {
+    font-size: 75%;
+    line-height: 0;
+    position: relative;
+    vertical-align: baseline;
+}
+user agent stylesheet
+sup {
+    vertical-align: super;
+    font-size: smaller;
+}
+Inherited from span
+main.min.e3cc4afa.css:1
+.pricing .offer-list .offer .about .price span {
+    font-size: 4rem;
+}
+.pricing .offer-list .offer .about .btn-wrap {
+    padding: 2rem 0 0;
+}
+main.min.e3cc4afa.css:1
+.btn-wrap {
+    padding: 5rem 0 2rem;
+    text-align: center;
+}
+user agent stylesheet
+div {
+    display: block;
+}
+@media only screen and (max-width: 979px)
+main.min.e3cc4afa.css:1
+.pricing .offer-list .offer .details {
+    display: none;
+}
+main.min.e3cc4afa.css:1
+.pricing .offer-list .offer .details {
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-flex: 1;
+    -ms-flex-positive: 1;
+    flex-grow: 1;
+    border-top: 1px solid #f2f2f2;
+    padding: 0 3rem;
+}
+user agent stylesheet
+div {
+    display: block;
+}
+.pricing .offer-list .offer .details ul {
+    list-style: none;
+    padding: 0;
+    margin: 2.5rem 0 0;
+}
+user agent stylesheet
+ul, menu, dir {
+    display: block;
+    list-style-type: disc;
+    -webkit-margin-before: 1em;
+    -webkit-margin-after: 1em;
+    -webkit-margin-start: 0px;
+    -webkit-margin-end: 0px;
+    -webkit-padding-start: 40px;
+}
+.pricing .offer-list .offer .details ul li {
+    font-family: RobotoBasic,Roboto,Helvetica,Arial,sans-serif;
+    font-weight: 300;
+    font-size: 1.4rem;
+    color: #373737;
+    margin-bottom: 1rem;
+}
+user agent stylesheet
+li {
+    display: list-item;
+    text-align: -webkit-match-parent;
+}
+Inherited from ul
+main.min.e3cc4afa.css:1
+
+
+main.min.e3cc4afa.css:1
+.pricing .offer-list .offer .details ul li strong {
+    font-weight: 400;
+}
+main.min.e3cc4afa.css:1
+strong {
+    font-weight: 400;
+}
+
+globals.min.8cc2b7fc.css:1
+b, strong {
+    font-weight: 700;
+}
+globals.min.8cc2b7fc.css:1
+b, strong {
+    font-weight: 700;
+}
+user agent stylesheet
+strong, b {
+    font-weight: bold;
+}
+Inherited from li
+main.min.e3cc4afa.css:1
+.pricing .offer-list .offer .details ul li {
+    font-family: RobotoBasic,Roboto,Helvetica,Arial,sans-serif;
+    font-weight: 300;
+    font-size: 1.4rem;
+    color: #373737;
+    margin-bottom: 1rem;
+}
+user agent stylesheet
+li {
+    display: list-item;
+    text-align: -webkit-match-parent;
+}
+.pricing .offer-list .offer .details ul.automation {
+    -webkit-box-pack: end;
+    -ms-flex-pack: end;
+    justify-content: flex-end;
+    -webkit-box-flex: 1;
+    -ms-flex-positive: 1;
+    flex-grow: 1;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    margin-top: .9em;
+}
+main.min.e3cc4afa.css:1
+.pricing .offer-list .offer .details ul {
+    list-style: none;
+    padding: 0;
+    margin: 2.5rem 0 0;
+}
+user agent stylesheet
+ul, menu, dir {
+    display: block;
+    list-style-type: disc;
+    -webkit-margin-before: 1em;
+    -webkit-margin-after: 1em;
+    -webkit-margin-start: 0px;
+    -webkit-margin-end: 0px;
+    -webkit-padding-start: 40px;
+}
+.pricing .offer-list .offer .details ul.crm {
+    -webkit-box-pack: end;
+    -ms-flex-pack: end;
+    justify-content: flex-end;
+    -webkit-box-flex: 0;
+    -ms-flex-positive: 0;
+    flex-grow: 0;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    margin-top: 0;
+}
+main.min.e3cc4afa.css:1
+.pricing .offer-list .offer .details ul {
+    list-style: none;
+    padding: 0;
+    margin: 2.5rem 0 0;
+}
+user agent stylesheet
+ul, menu, dir {
+    display: block;
+    list-style-type: disc;
+    -webkit-margin-before: 1em;
+    -webkit-margin-after: 1em;
+    -webkit-margin-start: 0px;
+    -webkit-margin-end: 0px;
+    -webkit-padding-start: 40px;
+}
+@media only screen and (max-width: 767px)
+main.min.e3cc4afa.css:1
+.pricing .offer-list .offer.active {
+    -webkit-transform: none;
+    transform: none;
+    margin: 0;
+    z-index: initial;
+}
+main.min.e3cc4afa.css:1
+.pricing .offer-list .offer.active {
+    z-index: 10;
+    box-shadow: 0 3px 15px 0 rgba(50,50,50,.15);
+    -webkit-transform: translate3d(0,-2rem,0);
+    transform: translate3d(0,-2rem,0);
+    margin-bottom: -2rem;
+}
+@media only screen and (max-width: 767px)
+main.min.e3cc4afa.css:1
+.pricing .offer-list .offer {
+    -ms-flex-preferred-size: 100%;
+    flex-basis: 100%;
+    width: 100%;
+    padding: 1.5rem 0;
+}
+@media only screen and (max-width: 979px)
+main.min.e3cc4afa.css:1
+.pricing .offer-list .offer {
+    -ms-flex-preferred-size: 50%;
+    flex-basis: 50%;
+    width: 50%;
+}
+main.min.e3cc4afa.css:1
+.pricing .offer-list .offer {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    -webkit-box-flex: 1;
+    -ms-flex-positive: 1;
+    flex-grow: 1;
+    -ms-flex-preferred-size: 25%;
+    flex-basis: 25%;
+    background: #fff;
+    border: 1px solid #edf0f3;
+    box-shadow: 3px 3px 10px 0 rgba(50,50,50,.15);
+    padding: 2.5rem 0 1.5rem;
+    text-align: center;
+    margin: 0 -1px;
+}
+user agent stylesheet
+div {
+    display: block;
+}
+@media only screen and (max-width: 767px)
+main.min.e3cc4afa.css:1
+.pricing .offer-list .offer.active .about {
+    -ms-flex-preferred-size: 24rem;
+    flex-basis: 24rem;
+}
+main.min.e3cc4afa.css:1
+.pricing .offer-list .offer.active .about {
+    -ms-flex-preferred-size: 29rem;
+    flex-basis: 29rem;
+}
+@media only screen and (max-width: 767px)
+main.min.e3cc4afa.css:1
+.pricing .offer-list .offer .about {
+    padding: 0 1.5rem 1.5rem;
+    -webkit-box-flex: 0;
+    -ms-flex: 0 0 22rem;
+    flex: 0 0 22rem;
+}
+main.min.e3cc4afa.css:1
+.pricing .offer-list .offer .about {
+    padding: 0 3rem 2.5rem;
+    -webkit-box-flex: 0;
+    -ms-flex: 0 0 27rem;
+    flex: 0 0 27rem;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    box-sizing: border-box;
+}
+user agent stylesheet
+div {
+    display: block;
+}
+Inherited from div.offer.pro.active
+main.min.e3cc4afa.css:1
+
+.pricing .offer-list .offer .about .package {
+    -webkit-box-flex: 1;
+    -ms-flex: 1 0 auto;
+    flex: 1 0 auto;
+}
+user agent stylesheet
+div {
+    display: block;
+}
+.pricing .offer-list .offer .about .popular {
+    font-family: Roboto,Helvetica,Arial,sans-serif;
+    font-weight: 600;
+    font-size: 1rem;
+    color: #00afec;
+    letter-spacing: 3px;
+    margin-bottom: .5rem;
+    display: block;
+}
+.pricing .offer-list .offer .about h3 {
+    font-family: RobotoBasic,Roboto,Helvetica,Arial,sans-serif;
+    font-weight: 300;
+    font-size: 3.5rem;
+    color: #00afec;
+    margin: 0 0 1rem;
+}
+user agent stylesheet
+h3 {
+    display: block;
+    font-size: 1.17em;
+    -webkit-margin-before: 1em;
+    -webkit-margin-after: 1em;
+    -webkit-margin-start: 0px;
+    -webkit-margin-end: 0px;
+    font-weight: bold;
+}
+.pricing .offer-list .offer .about p {
+    font-family: RobotoBasic,Roboto,Helvetica,Arial,sans-serif;
+    font-weight: 300;
+    font-size: 1.3rem;
+    color: #737373;
+    margin: 0;
+}
+user agent stylesheet
+p {
+    display: block;
+    -webkit-margin-before: 1em;
+    -webkit-margin-after: 1em;
+    -webkit-margin-start: 0px;
+    -webkit-margin-end: 0px;
+}
+.pricing .offer-list .offer .about .price {
+    font-family: RobotoBasic,Roboto,Helvetica,Arial,sans-serif;
+    font-weight: 300;
+    font-size: 2.2rem;
+    color: #373737;
+    margin-top: .5rem;
+}
+user agent stylesheet
+div {
+    display: block;
+}

@@ -22,5 +22,45 @@
     margin-bottom: 0px;
     
 }
+.ui-button.buttoncolor1{
+	 background:#4682B4;
+   color:#fff;
+   font-family:  Arial;
+    
+   
+}
+.buttoncolor1:hover{
+	 background-color:#4682B4;
+	
+}
 
 
+
+
+
+
+
+.red{
+   background-color:#ce5858;  
+}
+
+
+.green{
+	 background-color:#3db545;  
+}
+.white{
+	 background-color:#fff;  
+}
+ .dd{
+	 border: 0;
+	 white-space: -moz-pre-wrap !important;  /* Mozilla, since 1999 */
+     white-space: -pre-wrap;      /* Opera 4-6 */
+     white-space: -o-pre-wrap;    /* Opera 7 */
+     white-space: pre-wrap;       /* css-3 */
+     word-wrap: break-word;       /* Internet Explorer 5.5+ */
+     word-break: break-all;
+     white-space: normal; 
+}
+tr.noBorder td {
+  border: 0;
+}

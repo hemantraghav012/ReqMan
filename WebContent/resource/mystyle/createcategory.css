@@ -38,14 +38,25 @@ border-radius: 0px;
   background-color: #fff;
   margin: 0 auto;
   border-radius: 8px;
-  box-shadow: 4px 4px 3px rgba(0, 0, 0, 0.5);
- 
+
+  overflow: hidden;
   font-family: roboto;
-   
-       border: .5px solid rgba(0, 0, 0, 0.2);
 }
 
-
+.fixedcontainercreatemaster{
+	
+	  padding: 20px;
+ padding-left:0px;
+ margin-left:0px;
+  width: 100% !important;
+  background-color: #fff;
+  margin: 0 auto;
+border-radius: 0px;
+  overflow: hidden;
+  font-family: roboto;
+ 
+       border: .5px solid rgba(0, 0, 0, 0.2);
+}
 
 
 .fixedcontainerrequset{
@@ -92,4 +103,12 @@ hr {
     border-style: inset;
     border-width: 1px;
 }
-
+.footer {
+   position: fixed;
+   left: 0;
+   bottom: 0;
+   width: 100%;
+ padding: 4px 4px 4px 4px;
+   color: white;
+   text-align: center;
+}
