@@ -58,13 +58,12 @@ public class ResponseImpl implements responseInterface {
             friendList = (List<Integer>) crit1.list();
 	
             List<Request> requesPojoList =  null;
-			if(friendList != null && friendList.size() != 0)
-			{
-				requesPojoList = (List<Request>) session.createCriteria(Request.class)
-						.add(Restrictions.in("userfriendlist.id",friendList)).list();
-
-			}
-			
+            			if(friendList != null && friendList.size() != 0)
+            		{
+            				requesPojoList = (List<Request>) session.createCriteria(Request.class)
+             						.add(Restrictions.in("userfriendlist.id",friendList)).list();
+            
+            		}
 			    String userCategory = "";
 				String userProject = "";
 				String userRequestType= "";

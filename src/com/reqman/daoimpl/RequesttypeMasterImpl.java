@@ -10,15 +10,12 @@ import org.hibernate.Transaction;
 import org.hibernate.criterion.Restrictions;
 
 import com.reqman.common.HibernateUtil;
-
 import com.reqman.dao.requesttypeMasterInterface;
-import com.reqman.pojo.Category;
 import com.reqman.pojo.Requesttype;
-import com.reqman.pojo.Usercategory;
 import com.reqman.pojo.Userrequesttype;
 import com.reqman.pojo.Users;
-import com.reqman.vo.CategoryVo;
 import com.reqman.vo.RequesttypeVo;
+
 
 public class RequesttypeMasterImpl implements requesttypeMasterInterface{
 
@@ -436,6 +433,59 @@ RequesttypeVo requesttypeVo = new RequesttypeVo();
 
 		return requesttypeList1;
 	}
+
+	@Override
+	public int updateRequesttype(String oldValue, String newValue,
+			Integer updaterequesttypeId) throws Exception {
+		// TODO Auto-generated method stub
+
+		Userrequesttype userrequesttypeTemp = null;
+	    Session session = null;
+	    Transaction tx = null;
+	    int result = 0;
+		try
+		{
+           	session = HibernateUtil.getSession();
+            tx = session.beginTransaction();
+            userrequesttypeTemp = (Userrequesttype)session.createCriteria(Userrequesttype.class)
+            		.add(Restrictions.eq("id", updaterequesttypeId))
+            		.uniqueResult();
+            
+            if(userrequesttypeTemp != null)
+            {   
+            	if(oldValue != null && oldValue.trim().equalsIgnoreCase("InActive") 
+            			&& newValue != null && newValue.trim().equalsIgnoreCase("Active"))
+            	{
+            		userrequesttypeTemp.setStatus(true);
+            		
+            	}
+            	
+            	if(oldValue != null && oldValue.trim().equalsIgnoreCase("Active") 
+            			&& newValue != null && newValue.trim().equalsIgnoreCase("InActive"))
+            	{
+            		userrequesttypeTemp.setStatus(false);
+            	}
+            	session.update(userrequesttypeTemp);
+            	tx.commit();
+            	result = 1;
+            	
+            }
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+			result = 2;
+		}
+		finally 
+		{
+        	if(session != null)
+            session.close();
+	    }
+
+		return result;
+	}
+	
+
 	
 
 	

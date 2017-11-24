@@ -1,19 +1,27 @@
 package com.reqman.daoimpl;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.ListIterator;
+import java.util.Map;
+import java.util.Set;
 
 import org.hibernate.Criteria;
 import org.hibernate.Hibernate;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.primefaces.model.UploadedFile;
 
 import com.reqman.common.HibernateUtil;
 import com.reqman.dao.NewrequestInterface;
 import com.reqman.pojo.Request;
+import com.reqman.pojo.Requestnotes;
 import com.reqman.pojo.Usercategory;
 import com.reqman.pojo.Userfriendlist;
 import com.reqman.pojo.Userproject;
@@ -23,6 +31,8 @@ import com.reqman.util.Dateconverter;
 import com.reqman.util.requestsendEmail;
 import com.reqman.util.sendEmailonfriend;
 import com.reqman.vo.NewrequestVo;
+import com.reqman.vo.requestNoteVo;
+
 
 public class NewrequestImpl implements NewrequestInterface {
 
@@ -185,7 +195,7 @@ public class NewrequestImpl implements NewrequestInterface {
 					
 					
 					request.setTitle(title != null ? title.trim() : "");
-					request.setCompletionpercentage(0.0f);
+					request.setCompletionpercentage(0);
 					request.setRequeststatus(1);
 					request.setStatus(true);
 					request.setDatecreated(new Date());
@@ -234,10 +244,14 @@ public class NewrequestImpl implements NewrequestInterface {
 	public List<NewrequestVo> getNewrequestDetails(String userName)
 			throws Exception {
 		List<NewrequestVo> requestList = new ArrayList<NewrequestVo>();
+
+		List<requestNoteVo> requestnoteList =null;
 		Users usersTemp = null;
 		Session session = null;
 		Transaction tx = null;
+		Request request= null;
 		NewrequestVo newrequestVo = null;
+		requestNoteVo requestnoteVo=null;
 		try {
 			session = HibernateUtil.getSession();
 			tx = session.beginTransaction();
@@ -271,13 +285,13 @@ public class NewrequestImpl implements NewrequestInterface {
 						firstName = "";
 						lastName = "";
 						name = "";
-
+						requestnoteList=new ArrayList<requestNoteVo>();
 
 						Hibernate.initialize(requestDB.getUsercategory());
 						Hibernate.initialize(requestDB.getUserproject());
 						Hibernate.initialize(requestDB.getUserrequesttype());
 						Hibernate.initialize(requestDB.getUserfriendlist());
-						
+						Hibernate.initialize(requestDB.getRequestnoteses());
 						if(requestDB != null && requestDB.getUsercategory() != null && requestDB.getUsercategory().getCategory() != null)
 						{
 							userCategory = requestDB.getUsercategory().getCategory().getName() != null 
@@ -324,6 +338,8 @@ public class NewrequestImpl implements NewrequestInterface {
 						newrequestVo.setUserproject(userProject);
 						newrequestVo.setUserrequesttype(userRequestType);
 						newrequestVo.setCompletionpercentage(requestDB.getCompletionpercentage());
+						//newrequestVo.setNoteList(requestDB.getRequestnoteses());
+						
 						if(requestDB.getRequeststatus()==2)
 						{
 							newrequestVo.setStage("Accepted");
@@ -363,11 +379,64 @@ public class NewrequestImpl implements NewrequestInterface {
 						}
 						
 						newrequestVo.setNewRequestId(requestDB.getId());
-									
+						
+						
+						if(requestDB.getRequestnoteses() !=null && requestDB.getRequestnoteses().size() !=0){ 
+							
+						for(Requestnotes requestnotes : requestDB.getRequestnoteses()){
+						 firstName="";
+						 lastName="";
+						 name="";
+			
+						 
+						 if(usersTemp != null && requestnotes.getCreatedby() != null)
+							{
+								usersTemp = (Users)session.createCriteria(Users.class)
+										.add(Restrictions.eq("emailid",  requestnotes.getCreatedby()))
+										.uniqueResult();
+								
+								
+								firstName = usersTemp.getFirstname() != null 
+										? usersTemp.getFirstname() : "";
+										
+								lastName = usersTemp.getLastname() != null 
+										? usersTemp.getLastname() : "";
+										
+								if(firstName != null && !firstName.trim().equals(""))
+								{
+									name = firstName.trim();
+								}
+								
+								if(lastName != null && !lastName.trim().equals(""))
+								{
+									name = name + " " +lastName.trim();
+								}
+								
+							}
+						 
+						
+							requestnoteVo=new requestNoteVo();
+							
+							
+						//	Collections.sort(requestnoteList,requestNoteVo.NoteIdComparator );
+							requestnoteVo.setCreatedby(name);
+							//requestnoteVo.setCreatedby(requestnotes.getCreatedby() !=null ? requestnotes.getCreatedby().trim() : "" );
+							requestnoteVo.setNoteId(requestnotes.getId());
+							requestnoteVo.setMessage(requestnotes.getMessage() != null ? requestnotes.getMessage().trim() : "");
+							requestnoteVo.setCreatedon(requestnotes.getCreatedon()!= null ?  Dateconverter.convertDateToStringDDMMDDYYYY(requestnotes.getCreatedon()) : "");
+							requestnoteVo.setTime(requestnotes.getCreatedon()!= null ?  Dateconverter.convertTimeToStringhhmmss(requestnotes.getCreatedon()) : "");
+							
+							
+							requestnoteList.add(requestnoteVo);
+							Collections.sort(requestnoteList,requestNoteVo.NoteIdComparator );
+						}
+						}
+					
+						 
+						newrequestVo.setNoteList(requestnoteList);			
 						requestList.add(newrequestVo);
 					}
-								
-				}
+					}
 
 				tx.commit();
 			}
@@ -510,7 +579,8 @@ public class NewrequestImpl implements NewrequestInterface {
 
 	@Override
 	public int updateRequestById(String requestId, Boolean status,
-			String description, Date completiondate, UploadedFile attachment, Float completionpercentage,Integer stage)
+			String description, Date completiondate, UploadedFile attachment,
+			Float completionpercentage,Integer stage,String message, String userName)
 			throws Exception {
 		// TODO Auto-generated method stub
 		 Session session = null;
@@ -519,7 +589,7 @@ public class NewrequestImpl implements NewrequestInterface {
 		   Request requestworkflow = null;
 		   Request request=null;
 		   int result = 0;
-			
+		   Requestnotes  requestnotes=null;
 				try
 				{
 					session = HibernateUtil.getSession();
@@ -533,13 +603,19 @@ public class NewrequestImpl implements NewrequestInterface {
 		            if(requestworkflow != null ){
 		            	requestworkflow.setStatus(status);
 		            	requestworkflow.setDescription(description);		            	
-		            	requestworkflow.setCompletiondate(completiondate);		            	
-		         
-		            	
-		            	//requestworkflow.setRequeststatus(stage);
-		            	
+		            	requestworkflow.setCompletiondate(completiondate);
 		            	session.update(requestworkflow);
-		    			tx.commit();;
+		            	
+		            if(message !=null && ! message.trim().equals("")){	
+		           	requestnotes=new Requestnotes();
+	            		requestnotes.setRequest(requestworkflow);
+		            	requestnotes.setMessage(message);	            	
+		            	requestnotes.setCreatedby(userName);
+		            	requestnotes.setCreatedon(new Date());
+		            	session.save(requestnotes);
+		            	
+		            }
+		    			tx.commit();
     			result = 1;
 				}
  		}
@@ -566,9 +642,314 @@ public class NewrequestImpl implements NewrequestInterface {
 
 
 	
+	@SuppressWarnings("unchecked")
+	@Override
+	public Map<String, Integer> barchart(String userName) throws Exception {
+		// TODO Auto-generated method stub
+		 Session session = null;
+		    Transaction tx = null;		
+		   Users  usersTemp1=null;		  
+		   Request request=null;
+		   int result = 0;
+		   Set<String> friendNameset = new HashSet<String>();
+		   Map<String, Integer> requestmap = new HashMap<String, Integer>();
+				try
+				{
+					session = HibernateUtil.getSession();
+		            tx = session.beginTransaction();
+		            usersTemp1 = (Users) session
+							.createCriteria(Users.class)
+							.add(Restrictions.eq("emailid",
+									userName.toLowerCase().trim()).ignoreCase())								
+							.uniqueResult();
 
+		            
+					if (usersTemp1 != null) {
+
+						 					
+						List<Request> requesPojoList1 = (List<Request>) session
+								.createCriteria(Request.class)
+								.add(Restrictions.eq("createdby",
+										userName.toLowerCase().trim()).ignoreCase())
+										.add(Restrictions.eq("requeststatus", 4))
+																			
+								.list();
+						
+					 int count1=0;
+						String shortName = "";
+						String lastName = "";
+						String friendemail = "";
+						if (requesPojoList1 != null && requesPojoList1.size() != 0) {
+							
+							for (Request requestDB : requesPojoList1) {
+								
+								 NewrequestVo	newrequestVo = new NewrequestVo();
+							shortName = "";
+								lastName = "";
+								friendemail = "";
+
+
+								Hibernate.initialize(requestDB.getUserfriendlist());
+								
+		
+								
+								if(requestDB != null && requestDB.getUserfriendlist() != null 
+										&& requestDB.getUserfriendlist().getUsersByFriendid() != null )								{
+									shortName = requestDB.getUserfriendlist().getUsersByFriendid().getShortname() != null 
+											? requestDB.getUserfriendlist().getUsersByFriendid().getShortname() : "";
+								
+								}
+								if(requestDB.getUserfriendlist().getRequests() !=null  && requestDB.getUserfriendlist().getRequests().size() !=0  ){
+									
+									count1=requestDB.getUserfriendlist().getRequests().size();
+									}
+							System.out.println("friend name is ==" +count1);
+								friendNameset.add(shortName);
+	                        	  requestmap.put(shortName,count1);
+								
+							}
+						}
+					}
+				}
+		            catch(Exception e)
+		    		{
+		    			e.printStackTrace();
+		    			if(tx != null){
+		    				tx.rollback();
+		    			}
+		    			result = 2;
+		    		}
+		    		finally 
+		    		{
+		            	if(session != null)
+		                session.close();
+		    	    }
 
 		
+		return requestmap;
+	}
+
+
+	@Override
+	public List<NewrequestVo> getallproject(String userName) throws Exception {
+		// TODO Auto-generated method stub
+		List<NewrequestVo> requestList = new ArrayList<NewrequestVo>();
+
+		List<requestNoteVo> requestnoteList =null;
+		Users usersTemp = null;
+		Session session = null;
+		Transaction tx = null;
+		Request request= null;
+		NewrequestVo newrequestVo = null;
+		requestNoteVo requestnoteVo=null;
+		try {
+			session = HibernateUtil.getSession();
+			tx = session.beginTransaction();
+			usersTemp = (Users) session
+					.createCriteria(Users.class)
+					.add(Restrictions.eq("emailid",
+							userName.toLowerCase().trim()).ignoreCase())
+					.uniqueResult();
+
+			if (usersTemp != null) {
+
+
+				List<Request> requesPojoList = (List<Request>) session
+						.createCriteria(Request.class)
+						.add(Restrictions.eq("createdby",
+								userName.toLowerCase().trim()).ignoreCase())
+						.list();
+				
+			    String userCategory = "";
+				String userProject = "";
+				String userRequestType= "";
+				String firstName = "";
+				String lastName = "";
+				String name = "";
+				if (requesPojoList != null && requesPojoList.size() != 0) {
+					for (Request requestDB : requesPojoList) {
+						if(requestDB.getUserproject().getProjectaccess()==true){
+						
+						
+						userCategory = "";
+						userProject = "";
+						userRequestType= "";
+						newrequestVo = new NewrequestVo();
+						firstName = "";
+						lastName = "";
+						name = "";
+						requestnoteList=new ArrayList<requestNoteVo>();
+
+						Hibernate.initialize(requestDB.getUsercategory());
+						Hibernate.initialize(requestDB.getUserproject());
+						Hibernate.initialize(requestDB.getUserrequesttype());
+						Hibernate.initialize(requestDB.getUserfriendlist());
+						Hibernate.initialize(requestDB.getRequestnoteses());
+						if(requestDB != null && requestDB.getUsercategory() != null && requestDB.getUsercategory().getCategory() != null)
+						{
+							userCategory = requestDB.getUsercategory().getCategory().getName() != null 
+									? requestDB.getUsercategory().getCategory().getName() : "" ;
+						}
+						
+						if(requestDB != null && requestDB.getUserproject() != null && requestDB.getUserproject().getProject() != null)
+						{
+							userProject = requestDB.getUserproject().getProject().getName() != null 
+									? requestDB.getUserproject().getProject().getName() : "" ;
+						}
+						
+						if(requestDB != null && requestDB.getUserrequesttype() != null && requestDB.getUserrequesttype().getRequesttype() != null)
+						{
+							userRequestType = requestDB.getUserrequesttype().getRequesttype() != null 
+									? requestDB.getUserrequesttype().getRequesttype().getName() : "" ;
+						}
+						
+						if(requestDB != null && requestDB.getUserfriendlist() != null 
+								&& requestDB.getUserfriendlist().getUsersByFriendid() != null)
+						{
+							firstName = requestDB.getUserfriendlist().getUsersByFriendid().getFirstname() != null 
+									? requestDB.getUserfriendlist().getUsersByFriendid().getFirstname() : "";
+									
+							lastName = requestDB.getUserfriendlist().getUsersByFriendid().getLastname() != null 
+									? requestDB.getUserfriendlist().getUsersByFriendid().getLastname() : "";
+									
+							if(firstName != null && !firstName.trim().equals(""))
+							{
+								name = firstName.trim();
+							}
+							
+							if(lastName != null && !lastName.trim().equals(""))
+							{
+								name = name + " " +lastName.trim();
+							}
+						}
+						
+						newrequestVo.setTitle(requestDB.getTitle() != null ? requestDB.getTitle().trim() : "");
+						newrequestVo.setDescription(requestDB.getDescription() != null ? requestDB.getDescription().trim() : "");
+						newrequestVo.setChangedate(requestDB.getCompletiondate() != null ?  Dateconverter.convertDateToStringDDMMDDYYYY(requestDB.getCompletiondate()) : "");
+						newrequestVo.setFriendName(name);
+						newrequestVo.setUsercategory(userCategory);
+						newrequestVo.setUserproject(userProject);
+						newrequestVo.setUserrequesttype(userRequestType);
+						newrequestVo.setCompletionpercentage(requestDB.getCompletionpercentage());
+						//newrequestVo.setNoteList(requestDB.getRequestnoteses());
+						
+						if(requestDB.getRequeststatus()==2)
+						{
+							newrequestVo.setStage("Accepted");
+						}
+					 else if(requestDB.getRequeststatus()==3)
+						{
+						 newrequestVo.setStage("Send Back");
+						}
+					 else if(requestDB.getRequeststatus()==1){
+						 newrequestVo.setStage("Request");
+					 }
+					 else if(requestDB.getRequeststatus()==4){
+						 newrequestVo.setStage("In-progress");
+					 }
+						
+					 else if(requestDB.getRequeststatus()==5){
+						 newrequestVo.setStage("Completed");
+					 }
+					 else if(requestDB.getRequeststatus()==6){
+						 newrequestVo.setStage("Cancelled");
+					 }
+					 else if(requestDB.getRequeststatus()==7){
+						 newrequestVo.setStage("Hold");
+					 }
+					 else if(requestDB.getRequeststatus()==8){
+						 newrequestVo.setStage("Close");
+					 }
+						
+						if(requestDB != null && requestDB.getStatus() != null 
+								&& requestDB.getStatus().booleanValue() == true)
+						{
+							newrequestVo.setStatus("Active");
+						}
+						else
+						{
+							newrequestVo.setStatus("In Active");
+						}
+						
+						newrequestVo.setNewRequestId(requestDB.getId());
+						
+						
+						if(requestDB.getRequestnoteses() !=null && requestDB.getRequestnoteses().size() !=0){ 
+							
+						for(Requestnotes requestnotes : requestDB.getRequestnoteses()){
+						 firstName="";
+						 lastName="";
+						 name="";
+			
+						 
+						 if(usersTemp != null && requestnotes.getCreatedby() != null)
+							{
+								usersTemp = (Users)session.createCriteria(Users.class)
+										.add(Restrictions.eq("emailid",  requestnotes.getCreatedby()))
+										.uniqueResult();
+								
+								
+								firstName = usersTemp.getFirstname() != null 
+										? usersTemp.getFirstname() : "";
+										
+								lastName = usersTemp.getLastname() != null 
+										? usersTemp.getLastname() : "";
+										
+								if(firstName != null && !firstName.trim().equals(""))
+								{
+									name = firstName.trim();
+								}
+								
+								if(lastName != null && !lastName.trim().equals(""))
+								{
+									name = name + " " +lastName.trim();
+								}
+								
+							}
+						 
+						
+							requestnoteVo=new requestNoteVo();
+							
+							
+						//	Collections.sort(requestnoteList,requestNoteVo.NoteIdComparator );
+							requestnoteVo.setCreatedby(name);
+							//requestnoteVo.setCreatedby(requestnotes.getCreatedby() !=null ? requestnotes.getCreatedby().trim() : "" );
+							requestnoteVo.setNoteId(requestnotes.getId());
+							requestnoteVo.setMessage(requestnotes.getMessage() != null ? requestnotes.getMessage().trim() : "");
+							requestnoteVo.setCreatedon(requestnotes.getCreatedon()!= null ?  Dateconverter.convertDateToStringDDMMDDYYYY(requestnotes.getCreatedon()) : "");
+							requestnoteVo.setTime(requestnotes.getCreatedon()!= null ?  Dateconverter.convertTimeToStringhhmmss(requestnotes.getCreatedon()) : "");
+							
+							
+							requestnoteList.add(requestnoteVo);
+							Collections.sort(requestnoteList,requestNoteVo.NoteIdComparator );
+						}
+						}
+					
+						 
+						newrequestVo.setNoteList(requestnoteList);			
+						requestList.add(newrequestVo);
+					}
+				}
+					}
+
+				tx.commit();
+			}
+		} catch (Exception e) 
+		{
+			if(tx != null)
+			{
+				tx.rollback();
+			}
+
+			e.printStackTrace();
+			throw new Exception(e);
+		} finally {
+			if (session != null)
+				session.close();
+		}
+
+		return requestList;
+	}
 	
 
 

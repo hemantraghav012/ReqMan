@@ -11,7 +11,6 @@ import org.hibernate.Transaction;
 import org.hibernate.criterion.Restrictions;
 
 import com.reqman.common.HibernateUtil;
-
 import com.reqman.dao.ProjectMasterInterface;
 import com.reqman.pojo.Project;
 import com.reqman.pojo.Usercategory;
@@ -70,7 +69,7 @@ public class ProjectMasterImpl implements ProjectMasterInterface{
 	
 
 	
-	public int saveproject(String projectName, Boolean status, String emailId)
+	public int saveproject(String projectName, Boolean status, String emailId,Boolean projectaccess)
 			throws Exception {
 		// TODO Auto-generated method stub
 		 Session session = null;
@@ -121,7 +120,7 @@ public class ProjectMasterImpl implements ProjectMasterInterface{
 	            		userproject.setProject(project);
 	                	userproject.setUsers(users);
 	                	userproject.setStatus(true);
-	                	
+	                	userproject.setProjectaccess(projectaccess);
 	                	session.save(userproject);
 	                	
 	                	result = 3;
@@ -142,7 +141,7 @@ public class ProjectMasterImpl implements ProjectMasterInterface{
 	            	userproject.setProject(project);
 	            	userproject.setUsers(users);
 	            	userproject.setStatus(true);
-	            	
+	            	userproject.setProjectaccess(projectaccess);
 	            	session.save(userproject);
 	            	
 	            	result = 3;
@@ -206,6 +205,16 @@ public class ProjectMasterImpl implements ProjectMasterInterface{
                 			{
                 				projectVo.setStatus("InActive");
                 			}
+                			
+                			if(userprojectDB.getProjectaccess().equals(true))
+                			{
+                				projectVo.setProjectaccess("Employee");
+                			}
+                			else
+                			{
+                				projectVo.setProjectaccess("ALL");
+                			}
+                			
                 			counter++;
                 			projectList.add(projectVo);
             			}
@@ -228,7 +237,7 @@ public class ProjectMasterImpl implements ProjectMasterInterface{
 	}
 	
 
-
+/*
 	
 	public ProjectVo getUserProjectById(String projectId) throws Exception {
 		// TODO Auto-generated method stub
@@ -323,7 +332,7 @@ public class ProjectMasterImpl implements ProjectMasterInterface{
 		return result;
 	
 	
-	}
+	}*/
 
 
 
@@ -450,6 +459,79 @@ public class ProjectMasterImpl implements ProjectMasterInterface{
 		return projectList1;
 	}
 
+
+
+	@Override
+	public int updateProject(String oldValue, String newValue,
+			Integer updateprojectId) throws Exception {
+		// TODO Auto-generated method stub
+		Userproject userprojectTemp = null;
+	    Session session = null;
+	    Transaction tx = null;
+	    int result = 0;
+		try
+		{
+           	session = HibernateUtil.getSession();
+            tx = session.beginTransaction();
+            userprojectTemp = (Userproject)session.createCriteria(Userproject.class)
+            		.add(Restrictions.eq("id", updateprojectId))
+            		.uniqueResult();
+            
+            if(userprojectTemp != null)
+            {   
+            	if(oldValue != null && oldValue.trim().equalsIgnoreCase("InActive") 
+            			&& newValue != null && newValue.trim().equalsIgnoreCase("Active"))
+            	{
+            		userprojectTemp.setStatus(true);
+            		
+            	}
+            	
+            	if(oldValue != null && oldValue.trim().equalsIgnoreCase("Active") 
+            			&& newValue != null && newValue.trim().equalsIgnoreCase("InActive"))
+            	{
+            		userprojectTemp.setStatus(false);
+            	}
+            	
+            	
+            	 
+            	if(oldValue != null && oldValue.trim().equalsIgnoreCase("ALL") 
+            			&& newValue != null && newValue.trim().equalsIgnoreCase("Employee"))
+            	{
+            		userprojectTemp.setProjectaccess(true);
+            		
+            	}
+            	
+            	if(oldValue != null && oldValue.trim().equalsIgnoreCase("Employee") 
+            			&& newValue != null && newValue.trim().equalsIgnoreCase("All"))
+            	{
+            		userprojectTemp.setProjectaccess(false);
+            	}
+            	
+            	
+            	session.update(userprojectTemp);
+            	tx.commit();
+            	result = 1;
+            	
+            }
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+			result = 2;
+		}
+		finally 
+		{
+        	if(session != null)
+            session.close();
+	    }
+
+		return result;
+	}
 	
 
 }
+
+
+	
+
+

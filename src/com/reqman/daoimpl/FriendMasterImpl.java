@@ -18,16 +18,26 @@ import org.primefaces.model.chart.PieChartModel;
 
 
 
+
+
+
+
+
+
+
 import com.reqman.common.HibernateUtil;
 import com.reqman.dao.FriendMasterInterface;
 import com.reqman.pojo.Category;
 import com.reqman.pojo.Project;
+import com.reqman.pojo.Roles;
 import com.reqman.pojo.Usercategory;
 import com.reqman.pojo.Userfriendlist;
 import com.reqman.pojo.Userproject;
+import com.reqman.pojo.Userroles;
 import com.reqman.pojo.Users;
 import com.reqman.util.sendEmail1;
 import com.reqman.util.sendEmailonfriend;
+import com.reqman.util.setinfoEmail;
 import com.reqman.vo.CategoryVo;
 import com.reqman.vo.FriendVo;
 import com.reqman.vo.ProjectVo;
@@ -37,13 +47,17 @@ public class FriendMasterImpl implements FriendMasterInterface {
 	
 
 	@Override
-	public int savefriend(String firstname, String lastname, String emailid,String password,String shortname) throws Exception {
+	public int savefriend(String firstname, String lastname, String emailid,String password,String shortname,String hashkey) throws Exception {
 		// TODO Auto-generated method stub
 		
 		 Session session = null;
 	        SessionFactory hsf = null;
 	        Transaction tx = null;
 	      Users users = null;
+	      Userroles userrolesDetails=null;
+	        Roles roles=null;
+	        roles= new Roles();
+	        userrolesDetails = new Userroles();
 	        int result = 0;
 	        try {
 	        	session = HibernateUtil.getSession();
@@ -60,17 +74,35 @@ public class FriendMasterImpl implements FriendMasterInterface {
 	            }
 	            else
 	            {
-	            	
+	            	hashkey = new setinfoEmail().createAccount2(emailid, emailid);
+	            	//hashkey = new sendEmail1().createAccount(emailid, emailid);
+	     			System.out.println("-password--"+hashkey);
+	            
 	            	  users=new Users();
-	            	  users.setFirstname(firstname);
-	            	  users.setLastname(lastname);
-	            	 // users.setPassword(password);
 	            	  users.setEmailid(emailid);
-	            	  users.setShortname(shortname);	            	              
+	            	  //users.setFirstname(firstname);
+	            	 // users.setLastname(lastname);		            	
+	            	 // users.setShortname(shortname);	            	              
 	            	  users.setCreatedby("SYSTEM");	            
 	            	  users.setCreatedon(new Date());
+	                  users.setHashkey(hashkey != null ? hashkey.trim() : "");
 	            	  users.setStatus(true);
 	            	session.save(users);
+       if(roles != null && userrolesDetails != null) {
+	                    
+	            		
+	            		
+	            		roles=(Roles)session.createCriteria(Roles.class)
+	                    		.add(Restrictions.eq("id", 3))
+	                    		.uniqueResult();
+	            	
+	            		userrolesDetails = new Userroles();            		
+	            		userrolesDetails.setRoles(roles);
+	            		userrolesDetails.setUsers(users);
+	            		session.save(userrolesDetails);
+	            	}
+	            	
+	            	
 	            	tx.commit();
 	            	result = 3;
 	            }
@@ -92,13 +124,17 @@ public class FriendMasterImpl implements FriendMasterInterface {
 	
 	@Override
 	public int savefriend(String frienduser, Boolean status,String friendfirstname, String friendlastname,
-			String password,String friendshortname, String userName) throws Exception {
+			String password,String friendshortname, String userName,String hashkey) throws Exception {
 		
 		// TODO Auto-generated method stub
 		 Session session = null;
 	        SessionFactory hsf = null;
 	        Transaction tx = null;
 	        Users users = null;
+	        Userroles userrolesDetails=null;
+	        Roles roles=null;
+	        roles= new Roles();
+	        userrolesDetails = new Userroles();
 	        int result = 0;
 	     
 	        Userfriendlist userfriendlist = null;
@@ -153,7 +189,7 @@ public class FriendMasterImpl implements FriendMasterInterface {
 	     	            		.uniqueResult();
 	            		userfriendlist.setUsersByUserid(users);         		
 	            		userfriendlist.setStatus(true);
-	            		userfriendlist.setCreatedby(userName);
+	            		userfriendlist.setCreatedby(userName != null ? userName.trim() : "");
 	            		userfriendlist.setDatecreated(new Date());
 	                	session.save(userfriendlist);
 	                	
@@ -163,24 +199,41 @@ public class FriendMasterImpl implements FriendMasterInterface {
 	            }
 	            else
 	            {
+	            	hashkey = new setinfoEmail().createAccount2(frienduser, frienduser);
+	            	//hashkey = new sendEmail1().createAccount(frienduser, frienduser);
+	     			System.out.println("-password--"+hashkey);
+	            
 	            	sendEmailonfriend sef=new sendEmailonfriend();
-                	sef.friendemail(frienduser, friendfirstname,usename);
-	            	
+                	sef.friendemail(frienduser, friendfirstname,usename);	            	
 	            	// password = new sendEmail1().createAccount(frienduser, friendfirstname);
 	 				System.out.println("-password--"+password);
 	 		
 	            	users = new Users();
-	            	users.setEmailid(frienduser.trim());
-	            	users.setFirstname(friendfirstname);
-	            	users.setLastname(friendlastname);
-	            	users.setShortname(friendshortname);
+	            	users.setEmailid(frienduser != null ? frienduser.trim() : "");
+	            	//users.setFirstname(friendfirstname  != null ? friendfirstname.trim() : "");
+	            	//users.setLastname(friendlastname  != null ? friendlastname.trim() : "");
+	            	//users.setShortname(friendshortname  != null ? friendshortname.trim() : "");
+	            	//users.setPassword(password  != null ? password .trim() : "");
 	            	users.setStatus(true);
-	            	users.setPassword(password);
-	            	users.setCreatedby(userName);
+	            	users.setCreatedby(userName  != null ? userName.trim() : "");
 	            	users.setCreatedon(new Date());
-	            	
+	            	users.setHashkey(hashkey != null ? hashkey.trim() : "");           	
 	            	
 	            	session.save(users);
+	            	
+                      if(roles != null && userrolesDetails != null) {
+	                    
+	            		
+	            		
+	            		roles=(Roles)session.createCriteria(Roles.class)
+	                    		.add(Restrictions.eq("id", 3))
+	                    		.uniqueResult();
+	            	
+	            		userrolesDetails = new Userroles();            		
+	            		userrolesDetails.setRoles(roles);
+	            		userrolesDetails.setUsers(users);
+	            		session.save(userrolesDetails);
+	            	}
 	            	
 	            	userfriendlist = new Userfriendlist();
 	            	
@@ -507,6 +560,60 @@ public class FriendMasterImpl implements FriendMasterInterface {
 
 		return friendList1;
 	}
+
+
+
+	@Override
+	public int updateFriend(String oldValue, String newValue,
+			Integer updatefriendId) throws Exception {
+		// TODO Auto-generated method stub
+		Userfriendlist userfriendlistTemp = null;
+	    Session session = null;
+	    Transaction tx = null;
+	    int result = 0;
+		try
+		{
+           	session = HibernateUtil.getSession();
+            tx = session.beginTransaction();
+            userfriendlistTemp = (Userfriendlist)session.createCriteria(Userfriendlist.class)
+            		.add(Restrictions.eq("id", updatefriendId))
+            		.uniqueResult();
+            
+            if(userfriendlistTemp != null)
+            {   
+            	if(oldValue != null && oldValue.trim().equalsIgnoreCase("InActive") 
+            			&& newValue != null && newValue.trim().equalsIgnoreCase("Active"))
+            	{
+            		userfriendlistTemp.setStatus(true);
+            		
+            	}
+            	
+            	if(oldValue != null && oldValue.trim().equalsIgnoreCase("Active") 
+            			&& newValue != null && newValue.trim().equalsIgnoreCase("InActive"))
+            	{
+            		userfriendlistTemp.setStatus(false);
+            	}
+            	session.update(userfriendlistTemp);
+            	tx.commit();
+            	result = 1;
+            	
+            }
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+			result = 2;
+		}
+		finally 
+		{
+        	if(session != null)
+            session.close();
+	    }
+
+		return result;
+	}
+	
+
 
 
 
