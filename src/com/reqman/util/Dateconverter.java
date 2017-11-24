@@ -21,5 +21,19 @@ public class Dateconverter {
 
 	    }
 	
-	
+	 public static String convertTimeToStringhhmmss(Date date) {
+			// DateFormat dateTimeInstance = SimpleDateFormat.getDateTimeInstance();
+			 
+		        SimpleDateFormat df = new SimpleDateFormat("dd/MMM/yyyy H:mm a");
+		        String newtime = null;
+		        try {
+		            newtime = df.format(date);
+		            //
+
+		        } catch (Exception e) {
+		            e.printStackTrace();
+		        }
+		        return newtime;
+
+		    }
 }

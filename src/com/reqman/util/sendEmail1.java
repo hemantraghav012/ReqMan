@@ -18,6 +18,7 @@ import com.sendgrid.SendGrid;
 public class sendEmail1 { 
 	
 	  private static String MAIL_REGISTRATION_SITE_LINK = "";
+	
 	  private static char[] symbols = null;
 	  
 	  private static Random random = new Random();
@@ -47,6 +48,7 @@ public class sendEmail1 {
 				if(propertiesStream != null){
 					myResources.load(propertiesStream);
 					MAIL_REGISTRATION_SITE_LINK = myResources.getProperty("AppUrl");
+				
 				}
 
 				
@@ -81,7 +83,7 @@ public class sendEmail1 {
 		try{
 			sb.append("Welcome to Collabor8,"+ firstName + "!");
 			sb.append("<br>");
-			sb.append("Your account has been created! You can find the members' login URL as well as your account username and password below in this e-mail. To keep your account safe,");
+			sb.append("Your account has been created! You can Add the members' login URL as well as your account username and password below in this e-mail. To keep your account safe,");
 			sb.append("<br>");
 			sb.append("we recommend changing your password by going to "+temp+"Account"+temp+" after logging in. ");
 			sb.append("<br>");
@@ -91,7 +93,7 @@ public class sendEmail1 {
 			sb.append("<br>");
 			sb.append("Login URL");
 			sb.append("<br>");
-			sb.append("http://localhost:9002/ReqMan/faces/faces/eregisters.xhtml");
+		//	sb.append("http://localhost:9002/ReqMan/faces/faces/eregisters.xhtml");
 			sb.append("<br>");
 			sb.append("Username");
 			sb.append("<br>");
@@ -167,6 +169,19 @@ public class sendEmail1 {
 		
 		return hashkey;
     }  
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	public String resetPasswordContent(String To, String password, String userName){
 		StringBuffer sb = new StringBuffer();
