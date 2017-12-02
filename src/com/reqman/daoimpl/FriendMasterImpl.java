@@ -25,6 +25,7 @@ import org.primefaces.model.chart.PieChartModel;
 
 
 
+
 import com.reqman.common.HibernateUtil;
 import com.reqman.dao.FriendMasterInterface;
 import com.reqman.pojo.Category;
@@ -88,9 +89,8 @@ public class FriendMasterImpl implements FriendMasterInterface {
 	                  users.setHashkey(hashkey != null ? hashkey.trim() : "");
 	            	  users.setStatus(true);
 	            	session.save(users);
-       if(roles != null && userrolesDetails != null) {
-	                    
-	            		
+	            	
+	            	if(roles != null && userrolesDetails != null) {
 	            		
 	            		roles=(Roles)session.createCriteria(Roles.class)
 	                    		.add(Restrictions.eq("id", 3))
@@ -221,9 +221,7 @@ public class FriendMasterImpl implements FriendMasterInterface {
 	            	
 	            	session.save(users);
 	            	
-                      if(roles != null && userrolesDetails != null) {
-	                    
-	            		
+                    if(roles != null && userrolesDetails != null) {
 	            		
 	            		roles=(Roles)session.createCriteria(Roles.class)
 	                    		.add(Restrictions.eq("id", 3))
@@ -300,7 +298,31 @@ public class FriendMasterImpl implements FriendMasterInterface {
             					&& userfriendDB.getUsersByFriendid().getStatus() == true)
             			{
             				friendVo = new FriendVo();
-            			
+            				String firstName = "";
+            				String lastName = "";
+            				String name = "";
+            				if(userfriendDB != null && userfriendDB.getUsersByFriendid() != null 
+    								&& userfriendDB.getUsersByFriendid() != null)
+            				{
+    							firstName = userfriendDB.getUsersByFriendid().getFirstname() != null 
+    									? userfriendDB.getUsersByFriendid().getFirstname() : "";
+    									
+    							lastName = userfriendDB.getUsersByFriendid().getLastname() != null 
+    									? userfriendDB.getUsersByFriendid().getLastname() : "";
+    									
+    							if(firstName != null && !firstName.trim().equals(""))
+    							{
+    								name = firstName.trim();
+    							}
+    							
+    							if(lastName != null && !lastName.trim().equals(""))
+    							{
+    								name = name + " " +lastName.trim();
+    							}
+    						}
+    						
+            				
+            				friendVo.setName(name);
             				friendVo.setFirstname(userfriendDB.getUsersByFriendid() .getFirstname());
             				friendVo.setLastname(userfriendDB.getUsersByFriendid().getLastname());
             				friendVo.setEmailid(userfriendDB.getUsersByFriendid().getEmailid());

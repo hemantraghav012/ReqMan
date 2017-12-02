@@ -241,7 +241,7 @@ public class NewrequestImpl implements NewrequestInterface {
 
 	
 	@SuppressWarnings("unchecked")
-	public List<NewrequestVo> getNewrequestDetails(String userName)
+	public List<NewrequestVo> getNewrequestDetails(String userName,	Date startDate, Date endDate)
 			throws Exception {
 		List<NewrequestVo> requestList = new ArrayList<NewrequestVo>();
 
@@ -262,13 +262,24 @@ public class NewrequestImpl implements NewrequestInterface {
 					.uniqueResult();
 
 			if (usersTemp != null) {
-
-
+/*
 				List<Request> requesPojoList = (List<Request>) session
-						.createCriteria(Request.class)
+						.createCriteria(Request.class)						
 						.add(Restrictions.eq("createdby",
-								userName.toLowerCase().trim()).ignoreCase())
+						userName.toLowerCase().trim()).ignoreCase())
 						.list();
+						*/
+				Criteria crit = session.createCriteria(Request.class);
+				crit.add(Restrictions.eq("createdby", userName.toLowerCase().trim()).ignoreCase());
+				//search date range
+				if(startDate != null && endDate !=null)
+				{
+					crit.add(Restrictions.ge("completiondate", startDate)); 
+					crit.add(Restrictions.lt("completiondate", endDate));
+			
+				}
+				List<Request> requesPojoList = (List<Request>)crit.list();
+				
 				
 			    String userCategory = "";
 				String userProject = "";
@@ -277,7 +288,9 @@ public class NewrequestImpl implements NewrequestInterface {
 				String lastName = "";
 				String name = "";
 				if (requesPojoList != null && requesPojoList.size() != 0) {
+					
 					for (Request requestDB : requesPojoList) {
+						int count=0;
 						userCategory = "";
 						userProject = "";
 						userRequestType= "";
@@ -286,12 +299,12 @@ public class NewrequestImpl implements NewrequestInterface {
 						lastName = "";
 						name = "";
 						requestnoteList=new ArrayList<requestNoteVo>();
-
 						Hibernate.initialize(requestDB.getUsercategory());
 						Hibernate.initialize(requestDB.getUserproject());
 						Hibernate.initialize(requestDB.getUserrequesttype());
 						Hibernate.initialize(requestDB.getUserfriendlist());
 						Hibernate.initialize(requestDB.getRequestnoteses());
+						Hibernate.initialize(request);
 						if(requestDB != null && requestDB.getUsercategory() != null && requestDB.getUsercategory().getCategory() != null)
 						{
 							userCategory = requestDB.getUsercategory().getCategory().getName() != null 
@@ -416,9 +429,7 @@ public class NewrequestImpl implements NewrequestInterface {
 						 
 						
 							requestnoteVo=new requestNoteVo();
-							
-							
-						//	Collections.sort(requestnoteList,requestNoteVo.NoteIdComparator );
+						
 							requestnoteVo.setCreatedby(name);
 							//requestnoteVo.setCreatedby(requestnotes.getCreatedby() !=null ? requestnotes.getCreatedby().trim() : "" );
 							requestnoteVo.setNoteId(requestnotes.getId());
@@ -435,10 +446,13 @@ public class NewrequestImpl implements NewrequestInterface {
 						 
 						newrequestVo.setNoteList(requestnoteList);			
 						requestList.add(newrequestVo);
+						 count++;
+						System.out.println("total number"+count);
 					}
-					}
-
+				 
+				
 				tx.commit();
+			}
 			}
 		} catch (Exception e) 
 		{
@@ -456,6 +470,8 @@ public class NewrequestImpl implements NewrequestInterface {
 
 		return requestList;
 	}
+	
+	
 	
 	
 	
@@ -930,6 +946,7 @@ public class NewrequestImpl implements NewrequestInterface {
 						requestList.add(newrequestVo);
 					}
 				}
+					
 					}
 
 				tx.commit();
@@ -949,9 +966,11 @@ public class NewrequestImpl implements NewrequestInterface {
 		}
 
 		return requestList;
+		
 	}
-	
 
+
+	
 
 
 }

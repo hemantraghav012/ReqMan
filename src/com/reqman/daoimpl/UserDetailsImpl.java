@@ -8,6 +8,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.Restrictions;
+import org.primefaces.model.UploadedFile;
 
 import com.reqman.common.HibernateUtil;
 import com.reqman.dao.UserDetailsInterface;
@@ -68,7 +69,7 @@ public class UserDetailsImpl implements UserDetailsInterface {
     	
     }
 	
-	public int saveUser(String emailid, String password, String firstname, String lastname, String shortname,String hashkey) throws Exception
+	public int saveUser(String emailid, String password, String firstname, String lastname, String shortname,String hashkey ,UploadedFile photo) throws Exception
 	{
         Session session = null;
         SessionFactory hsf = null;
@@ -98,8 +99,7 @@ public class UserDetailsImpl implements UserDetailsInterface {
             else
             {
             	
-         	hashkey = new sendEmail1().createAccount(emailid, firstname);
-            	//hashkey = new setinfoEmail().createAccount2(emailid, emailid);
+            	hashkey = new sendEmail1().createAccount(emailid, firstname);
      			System.out.println("-password--"+hashkey);
             
             	
@@ -114,6 +114,7 @@ public class UserDetailsImpl implements UserDetailsInterface {
             	users.setCreatedon(new Date());
             	users.setStatus(true);
             	users.setHashkey(hashkey != null ? hashkey.trim() : "");
+            	users.setPhoto(photo.getContents());
             	session.save(users);
             	
             	emailArr = emailid.split("@");
@@ -219,7 +220,7 @@ public class UserDetailsImpl implements UserDetailsInterface {
 	
 	@Override
 	public int updateUsers(String emailid, String firstname, String lastname,
-			String shortname, String password) throws Exception {
+			String shortname, String password,UploadedFile photo) throws Exception {
 		// TODO Auto-generated method stub
 		 Session session = null; 
 		    Transaction tx = null;
@@ -240,6 +241,8 @@ public class UserDetailsImpl implements UserDetailsInterface {
 	            users.setShortname(shortname);
 	            users.setPassword(password);
 	            
+				users.setPhoto(photo.getContents());
+			
 	            	session.update(users);
 	    			tx.commit();
 	    			result = 1;
@@ -390,17 +393,14 @@ public class UserDetailsImpl implements UserDetailsInterface {
 	     			System.out.println("-password--"+password);
 	            	users = new Users();
 	            	users.setEmailid(emailid);
-	            	//users.setFirstname(firstname != null ? firstname.trim() : "");
-	            	//users.setLastname(lastname != null ? lastname.trim() : "");
-	            	//users.setPassword(password);
-	            	//users.setShortname(shortname != null ? shortname : "");
+	            	
 	            	users.setCreatedby("SYSTEM");
 	            	users.setCreatedon(new Date());
 	            	users.setStatus(true);
 	            	users.setHashkey(hashkey != null ? hashkey.trim() : "");
 	            	session.save(users);
 	            	
-	            	emailArr = emailid.split("@");
+	                  	emailArr = emailid.split("@");
 	            	if(emailArr != null && emailArr.length >= 2)
 	            	{
 	                	accountDetails = (Account)session.createCriteria(Account.class)
@@ -419,7 +419,7 @@ public class UserDetailsImpl implements UserDetailsInterface {
 	                	}
 
 	            	}
-	            	if(roles != null && userrolesDetails != null) {
+		if(roles != null && userrolesDetails != null) {
 	                    
 	            		
 	            		
