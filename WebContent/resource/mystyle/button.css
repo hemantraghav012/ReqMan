@@ -23,9 +23,9 @@
     
 }
 .ui-button.buttoncolor1{
-	 background:#4682B4;
+	 background-color:#4682B4;
    color:#fff;
-   font-family:  Arial;
+   
     
    
 }
@@ -33,10 +33,6 @@
 	 background-color:#4682B4;
 	
 }
-
-
-
-
 
 
 
@@ -64,3 +60,8 @@
 tr.noBorder td {
   border: 0;
 }
+
+
+
+
+
