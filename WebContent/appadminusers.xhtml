@@ -1,0 +1,188 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+ xmlns:ui="http://java.sun.com/jsf/facelets" 
+  xmlns:f="http://java.sun.com/jsf/core"
+   xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+    xmlns:p="http://primefaces.org/ui"
+ 	xmlns:h="http://java.sun.com/jsf/html">
+<h:head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<link rel="stylesheet" href="resource/css/bootstrap.css"/>
+<link rel="stylesheet" href="resource/mystyle/home.css"/>
+<link rel="stylesheet" href="resource/mystyle/onlyhome.css"/>
+<link rel="stylesheet" href="resource/mystyle/button.css"/>
+<script type="text/javascript" src="resource/js/bootstrap.js"/>
+<script type="text/javascript" src="resource/js/jquery.js"/>
+
+ 
+
+	<title> App Admin Users </title>
+	
+	<script>
+
+function setUsersHiddenValue(new_value)
+{
+	document.getElementById('appadminForm:userid').value = new_value;
+
+}
+
+</script>
+	
+</h:head>
+<h:body>
+
+<div id="header">
+	<ui:insert name="header">
+		<ui:include src="header.xhtml" />
+	</ui:insert>
+</div>
+       
+      <!-- -end of header --> 
+          <h:form id="appadminForm">
+  <div class="container-fluid " style=" margin-top:2.5cm; margin-right:-15px;margin-left:-15px">
+  
+         <h:inputHidden id="userid" value="#{appadmin.userid}" ></h:inputHidden>
+         
+      <div class="row">
+      	<div class="col-sm-8">
+      		<span style=";font-size:25px;margin-left: 3px;">Manage All Users List</span>
+      	</div>
+      	
+	  </div>
+
+
+
+<div class="ui-fluid ">
+
+	     <p:dataTable id="adminTable" var="users" value="#{appadminbean.userList}" draggableColumns="true" resizableColumns="true"
+	     reflow="true" scrollable="true" scrollHeight="300" 
+	      rows="10"  paginator="true"     
+	      paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rowsPerPageTemplate="5,10,15"
+	   
+	     class="table table-striped table-hover table-bordered" 
+	     style="margin-top:5px; margin-left:0px; " filteredValue="#{appadminbean.filteredUserList}" 	     
+	     widgetVar="userListTable">
+	   
+	     <f:facet name="header">
+	    
+		<p:commandButton id="toggler" value="Click here to choose columns to view as per your requirement" 
+		 style="background-color:skyblue;"  />
+        <p:columnToggler datasource="adminTable" trigger="toggler" />
+	     
+		</f:facet> 
+
+ 
+ <p:column filterBy="#{users.emailid}"  sortBy="#{users.emailid}" headerText="Email Id"  
+			 filterMatchMode="contains"  style="text-overflow: ellipsis; white-space: nowrap; padding: 0px 0px 0px 3px;" >			 
+				<f:facet name="header" >
+					 <h:outputText value="Email Id"/>
+				</f:facet>
+				<h:outputText value="#{users.emailid}" style="display: inline;"/>
+</p:column>
+ 
+ 
+ <p:column filterBy="#{users.firstname}" sortBy="#{users.firstname}" headerText="First Name"  
+			 filterMatchMode="contains"   style="text-overflow: ellipsis; white-space: nowrap;padding: 0px 0px 0px 3px;">
+				<f:facet name="header">
+					 <h:outputText value="First Name" />
+				</f:facet>
+				<h:outputText value="#{users.firstname}" style="display: inline;"   />
+</p:column>
+ 
+<p:column filterBy="#{users.lastname}" sortBy="#{users.lastname}" headerText="Last	Name"    
+			 filterMatchMode="contains"   pattern="dd-MMM-yyyy"  style="text-overflow: ellipsis; white-space: nowrap;padding: 0px 0px 0px 3px;">
+				<f:facet name="header">
+					<h:outputText value="Last Name" />
+				</f:facet>
+				<h:outputText value="#{users.lastname}" pattern="dd-MMM-yyyy" />
+			</p:column>
+    
+     <p:column headerText="Short Name"  filterBy="#{users.shortname}" sortBy="#{users.shortname}"  filterMatchMode="contains">
+            <f:facet name="header">
+              <h:outputText value="Short Name" />   
+            </f:facet>
+            <h:outputText value="#{users.shortname}" />
+        </p:column>
+    
+    
+  
+     
+    
+     <p:column filterBy="#{users.createdby}"  sortBy="#{users.createdby}" headerText="Created By"  
+			 filterMatchMode="contains" >
+				<f:facet name="header">
+              <h:outputText value="Created By" /> 
+            </f:facet>
+				<h:outputText value="#{users.createdby}" style="display: inline;"  />
+			</p:column>
+    
+    
+   
+     <p:column filterBy="#{users.createdon}"  sortBy="#{users.createdon}" headerText="Date"   
+			 filterMatchMode="contains" style="text-overflow: ellipsis; white-space: nowrap;padding: 0px 0px 0px 3px;">
+				<f:facet name="header">
+              <h:outputText value="Date" /> 
+            </f:facet>
+				<h:outputText value="#{users.createdon}"  style="display: inline;"  />
+			</p:column> 
+    
+    
+      <p:column filterBy="#{users.password}"  sortBy="#{users.password}"  headerText="Password"    
+			 filterMatchMode="contains"  style="text-overflow: ellipsis; white-space: nowrap;padding: 0px 0px 0px 3px;">
+				<f:facet name="header">
+              <h:outputText value="Password" /> 
+            </f:facet>
+				<h:outputText value="#{users.password}" style="display: inline;"   />
+			</p:column>
+    
+       <p:column filterBy="#{users.hashkey}"  sortBy="#{users.hashkey}"  headerText="Hash Key"  
+			 filterMatchMode="contains"  style="text-overflow: ellipsis; white-space: nowrap;padding: 0px 0px 0px 3px;">
+				<f:facet name="header">
+              <h:outputText value="Hash Key" /> 
+            </f:facet>
+				<h:outputText value="#{users.hashkey}" style="display: inline;"   />
+			</p:column>
+    
+    
+    
+    
+    
+    
+     <p:column filterBy="#{users.status}"  sortBy="#{users.status}" 
+			headerText="Status"   filterMatchMode="contains" style="padding: 0px 0px 0px 3px;" >
+				<f:facet name="header">
+					<h:outputText value="Status" />
+				</f:facet>
+				<h:outputText value="#{users.status}"  />
+			</p:column>
+			
+
+ 
+          
+</p:dataTable>
+	    
+	</div>
+	
+ 
+
+
+</div>
+      
+        </h:form>
+   
+      <br></br> <br></br> <br></br> <br></br>
+  <div id="footer">
+	<ui:insert name="footer">
+		<ui:include src="footerpage.xhtml" />
+	</ui:insert>
+</div>
+       
+      <!-- -end of footer --> 
+      
+      </h:body>
+
+</html>

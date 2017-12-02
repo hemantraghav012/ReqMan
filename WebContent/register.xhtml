@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="ISO-8859-1" ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Frameset//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-frameset.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:f="http://java.sun.com/jsf/core"  
-         xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
-      xmlns:ui="http://java.sun.com/jsf/facelets">
+ xmlns:ui="http://java.sun.com/jsf/facelets" 
+  xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:p="http://primefaces.org/ui"
+ 	xmlns:h="http://java.sun.com/jsf/html">
       <h:head>
 <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
@@ -47,7 +47,7 @@
 <h2 style="font-weight: bold; padding-left:15px; "> Create an account</h2>
 <h3 style="padding-left:15px;">Fully functional. No credit card required.</h3>
 <br></br>
-<h:form class="form-horizontal" >
+       <h:form enctype="multipart/form-data" class="form-horizontal">
 
 <div><h:messages style = "color:red;margin:8px;" /></div>
 
@@ -76,6 +76,14 @@
 <div class="col-sm-6"><h:inputText value="#{register.shortname}" p:placeholder="Short Name"  maxlength="4" class="form-control" id="shortname" required="true" requiredMessage="* Please enter your short name"></h:inputText><span style="color:red;">Please enter upto 4 characters</span></div>
  <h:message for="shortname"  style="color:red;margin:8px;"/> 
 </div>
+<div class=" row form-group ">
+<div class="col-sm-2 control-label"><h:outputLabel style="white-space:nowrap;">Profile Image :</h:outputLabel></div>
+<div class="col-sm-4">
+<p:fileUpload value="#{register.photo}" mode="simple" />
+</div>
+
+</div>
+
  <div class=" row form-group ">
  <div class="col-sm-2 .col-sm-offset-2"></div>
 <div class="col-sm-6 "><h:commandLink action="#{register.submit()}" value="Register" class="btn fontsize btn-success btn-block"></h:commandLink></div>
