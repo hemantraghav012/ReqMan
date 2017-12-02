@@ -8,9 +8,13 @@ import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Comparator;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
@@ -48,6 +52,8 @@ import com.reqman.util.Dateconverter;
 import com.reqman.util.SessionUtils;
 import com.reqman.util.UserSession;
 import com.reqman.vo.NewrequestVo;
+import com.reqman.vo.requestNoteVo;
+import com.sun.el.parser.ParseException;
 
 
 @ManagedBean(name="createrequest",eager = true)
@@ -67,23 +73,42 @@ public class CreateRequestbean implements Serializable
 	 private Date completiondate;
 	 private  List<Request> request ;
 	 private String requestId;
-	 private List<NewrequestVo> newrequestList = new ArrayList<NewrequestVo>();
-	 
-	 private List<NewrequestVo> newrequestList3 = new ArrayList<NewrequestVo>();
-	 
+	 private List<NewrequestVo> newrequestList = new ArrayList<NewrequestVo>();	 
+	 private List<NewrequestVo> newrequestList3 = new ArrayList<NewrequestVo>();	 
 	 private Boolean status;
 	 private NewrequestInterface newrequestInterface = new NewrequestImpl();
 	 private StreamedContent file;
-	 private NewrequestVo newrequestVo = new NewrequestVo();
-	
+	 private NewrequestVo newrequestVo = new NewrequestVo();	
 	 private NewrequestVo selectedReuest;
 	 private List<NewrequestVo> filteredRequestList = new ArrayList<NewrequestVo>();
 	 private Integer stage;
 	 private BarChartModel barModel;
 	 private HorizontalBarChartModel horizontalBarModel;
      private String currentDate;
+     private String onemonthpastDate;   
 	 private Float completionpercentage;
      private  String message;
+     
+     private Date startDate;
+     private Date endDate;
+     private DateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+
+     
+     
+     
+     
+     
+     private Integer[]  searchteammember;
+     private Integer[]  searchcategory;
+     private Integer[]  searchproject;
+     private Integer[]  searchtype;
+     private Integer[]  searchstage;
+     
+     
+     
+     
+     
+     
 	@PostConstruct
     public void init() 
 	{
@@ -95,12 +120,22 @@ public class CreateRequestbean implements Serializable
 			HttpSession session = SessionUtils.getSession();
 			String userName = (String)session.getAttribute("username");
 			System.out.println("--usersession--userName-->"+userName);
-			newrequestList = newrequestInterface.getNewrequestDetails(userName);
+			if(startDate == null)
+			{
+				 startDate = Dateconverter.getPreToPreMonthDate(new Date());	
+			}
+			if(endDate == null)
+			{
+				endDate = new Date();
+			}
+				
+			newrequestList = newrequestInterface.getNewrequestDetails(userName,startDate,endDate);
+			
 			newrequestList3 = newrequestInterface.getallproject(userName);
 			 
 			setFilteredRequestList(newrequestList);
 			createBarModels();
-			 currentDate =  Dateconverter.convertDateToStringDDMMDDYYYY(new Date());
+			
 		}
 		catch(Exception e)
 		{
@@ -108,6 +143,37 @@ public class CreateRequestbean implements Serializable
 		}
 		
 	}
+		
+
+	public String daterange()
+	{
+		try
+		{
+			newrequestList = new ArrayList<NewrequestVo>();
+			System.out.println("--create new request-->");
+			HttpSession session = SessionUtils.getSession();
+			String userName = (String)session.getAttribute("username");
+			System.out.println("--usersession--userName-->"+startDate);
+			System.out.println("--usersession--userName-->"+endDate);
+			
+			
+			System.out.println("--usersession--userName-->"+userName);
+			newrequestList = newrequestInterface.getNewrequestDetails(userName,startDate,endDate);
+			
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+		return "request";
+	}
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	 private void createBarModels() {
@@ -248,8 +314,8 @@ public class CreateRequestbean implements Serializable
 			HttpSession session = SessionUtils.getSession();
 			String userName = (String)session.getAttribute("username");
 			System.out.println("--usersession--userName-->"+userName);
-			newrequestList = newrequestInterface.getNewrequestDetails(userName);
-		
+			newrequestList = newrequestInterface.getNewrequestDetails(userName,startDate,endDate);
+			
 		}
 		catch(Exception e)
 		{
@@ -309,8 +375,8 @@ public class CreateRequestbean implements Serializable
 				return "newrequestfriend";
 			}
 			if (result == 3) {
-				newrequestList = newrequestInterface.getNewrequestDetails(userName);
-				FacesContext.getCurrentInstance().addMessage(
+				newrequestList = newrequestInterface.getNewrequestDetails(userName,startDate,endDate);
+					FacesContext.getCurrentInstance().addMessage(
 						null,
 						new FacesMessage(FacesMessage.SEVERITY_WARN,
 								"Category created  successfully.",
@@ -393,8 +459,8 @@ public class CreateRequestbean implements Serializable
         	
         	if(result == 1)
         	{
-        		newrequestList = newrequestInterface.getNewrequestDetails(userName);
-        	}
+        		newrequestList = newrequestInterface.getNewrequestDetails(userName,startDate,endDate);
+    				}
         	
 		}
 		catch(Exception e)
@@ -418,11 +484,9 @@ public class CreateRequestbean implements Serializable
 		 	System.out.println("hello");
 		 	InputStream stream = null;
 		 	try{
-		 		//System.out.println("modify action"+requestId);
-	            //addMessage("Welcome to Primefaces!!");
+		 		
 	        	setRequestId(requestId);
-	        	newrequestVo = newrequestInterface.getRequestById(requestId);
-	        	//stream = FacesContext.getCurrentInstance().getExternalContext().getResourceAsStream("/resource/temp/avatar.jpg");
+	        	newrequestVo = newrequestInterface.getRequestById(requestId);	        	
 	        	if(newrequestVo.getFile() != null && newrequestVo.getFile().length != 0)
 	        	{
 	        		stream = new ByteArrayInputStream(newrequestVo.getFile());
@@ -728,6 +792,121 @@ public class CreateRequestbean implements Serializable
 		}
 
 
+		public String getOnemonthpastDate() {
+			return onemonthpastDate;
+		}
+
+
+		public void setOnemonthpastDate(String onemonthpastDate) {
+			this.onemonthpastDate = onemonthpastDate;
+		}
+
+
+
+
+
+
+		public Integer[] getSearchteammember() {
+			return searchteammember;
+		}
+
+
+
+
+
+
+		public void setSearchteammember(Integer[] searchteammember) {
+			this.searchteammember = searchteammember;
+		}
+
+
+
+
+
+
+		public Integer[] getSearchcategory() {
+			return searchcategory;
+		}
+
+
+
+
+
+
+		public void setSearchcategory(Integer[] searchcategory) {
+			this.searchcategory = searchcategory;
+		}
+
+
+
+
+
+
+		public Integer[] getSearchproject() {
+			return searchproject;
+		}
+
+
+
+
+
+
+		public void setSearchproject(Integer[] searchproject) {
+			this.searchproject = searchproject;
+		}
+
+
+
+
+
+
+		public Integer[] getSearchtype() {
+			return searchtype;
+		}
+
+
+
+
+
+
+		public void setSearchtype(Integer[] searchtype) {
+			this.searchtype = searchtype;
+		}
+
+
+
+
+
+
+		public Integer[] getSearchstage() {
+			return searchstage;
+		}
+
+
+
+
+
+
+		public void setSearchstage(Integer[] searchstage) {
+			this.searchstage = searchstage;
+		}
+
+
+		 public Date getStartDate() {
+		      return startDate;
+		  }
+
+		  public void setStartDate(Date startDate) {
+		      this.startDate = startDate;
+		  }
+
+		  public Date getEndDate() {
+		      return endDate;
+		  }
+
+		  public void setEndDate(Date endDate) {
+		      this.endDate = endDate;
+		  }
 		
 
 		

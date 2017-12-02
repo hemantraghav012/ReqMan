@@ -7,6 +7,8 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 
+import org.primefaces.model.UploadedFile;
+
 import com.reqman.dao.UserDetailsInterface;
 import com.reqman.daoimpl.UserDetailsImpl;
 import com.reqman.util.sendEmail1;
@@ -20,7 +22,7 @@ public class Register implements Serializable{
 	 * 
 	 */
 	private static final long serialVersionUID = 4003590909487243150L;
-
+	  private UploadedFile photo;
 	private String emailid;
    private String password;
 	private String firstname;
@@ -39,7 +41,7 @@ public class Register implements Serializable{
 		int result = 0;
 		try{
 		
-			result = userImpl.saveUser(emailid, password, firstname, lastname, shortname,hashkey);
+			result = userImpl.saveUser(emailid, password, firstname, lastname, shortname,hashkey,photo);
 			
 			//boolean valid = LoginDAO.validate(user, pwd);
 			if (result == 1) {
@@ -215,6 +217,22 @@ public class Register implements Serializable{
 
 	public void setEmailstatus(String emailstatus) {
 		this.emailstatus = emailstatus;
+	}
+
+
+
+
+
+	public UploadedFile getPhoto() {
+		return photo;
+	}
+
+
+
+
+
+	public void setPhoto(UploadedFile photo) {
+		this.photo = photo;
 	}
 	
 	

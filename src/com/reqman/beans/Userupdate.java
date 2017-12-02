@@ -1,5 +1,11 @@
 package com.reqman.beans;
 
+import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.Serializable;
 
@@ -7,7 +13,12 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
+import javax.imageio.ImageIO;
 import javax.servlet.http.HttpSession;
+
+import org.primefaces.model.DefaultStreamedContent;
+import org.primefaces.model.StreamedContent;
+import org.primefaces.model.UploadedFile;
 
 import com.reqman.dao.UserDetailsInterface;
 import com.reqman.daoimpl.UserDetailsImpl;
@@ -31,8 +42,16 @@ public class Userupdate implements Serializable{
 		private String shortname;
 		private UserupdateVo userupdateVo = new UserupdateVo();
 		private UserDetailsInterface userImpl = new UserDetailsImpl();
+		  private UploadedFile photo;
 		
-		
+		  
+		  
+		  
+		  
+		  
+		  
+		  
+		  
 		public void modifyAction() throws IOException {
 			
 	        try
@@ -74,7 +93,7 @@ public class Userupdate implements Serializable{
 				System.out.println("--usersession--userName-->"+userName);
 				
 	        
-	        	result = userImpl.updateUsers(userName,firstname,lastname,shortname,password);
+	        	result = userImpl.updateUsers(userName,firstname,lastname,shortname,password,photo);
 	        	
 	        	if(result == 2)
 	        	{
@@ -168,6 +187,20 @@ public class Userupdate implements Serializable{
 		public void setUserName(String userName) {
 			this.userName = userName;
 		}
-	
+
+
+
+		public UploadedFile getPhoto() {
+			return photo;
+		}
+
+
+
+		public void setPhoto(UploadedFile photo) {
+			this.photo = photo;
+		}
+
+
+
 	
 }
