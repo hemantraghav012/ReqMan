@@ -58,21 +58,19 @@ function setUsersHiddenValue(new_value)
 
 <div class="ui-fluid ">
 
-	     <p:dataTable id="adminTable" var="users" value="#{appadminbean.userList}" draggableColumns="true" resizableColumns="true"
-	     reflow="true" scrollable="true" scrollHeight="300" 
-	      rows="10"  paginator="true"     
-	      paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rowsPerPageTemplate="5,10,15"
-	   
-	     class="table table-striped table-hover table-bordered" 
+	     <p:dataTable id="adminTable" var="users" value="#{appadminbean.userList}" draggableColumns="true" 
+	     resizableColumns="true" editable="true" editMode="cell"
+	     reflow="true" scrollable="true" scrollHeight="300" rows="10"  paginator="true"    	       
+	      paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" 
+	      rowsPerPageTemplate="5,10,15" class="table table-striped table-hover table-bordered" 	     
 	     style="margin-top:5px; margin-left:0px; " filteredValue="#{appadminbean.filteredUserList}" 	     
 	     widgetVar="userListTable">
 	   
-	     <f:facet name="header">
-	    
+	   
+	     <f:facet name="header">	    
 		<p:commandButton id="toggler" value="Click here to choose columns to view as per your requirement" 
 		 style="background-color:skyblue;"  />
-        <p:columnToggler datasource="adminTable" trigger="toggler" />
-	     
+        <p:columnToggler datasource="adminTable" trigger="toggler" />	     
 		</f:facet> 
 
  

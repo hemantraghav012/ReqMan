@@ -31,7 +31,7 @@ function setRequestHiddenValue(new_value)
 }
 function setstartDateValue()
 {
-	alert("hii"+document.getElementById('requestForm:idEndDate').value);
+	
 	document.getElementById('requestForm:endDate').value = document.getElementById('requestForm:idEndDate').value;	
 	document.getElementById('requestForm:startDate').value = document.getElementById('requestForm:idstartDate').value;
 
@@ -94,11 +94,9 @@ function setstartDateValue()
                 </div>
                
               <div class="col-sm-2" >	
-                <p:commandButton action="#{createrequest.daterange()}" value="Save" icon="ui-icon-check" 
+                <p:commandButton action="#{createrequest.daterange()}" value="Search" icon="ui-icon-check" 
                   onclick="setstartDateValue()" />
-                <p:commandButton value="Cancel" icon="ui-icon-close"
-                                 immediate="true"
-                                 onclick="PF('dateRangeDlg').hide()"/>
+                
             </div>
             <div class="col-sm-4" >	
         <p:messages id="messages" showDetail="true"

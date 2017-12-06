@@ -32,75 +32,99 @@
        
       <!-- -end of header --> 
       
-      
-      
-      <div class="container" style=" margin-top:2cm; ">
- 
-  
-  <div  style="margin-top:1cm;"> 
-  <h:form class="form-horizontal fixedcontainer " >
- <h2 style=" margin-bottom:1cm; text-align:center">  View/Modify Request</h2>
-<div><h:messages style = "color:red;margin:8px;" /></div>
-
-
+      	
+        <div class="ui-fluid">
+            <p:panelGrid columns="1"  layout="grid" styleClass="ui-panelgrid-blank ui-fluid" style=" border: 0;">
+               
+     
+       <h:form enctype="multipart/form-data" class="form-horizontal">
+      <div class="container fixedcontainerrequset" style=" margin-top:50px; ">
+  <h2 style=" text-align: center;"> View/Modify Request</h2><br></br>
+     <h:inputHidden value = "#{createrequest.requestId}" id = "hiddenField" /> 
 
  <div class=" row form-group ">
- 
- <h:inputHidden value = "#{createrequest.requestId}" id = "hiddenField" /> 
- 
- <div class="col-sm-2 control-label"><h:outputLabel  >Title:</h:outputLabel></div>
-<div class=" col-sm-10"> <h:inputText value="#{createrequest.title}" readonly="true" disabled="true"  style="background-color:lightgrey;" class="  form-control"  id="title"   requiredMessage="* Please enter Title"/></div>
+ <div class="col-sm-2 control-label"><h:outputLabel><span style="color:red;">* </span> Title:</h:outputLabel></div>
+<div class=" col-sm-10"> <h:inputText value="#{createrequest.title}"   class="  form-control" readonly="true" disabled="true" id="title" required="true" requiredMessage="* Please enter Title" /></div>
  <h:message for="title"  style="color:red;margin:8px;"/> 
-</div>
- <div class=" row form-group ">
 
+</div>
+
+ <div class=" row form-group " >
  <div class="col-sm-2 control-label"><h:outputLabel>Description:</h:outputLabel></div>
-<div class=" col-sm-10"> <h:inputTextarea value="#{createrequest.description}"  class="  form-control"  id="discription"  requiredMessage="* Please enter Title"/></div>
- <h:message for="description"  style="color:red;margin:8px;"/> 
-</div><br></br>
+<div class=" col-sm-10"><h:inputTextarea id="address" value="#{createrequest.description}"    
+ cols="19" rows="3" class="  form-control" /></div>
+<h:message for="address"  style="color:red;margin:6px;"/>
+</div>
+
+ 
+ 
+ <div class="row form-grop">
+ <div class="col-sm-2 control-label" style="padding-left: 0px;">
+ <h:outputLabel>Team Member:</h:outputLabel>
+</div>
+ <div class="col-sm-4 control-label" >
+   <p:selectOneMenu  id="multiple" value="#{createrequest.userfriendlist}" style=" border-style: none;">
+                     <f:selectItem itemLabel="#{createrequest.newrequestVo.friendName}" itemValue="" />
+                                <f:selectItems value="#{friendbean.friendList}" var="friend" itemLabel="#{friend.emailid}"  itemValue="#{friend.userFriendId}"  />                               
+                                </p:selectOneMenu >
+                              <h:message for="multiple"  style="color:red;margin:6px;"/>
+ </div>
+ <div class="col-sm-2 control-label">
+ <h:outputLabel style="white-space:nowrap;">Completion Date:</h:outputLabel>
+ </div>
+<div class="col-sm-4"> 
+<p:calendar id="completiondate" value="#{createrequest.completiondate}" style=" border: 0;"   pattern="dd/MM/yyyy HH:mm:ss"  required="true" requiredMessage="* Please enter completion Date"  />
+
+ </div>
+ <h:message for="completiondate"  style="color:red;margin:8px;"/>
+ </div>
+
+
+<div class=" row form-group ">
+ 
+ <div class="col-sm-2 control-label">
+<h:outputLabel>Project:</h:outputLabel>
+</div>
+ <div class=" col-sm-4">
+ 
+ <p:selectOneMenu id="project" value="#{createrequest.userproject}" style=" border: 0;" >
+            <f:selectItem itemLabel="#{createrequest.newrequestVo.userproject}" itemValue="" />
+           <f:selectItems value="#{projectbean.projectList}" var="project" itemLabel="#{project.name}"  itemValue="#{project.userProjectId}"/>
+        </p:selectOneMenu>
+</div>
+ <h:message for="project"  style="color:red;margin:8px;"/>
+ <div class="col-sm-2 control-label"> 
+
+ <h:outputLabel>Category:</h:outputLabel>
+ </div>
+ <div class=" col-sm-4">
+      <p:selectOneMenu  value="#{createrequest.usercategory}"  style="  border: none;">
+            <f:selectItem itemLabel="#{createrequest.newrequestVo.usercategory}" itemValue="" />
+           <f:selectItems value="#{categorybean.categoryList}"  var="category" itemLabel="#{category.name}"
+                          itemValue="#{category.userCategoryId}"/>
+        </p:selectOneMenu>
+
+</div>
+ <h:message   style="color:red;margin:8px;"/>
+</div>
 
  <div class=" row form-group ">
-<div class="col-sm-2 control-label"><h:outputLabel  >Team Member:</h:outputLabel></div>
-<div class=" col-sm-10"> <h:inputText value="#{createrequest.newrequestVo.friendName}" readonly="true" disabled="true"   style="background-color:lightgrey;" class="  form-control"  id="title112"   requiredMessage="* Please enter Title"/></div>
- <h:message for="title"  style="color:red;margin:8px;"/> 
-</div>
-
-<div class=" row form-group ">
- <div class="col-sm-2 control-label"><h:outputLabel  >Completion Date:</h:outputLabel></div>
-<div class=" col-sm-4">
-<p:calendar id="completiondate" value="#{createrequest.completiondate}" style=" border: 0;"   pattern="dd/MM/yyyy HH:mm:ss"   />
-</div>
- <h:message for="completiondate"  style="color:red;margin:8px;"/> 
- <div class="col-sm-2 control-label"><h:outputLabel  >Category:</h:outputLabel></div>
-<div class=" col-sm-4"> <h:inputText value="#{createrequest.newrequestVo.usercategory}" readonly="true"  disabled="true" class="  form-control"  style="background-color:lightgrey;" id="usercategory"  required="true" requiredMessage="* Please enter Title"/></div>
- <h:message for="usercategory"  style="color:red;margin:8px;"/> 
-</div><br></br>
-
-<div class=" row form-group ">
  
- <div class="col-sm-2 control-label"><h:outputLabel  > Project:</h:outputLabel></div>
-<div class=" col-sm-4"> <h:inputText value="#{createrequest.newrequestVo.userproject}" readonly="true" disabled="true" class="  form-control"  id="userproject"  style="background-color:lightgrey;"  requiredMessage="* Please enter Title"/></div>
- <h:message for="userproject"  style="color:red;margin:8px;"/> 
-
-
- <div class="col-sm-2 control-label"><h:outputLabel>Type:</h:outputLabel></div>
-<div class=" col-sm-4"> <h:inputText value="#{createrequest.newrequestVo.userrequesttype}" readonly="true"  disabled="true" class="  form-control"  id="userrequesttype"  style="background-color:lightgrey;"  requiredMessage="* Please enter Title"/></div>
- <h:message for="userrequesttype"  style="color:red;margin:8px;"/> 
-</div><br></br>
-
-
-
-
-
-<div class=" row form-group ">
+ <div class="col-sm-2 control-label">
+ <h:outputLabel style="white-space:nowrap;">Type:</h:outputLabel>
+ </div>
+ <div class=" col-sm-4">
+ <p:selectOneMenu id="requesttype" value="#{createrequest.userrequesttype}"  style=" border: 0;" >
+            <f:selectItem itemLabel="#{createrequest.newrequestVo.userrequesttype}" itemValue="" />
+            <f:selectItems value="#{requesttypebean.requesttypeList}" var="requesttype" itemLabel="#{requesttype.name}"  itemValue="#{requesttype.userRequesttypeId}"/>
+        </p:selectOneMenu>
+</div>
+ <h:message for="requesttype"  style="color:red;margin:8px;"/>
  
-
-
-
- <div class="col-sm-2 control-label"><h:outputLabel>Attached File:</h:outputLabel></div>
+  <div class="col-sm-2 control-label"><h:outputLabel>Attached File:</h:outputLabel></div>
 <div class=" col-sm-4">  <h:inputText value="#{createrequest.newrequestVo.fileName}" readonly="true" class="  form-control" disabled="true" id="userrequesttype12"  style="background-color:lightgrey;"  requiredMessage="* Please enter Title"/></div>
  <h:message for="AttachedFile"  style="color:red;margin:8px;"/> 
-</div><br></br>
+</div>
 
     <div class=" row form-group " >
 <div class="col-sm-2 control-label" style="padding-top:0cm;"><h:outputLabel>Notes: </h:outputLabel></div>
@@ -134,20 +158,12 @@
 </div>
 
 
-   
 
-  
-
- 
- 
-    
-
-
+   </div><!-- end of container -->
 </h:form>
-  
-  </div>
-      
-  </div>
+
+      </p:panelGrid>
+      </div>
 </h:body>
 	
 </html>
