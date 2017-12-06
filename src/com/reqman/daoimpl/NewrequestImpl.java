@@ -28,7 +28,9 @@ import com.reqman.pojo.Userproject;
 import com.reqman.pojo.Userrequesttype;
 import com.reqman.pojo.Users;
 import com.reqman.util.Dateconverter;
+import com.reqman.util.requestemail;
 import com.reqman.util.requestsendEmail;
+import com.reqman.util.sendEmail1;
 import com.reqman.util.sendEmailonfriend;
 import com.reqman.vo.NewrequestVo;
 import com.reqman.vo.requestNoteVo;
@@ -241,7 +243,7 @@ public class NewrequestImpl implements NewrequestInterface {
 
 	
 	@SuppressWarnings("unchecked")
-	public List<NewrequestVo> getNewrequestDetails(String userName,	Date startDate, Date endDate)
+	public List<NewrequestVo> getNewrequestDetails(String userName,	Date startDate, Date endDate, String title, String description)
 			throws Exception {
 		List<NewrequestVo> requestList = new ArrayList<NewrequestVo>();
 
@@ -262,6 +264,9 @@ public class NewrequestImpl implements NewrequestInterface {
 					.uniqueResult();
 
 			if (usersTemp != null) {
+				
+			
+				
 /*
 				List<Request> requesPojoList = (List<Request>) session
 						.createCriteria(Request.class)						
@@ -274,8 +279,8 @@ public class NewrequestImpl implements NewrequestInterface {
 				//search date range
 				if(startDate != null && endDate !=null)
 				{
-					crit.add(Restrictions.ge("completiondate", startDate)); 
-					crit.add(Restrictions.lt("completiondate", endDate));
+					crit.add(Restrictions.ge("datecreated", startDate)); 
+					crit.add(Restrictions.lt("datecreated", endDate));
 			
 				}
 				List<Request> requesPojoList = (List<Request>)crit.list();
@@ -290,7 +295,7 @@ public class NewrequestImpl implements NewrequestInterface {
 				if (requesPojoList != null && requesPojoList.size() != 0) {
 					
 					for (Request requestDB : requesPojoList) {
-						int count=0;
+
 						userCategory = "";
 						userProject = "";
 						userRequestType= "";
@@ -446,13 +451,23 @@ public class NewrequestImpl implements NewrequestInterface {
 						 
 						newrequestVo.setNoteList(requestnoteList);			
 						requestList.add(newrequestVo);
-						 count++;
-						System.out.println("total number"+count);
+						
+					/*	System.out.println("title--"+requestDB.getTitle());
+						System.out.println("dec--"+requestDB.getDescription());
+						System.out.println("friend--"+name);
+						System.out.println("project--"+userProject);
+						
+						title=requestDB.getTitle();
+						description=requestDB.getDescription();
+						requestemail rm= new requestemail();					
+						rm.friendemail(userName,userName, title, description);*/
+					
 					}
-				 
-				
+					
+					
 				tx.commit();
 			}
+				
 			}
 		} catch (Exception e) 
 		{
@@ -620,6 +635,7 @@ public class NewrequestImpl implements NewrequestInterface {
 		            	requestworkflow.setStatus(status);
 		            	requestworkflow.setDescription(description);		            	
 		            	requestworkflow.setCompletiondate(completiondate);
+		            	//requestworkflow.setUserfriendlist(userfriendlist);
 		            	session.update(requestworkflow);
 		            	
 		            if(message !=null && ! message.trim().equals("")){	
