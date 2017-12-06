@@ -41,10 +41,10 @@ public class HibernateUtil {
     	    configuration.setProperty("hibernate.connection.driver_class", "org.postgresql.Driver");
     	    configuration.setProperty("hibernate.connection.url", "jdbc:postgresql://localhost:5432/reqman");
     	    configuration.setProperty("hibernate.connection.username", "postgres");
-    	    configuration.setProperty("hibernate.connection.password", "admin123");
+    	    configuration.setProperty("hibernate.connection.password", "3394");
     	    configuration.setProperty("hibernate.show_sql", "true");
     	    configuration.setProperty("hibernate.default_schema", "reqman");
-    	  // configuration.setProperty("hibernate.hbm2ddl.auto", "create");
+    	   configuration.setProperty("hibernate.hbm2ddl.auto", "update");
     	    
     	    configuration.addAnnotatedClass(Audittrail.class);
     	    configuration.addAnnotatedClass(Category.class);
@@ -67,8 +67,8 @@ public class HibernateUtil {
     	    configuration.addAnnotatedClass(Userusertype.class);
     	    configuration.addAnnotatedClass(UserusertypeId.class);
     	    configuration.addAnnotatedClass(Suggestion.class);
-    	    configuration.addAnnotatedClass(Account.class);
     	    configuration.addAnnotatedClass(Requestnotes.class);
+    	    configuration.addAnnotatedClass(Account.class);
             ServiceRegistry serviceRegistry
                 = new StandardServiceRegistryBuilder()
                     .applySettings(configuration.getProperties()).build();
