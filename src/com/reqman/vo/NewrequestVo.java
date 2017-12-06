@@ -38,6 +38,7 @@ public class NewrequestVo implements Serializable
 		return stage;
 	}
 
+
 	public List<requestNoteVo> getNoteList() {
 		return noteList;
 	}
