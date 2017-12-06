@@ -2,9 +2,11 @@ package com.reqman.beans;
 
 
 import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
+import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -20,10 +22,12 @@ import java.util.Set;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
+import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
+import javax.faces.event.PhaseId;
 import javax.servlet.http.HttpSession;
 
 import org.apache.poi.hssf.usermodel.HSSFCell;
@@ -59,6 +63,7 @@ import com.sun.el.parser.ParseException;
 @ManagedBean(name="createrequest",eager = true)
 @RequestScoped
 @ViewScoped
+
 public class CreateRequestbean implements Serializable
 {
 	private static final long serialVersionUID = 3076255353187837257L;
@@ -95,7 +100,7 @@ public class CreateRequestbean implements Serializable
 
      
      
-     
+   
      
      
      private Integer[]  searchteammember;
@@ -129,10 +134,8 @@ public class CreateRequestbean implements Serializable
 				endDate = new Date();
 			}
 				
-			newrequestList = newrequestInterface.getNewrequestDetails(userName,startDate,endDate);
-			
-			newrequestList3 = newrequestInterface.getallproject(userName);
-			 
+			newrequestList = newrequestInterface.getNewrequestDetails(userName,startDate,endDate,title, description);			
+			newrequestList3 = newrequestInterface.getallproject(userName);			 
 			setFilteredRequestList(newrequestList);
 			createBarModels();
 			
@@ -158,7 +161,7 @@ public class CreateRequestbean implements Serializable
 			
 			
 			System.out.println("--usersession--userName-->"+userName);
-			newrequestList = newrequestInterface.getNewrequestDetails(userName,startDate,endDate);
+			newrequestList = newrequestInterface.getNewrequestDetails(userName,startDate,endDate, userName, userName);
 			
 		}
 		catch(Exception e)
@@ -314,7 +317,7 @@ public class CreateRequestbean implements Serializable
 			HttpSession session = SessionUtils.getSession();
 			String userName = (String)session.getAttribute("username");
 			System.out.println("--usersession--userName-->"+userName);
-			newrequestList = newrequestInterface.getNewrequestDetails(userName,startDate,endDate);
+			newrequestList = newrequestInterface.getNewrequestDetails(userName,startDate,endDate, userName, userName);
 			
 		}
 		catch(Exception e)
@@ -375,7 +378,7 @@ public class CreateRequestbean implements Serializable
 				return "newrequestfriend";
 			}
 			if (result == 3) {
-				newrequestList = newrequestInterface.getNewrequestDetails(userName,startDate,endDate);
+				newrequestList = newrequestInterface.getNewrequestDetails(userName,startDate,endDate, userName, userName);
 					FacesContext.getCurrentInstance().addMessage(
 						null,
 						new FacesMessage(FacesMessage.SEVERITY_WARN,
@@ -405,11 +408,10 @@ public class CreateRequestbean implements Serializable
         	newrequestVo = newrequestInterface.getRequestById(requestId);      	
 			
         	if(newrequestVo != null && newrequestVo.getStatus().trim().equalsIgnoreCase("Active")){
-        		setTitle(newrequestVo.getTitle() != null ? newrequestVo.getTitle(): "");
-        		setDescription(newrequestVo.getDescription() != null ? newrequestVo.getDescription() : "");
-        		//Dateconverter.convertDateToStringDDMMDDYYYY(completiondate);
-        	setCompletiondate(newrequestVo.getCompletiondate());
-        		 
+        		 setTitle(newrequestVo.getTitle() != null ? newrequestVo.getTitle(): "");
+        		 setDescription(newrequestVo.getDescription() != null ? newrequestVo.getDescription() : "");        		
+        	     setCompletiondate(newrequestVo.getCompletiondate());
+        	     //setUserfriendlist(newrequestVo.getUserfriend());
         		setStatus(true);
         		
         	}
@@ -417,7 +419,7 @@ public class CreateRequestbean implements Serializable
         	{
         		setTitle(newrequestVo.getTitle() != null ? newrequestVo.getTitle(): "");
         		setDescription(newrequestVo.getDescription() != null ? newrequestVo.getDescription() : "");
-        		
+        		//setUserfriendlist(newrequestVo.getUserfriend());
         		setStatus(false);
         	}
         	
@@ -459,7 +461,7 @@ public class CreateRequestbean implements Serializable
         	
         	if(result == 1)
         	{
-        		newrequestList = newrequestInterface.getNewrequestDetails(userName,startDate,endDate);
+        		newrequestList = newrequestInterface.getNewrequestDetails(userName,startDate,endDate, userName, userName);
     				}
         	
 		}
