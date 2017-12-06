@@ -20,7 +20,7 @@ public interface NewrequestInterface {
 			UploadedFile attachment, String userName, Date completiondate,
 			Integer[] userfriendlist) throws IOException, Exception;
 
-	public List<NewrequestVo> getNewrequestDetails(String userName,	Date startDate, Date endDate)
+	public List<NewrequestVo> getNewrequestDetails(String userName,	Date startDate, Date endDate, String title, String description)
 			throws Exception;
 
 	public NewrequestVo getRequestById(String requestId)throws Exception;
