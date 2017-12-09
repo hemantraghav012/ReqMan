@@ -24,6 +24,8 @@ public interface UserDetailsInterface
 
 	public int savesocialUser(String emailid, String password,
 			String firstname, String lastname, String shortname, String hashkey)throws Exception;
+	
+	public byte[] getImageDetails(String userName)  throws Exception;
 
 
 

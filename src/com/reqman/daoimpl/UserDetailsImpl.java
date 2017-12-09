@@ -137,9 +137,6 @@ public class UserDetailsImpl implements UserDetailsInterface {
 
             	}
             	if(roles != null && userrolesDetails != null) {
-                    
-            		
-            		
             		roles=(Roles)session.createCriteria(Roles.class)
                     		.add(Restrictions.eq("id", 3))
                     		.uniqueResult();
@@ -452,7 +449,47 @@ public class UserDetailsImpl implements UserDetailsInterface {
 
 
 	
+	public byte[] getImageDetails(String userName)  throws Exception
+	{
+
+		// TODO Auto-generated method stub
+	    Session session = null;
+	    Transaction tx = null;
+	    UserupdateVo userupdateVo = new UserupdateVo();
+	    Users users = null;
+	    byte[] imageBytes = null;
+		try
+		{
+           	session = HibernateUtil.getSession();
+            tx = session.beginTransaction();
+            users = (Users)session.createCriteria(Users.class)
+            		.add(Restrictions.eq("emailid", userName.toLowerCase().trim()).ignoreCase())
+            		.uniqueResult();
+            if(users != null){
+            	if(users.getPhoto() != null)
+            	{
+            		imageBytes = users.getPhoto();
+            	}
+    			tx.commit();
+            }
+ 		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+			if(tx != null){
+				tx.rollback();
+			}
+		}
+		finally 
+		{
+        	if(session != null)
+            session.close();
+	    }
+
+		return imageBytes;
 	
+	
+	}
 
 	
 

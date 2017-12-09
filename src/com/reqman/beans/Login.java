@@ -1,13 +1,21 @@
 package com.reqman.beans;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.Serializable;
+import java.sql.SQLException;
 
 import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
+import javax.faces.event.PhaseId;
 import javax.servlet.http.HttpSession;
+
+import org.primefaces.model.DefaultStreamedContent;
+import org.primefaces.model.StreamedContent;
 
 import com.reqman.dao.UserDetailsInterface;
 import com.reqman.daoimpl.UserDetailsImpl;
@@ -94,5 +102,35 @@ public class Login implements Serializable {
 		HttpSession session = SessionUtils.getSession();
 		session.invalidate();
 		return "login";
+	}
+	
+	public StreamedContent getImageFromDB() throws IOException {
+		FacesContext context = FacesContext.getCurrentInstance();
+		UserDetailsInterface userImpl = new UserDetailsImpl();
+		HttpSession session = SessionUtils.getSession();
+		String userLoginId = "";
+		byte[] image = null;
+		if (session == null) {
+			return new DefaultStreamedContent();
+		} else {
+			//user = (String)session.getAttribute("username");
+			ByteArrayOutputStream bos = new ByteArrayOutputStream();
+
+			// Reading image from database assuming that product image (bytes)
+			// of product id I1 which is already stored in the database.
+			try {
+				image = userImpl.getImageDetails(user);
+				if(image == null)
+				{
+					image = new byte[10];
+				}
+			} catch (Exception e) { 
+					e.printStackTrace();
+			}
+
+			return new DefaultStreamedContent(new ByteArrayInputStream(image),
+					"image/png");
+
+		}
 	}
 }

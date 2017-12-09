@@ -70,7 +70,8 @@
 </ul>
   </h:form>  
 <ul class="nav navbar-nav navbar-right">
- <li><p:graphicImage url="resource/image/22.jpg" width="40px" height="51px;"/>        </li> 
+ <!-- <li><p:graphicImage url="resource/image/22.jpg" width="40px" height="51px;"/>        </li>  -->
+ <li><p:graphicImage value="#{login.imageFromDB}" width="40px" height="51px;"/>        </li> 
  <li class="dropdown">
  <a class="dropdown-toggle " data-toggle="dropdown" style="color:#faebd1; font-weight: bold; background-color:#f36c00;">#{login.user} <span class="caret"></span></a>         
 
