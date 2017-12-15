@@ -1,17 +1,18 @@
 package com.reqman.beans;
 
+import java.awt.Graphics;
+import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.Serializable;
-import java.sql.SQLException;
 
 import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
-import javax.faces.event.PhaseId;
+import javax.imageio.ImageIO;
 import javax.servlet.http.HttpSession;
 
 import org.primefaces.model.DefaultStreamedContent;
@@ -101,7 +102,10 @@ public class Login implements Serializable {
 	public String logout() {
 		HttpSession session = SessionUtils.getSession();
 		session.invalidate();
-		return "login";
+		
+		FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
+        return "/login?faces-redirect=true";
+
 	}
 	
 	public StreamedContent getImageFromDB() throws IOException {
@@ -122,7 +126,27 @@ public class Login implements Serializable {
 				image = userImpl.getImageDetails(user);
 				if(image == null)
 				{
-					image = new byte[10];
+					//image = new byte[10];
+					
+					//ByteArrayOutputStream bos = new ByteArrayOutputStream();
+					BufferedImage img = ImageIO.read(context.getExternalContext()
+							.getResourceAsStream("/resource/image/22.jpg"));
+					int w = img.getWidth(null);
+					int h = img.getHeight(null);
+		 
+					// image is scaled two times at run time
+					int scale = 2;
+		 
+					BufferedImage bi = new BufferedImage(w * scale, h * scale,
+							BufferedImage.TYPE_INT_ARGB);
+					Graphics g = bi.getGraphics();
+		 
+					g.drawImage(img, 10, 10, w * scale, h * scale, null);
+		 
+					ImageIO.write(bi, "png", bos);
+		 
+					return new DefaultStreamedContent(new ByteArrayInputStream(
+							bos.toByteArray()), "image/png");
 				}
 			} catch (Exception e) { 
 					e.printStackTrace();

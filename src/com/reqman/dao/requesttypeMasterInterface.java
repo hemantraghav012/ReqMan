@@ -8,6 +8,7 @@ import java.util.List;
 
 
 
+
 import com.reqman.vo.RequesttypeVo;
 
 public interface requesttypeMasterInterface {
@@ -23,10 +24,12 @@ public int saverequesttype(String name) throws Exception;
 	
 	public int updateUserRequesttypeById(String requesttypeId, boolean status) throws Exception;
 
-	public List<RequesttypeVo> getRequesttypeStatus(String userName)throws Exception;
+	public List<RequesttypeVo> getRequesttypeStatus(String userName) throws Exception;
 
-	public List<RequesttypeVo> getRequesttypefalseStatus(String userName)throws Exception;
+	public List<RequesttypeVo> getRequesttypefalseStatus(String userName) throws Exception;
 
 	public int updateRequesttype(String oldValue, String newValue,
-			Integer updaterequesttypeId)throws Exception;
+			Integer updaterequesttypeId) throws Exception;
+	
+	public List<Integer> getRequestListByRole(String roleName, String loginId) throws Exception;
 }

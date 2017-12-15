@@ -254,28 +254,22 @@ public class NewrequestImpl implements NewrequestInterface {
 		Request request= null;
 		NewrequestVo newrequestVo = null;
 		requestNoteVo requestnoteVo=null;
+		RequesttypeMasterImpl reinf = new RequesttypeMasterImpl();
+		List<Integer> requestIdList  = new ArrayList<Integer>();
+		String roleName = "";
 		try {
-			session = HibernateUtil.getSession();
-			tx = session.beginTransaction();
-			usersTemp = (Users) session
-					.createCriteria(Users.class)
-					.add(Restrictions.eq("emailid",
-							userName.toLowerCase().trim()).ignoreCase())
-					.uniqueResult();
-
-			if (usersTemp != null) {
-				
 			
+			roleName = reinf.getRoleNameByLoginId(userName);
+			
+			requestIdList = reinf.getRequestListByRole(roleName, userName);
+			
+			if (requestIdList != null && requestIdList.size() != 0) 
+			{
+				session = HibernateUtil.getSession();
+				tx = session.beginTransaction();
 				
-/*
-				List<Request> requesPojoList = (List<Request>) session
-						.createCriteria(Request.class)						
-						.add(Restrictions.eq("createdby",
-						userName.toLowerCase().trim()).ignoreCase())
-						.list();
-						*/
 				Criteria crit = session.createCriteria(Request.class);
-				crit.add(Restrictions.eq("createdby", userName.toLowerCase().trim()).ignoreCase());
+				crit.add(Restrictions.in("id", requestIdList));
 				//search date range
 				if(startDate != null && endDate !=null)
 				{
@@ -292,10 +286,11 @@ public class NewrequestImpl implements NewrequestInterface {
 				String firstName = "";
 				String lastName = "";
 				String name = "";
-				if (requesPojoList != null && requesPojoList.size() != 0) {
+				if (requesPojoList != null && requesPojoList.size() != 0) 
+				{
 					
-					for (Request requestDB : requesPojoList) {
-
+					for (Request requestDB : requesPojoList) 
+					{
 						userCategory = "";
 						userProject = "";
 						userRequestType= "";

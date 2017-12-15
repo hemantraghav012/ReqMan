@@ -13,6 +13,7 @@ import org.primefaces.model.UploadedFile;
 import com.reqman.common.HibernateUtil;
 import com.reqman.dao.UserDetailsInterface;
 import com.reqman.pojo.Account;
+import com.reqman.pojo.Accountusers;
 import com.reqman.pojo.Roles;
 import com.reqman.pojo.Userroles;
 import com.reqman.pojo.Users;
@@ -134,9 +135,17 @@ public class UserDetailsImpl implements UserDetailsInterface {
                 		accountDetails.setDatecreated(new Date());
                 		session.save(accountDetails);
                 	}
+                	
+                	Accountusers accountusers = new Accountusers();
+                	accountusers.setAccount(accountDetails);
+                	accountusers.setUsers(users);
+                	session.save(accountusers);
 
             	}
-            	if(roles != null && userrolesDetails != null) {
+            	
+            	if(roles != null && userrolesDetails != null)
+            	{
+            		
             		roles=(Roles)session.createCriteria(Roles.class)
                     		.add(Restrictions.eq("id", 3))
                     		.uniqueResult();

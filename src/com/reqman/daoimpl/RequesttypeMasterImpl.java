@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -14,6 +15,7 @@ import com.reqman.dao.requesttypeMasterInterface;
 import com.reqman.pojo.Requesttype;
 import com.reqman.pojo.Userrequesttype;
 import com.reqman.pojo.Users;
+import com.reqman.util.RequestConstants;
 import com.reqman.vo.RequesttypeVo;
 
 
@@ -485,8 +487,164 @@ RequesttypeVo requesttypeVo = new RequesttypeVo();
 		return result;
 	}
 	
+	@SuppressWarnings("unchecked")
+	public String getRoleNameByLoginId(String loginId) throws Exception 
+	{
+	    Session session = null;
+	    Transaction tx = null;
+	    String roleName = "";
+	    List<Object[]> rows = null;
+	    SQLQuery query = null;
+	    String sqlQuery = "";
+	    String roleId = "";
+	    try
+		{
+           	session = HibernateUtil.getSession();
+            tx = session.beginTransaction();
+            sqlQuery ="select r.id as roleId,r.name as roleName from reqman.roles as r, reqman.users as u,reqman.userroles as ur"
+            		+ " where u.id=ur.userid and ur.roleid=r.id and r.status=true and u.emailid='"+loginId+"'";
+            query = session.createSQLQuery(sqlQuery);
+            rows = query.list();
+            
+            if(rows != null && rows.size() != 0)
+            {
+            	for(Object[] row : rows)
+            	{
+            		roleId = row[0].toString();
+            		roleName = row[1].toString();
+            	}
+            }
+
+            	tx.commit();
+		}
+		catch(Exception e)
+		{
+			
+			e.printStackTrace();
+			if(tx != null)
+			{
+				tx.rollback();
+			}
+		}
+		finally 
+		{
+        	if(session != null)
+            session.close();
+	    }
+
+		return roleName;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Integer> getRequestListByRole(String roleName, String loginId) throws Exception 
+	{
+	    Session session = null;
+	    Transaction tx = null;
+	    List<Object[]> rows = null;
+	    SQLQuery query = null;
+	    String sqlQuery = "";
+	    Integer requestId = 0;
+	    Integer friendId = 0;
+	    
+	    StringBuffer sb = new StringBuffer();
+	    String[] accountArr = {};
+	    String accountName = "";
+	    List<Integer> requestIdList = new ArrayList<Integer>();
+	    try
+		{
+           	session = HibernateUtil.getSession();
+            tx = session.beginTransaction();
+            accountArr = loginId.split("@");
+            if(accountArr != null && accountArr.length > 1)
+            {
+            	accountName = accountArr[1];
+            }
+            
+            if(roleName != null && roleName.trim().equalsIgnoreCase(RequestConstants.REQUESTOR_ROLE))
+            {
+            	sb.append("select rq.id,uf.friendid from reqman.users as u, reqman.userfriendlist as uf,reqman.request as rq,reqman.roles as r,"
+            			+ "reqman.userroles as ur, reqman.accountusers as au, reqman.account as a where u.id=uf.userid and uf.id=rq.friendid "
+            			+ "and u.id=ur.userid and ur.roleid=r.id and au.userid=u.id and a.id=au.accountid and r.name = '"+roleName+"' "
+            			+ "and u.emailid='"+loginId+"'");
+            }
+            else if(roleName != null && roleName.trim().equalsIgnoreCase(RequestConstants.TEAM_MEMBER))
+            {
+            	sb.append("select rq.id,uf.friendid from reqman.users as u, reqman.userfriendlist as uf,reqman.request as rq,reqman.roles as r,"
+            			+ "reqman.userroles as ur, reqman.accountusers as au, reqman.account as a where u.id=uf.userid and uf.id=rq.friendid "
+            			+ "and u.id=ur.userid and ur.roleid=r.id and au.userid=u.id and a.id=au.accountid and r.name = '"+roleName+"' "
+            			+ "and u.emailid='"+loginId+"'");
+            }
+            else if(roleName != null && roleName.trim().equalsIgnoreCase(RequestConstants.ACCOUNT_ADMIN_ROLE))
+            {
+            	sb.append("select rq.id,uf.friendid from reqman.users as u, reqman.userfriendlist as uf,reqman.request as rq,reqman.roles as r,"
+            			+ "reqman.userroles as ur, reqman.accountusers as au, reqman.account as a where u.id=uf.userid and "
+            			+ "uf.id=rq.friendid and u.id=ur.userid and ur.roleid=r.id and au.userid=u.id and a.id=au.accountid "
+            			+ "and r.name = '"+roleName+"' and a.name='"+accountName+"'");
+            }
+            else if(roleName != null && roleName.trim().equalsIgnoreCase(RequestConstants.APP_ADMIN_ROLE))
+            {
+            	sb.append("select rq.id,uf.friendid from reqman.users as u, reqman.userfriendlist as uf,reqman.request as rq,"
+            			+ "reqman.roles as r,reqman.userroles as ur where uf.id=rq.friendid and u.id=ur.userid and "
+            			+ "ur.roleid=r.id and r.name = '"+roleName+"'");
+            }
+            else
+            {
+            	sb.append("");
+            	
+            }
+            
+            if(sb.length() == 0)
+            {
+            	return requestIdList;
+            }
+            
+            sqlQuery = sb.toString();
+            query = session.createSQLQuery(sqlQuery);
+            rows = query.list();
+            
+            if(rows != null && rows.size() != 0)
+            {
+            	for(Object[] row : rows)
+            	{
+            		requestId = row[0] != null ? (Integer)row[0] : 0;
+            		friendId = row[1] != null ?  (Integer)row[1] : 0;
+            		requestIdList.add(requestId);
+            	}
+            }
+
+            	tx.commit();
+		}
+		catch(Exception e)
+		{
+			
+			e.printStackTrace();
+			if(tx != null)
+			{
+				tx.rollback();
+			}
+		}
+		finally 
+		{
+        	if(session != null)
+            session.close();
+	    }
+
+		return requestIdList;
+	}
+
 
 	
+
+	public static void main(String args[]) throws Exception
+	{
+		RequesttypeMasterImpl reinf = new RequesttypeMasterImpl();
+		String emaiilId = "naveen.namburu1@yahoo.com";
+		String roleName = reinf.getRoleNameByLoginId("naveen.namburu1@yahoo.com");
+		
+		List<Integer> requestIdList = reinf.getRequestListByRole(roleName, emaiilId);
+		
+		System.out.println("-roleName->"+roleName);
+	}
 
 	
 

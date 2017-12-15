@@ -9,6 +9,7 @@ import org.hibernate.cfg.Configuration;
 import org.hibernate.service.ServiceRegistry;
 
 import com.reqman.pojo.Account;
+import com.reqman.pojo.Accountusers;
 import com.reqman.pojo.Audittrail;
 import com.reqman.pojo.Category;
 import com.reqman.pojo.Menu;
@@ -61,7 +62,7 @@ public class HibernateUtilH {
         	    configuration.addAnnotatedClass(Project.class);
         	    configuration.addAnnotatedClass(Request.class);
         	    configuration.addAnnotatedClass(Requesttype.class);
-        	    //configuration.addAnnotatedClass(Requestworkflow.class);
+        	    configuration.addAnnotatedClass(Accountusers.class);
         	    configuration.addAnnotatedClass(Rolemenus.class);
         	    configuration.addAnnotatedClass(RolemenusId.class);
         	    configuration.addAnnotatedClass(Roles.class);

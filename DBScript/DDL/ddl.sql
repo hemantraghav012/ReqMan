@@ -515,3 +515,33 @@ TABLESPACE pg_default;
 
 ALTER TABLE reqman.account
     OWNER to postgres;
+    
+-- Table: reqman.accountusers
+
+-- DROP TABLE reqman.accountusers;
+
+CREATE TABLE reqman.accountusers
+(
+    id integer NOT NULL DEFAULT nextval('reqman.accountusers_id_seq'::regclass),
+    userid integer,
+    accountid integer,
+    CONSTRAINT pk_accountuserid PRIMARY KEY (id),
+    CONSTRAINT uk_knvs9nm4eypucy00drj5gpte1 UNIQUE (accountid, userid),
+    CONSTRAINT fk_accountusers_account FOREIGN KEY (accountid)
+        REFERENCES reqman.account (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT fk_accountusers_users FOREIGN KEY (userid)
+        REFERENCES reqman.users (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+)
+WITH (
+    OIDS = FALSE
+)
+TABLESPACE pg_default;
+
+ALTER TABLE reqman.accountusers
+    OWNER to postgres;
+
+GRANT ALL ON TABLE reqman.accountusers TO postgres WITH GRANT OPTION;
