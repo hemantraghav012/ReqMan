@@ -199,12 +199,6 @@
 		    <version>4.0.1</version>
 		</dependency>
 		
- <!-- Servlet API -->
-        <dependency>
-            <groupId>javax.servlet</groupId>
-            <artifactId>servlet-api</artifactId>
-            <version>2.5</version>
-        </dependency>
         <!-- Dependencies needed by the file upload -->
         <!-- Commons Fileupload -->
         <dependency>
@@ -212,8 +206,19 @@
             <artifactId>commons-fileupload</artifactId>
             <version>1.2.1</version>
         </dependency>
-	
-	
+        
+        <!-- https://mvnrepository.com/artifact/org.quartz-scheduler/quartz -->
+        <dependency>
+			<groupId>org.quartz-scheduler</groupId>
+			<artifactId>quartz</artifactId>
+			<version>2.1.5</version>
+		</dependency>
+		<dependency>
+			<groupId>javax.transaction</groupId>
+			<artifactId>jta</artifactId>
+			<version>1.1</version>
+		</dependency>
+		
 </dependencies>
 <repositories>
 
