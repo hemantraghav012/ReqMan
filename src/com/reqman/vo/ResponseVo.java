@@ -1,6 +1,7 @@
 package com.reqman.vo;
 
 import java.util.Date;
+import java.util.List;
 
 import org.primefaces.model.UploadedFile;
 
@@ -26,13 +27,21 @@ public class ResponseVo{
 	private Float completionpercentage;
 	private String createdby;
 	private Date changedate;
-	
+	private List<requestNoteVo> noteList;
 	
 	
 	
 	
 
 	
+
+	public List<requestNoteVo> getNoteList() {
+		return noteList;
+	}
+
+	public void setNoteList(List<requestNoteVo> noteList) {
+		this.noteList = noteList;
+	}
 
 	public String getStage() {
 		return stage;

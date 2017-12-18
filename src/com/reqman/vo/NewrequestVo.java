@@ -27,15 +27,74 @@ public class NewrequestVo implements Serializable
 	private String fileName;
 	private UploadedFile attachment;
 	private int completionpercentage;
-	private String stage;
+	private String stage;	
 	private String changedate;
 	private List<requestNoteVo> noteList;
+	private Integer project;
+	private Integer category;
+	private Integer requesttype;
+	private Integer userfriend;
+	private Integer requeststage;
 	
-	//private List<requestNoteVo> requestnoteList = new ArrayList<requestNoteVo>();
 	
 	
+	
+	
+	
+	
+	
+	public Integer getRequeststage() {
+		return requeststage;
+	}
+
+
+	public void setRequeststage(Integer requeststage) {
+		this.requeststage = requeststage;
+	}
+
+
+	public Integer getUserfriend() {
+		return userfriend;
+	}
+
+
+	public void setUserfriend(Integer userfriend) {
+		this.userfriend = userfriend;
+	}
+
+
 	public String getStage() {
 		return stage;
+	}
+
+
+	public Integer getCategory() {
+		return category;
+	}
+
+
+	public void setCategory(Integer category) {
+		this.category = category;
+	}
+
+
+	public Integer getRequesttype() {
+		return requesttype;
+	}
+
+
+	public void setRequesttype(Integer requesttype) {
+		this.requesttype = requesttype;
+	}
+
+
+	public Integer getProject() {
+		return project;
+	}
+
+
+	public void setProject(Integer project) {
+		this.project = project;
 	}
 
 
