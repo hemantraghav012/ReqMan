@@ -1,0 +1,268 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+ xmlns:ui="http://java.sun.com/jsf/facelets" 
+  xmlns:f="http://java.sun.com/jsf/core"
+   xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+    xmlns:p="http://primefaces.org/ui"
+ 	xmlns:h="http://java.sun.com/jsf/html">
+<h:head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<link rel="stylesheet" href="resource/css/bootstrap.css"/>
+<link rel="stylesheet" href="resource/mystyle/onlyhome.css"/>
+<link rel="stylesheet" href="resource/mystyle/home.css"/>
+<link rel="stylesheet" href="resource/mystyle/button.css"/>
+<script type="text/javascript" src="resource/js/bootstrap.js"/>
+<script type="text/javascript" src="resource/js/jquery.js"/>
+
+	<title> View History </title>
+	
+	<script>
+
+function setRequestHiddenValue(new_value)
+{
+	document.getElementById('requestForm:requestId').value = new_value;
+
+}
+
+</script>
+	
+</h:head>
+<h:body>
+
+<div id="header">
+	<ui:insert name="header">
+		<ui:include src="header.xhtml" />
+	</ui:insert>
+</div>
+       
+    
+
+     <h:form id="requestForm">
+  <div class="container-fluid " style=" margin-top:2.5cm; ">
+      
+         
+         <h:inputHidden id="requestId" value="#{updatestatusbean.requestId}" ></h:inputHidden>
+  
+  <div class="row">
+      	<div class="col-sm-8">
+      		<span style=";font-size:25px;margin-left: 3px;">Manage All Completed Tasks List</span>
+      	</div>    		
+	  
+          <div class="col-sm-4 pull-right" > 
+        		
+     			 <h:link value="Back TO Update Task Status List " style="padding-bottom:5px;" class="btn2 btn pull-right fontsize" outcome="updatestatustask" /> 
+     			
+     			 	</div>		
+        </div>
+  
+  
+  
+  <div class="ui-fluid ">
+
+	     <p:dataTable id="requestTable" var="update1" value="#{updatestatusbean.completedtaskList}" draggableColumns="true" resizableColumns="true"
+	     reflow="true" scrollable="true" scrollHeight="310" 
+	      rows="5"  paginator="true"   
+	      paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rowsPerPageTemplate="5,10,15"
+	      sortBy="#{update1.status},#{update1.title}" 
+	     class="table table-striped table-hover table-bordered" 
+	     style="margin-top:10px;  " filteredValue="#{updatestatusbean.filteredCompletedList}" 
+	     widgetVar="updatestatusListTable">
+	     
+
+
+ <f:facet name="header">
+	      <p:outputPanel class="pull-left" >
+	     <h:inputText id="globalFilter" onkeyup="PF('updatestatusListTable').filter()" a:placeholder="Search on any field (s) " class="form-control"  />
+			</p:outputPanel>	
+	     
+	    <p:outputPanel class="pull-right">
+		<p:commandLink id="toggler" class="btn fontsize pull-right" 
+		 style="background-color:skyblue;">Choose Columns To View </p:commandLink>
+        <p:columnToggler datasource="requestTable" trigger="toggler" />
+        </p:outputPanel>
+	      <p:outputPanel class="pull-right">
+         <h:commandLink id="excel">
+         <img  src="resource/image/Excel.png" class="img-responsive pull-right" alt="Excel" style="width:35px;"></img>
+	        <p:dataExporter type="xls" target="requestTable" fileName="update1" postProcessor="#{updatestatusbean.postProcessXLS}" />
+	    </h:commandLink>
+	 	</p:outputPanel>
+	      <p:outputPanel class="pull-right">
+	    <h:commandLink id="pdf">
+	     <img  src="resource/image/pdf.png" class="img-responsive pull-right" alt="Excel" style="width:35px;"></img>
+	        <p:dataExporter type="pdf" target="requestTable" fileName="update1" preProcessor="#{updatestatusbean.preProcessPDF}" />
+	    </h:commandLink>
+	     </p:outputPanel>
+		</f:facet> 
+
+
+
+ 
+ <p:column filterBy="#{update1.title}"  sortBy="#{update1.title}" headerText="Title"  filterStyle="display:none;"
+			 filterMatchMode="contains"  style="text-overflow: ellipsis; white-space: nowrap; padding: 0px 0px 0px 3px;">			 
+				<f:facet name="header" >
+					 <h:outputText value="Title"/>
+				</f:facet>
+				<h:outputText value="#{update1.title}" style="display: inline;"/>
+</p:column>
+ 
+ 
+ <p:column filterBy="#{update1.description}"  sortBy="#{update1.description}" headerText="Description" filterStyle="display:none;"  
+			 filterMatchMode="contains"   style="text-overflow: ellipsis; white-space: nowrap;padding: 0px 0px 0px 3px;">
+				<f:facet name="header">
+					 <h:outputText value="Description" />
+				</f:facet>
+				<h:outputText value="#{update1.description}" style="display: inline;"   />
+</p:column>
+ 
+<p:column filterBy="#{update1.completiondate}" sortBy="#{update1.completiondate}" headerText="Due Date"  filterStyle="display:none;"  
+			 filterMatchMode="contains"   pattern="dd-MMM-yyyy"  style="text-overflow: ellipsis; white-space: nowrap;padding: 0px 0px 0px 3px;">
+				<f:facet name="header">
+					<h:outputText value="Due Date" />
+				</f:facet>
+				<h:outputText value="#{update1.completiondate}" pattern="dd-MMM-yyyy" />
+			</p:column>
+    
+    
+    
+    
+   <p:column filterBy="#{update1.usercategory}" sortBy="#{update1.usercategory}" headerText="Category"  filterStyle="display:none;"  
+			 filterMatchMode="contains"  style="text-overflow: ellipsis; white-space: nowrap;padding: 0px 0px 0px 3px;">
+				<f:facet name="header">
+					<h:outputText value="Category" />
+				</f:facet>
+				<h:outputText value="#{update1.usercategory}" style="display: inline;" />
+			</p:column> 
+    
+     <p:column filterBy="#{update1.userproject}" sortBy="#{update1.userproject}"  headerText="Project"  filterStyle="display:none;"  
+			 filterMatchMode="contains" style="text-overflow: ellipsis; white-space: nowrap;padding: 0px 0px 0px 3px;">
+				<f:facet name="header">
+					<h:outputText value="Project" />
+				</f:facet>
+				<h:outputText value="#{update1.userproject}" style="display: inline;"  />
+			</p:column> 
+    
+   
+     <p:column filterBy="#{update1.userrequesttype}" sortBy="#{update1.userrequesttype}"  headerText="Type"  filterStyle="display:none;"  
+			 filterMatchMode="contains" style="text-overflow: ellipsis; white-space: nowrap;padding: 0px 0px 0px 3px;">
+				<f:facet name="header">
+					<h:outputText value="Type" />
+				</f:facet>
+				<h:outputText value="#{update1.userrequesttype}"  style="display: inline;"  />
+			</p:column> 
+    
+
+    
+     <p:column filterBy="#{update1.completionpercentage}" sortBy="#{update1.completionpercentage}"  headerText="% Age Completion"  filterStyle="display:none;"  
+			 filterMatchMode="contains"  style="text-overflow: ellipsis; white-space: nowrap;padding: 0px 0px 0px 3px;">
+				<f:facet name="header">
+					<h:outputText value="% Age
+					                  Completion" />
+				</f:facet>
+				<h:outputText value="#{update1.completionpercentage}%" style="display: inline;"   />
+			</p:column>
+    
+  
+     <p:column filterBy="#{update1.createdby}" sortBy="#{update1.createdby}"  headerText="Task From"  filterStyle="display:none;"  
+			 filterMatchMode="contains"  style="text-overflow: ellipsis; white-space: nowrap;padding: 0px 0px 0px 3px;">
+				<f:facet name="header">
+					<h:outputText value="Task From" />
+				</f:facet>
+				<h:outputText value="#{update1.createdby}" style="display: inline;"   />
+			</p:column>
+    
+    <p:column filterBy="#{update1.stage}"  sortBy="#{update1.stage}"  headerText="Stage"  
+			 filterMatchMode="in"  style="text-overflow: ellipsis; white-space: nowrap;padding: 0px 0px 0px 3px;">
+				<f:facet name="filter">
+                <p:selectCheckboxMenu label="Search" onchange="PF('updatestatusListTable').filter()">                  
+                    <f:selectItem   itemLabel="Cancelled" itemValue="Cancelled" />
+                    <f:selectItem   itemLabel="Close" itemValue="Close" />
+                </p:selectCheckboxMenu>
+            </f:facet>
+				<h:outputText value="#{update1.stage}" style="display: inline;"   />
+			</p:column>
+   
+   
+     <p:column headerText="View Notes" exportable="false"  style="padding: 0px 0px 0px 0px; ">
+     
+     	<p:commandLink id="nonAjax12" class="btn2 btn  fontsize" 
+				style="color:black; width:135px;font-size:12px;background-color:skyblue;"
+    onclick="PF('#{update1.newRequestId}').show(); ">
+    		View Notes
+    		</p:commandLink> 
+     
+     
+  
+
+ <p:dialog  header="View Notes" widgetVar="#{update1.newRequestId}" varStatus="status" modal="true" responsive = "true">
+      
+      
+       <div class="container">
+        <h:form>   
+        
+<p:dataTable var="noteview"  value = "#{update1.noteList}" scrollable="true" scrollHeight="300"    >
+    
+ <p:column headerText="Id" style="width:200px">  
+        <h:outputText value="#{noteview.noteId}"/>
+    </p:column>
+    <p:column headerText="Date/Time" style="width:200px">  
+        <h:outputText value="#{noteview.time}"/>
+    </p:column>
+
+    <p:column headerText="createdby" style="width:250px">
+        <h:outputText value="#{noteview.createdby}"/>
+    </p:column>
+
+    <p:column headerText="Message">
+        <h:outputText value="#{noteview.message}" class="dd"/>
+    </p:column>
+</p:dataTable>
+          
+       </h:form>    
+       </div>
+</p:dialog> 
+
+     </p:column>
+     
+    
+     <p:column headerText="View / Modify" exportable="false" style="padding: 0px 0px 0px 0px; ">
+<p:commandLink id="nonAjax" styleClass="btn btn-primary fontsize" 
+				style="color:white; width:145px; border-radius: none;font-size:12px;" onclick='setRequestHiddenValue(#{update1.newRequestId})' 
+				action="#{updatestatusbean.modifyAction()}" ajax="false" >
+	        		View / Update
+	    		</p:commandLink> 
+	    		
+	    		
+	    		
+	    		
+   </p:column>   
+</p:dataTable>
+	    
+	</div>
+	
+ 
+
+
+
+
+<script type="text/javascript">
+function start() {
+    PF('statusDialog').show();
+}
+ 
+function stop() {
+    PF('statusDialog').hide();
+}
+</script>
+
+      </div><!-- end oc container -->
+        </h:form>
+   
+      
+      
+      </h:body>
+
+</html>
