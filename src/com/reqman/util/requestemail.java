@@ -1,11 +1,26 @@
 package com.reqman.util;
 
+import java.awt.FlowLayout;
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 
+import javax.imageio.ImageIO;
+import javax.servlet.http.HttpSession;
+import javax.swing.ImageIcon;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+
+import com.reqman.dao.NewrequestInterface;
+import com.reqman.dao.UpdatestatusInterface;
 import com.reqman.daoimpl.NewrequestImpl;
+import com.reqman.daoimpl.UpdatestatusImpl;
 import com.reqman.vo.NewrequestVo;
+import com.reqman.vo.UpdatestatusVo;
 import com.sendgrid.Content;
 import com.sendgrid.Email;
 import com.sendgrid.Mail;
@@ -18,26 +33,47 @@ public class requestemail {
 
 	
 	@SuppressWarnings("null")
-	public String RequestGrid(String To, String emailid,String title, String description) throws Exception{
+	public String RequestGrid(String To, String emailid) throws Exception, IOException{
 		StringBuffer sb = new StringBuffer();
 		String content = "";
 		String temp ="\"";
-		
-		
+		List<NewrequestVo> requestListemail = new ArrayList<NewrequestVo>();
+		List<UpdatestatusVo> updatestatusListemail = new ArrayList<UpdatestatusVo>();
+		 NewrequestInterface newrequestInterface = new NewrequestImpl();	
+         UpdatestatusInterface updatestatusInterface = new UpdatestatusImpl();
+			HttpSession session = SessionUtils.getSession();
+			String userName = (String)session.getAttribute("username");
+			System.out.println("--usersession--userName-->"+userName);
+			
+				
+		String userproject = null;
+		String usercategory= null;
+		String userrequesttype= null;
+		String friendname= null;
+		String changedate= null;
+		String title=null;
+		String description=null;
+		Float completionpercentage = null;
+		Integer stage = null;
+		String createdby=null;
 		try{
 			sb.append("<html>");
 			sb.append("<head>");
-			
-			  sb.append("<html><head><style type='text/css'>");
-			  sb.append("table , th, td { border-width: 1px; border-style: solid; border-color: black; } ");
-			  sb.append("tbody {background-color:yellow; } ");
-			  sb.append("</style></head>");
-			
-			sb.append("</head>");
+			sb.append("<html><head><style type='text/css'>");
+			sb.append("table {font-family:Trebuchet MS, Arial, Helvetica, sans-serif;border-collapse: collapse; width: 100%;}");
+			sb.append("table td, table th {border: 1px solid #ddd;padding: 8px;}");
+			sb.append("table tr:hover {background-color: #ddd;}");
+			sb.append("table th {padding-top: 12px;padding-bottom: 12px;text-align: left;background-color:blue; color: white;}");
+			sb.append("</style></head>");			
 			sb.append("<body>");
+			
+			
+			
+			sb.append("<center>");
 			sb.append("<h2>");
-			sb.append("Request Grid");
+			sb.append("Tasks From  Requestor");
 			sb.append("</h2>");
+			sb.append("</center>");
 			sb.append("<table>");
 			sb.append("<tbody>");
 			sb.append("<tr>");
@@ -48,64 +84,152 @@ public class requestemail {
 			sb.append("Description");
 			sb.append("</th>");
 			sb.append("<th>");
-			sb.append("Project");
+			sb.append("Due Date");			
 			sb.append("</th>");
 			sb.append("<th>");
 			sb.append("Category");
 			sb.append("</th>");
 			sb.append("<th>");
+			sb.append("Project");			
+			sb.append("</th>");
+			sb.append("<th>");
 			sb.append("Type");
 			sb.append("</th>");
 			sb.append("<th>");
-			sb.append("Due Date");
+			sb.append("Task From");			
+			sb.append("</th>");			
+			sb.append("<th>");
+			sb.append("%Age Completion");
+			sb.append("</th>");
+			sb.append("</tr>");
+			
+		
+			updatestatusListemail = updatestatusInterface.getupdatestatusDetailsforemail(userName,title, description,userproject, usercategory, userrequesttype, createdby, changedate,completionpercentage,stage);			
+				
+				for (UpdatestatusVo updatestatusDB : updatestatusListemail) {
+
+			sb.append("<tr>");
+			sb.append("<td>");
+		    sb.append(updatestatusDB.getTitle());
+			sb.append("</td>");
+			sb.append("<td>");
+		    sb.append(updatestatusDB.getDescription());
+			sb.append("</td>");
+			sb.append("<td>");
+			sb.append(updatestatusDB.getCompletiondate());
+			sb.append("</td>");
+			sb.append("<td>");
+			sb.append(updatestatusDB.getUsercategory());			
+			sb.append("</td>");
+			sb.append("<td>");
+			sb.append(updatestatusDB.getUserproject());			
+			sb.append("</td>");
+			sb.append("<td>");
+			sb.append(updatestatusDB.getUserrequesttype());
+			sb.append("</td>");
+			sb.append("<td>");
+			sb.append(updatestatusDB.getFriendName());
+			sb.append("</td>");
+					
+			sb.append("<td>");
+			sb.append(updatestatusDB.getCompletionpercentage());
+			sb.append("</td>");			
+			sb.append("</tr>");			
+			}
+
+			sb.append("</tbody>");
+			sb.append("</table>");
+			sb.append("</body>");
+			sb.append("</html>");
+				
+			
+			
+				
+				
+				sb.append("<html>");
+				sb.append("<head>");
+				sb.append("<html><head><style type='text/css'>");
+				sb.append("table {font-family:Trebuchet MS, Arial, Helvetica, sans-serif;border-collapse: collapse; width: 100%;}");
+				sb.append("table td, table th {border: 1px solid #ddd;padding: 8px;}");
+				sb.append("table tr:hover {background-color: #ddd;}");
+				sb.append("table th {padding-top: 12px;padding-bottom: 12px;text-align: left;background-color:blue; color: white;}");
+				sb.append("</style></head>");			
+				sb.append("<body>");
+				
+			
+			sb.append("<center>");
+			sb.append("<h2>");
+			sb.append("Pending Requests From Team Member");
+			sb.append("</h2>");
+			sb.append("</center>");
+			sb.append("<table>");
+			sb.append("<tbody>");
+			sb.append("<tr>");
+			sb.append("<th>");
+			sb.append("Title");
 			sb.append("</th>");
 			sb.append("<th>");
-			sb.append(" %Age Completion");
+			sb.append("Description");
+			sb.append("</th>");
+			sb.append("<th>");
+			sb.append("Due Date");			
+			sb.append("</th>");
+			sb.append("<th>");
+			sb.append("Category");
+			sb.append("</th>");
+			sb.append("<th>");
+			sb.append("Project");			
+			sb.append("</th>");
+			sb.append("<th>");
+			sb.append("Type");
+			sb.append("</th>");
+			sb.append("<th>");
+			sb.append("Team Member");			
 			sb.append("</th>");
 			sb.append("<th>");
 			sb.append("stage");
 			sb.append("</th>");
 			sb.append("<th>");
-			sb.append("Team Member");
+			sb.append("%Age Completion");
 			sb.append("</th>");
 			sb.append("</tr>");
 			
+		
+				requestListemail = newrequestInterface.getNewrequestDetailsforemail(userName,title, description,userproject, usercategory, userrequesttype, friendname, changedate,completionpercentage,stage);			
 				
-			//	System.out.println("title11--"+);
-				//System.out.println("dec11--"+nr.getDescription());
+				for (NewrequestVo requestDB : requestListemail) {
+
 			sb.append("<tr>");
 			sb.append("<td>");
-		sb.append(description);
+		    sb.append(requestDB.getTitle());
 			sb.append("</td>");
 			sb.append("<td>");
-		sb.append(title);
+		    sb.append(requestDB.getDescription());
 			sb.append("</td>");
 			sb.append("<td>");
-			sb.append("my Project");
+			sb.append(requestDB.getChangedate());
 			sb.append("</td>");
 			sb.append("<td>");
-			sb.append("my Category");
+			sb.append(requestDB.getUsercategory());			
 			sb.append("</td>");
 			sb.append("<td>");
-			sb.append("my Type");
+			sb.append(requestDB.getUserproject());			
 			sb.append("</td>");
 			sb.append("<td>");
-			sb.append("12-14-15");
+			sb.append(requestDB.getUserrequesttype());
 			sb.append("</td>");
 			sb.append("<td>");
-			sb.append("24%");
+			sb.append(requestDB.getFriendName());
 			sb.append("</td>");
 			sb.append("<td>");
-			sb.append("in-progress");
-			sb.append("</td>");
+			sb.append(requestDB.getStage());
+			sb.append("</td>");			
 			sb.append("<td>");
-			sb.append("Raghav");
-			sb.append("</td>");
-			sb.append("</tr>");
-			
-			
-		
-			
+			sb.append(requestDB.getCompletionpercentage());
+			sb.append("</td>");			
+			sb.append("</tr>");			
+			}
+				
 			
 			sb.append("</tbody>");
 			sb.append("</table>");
@@ -124,7 +248,7 @@ public class requestemail {
 		return content;
 	}
 
-public void friendemail(String To, String emailid,String title, String description) throws Exception {
+public void friendemail(String To, String emailid) throws Exception {
 		
 	
 		StringBuffer sb = new StringBuffer();
@@ -135,7 +259,7 @@ public void friendemail(String To, String emailid,String title, String descripti
 		    String subject = emailid+" Welcome to Collabor8!";
 		    Email to = new Email(To);
 		    //Content content = getContent(To, firstName, password);
-		    Content content = new Content("text/html", RequestGrid(To, emailid,title, description));
+		    Content content = new Content("text/html", RequestGrid(To,emailid));
 		    //Content content = new Content("hello password");
 		    Mail mail = new Mail(from, subject, to, content);
 		    SendGrid sg = new SendGrid(SearchConstants.EMAIL_KEY);
@@ -163,7 +287,7 @@ public static void main(String[] args) throws IOException
 	try{
 		String emailid = null;
 //requestemail rr= new requestemail();
-//	rr.friendemail("hemantraghav012@gmail.com", "Sumit12", emailid, emailid);
+//	rr.friendemail("hemantraghav012@gmail.com", "Sumit12");
 //	System.out.println("-password--"+emailid);
 	
 	/*String password1 = new sendEmail1().resetAccount("naveen.namburu@gmail.com", "Naveen Namburu");
