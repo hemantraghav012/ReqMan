@@ -1,0 +1,15 @@
+@CHARSET "ISO-8859-1";
+
+.accountgrid{  
+	padding: 80px;
+  max-width:750px;
+  width: 100% !important;
+  background-color: #fff;
+  margin: 0 auto;
+  border-radius: 8px;
+
+  overflow: hidden;
+  font-family: roboto;
+   
+    
+}

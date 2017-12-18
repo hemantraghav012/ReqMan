@@ -5,29 +5,35 @@
    color:#fff;
   
 } 
+.btn2 {
+  background-color:#3db545;
+   color:#fff;
+  
+} 
+
 .fontsize{
 	font-weight: bold;
 	font-size: 17px;
 	
 }
+.btn2:hover{   
+  background-color:#3db545;
+   color:#fff;  
+}
+
 .btn1:hover{
-	  background: rgba(255,255,255,0.1);
+	 background: rgba(255,255,255,0.1);
 	 box-shadow: 0 1px 1px rgba(0,0,0,0.2);
-	 border: 0.5px solid;
-   
-  background-color:#f36c00;
-   color:#fff;
-  
+	 border: 0.5px solid;   
+     background-color:#f36c00;
+     color:#fff;  
      margin-top: 0px;
-    margin-bottom: 0px;
+     margin-bottom: 0px;
     
 }
 .ui-button.buttoncolor1{
 	 background-color:#4682B4;
    color:#fff;
-   
-    
-   
 }
 .buttoncolor1:hover{
 	 background-color:#4682B4;
@@ -37,7 +43,7 @@
 
 
 .red{
-   background-color:#ce5858;  
+   background-color:orange;  
 }
 
 
