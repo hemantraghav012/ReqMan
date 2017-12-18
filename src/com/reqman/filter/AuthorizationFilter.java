@@ -70,7 +70,26 @@ public class AuthorizationFilter implements Filter {
 					|| reqURI.contains("javax.faces.resource")) {
 				chain.doFilter(request, response);
 			}
-                        else if(reqURI.indexOf("/price.xhtml") >=0 
+                  
+			else if(reqURI.indexOf("/forgotpassword.xhtml") >=0 
+					|| (ses != null && ses.getAttribute("username") != null)
+					|| reqURI.indexOf("/public/") >= 0
+					|| reqURI.contains("javax.faces.resource")) {
+				chain.doFilter(request, response);
+			}
+			else if(reqURI.indexOf("/forgotpasswordemail.xhtml") >=0 
+					|| (ses != null && ses.getAttribute("username") != null)
+					|| reqURI.indexOf("/public/") >= 0
+					|| reqURI.contains("javax.faces.resource")) {
+				chain.doFilter(request, response);
+			}
+			else if(reqURI.indexOf("/price.xhtml") >=0 
+ 					|| (ses != null && ses.getAttribute("username") != null)
+ 					|| reqURI.indexOf("/public/") >= 0
+ 					|| reqURI.contains("javax.faces.resource")) {
+ 				chain.doFilter(request, response);
+ 			}
+			else if(reqURI.indexOf("/googlesignin.xhtml") >=0 
  					|| (ses != null && ses.getAttribute("username") != null)
  					|| reqURI.indexOf("/public/") >= 0
  					|| reqURI.contains("javax.faces.resource")) {
@@ -81,6 +100,7 @@ public class AuthorizationFilter implements Filter {
 			{
 				resp.sendRedirect(reqt.getContextPath() + "/faces/index.xhtml");
 			}
+			
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
