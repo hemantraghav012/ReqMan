@@ -59,7 +59,7 @@ public class Responsebean implements Serializable{
 	 private responseInterface responseInterface = new ResponseImpl();
 	 private List<ResponseVo> filteredResponseList = new ArrayList<ResponseVo>();
 	 private ResponseVo responseVo = new ResponseVo();
-	
+	 private  String message;  
 	 
 	 
 	@PostConstruct
@@ -75,6 +75,7 @@ public class Responsebean implements Serializable{
 			System.out.println("--usersession--userName-->"+userName);						
 			responseList = responseInterface.getresponseDetails(userName);
 			setFilteredResponseList(responseList);
+			 
 		}
 		catch(Exception e)
 		{
@@ -117,15 +118,13 @@ public void modifyAction() {
 			
         	if(responseVo != null && responseVo.getStage().trim().equalsIgnoreCase("Request")){
         		setTitle(responseVo.getTitle() != null ? responseVo.getTitle(): "");
-        		setDescription(responseVo.getDescription() != null ? responseVo.getDescription() : "");
-        		//setCompletiondate((Date) (responseVo.getChangedate() !=null ? responseVo.getChangedate() : ""));
+        		setDescription(responseVo.getDescription() != null ? responseVo.getDescription() : "");        		
           		setStage(1);
         
         	}
         	else if(responseVo != null && responseVo.getStage().trim().equalsIgnoreCase("Accepted")){
         		setTitle(responseVo.getTitle() != null ? responseVo.getTitle(): "");
-        		setDescription(responseVo.getDescription() != null ? responseVo.getDescription() : "");
-        		//setCompletiondate((Date) (responseVo.getChangedate() !=null ? responseVo.getChangedate() : ""));
+        		setDescription(responseVo.getDescription() != null ? responseVo.getDescription() : "");        		
           		setStage(2);
         
         	
@@ -163,7 +162,7 @@ public void modifyAction() {
 			String userName = (String)session.getAttribute("username");			
 			System.out.println("--usersession--userName-->"+userName);
 			
-        	result = responseInterface.updateResponsetById(requestId,stage, completiondate,userName);
+        	result = responseInterface.updateResponsetById(requestId,stage, completiondate,userName,message);
         	
         	if(result == 2)
         	{
@@ -413,6 +412,14 @@ public void modifyAction() {
 
 	public void setStatus(Boolean status) {
 		this.status = status;
+	}
+
+	public String getMessage() {
+		return message;
+	}
+
+	public void setMessage(String message) {
+		this.message = message;
 	}
 	
 	

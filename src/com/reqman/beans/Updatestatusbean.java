@@ -67,8 +67,8 @@ public class Updatestatusbean implements Serializable {
 	 private UpdatestatusInterface updatestatusInterface = new UpdatestatusImpl();
 	 private  String message;
 	 private UpdatestatusVo updatestatusVo = new UpdatestatusVo();
-
-	
+	 private List<UpdatestatusVo> completedtaskList = new ArrayList<UpdatestatusVo>();
+	 private List<UpdatestatusVo> filteredCompletedList = new ArrayList<UpdatestatusVo>();
 	
 
 
@@ -92,6 +92,9 @@ public class Updatestatusbean implements Serializable {
 				updatestatusList = updatestatusInterface.getupdatestatusDetails(userName);
 				updatestatusList3 = updatestatusInterface.getallProject(userName);
 				setFilteredUpdateList(updatestatusList);
+				completedtaskList =new ArrayList<UpdatestatusVo>();
+				completedtaskList=updatestatusInterface.getcompletedtaskDetails(userName);
+				setFilteredCompletedList(completedtaskList); 
 			}
 			catch(Exception e)
 			{
@@ -422,6 +425,30 @@ public class Updatestatusbean implements Serializable {
 
 		public void setUpdatestatusList3(List<UpdatestatusVo> updatestatusList3) {
 			this.updatestatusList3 = updatestatusList3;
+		}
+
+
+
+		public List<UpdatestatusVo> getCompletedtaskList() {
+			return completedtaskList;
+		}
+
+
+
+		public void setCompletedtaskList(List<UpdatestatusVo> completedtaskList) {
+			this.completedtaskList = completedtaskList;
+		}
+
+
+
+		public List<UpdatestatusVo> getFilteredCompletedList() {
+			return filteredCompletedList;
+		}
+
+
+
+		public void setFilteredCompletedList(List<UpdatestatusVo> filteredCompletedList) {
+			this.filteredCompletedList = filteredCompletedList;
 		}
 
 

@@ -4,27 +4,32 @@ import java.io.Serializable;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
+import javax.faces.bean.RequestScoped;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpSession;
 
 import org.primefaces.model.UploadedFile;
 
 import com.reqman.dao.UserDetailsInterface;
 import com.reqman.daoimpl.UserDetailsImpl;
+import com.reqman.util.SessionUtils;
 import com.reqman.util.sendEmail1;
 
 
 @ManagedBean(name = "register", eager = true)
 @SessionScoped
+@RequestScoped
 public class Register implements Serializable{
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 4003590909487243150L;
-	  private UploadedFile photo;
+	private UploadedFile photo;
 	private String emailid;
-   private String password;
+    private String password;
 	private String firstname;
 	private String lastname;
 	private String msg;
@@ -32,12 +37,16 @@ public class Register implements Serializable{
 	private String hashkey;
 	private String emailstatus;
 	
+	 @ManagedProperty(value = "#{param.email}")
+	private String googleemail;
+	private	UserDetailsInterface userImpl = new UserDetailsImpl();
+	
 	public String submit()
 	{
 		System.out.println("--emailid--"+emailid);
 		
-
 		UserDetailsInterface userImpl = new UserDetailsImpl();
+		
 		int result = 0;
 		try{
 		
@@ -85,13 +94,9 @@ public class Register implements Serializable{
 	
 	
 	
-	
-	
 	public String linksubmit()
 	{
 		System.out.println("--emailid--"+emailid);
-		
-
 		UserDetailsInterface userImpl = new UserDetailsImpl();
 		int result = 0;
 		try{
@@ -121,7 +126,7 @@ public class Register implements Serializable{
 						new FacesMessage(FacesMessage.SEVERITY_WARN,
 								"Internal Error",
 								"Please check the server logs"));
-				return "registeraddlink";
+				     return "registeraddlink";
 			}
 			
 		}
@@ -132,15 +137,66 @@ public class Register implements Serializable{
 					new FacesMessage(FacesMessage.SEVERITY_WARN,
 							"Internal Error",
 							"Please check the server logs"));
-			return "registeraddlink";
-		}
-	
-		return "sendemailbutton";
+			 return "registeraddlink";
+		}	
+		     return "sendemailbutton";
 	}
 	
 	
 	
 	
+	public String googlesubmit()
+	{
+		System.out.println("--emailid--"+emailid);
+		
+		UserDetailsInterface userImpl = new UserDetailsImpl();
+	
+		int result = 0;
+		try{
+			System.out.println("--emailid--"+googleemail);
+			result = userImpl.saveUserthrowgoogle(googleemail);
+			System.out.println("--emailid--"+googleemail);
+			//boolean valid = LoginDAO.validate(user, pwd);
+			if (result == 1) {
+				HttpSession session = SessionUtils.getSession();
+				session.setAttribute("username", googleemail);
+				
+				return "home";
+			
+			}
+			if (result == 2) {
+				FacesContext.getCurrentInstance().addMessage(
+						null,
+						new FacesMessage(FacesMessage.SEVERITY_WARN,
+								"User Inactive",
+								"User already created, please activate the user credentials before login the sytem"));
+				return "googlesignin";
+			}
+			if (result == 4) {
+				FacesContext.getCurrentInstance().addMessage(
+						null,
+						new FacesMessage(FacesMessage.SEVERITY_WARN,
+								"Internal Error",
+								"Please check the server logs"));
+				return "googlesignin";
+			}
+			
+		}
+		catch(Exception e){
+			e.printStackTrace();
+			FacesContext.getCurrentInstance().addMessage(
+					null,
+					new FacesMessage(FacesMessage.SEVERITY_WARN,
+							"Internal Error",
+							"Please check the server logs"));
+			return "googlesignin";
+		}
+	
+		HttpSession session = SessionUtils.getSession();
+		session.setAttribute("username", googleemail);
+		
+		return "home";
+	}
 	
 	
 	
@@ -176,9 +232,6 @@ public class Register implements Serializable{
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	
-	
-	
 	
 	public String getFirstname() {
 		return firstname;
@@ -219,28 +272,28 @@ public class Register implements Serializable{
 		this.emailstatus = emailstatus;
 	}
 
-
-
-
-
 	public UploadedFile getPhoto() {
 		return photo;
 	}
 
-
-
-
-
 	public void setPhoto(UploadedFile photo) {
 		this.photo = photo;
 	}
-	
+
+
+
+	public String getGoogleemail() {
+		return googleemail;
+	}
+
+
+
+	public void setGoogleemail(String googleemail) {
+		this.googleemail = googleemail;
+	}
+
+
 	
 	
 	}
 	
-	
-
-
-
-

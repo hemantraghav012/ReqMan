@@ -2,6 +2,7 @@ package com.reqman.beans;
 
 
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,9 +24,13 @@ import com.reqman.vo.NewrequestVo;
 @ManagedBean(name="appadminbean",eager = true)
 @RequestScoped
 @ViewScoped
-public class AppAdminbean {
+public class AppAdminbean implements Serializable {
 	
-	 private AppAdminInterface appadminInterface = new AppAdminImpl();
+	 /**
+	 * 
+	 */
+	private static final long serialVersionUID = 5564329292861771411L;
+	private AppAdminInterface appadminInterface = new AppAdminImpl();
 	 private List<AdminVo> userList = new ArrayList<AdminVo>();	
 	 private List<AdminVo> filteredUserList = new ArrayList<AdminVo>();
 	
@@ -40,8 +45,8 @@ public class AppAdminbean {
 			 	
 			System.out.println("--create request-->");
 			userList = new  ArrayList<AdminVo>();			
-		//	HttpSession session = SessionUtils.getSession();
-			String userName = "hemantraghav@gmail.com";
+		HttpSession session = SessionUtils.getSession();
+		String userName = (String)session.getAttribute("username");
 			System.out.println("--usersession--userName-->"+userName);
 			userList = appadminInterface.getappadminDetails(userName);
 			

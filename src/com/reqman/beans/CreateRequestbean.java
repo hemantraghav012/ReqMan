@@ -79,6 +79,7 @@ public class CreateRequestbean implements Serializable
 	 private  List<Request> request ;
 	 private String requestId;
 	 private List<NewrequestVo> newrequestList = new ArrayList<NewrequestVo>();	 
+	 private List<NewrequestVo> closerequestList = new ArrayList<NewrequestVo>();
 	 private List<NewrequestVo> newrequestList3 = new ArrayList<NewrequestVo>();	 
 	 private Boolean status;
 	 private NewrequestInterface newrequestInterface = new NewrequestImpl();
@@ -86,23 +87,19 @@ public class CreateRequestbean implements Serializable
 	 private NewrequestVo newrequestVo = new NewrequestVo();	
 	 private NewrequestVo selectedReuest;
 	 private List<NewrequestVo> filteredRequestList = new ArrayList<NewrequestVo>();
+	 private List<NewrequestVo> filteredCloseRequestList = new ArrayList<NewrequestVo>();
+	 
 	 private Integer stage;
 	 private BarChartModel barModel;
 	 private HorizontalBarChartModel horizontalBarModel;
      private String currentDate;
      private String onemonthpastDate;   
 	 private Float completionpercentage;
-     private  String message;
-     
+     private  String message;     
      private Date startDate;
      private Date endDate;
-     private DateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
-
-     
-     
-   
-     
-     
+    private Integer userfriend;
+    
      private Integer[]  searchteammember;
      private Integer[]  searchcategory;
      private Integer[]  searchproject;
@@ -133,10 +130,12 @@ public class CreateRequestbean implements Serializable
 			{
 				endDate = new Date();
 			}
-				
-			newrequestList = newrequestInterface.getNewrequestDetails(userName,startDate,endDate,title, description);			
+			closerequestList=new ArrayList<NewrequestVo>();
+			closerequestList=newrequestInterface.getColserequestDetails(userName);	
+			newrequestList = newrequestInterface.getNewrequestDetails(userName,startDate,endDate);			
 			newrequestList3 = newrequestInterface.getallproject(userName);			 
 			setFilteredRequestList(newrequestList);
+			setFilteredCloseRequestList(closerequestList);
 			createBarModels();
 			
 		}
@@ -161,7 +160,7 @@ public class CreateRequestbean implements Serializable
 			
 			
 			System.out.println("--usersession--userName-->"+userName);
-			newrequestList = newrequestInterface.getNewrequestDetails(userName,startDate,endDate, userName, userName);
+			newrequestList = newrequestInterface.getNewrequestDetails(userName,startDate,endDate);
 			
 		}
 		catch(Exception e)
@@ -317,7 +316,7 @@ public class CreateRequestbean implements Serializable
 			HttpSession session = SessionUtils.getSession();
 			String userName = (String)session.getAttribute("username");
 			System.out.println("--usersession--userName-->"+userName);
-			newrequestList = newrequestInterface.getNewrequestDetails(userName,startDate,endDate, userName, userName);
+			newrequestList = newrequestInterface.getNewrequestDetails(userName,startDate,endDate);
 			
 		}
 		catch(Exception e)
@@ -378,12 +377,13 @@ public class CreateRequestbean implements Serializable
 				return "newrequestfriend";
 			}
 			if (result == 3) {
-				newrequestList = newrequestInterface.getNewrequestDetails(userName,startDate,endDate, userName, userName);
+				newrequestList = newrequestInterface.getNewrequestDetails(userName,startDate,endDate);
 					FacesContext.getCurrentInstance().addMessage(
 						null,
 						new FacesMessage(FacesMessage.SEVERITY_WARN,
 								"Category created  successfully.",
 								"Category created  successfully."));
+					
 			}
 
 		} catch (Exception e) {
@@ -411,16 +411,27 @@ public class CreateRequestbean implements Serializable
         		 setTitle(newrequestVo.getTitle() != null ? newrequestVo.getTitle(): "");
         		 setDescription(newrequestVo.getDescription() != null ? newrequestVo.getDescription() : "");        		
         	     setCompletiondate(newrequestVo.getCompletiondate());
-        	     //setUserfriendlist(newrequestVo.getUserfriend());
-        		setStatus(true);
+        	     setUserproject(newrequestVo.getProject());
+        	     setUsercategory(newrequestVo.getCategory());
+        	     setUserrequesttype(newrequestVo.getRequesttype());
+        	     setUserfriend(newrequestVo.getUserfriend());
+        	     setStage(newrequestVo.getRequeststage());
+        		 setStatus(true);
+        		
         		
         	}
         	else
         	{
         		setTitle(newrequestVo.getTitle() != null ? newrequestVo.getTitle(): "");
         		setDescription(newrequestVo.getDescription() != null ? newrequestVo.getDescription() : "");
-        		//setUserfriendlist(newrequestVo.getUserfriend());
+        		setCompletiondate(newrequestVo.getCompletiondate());
+        		setUserproject(newrequestVo.getProject());
+        		setUsercategory(newrequestVo.getCategory());
+            	setUserrequesttype(newrequestVo.getRequesttype());
+            	setUserfriend(newrequestVo.getUserfriend());
+            	setStage(newrequestVo.getRequeststage());
         		setStatus(false);
+        		 
         	}
         	
         	FacesContext.getCurrentInstance()
@@ -440,6 +451,9 @@ public class CreateRequestbean implements Serializable
 			System.out.println("--updateRequest-status-"+status);
 			System.out.println("--updateRequest-status-"+description);
 			System.out.println("--updateRequest-status-"+completiondate);
+			System.out.println("--updateRequest-project-"+userproject);
+			System.out.println("--updateRequest-category-"+usercategory);
+			System.out.println("--updateRequest-requesttype	-"+userrequesttype);
 			
 			
 			System.out.println("--updateRequesr requestid-"+requestId);
@@ -447,7 +461,8 @@ public class CreateRequestbean implements Serializable
 			String userName = (String)session.getAttribute("username");			
 			System.out.println("--usersession--userName-->"+userName);
 			
-        	result = newrequestInterface.updateRequestById(requestId,status,description, completiondate,attachment,   completionpercentage,stage,message,userName);
+        	result = newrequestInterface.updateRequestById(requestId,status,description, completiondate,attachment, 
+        			completionpercentage,stage,message,userName,userproject,usercategory,userrequesttype,userfriend);
         	
         	if(result == 2)
         	{
@@ -461,7 +476,7 @@ public class CreateRequestbean implements Serializable
         	
         	if(result == 1)
         	{
-        		newrequestList = newrequestInterface.getNewrequestDetails(userName,startDate,endDate, userName, userName);
+        		newrequestList = newrequestInterface.getNewrequestDetails(userName,startDate,endDate);
     				}
         	
 		}
@@ -909,8 +924,40 @@ public class CreateRequestbean implements Serializable
 		  public void setEndDate(Date endDate) {
 		      this.endDate = endDate;
 		  }
-		
 
+
+		public Integer getUserfriend() {
+			return userfriend;
+		}
+
+
+		public void setUserfriend(Integer userfriend) {
+			this.userfriend = userfriend;
+		}
+
+
+		public List<NewrequestVo> getCloserequestList() {
+			return closerequestList;
+		}
+
+
+		public void setCloserequestList(List<NewrequestVo> closerequestList) {
+			this.closerequestList = closerequestList;
+		}
+
+
+		public List<NewrequestVo> getFilteredCloseRequestList() {
+			return filteredCloseRequestList;
+		}
+
+
+		public void setFilteredCloseRequestList(
+				List<NewrequestVo> filteredCloseRequestList) {
+			this.filteredCloseRequestList = filteredCloseRequestList;
+		}
+
+
+		
 		
 	
 	

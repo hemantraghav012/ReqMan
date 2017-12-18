@@ -37,6 +37,7 @@ private String password;
 private String firstname;
 private String lastname;	
 private String shortname;
+private String hashkey;
 private UserDetailsInterface userImpl = new UserDetailsImpl();
 
 
@@ -110,7 +111,82 @@ public String setinformationupdate(){
 }
 
 
+public String forgotpassword()
+{
+	System.out.println("--emailid--"+emailid);
+	
 
+	UserDetailsInterface userImpl = new UserDetailsImpl();
+	int result = 0;
+	try{
+	
+		result = userImpl.forgotpassword(emailid,hashkey);
+		
+		if (result == 1) {
+			return "sendemailbutton";
+		} 
+		
+		
+		
+		
+		else {
+			FacesContext.getCurrentInstance().addMessage(
+					null,
+					new FacesMessage(FacesMessage.SEVERITY_WARN,
+							"Incorrect email id",
+							"Please enter correct email id"));
+			return "forgotpassword";
+			
+		}
+	}
+	catch(Exception e){
+		e.printStackTrace();
+		FacesContext.getCurrentInstance().addMessage(
+				null,
+				new FacesMessage(FacesMessage.SEVERITY_WARN,
+						"Incorrect emailid",
+						"Please enter correct emailid"));
+		
+		return "forgotpassword";
+		
+	}
+}
+
+
+
+public String forgotpasswordupdate(){
+	int result = 0;
+	try{
+		System.out.println("--emailid--"+emailid);
+		System.out.println("--hashkey-"+hash);
+		
+    	result = userImpl.forgotpasswordwithemail(hash, emailid,password);
+    	
+    	if(result == 2)
+    	{
+    		FacesContext.getCurrentInstance().addMessage(
+					null,
+					new FacesMessage(FacesMessage.SEVERITY_WARN,
+							"Problem while modifying the Category",
+							"Problem while modifying the Category"));
+			return "forgotpasswordemail.xhtml";
+    	}
+    	
+    	
+    	
+	}
+	catch(Exception e)
+	{
+		e.printStackTrace();
+		FacesContext.getCurrentInstance().addMessage(
+				null,
+				new FacesMessage(FacesMessage.SEVERITY_WARN,
+						"Problem while modifying the Category",
+						"Problem while modifying the Category"));
+		return "eregisters.xhtml";
+	}
+	return "login";
+}
 
 
 
@@ -164,6 +240,16 @@ public String getShortname() {
 
 public void setShortname(String shortname) {
 	this.shortname = shortname;
+}
+
+
+public String getHashkey() {
+	return hashkey;
+}
+
+
+public void setHashkey(String hashkey) {
+	this.hashkey = hashkey;
 }
 
 	
