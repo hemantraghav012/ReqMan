@@ -2,6 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
+             xmlns:p="http://primefaces.org/ui"
       xmlns:ui="http://java.sun.com/jsf/facelets">
 
 
@@ -30,13 +31,12 @@
        
       <!-- -end of header --> 
       
-      
-      
-      <div class="container" style=" margin-top:2cm; ">
- 
+       <div class="ui-fluid">
+            <p:panelGrid columns="1"  layout="grid" styleClass="ui-panelgrid-blank ui-fluid" style=" border: 0;">
+       <h:form enctype="multipart/form-data" class="form-horizontal">   
+   <div class="container fixedcontainerrequset" style=" margin-top:50px; ">
   
-  <div  style="margin-top:1cm;"> 
-  <h:form class="form-horizontal fixedcontainer " >
+     
  <h2 style=" margin-bottom:1cm; text-align:center">  View/Modify Response</h2>
 <div><h:messages style = "color:red;margin:8px;" /></div>
 
@@ -51,11 +51,17 @@
  <h:message for="title"  style="color:red;margin:8px;"/> 
 </div>
  
+  <div class=" row form-group " >
+ <div class="col-sm-2 control-label"><h:outputLabel>Description:</h:outputLabel></div>
+<div class=" col-sm-10"><h:inputTextarea id="address" value="#{responsebean.responseVo.description}" readonly="true" disabled="true" style="background-color:lightgrey;"   
+ cols="19" rows="3" class="  form-control" /></div>
+<h:message for="address"  style="color:red;margin:6px;"/>
+</div>
  
 
 <div class=" row form-group ">
  <div class="col-sm-2 control-label"><h:outputLabel  >Completion Date:</h:outputLabel></div>
-<div class=" col-sm-4"> <h:inputText value="#{responsebean.responseVo.completiondate}"  class="  form-control"  id="completiondate"   requiredMessage="* Please enter Title"/></div>
+<div class=" col-sm-4"> <h:inputText value="#{responsebean.responseVo.completiondate}"  readonly="true" disabled="true" style="background-color:lightgrey;" class="  form-control"  id="completiondate"   requiredMessage="* Please enter Title"/></div>
  <h:message for="completiondate"  style="color:red;margin:8px;"/> 
  <div class="col-sm-2 control-label"><h:outputLabel  >Category:</h:outputLabel></div>
 <div class=" col-sm-4"> <h:inputText value="#{responsebean.responseVo.usercategory}" readonly="true"  disabled="true" class="  form-control"  style="background-color:lightgrey;" id="usercategory"  required="true" requiredMessage="* Please enter Title"/></div>
@@ -74,6 +80,13 @@
  <h:message for="userrequesttype"  style="color:red;margin:8px;"/> 
 </div><br></br>
 
+ <div class=" row form-group " >
+<div class="col-sm-2 control-label" style="padding-top:0cm;"><h:outputLabel>Notes: </h:outputLabel></div>
+<div class=" col-sm-10"><h:inputTextarea id="message" value="#{responsebean.message}"    
+ cols="19" rows="3" class="  form-control" /></div>
+<h:message for="message"  style="color:red;margin:6px;"/>
+
+ </div>
 
 
 
@@ -108,11 +121,11 @@
 </div>
 
 
-
+  </div>
 </h:form>
   
-  </div>
-      
+
+      </p:panelGrid>
   </div>
 
 

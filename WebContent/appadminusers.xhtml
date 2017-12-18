@@ -70,9 +70,11 @@ function setUsersHiddenValue(new_value)
 	     <f:facet name="header">	    
 		<p:commandButton id="toggler" value="Click here to choose columns to view as per your requirement" 
 		 style="background-color:skyblue;"  />
-        <p:columnToggler datasource="adminTable" trigger="toggler" />	     
+        <p:columnToggler datasource="adminTable" trigger="toggler" />	
+             
 		</f:facet> 
-
+ 
+	     
  
  <p:column filterBy="#{users.emailid}"  sortBy="#{users.emailid}" headerText="Email Id"  
 			 filterMatchMode="contains"  style="text-overflow: ellipsis; white-space: nowrap; padding: 0px 0px 0px 3px;" >			 
@@ -108,17 +110,6 @@ function setUsersHiddenValue(new_value)
     
     
   
-     
-    
-     <p:column filterBy="#{users.createdby}"  sortBy="#{users.createdby}" headerText="Created By"  
-			 filterMatchMode="contains" >
-				<f:facet name="header">
-              <h:outputText value="Created By" /> 
-            </f:facet>
-				<h:outputText value="#{users.createdby}" style="display: inline;"  />
-			</p:column>
-    
-    
    
      <p:column filterBy="#{users.createdon}"  sortBy="#{users.createdon}" headerText="Date"   
 			 filterMatchMode="contains" style="text-overflow: ellipsis; white-space: nowrap;padding: 0px 0px 0px 3px;">
@@ -137,14 +128,7 @@ function setUsersHiddenValue(new_value)
 				<h:outputText value="#{users.password}" style="display: inline;"   />
 			</p:column>
     
-       <p:column filterBy="#{users.hashkey}"  sortBy="#{users.hashkey}"  headerText="Hash Key"  
-			 filterMatchMode="contains"  style="text-overflow: ellipsis; white-space: nowrap;padding: 0px 0px 0px 3px;">
-				<f:facet name="header">
-              <h:outputText value="Hash Key" /> 
-            </f:facet>
-				<h:outputText value="#{users.hashkey}" style="display: inline;"   />
-			</p:column>
-    
+      
     
     
     
@@ -159,7 +143,10 @@ function setUsersHiddenValue(new_value)
 			</p:column>
 			
 
- 
+         
+	    		
+	    		
+	    	 
           
 </p:dataTable>
 	    

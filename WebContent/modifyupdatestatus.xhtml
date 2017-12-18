@@ -70,7 +70,7 @@
 
 <div class=" row form-group ">
  <div class="col-sm-2 control-label"><h:outputLabel  >Completion Date:</h:outputLabel></div>
-<div class=" col-sm-4"> <h:inputText value="#{updatestatusbean.updatestatusVo.completiondate}"   class="  form-control"  id="completiondate"   requiredMessage="* Please enter Title"/></div>
+<div class=" col-sm-4"> <h:inputText value="#{updatestatusbean.updatestatusVo.completiondate}"  readonly="true" disabled="true"  style="background-color:lightgrey;" class="  form-control"  id="completiondate"   requiredMessage="* Please enter Title"/></div>
  <h:message for="completiondate"  style="color:red;margin:8px;"/> 
  <div class="col-sm-2 control-label"><h:outputLabel  >Category:</h:outputLabel></div>
 <div class=" col-sm-4"> <h:inputText value="#{updatestatusbean.updatestatusVo.usercategory}" readonly="true"  disabled="true" class="  form-control"  style="background-color:lightgrey;" id="usercategory"  required="true" requiredMessage="* Please enter Title"/></div>

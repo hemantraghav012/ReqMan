@@ -4,12 +4,18 @@
       xmlns:h="http://java.sun.com/jsf/html"
        xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
       xmlns:f="http://java.sun.com/jsf/core"  
+      
       xmlns:ui="http://java.sun.com/jsf/facelets">
+  
       
       <h:head>
 <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+   <meta name="google-signin-client_id" content="389846893349-evhrhcub22tsdnuda2oa72042kj9f32k.apps.googleusercontent.com"/>
+ <script src="https://apis.google.com/js/platform.js"  ></script>
+ 
 <link rel="stylesheet" href="resource/css/bootstrap.css"/>
 <link rel="stylesheet" href="resource/mystyle/home.css"/>
 <link rel="stylesheet" href="resource/mystyle/onlyhome.css"/>
@@ -19,6 +25,14 @@
 <script type="text/javascript" src="resource/js/bootstrap.js"/>
 <script type="text/javascript" src="resource/js/jquery.js"/>
 <title>Log In</title>
+<style type="text/css">
+]
+a{
+color:blue;
+}
+</style>
+
+
 </h:head>
 <h:body style="background-color:#DCDCDC"> 
 
@@ -35,8 +49,18 @@
  
     	  <div class="modal-dialog" style=" margin-top: 2.5cm;">
 				<div class="loginmodal-container">
+				
+	 		
+				
+			
+  
+        
+        	 	
 					<h1>Login to <span style="font-weight: bold;">Collabor8</span> </h1><br></br>
 				  <h:form >
+				 
+				  
+				  
    <div><h:messages style = "color:red;margin:8px;" /></div>
      <h:outputText>Email Id</h:outputText>
      <h:inputText   value="#{login.user}" id="emailid" required="true" requiredMessage="* Please enter your emaid id" validatorMessage="Invalid email format"> <f:validateRegex
@@ -53,11 +77,11 @@
   
    <h:commandButton   action="#{login.validateUsernamePassword}"
 			value="Login"  class="btn fontsize btn-success btn-block"></h:commandButton>
-   
+	 
 </h:form>
 					
 				  <div class="login-help">
-					 <a href="#" style="color:blue">Forgot Password...</a>
+					 <a href="faces/forgotpassword.xhtml" style="color:blue">Forgot Password...</a>
 					 <br></br>
 					
 					  
@@ -66,11 +90,55 @@
 				  <div class="or-break">
     <span>or</span>
   </div>
-  <a class="btn fontsize btn-primary btn-block" style="color:white;">
-    Sign In With Google
-</a>
+
+<div class="g-signin2 " data-width="370"  data-longtitle="true" id="myP" data-onsuccess="onSignIn" ></div>
+
+
+    
+		
+	 <img id="myImg"/><br></br>
+      <p id="name"></p>
+      <div id="status">
+   </div>
+   <script type="text/javascript">
+      function onSignIn(googleUser) {
+   
+      var profile = googleUser.getBasicProfile();
+      var imagurl=profile.getImageUrl();
+      var name=profile.getName();     
+      var email=profile.getEmail();
+     document.getElementById("myImg").src = imagurl; 
+      document.getElementById("myP").style.visibility = "hidden";
+    //  location.href='googlesignin.xhtml?email='+email+'';
+      document.getElementById("status").innerHTML= 'Welcome '+name+'!<a href="http://localhost:9002/ReqMan/faces/faces/googlesignin.xhtml?email='+email+'">Continue with Google login</a>'
+          }
+   </script>
+
+ <button onclick="myFunction()">Sign Out</button>  
+   
+   <script>
+      function myFunction() {
+      gapi.auth2.getAuthInstance().disconnect();     
+      location.reload(false)
+   }
+   </script> 
+   
+
+
 				</div>
 			</div>
+
+
+
+
+
+
+
+
+
+
+
+
 
   
 	<div id="footer">

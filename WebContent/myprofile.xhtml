@@ -31,7 +31,7 @@
                
     <nav class="col-sm-2" >
                 
-     <p:graphicImage url="resource/image/22.jpg"  width="150px" height="150px"/>        
+     <p:graphicImage value="#{login.imageFromDB}"  width="150px" height="150px"/>        
 
   
       <ul class="nav  stacked"  >
@@ -52,7 +52,7 @@
  <h:form enctype="multipart/form-data" class="form-horizontal">
  <div class=" row form-group registerfieldname">
  <div class="col-sm-2 control-label"><h:outputLabel  >Email Id:</h:outputLabel></div>
-<div class=" col-sm-6"> <h:inputText value="#{userupdate.userupdateVo.emailid}" class="  form-control"  id="emailid" required="true" requiredMessage="* Please enter your email id"/></div>
+<div class=" col-sm-6"> <h:inputText value="#{userupdate.userupdateVo.emailid}" readonly="true" disabled="true" class="  form-control"  id="emailid" required="true" requiredMessage="* Please enter your email id"/></div>
  <h:message for="emailid"  style="color:red;margin:8px;"/> 
 
 </div>
@@ -66,7 +66,7 @@
 
  <div class=" row form-group ">
 <div class="col-sm-2 control-label"><h:outputLabel>First Name:</h:outputLabel></div>
-<div class=" col-sm-6"><h:inputText value="#{userupdate.userupdateVo.firstname}"  class="form-control" id="firstname" required="true" requiredMessage="* Please enter your first name"></h:inputText></div>
+<div class=" col-sm-6"><h:inputText value="#{userupdate.firstname}"  class="form-control" id="firstname" required="true" requiredMessage="* Please enter your first name"></h:inputText></div>
  <h:message for="firstname"  style="color:red;margin:8px;"/> 
 </div>
 
@@ -94,8 +94,8 @@
 <div class="col-sm-6 "><h:commandLink action="#{userupdate.updateUserdetail}" value="submit" class="btn btn-lg btn-primary btn-block"></h:commandLink></div>
 </div>
  
-<h3 style="margin-top:0">JFreeChart</h3>
-<p:graphicImage value="#{test.file}" />
+<h3 style="margin-top:0">Image</h3>
+<p:graphicImage value="#{login.imageFromDB}" />
  
 
 

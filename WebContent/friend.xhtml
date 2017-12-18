@@ -170,7 +170,10 @@ filterBy="#{friend.emailid}"  filterStyle="display:none;" filterMatchMode="conta
 				
 				
 	    </p:dataTable>
-	    
+	     <p:contextMenu for="friendTable" widgetVar="cMenu">   
+       <p:menuitem value="Edit Cell" icon="ui-icon-search" onclick="PF('friendListTable').showCellEditor();return false;"/>  
+       <p:menuitem value="Hide Menu" icon="ui-icon-close" onclick="PF('cMenu').hide()"/>  
+   </p:contextMenu>
 	</div>
 
 	<div>

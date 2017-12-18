@@ -17,7 +17,7 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script type="text/javascript" src="resource/js/bootstrap.js"/>
 <script type="text/javascript" src="resource/js/jquery.js"/>
-<title>Register</title>
+<title>Sign in with Google</title>
 </h:head>
 
 <h:body >
@@ -52,41 +52,24 @@
 <div><h:messages style = "color:red;margin:8px;" /></div>
 
  <div class=" row form-group registerfieldname">
- <div class="col-sm-2 control-label"><h:outputLabel  >Email Id:</h:outputLabel></div>
-<div class=" col-sm-6"> <h:inputText value="#{register.emailid}" class="  form-control" p:placeholder="Email Id"  id="emailid" required="true" requiredMessage="* Please enter your email id" validatorMessage="Invalid email format"> <f:validateRegex
-		pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" /></h:inputText></div>
+
+ <h:inputHidden value="#{register.googleemail}" class="  form-control" p:placeholder="Email Id"    id="emailid" required="true" requiredMessage="* Please enter your email id" validatorMessage="Invalid email format"> <f:validateRegex
+		pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" /></h:inputHidden>
  <h:message for="emailid"  style="color:red;margin:8px;"/> 
 
 </div>
 
- <div class=" row form-group registerfieldname">
-<div class="col-sm-2 control-label"><h:outputLabel>First Name:</h:outputLabel></div>
-<div class=" col-sm-6"><h:inputText value="#{register.firstname}"  p:placeholder="First Name" class="form-control" id="firstname" required="true" requiredMessage="* Please enter your first name"></h:inputText></div>
- <h:message for="firstname"  style="color:red;margin:8px;"/> 
-</div>
-
- <div class=" row form-group registerfieldname">
-<div class="col-sm-2 control-label"><h:outputLabel>Last Name:</h:outputLabel></div>
-<div class="col-sm-6"><h:inputText value="#{register.lastname}"  p:placeholder="Last Name" class="form-control" id="lastname" required="true" requiredMessage="* Please enter your last name"></h:inputText></div>
- <h:message for="lastname"  style="color:red;margin:8px;"/> 
-</div>
-
- <div class=" row form-group registerfieldname">
-<div class="col-sm-2 control-label"><h:outputLabel>Short Name:</h:outputLabel></div>
-<div class="col-sm-6"><h:inputText value="#{register.shortname}" p:placeholder="Short Name"  maxlength="4" class="form-control" id="shortname" required="true" requiredMessage="* Please enter your short name"></h:inputText><span style="color:red;">Please enter upto 4 characters</span></div>
- <h:message for="shortname"  style="color:red;margin:8px;"/> 
-</div>
-
+ 
 
  <div class=" row form-group ">
  <div class="col-sm-2 .col-sm-offset-2"></div>
-<div class="col-sm-6 "><h:commandLink action="#{register.submit()}" value="Register" class="btn fontsize btn-success btn-block"></h:commandLink></div>
+<div class="col-sm-6 "><h:commandLink action="#{register.googlesubmit()}" value="Google Sign In" class="btn fontsize btn-success btn-block"></h:commandLink></div>
 </div>
 
 </h:form>
-
+<br></br>
 </div>
-
+<br></br><br></br>
 </div>
 </div>
 

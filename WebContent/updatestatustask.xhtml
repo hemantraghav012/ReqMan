@@ -12,6 +12,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
 <link rel="stylesheet" href="resource/css/bootstrap.css"/>
+<link rel="stylesheet" href="resource/mystyle/onlyhome.css"/>
 <link rel="stylesheet" href="resource/mystyle/home.css"/>
 <link rel="stylesheet" href="resource/mystyle/button.css"/>
 <script type="text/javascript" src="resource/js/bootstrap.js"/>
@@ -45,19 +46,23 @@ function setRequestHiddenValue(new_value)
       
          
          <h:inputHidden id="requestId" value="#{updatestatusbean.requestId}" ></h:inputHidden>
-      <div class="row">
+     
       
+      <div class="row">
       	<div class="col-sm-6">
       		<span style=";font-size:25px;margin-left: 3px;">Manage Update Status Of Task List</span>
-      	</div>
-    
-     	<div class="col-sm-6">    
-     			
-			
-			
-		</div>
+      	</div>    		
+	  
+          <div class="col-sm-6 pull-right" > 
+        	 <h:link value=" See project of your friends  " style="padding-bottom:5px;" class="btn1 btn  pull-right fontsize " outcome="commonproject" />  
+     	
+     		 <h:link value="View History" style="padding-bottom:5px;" class="btn2 btn pull-right fontsize" outcome="viewcompletedtask" /> 
+     				
+     			 	</div>		
+        </div>
+     
 
-	  </div>
+     <p:messages id="messages" showDetail="true"   autoUpdate="true"/>
 
 
 <div class="ui-fluid ">
@@ -66,32 +71,42 @@ function setRequestHiddenValue(new_value)
 	     reflow="true" scrollable="true" scrollHeight="310" 
 	      rows="5"  paginator="true"   
 	      paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rowsPerPageTemplate="5,10,15"
-	    rowStyleClass="#{update1.completionpercentage eq 100 ? 'red' : update1.completionpercentage gt 0 ? 'green': update1.completionpercentage eq 0 ? 'white': null}"
+	    rowStyleClass="#{update1.completionpercentage eq 100 ? 'red' : null}"
 	     sortBy="#{update1.status},#{update1.title}" 
 	     class="table table-striped table-hover table-bordered" 
 	     style="margin-top:10px;  " filteredValue="#{updatestatusbean.filteredUpdateList}" 
 	     widgetVar="updatestatusListTable">
 	     
-	     <f:facet name="header">
-			<p:outputPanel>
-				<div class="row">
-			
-				<div class= "col-sm-2" ></div>
-				<div class= "col-sm-8" >
-				<h:inputText id="globalFilter" onkeyup="PF('updatestatusListTable').filter()" a:placeholder="Search on any field (s) " class="form-control"  />
-				</div>
-				
-				</div>
-			</p:outputPanel>
-			
-			<div class="row">
-				<div class= "col-sm-2" ></div>
-			
-			<div class= "col-sm-8" ><p:commandButton id="toggler" value="Click here to choose columns to view as per your requirement"  style="background-color:skyblue;"  />
+
+
+ <f:facet name="header">
+	      <p:outputPanel class="pull-left" >
+	     <h:inputText id="globalFilter" onkeyup="PF('updatestatusListTable').filter()" a:placeholder="Search on any field (s) " class="form-control"  />
+			</p:outputPanel>	
+	     
+	    <p:outputPanel class="pull-right">
+		<p:commandLink id="toggler" class="btn fontsize pull-right" 
+		 style="background-color:skyblue;">Choose Columns To View </p:commandLink>
         <p:columnToggler datasource="requestTable" trigger="toggler" />
-	     </div>
-			</div>
+        </p:outputPanel>
+	      <p:outputPanel class="pull-right">
+        
+        <h:commandLink id="excel">
+         <img  src="resource/image/Excel.png" class="img-responsive pull-right" alt="Excel" style="width:35px;"></img>
+	        <p:dataExporter type="xls" target="requestTable" fileName="update1" postProcessor="#{updatestatusbean.postProcessXLS}" />
+	    </h:commandLink>
+	 	</p:outputPanel>
+	      <p:outputPanel class="pull-right">
+	    <h:commandLink id="pdf">
+	     <img  src="resource/image/pdf.png" class="img-responsive pull-right" alt="Excel" style="width:35px;"></img>
+	        <p:dataExporter type="pdf" target="requestTable" fileName="update1" preProcessor="#{updatestatusbean.preProcessPDF}" />
+	    </h:commandLink>
+        
+        
+	     </p:outputPanel>
 		</f:facet> 
+
+
 
  
  <p:column filterBy="#{update1.title}"  sortBy="#{update1.title}" headerText="Title"  filterStyle="display:none;"
@@ -169,10 +184,15 @@ function setRequestHiddenValue(new_value)
     
    
      <p:column headerText="View Notes" exportable="false"  style="padding: 0px 0px 0px 0px; ">
-    <p:commandButton  id="nonAjax12" value="View Notes" styleClass="buttoncolor1" 
-    style=" font-size:12px;padding: 3px 0px 4px 0px;"
-     onclick="PF('#{update1.newRequestId}').show(); "
-        />
+     
+     	<p:commandLink id="nonAjax12" class="btn2 btn  fontsize" 
+				style="color:black; width:135px;font-size:12px;background-color:skyblue;"
+    onclick="PF('#{update1.newRequestId}').show(); ">
+    		View Notes
+    		</p:commandLink> 
+     
+     
+  
 
  <p:dialog  header="View Notes" widgetVar="#{update1.newRequestId}" varStatus="status" modal="true" responsive = "true">
       
@@ -212,20 +232,14 @@ function setRequestHiddenValue(new_value)
 	        		View / Update
 	    		</p:commandLink> 
 	    		
+	    		
+	    		
+	    		
    </p:column>   
 </p:dataTable>
 	    
 	</div>
-	<div>
-		<strong>Export Data &nbsp;</strong>
-	    <h:commandButton id="excel" class="btn btn-primary fontsize" value="Excel">
-	        <p:dataExporter type="xls" target="requestTable" fileName="update1" postProcessor="#{updatestatusbean.postProcessXLS}" />
-	    </h:commandButton>
-	 	&nbsp;
-	    <h:commandButton id="pdf" class="btn btn-primary fontsize" value="Pdf">
-	        <p:dataExporter type="pdf" target="requestTable" fileName="update1" preProcessor="#{updatestatusbean.preProcessPDF}" />
-	    </h:commandButton>
-	</div>
+	
  
 
 
