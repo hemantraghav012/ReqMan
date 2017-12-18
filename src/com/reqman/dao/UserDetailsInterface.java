@@ -27,6 +27,15 @@ public interface UserDetailsInterface
 	
 	public byte[] getImageDetails(String userName)  throws Exception;
 
+	public int forgotpassword(String emailid, String hashkey)throws Exception;
+
+	public int forgotpasswordwithemail(String hash, String emailid,
+			String password)throws Exception;
+
+	
+
+	public int saveUserthrowgoogle(String googleemail) throws Exception;
+
 
 
 
