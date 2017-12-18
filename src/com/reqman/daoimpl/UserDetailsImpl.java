@@ -13,10 +13,10 @@ import org.primefaces.model.UploadedFile;
 import com.reqman.common.HibernateUtil;
 import com.reqman.dao.UserDetailsInterface;
 import com.reqman.pojo.Account;
-import com.reqman.pojo.Accountusers;
 import com.reqman.pojo.Roles;
 import com.reqman.pojo.Userroles;
 import com.reqman.pojo.Users;
+import com.reqman.util.forgotpasswordemail;
 import com.reqman.util.sendEmail1;
 import com.reqman.util.setinfoEmail;
 import com.reqman.vo.UserupdateVo;
@@ -135,17 +135,9 @@ public class UserDetailsImpl implements UserDetailsInterface {
                 		accountDetails.setDatecreated(new Date());
                 		session.save(accountDetails);
                 	}
-                	
-                	Accountusers accountusers = new Accountusers();
-                	accountusers.setAccount(accountDetails);
-                	accountusers.setUsers(users);
-                	session.save(accountusers);
 
             	}
-            	
-            	if(roles != null && userrolesDetails != null)
-            	{
-            		
+            	if(roles != null && userrolesDetails != null) {
             		roles=(Roles)session.createCriteria(Roles.class)
                     		.add(Restrictions.eq("id", 3))
                     		.uniqueResult();
@@ -500,9 +492,187 @@ public class UserDetailsImpl implements UserDetailsInterface {
 	
 	}
 
-	
+	@Override
+	public int forgotpassword(String emailid,String hashkey) throws Exception {
+		// TODO Auto-generated method stub
+		  Session session = null;
+	        SessionFactory hsf = null;
+	        Transaction tx = null;
+	        Users users = null;
+	        int result = 0;
+	        try {
+	            if(emailid != null && !emailid.trim().equals(""))
+	            {
+	             	session = HibernateUtil.getSession();
+	                tx = session.beginTransaction();
+	                users = (Users)session.createCriteria(Users.class)
+	                		.add(Restrictions.eq("emailid", emailid.toLowerCase().trim()).ignoreCase())
+	                		.uniqueResult();
+	                
+	                if(users != null){
+	                	//hashkey = new sendEmail1().createAccount(emailid, emailid);
+	                	hashkey=new forgotpasswordemail().createAccount(emailid, emailid);
+	                //	hashkey = new setinfoEmail().createAccount2(emailid, emailid);
+	                	tx.commit();
+	                	result = 1;
+	                }
+	                else
+	                {
+	                	result = 2;
+	                }
+			        
+	            }
+	            
+	        } catch (Exception e) {
+	        	if(tx != null)
+	            tx.rollback();
+	            e.printStackTrace();
+	            result = 3;
+	            throw new Exception(e);
+	        } finally {
+	        	if(session != null)
+	            session.close();
+	        }
+			
+			return result;
+	    	
+	    }
+
+	@Override
+	public int forgotpasswordwithemail(String hash, String emailid,
+			String password) throws Exception {
+		// TODO Auto-generated method stub
+		 Session session = null;
+		    Transaction tx = null;
+		    Users users = null;
+		    int result = 0;
+			try
+			{
+	           	session = HibernateUtil.getSession();
+	            tx = session.beginTransaction();
+	            users = (Users)
+	            			session.createCriteria(Users.class)
+	            			.add(Restrictions.eq("emailid", emailid))	            			
+	            			.uniqueResult();
+	            
+	            if(users != null){
+	            	users.setPassword(password);
+	            	
+	            	session.update(users);
+	    			tx.commit();
+	    			result = 1;
+	            }
+	 		}
+			catch(Exception e)
+			{
+				e.printStackTrace();
+				if(tx != null){
+					tx.rollback();
+				}
+				result = 2;
+			}
+			finally 
+			{
+	        	if(session != null)
+	            session.close();
+		    }
+
+			return result;
+		
+		
+		}
 
 	
+
+	@Override
+	public int saveUserthrowgoogle(String googleemail) throws Exception {
+		// TODO Auto-generated method stub
+		 Session session = null;
+	        SessionFactory hsf = null;
+	        Transaction tx = null;
+	        Users users = null;
+	        int result = 0;
+	        String emailArr[] = {};
+	        String account = "";
+	        Account accountDetails = new Account();
+	        Userroles userrolesDetails=null;
+	        Roles roles=null;
+	        roles= new Roles();
+	        userrolesDetails = new Userroles();
+	        try {
+	        	session = HibernateUtil.getSession();
+	            tx = session.beginTransaction();
+	            
+	            users = (Users)session.createCriteria(Users.class)
+	            		.add(Restrictions.eq("emailid", googleemail.toLowerCase().trim()).ignoreCase())
+	            		.uniqueResult();
+	            
+                  if(users != null){
+                	
+                	tx.commit();
+                	result = 1;
+	            }
+	           
+	            else
+	            {
+	            	
+	     			System.out.println("-googleemail--"+googleemail);
+	            	users = new Users();
+	            	users.setEmailid(googleemail);
+	            	users.setCreatedby("SYSTEM");
+	            	users.setCreatedon(new Date());
+	            	users.setStatus(true);	            	
+	            	session.save(users);
+	            	
+	            	emailArr = googleemail.split("@");
+	            	if(emailArr != null && emailArr.length >= 2)
+	            	{
+	                	accountDetails = (Account)session.createCriteria(Account.class)
+	            		.add(Restrictions.eq("name", emailArr[1].toLowerCase().trim()).ignoreCase())
+	            		.add(Restrictions.eq("status", true))
+	            		.uniqueResult();
+	                	
+	                	if(accountDetails == null)
+	                	{
+	                		accountDetails = new Account();
+	                		accountDetails.setName(emailArr[1].trim());
+	                		accountDetails.setStatus(true);
+	                		accountDetails.setCreatedby("SYSTEM");
+	                		accountDetails.setDatecreated(new Date());
+	                		session.save(accountDetails);
+	                	}
+
+	            	}
+	            	if(roles != null && userrolesDetails != null) {
+	            		roles=(Roles)session.createCriteria(Roles.class)
+	                    		.add(Restrictions.eq("id", 3))
+	                    		.uniqueResult();
+	            	
+	            		userrolesDetails = new Userroles();            		
+	            		userrolesDetails.setRoles(roles);
+	            		userrolesDetails.setUsers(users);
+	            		session.save(userrolesDetails);
+	            	}
+	            	
+	            	tx.commit();
+	            	result = 3;
+	            }
+	        } catch (Exception e) {
+	        	if(tx != null)
+	            tx.rollback();
+	            e.printStackTrace();
+	            result = 4;
+	            throw new Exception(e);
+	        } finally {
+	        	if(session != null)
+	            session.close();
+	        }
+			
+			return result;
+	 	}
+
+		
+
 
 	
 

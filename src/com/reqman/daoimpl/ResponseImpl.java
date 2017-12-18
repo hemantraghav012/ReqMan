@@ -1,6 +1,7 @@
 package com.reqman.daoimpl;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -14,11 +15,13 @@ import org.hibernate.criterion.Restrictions;
 import com.reqman.common.HibernateUtil;
 import com.reqman.dao.responseInterface;
 import com.reqman.pojo.Request;
+import com.reqman.pojo.Requestnotes;
 import com.reqman.pojo.Userfriendlist;
 import com.reqman.pojo.Users;
 import com.reqman.util.Dateconverter;
 import com.reqman.vo.NewrequestVo;
 import com.reqman.vo.ResponseVo;
+import com.reqman.vo.requestNoteVo;
 
 public class ResponseImpl implements responseInterface {
 
@@ -33,7 +36,8 @@ public class ResponseImpl implements responseInterface {
 		Transaction tx = null;
 		Request request=null;
 		List<Integer> friendList = null;
-	
+		List<requestNoteVo> requestnoteList =null;
+		requestNoteVo requestnoteVo=null;
 		ResponseVo responseVo = null;
 		try {
 			session = HibernateUtil.getSession();
@@ -79,13 +83,14 @@ public class ResponseImpl implements responseInterface {
 						firstName = "";
 						lastName = "";
 						name = "";
-
+						requestnoteList=new ArrayList<requestNoteVo>();
 
 						Hibernate.initialize(requestDB.getUsercategory());
 						Hibernate.initialize(requestDB.getUserproject());
 						Hibernate.initialize(requestDB.getUserrequesttype());
 						Hibernate.initialize(requestDB.getUserfriendlist());
-						
+						Hibernate.initialize(requestDB.getRequestnoteses());
+						Hibernate.initialize(request);
 						if(requestDB != null && requestDB.getUsercategory() != null && requestDB.getUsercategory().getCategory() != null)
 						{
 							userCategory = requestDB.getUsercategory().getCategory().getName() != null 
@@ -146,6 +151,36 @@ public class ResponseImpl implements responseInterface {
 						
 						responseVo.setNewRequestId(requestDB.getId());
 									
+						
+						if(requestDB.getRequestnoteses() !=null && requestDB.getRequestnoteses().size() !=0){ 
+							
+							for(Requestnotes requestnotes : requestDB.getRequestnoteses()){
+							 firstName="";
+							 lastName="";
+							 name="";
+				
+							 
+														 
+							
+								requestnoteVo=new requestNoteVo();
+							
+								requestnoteVo.setCreatedby(name);
+								//requestnoteVo.setCreatedby(requestnotes.getCreatedby() !=null ? requestnotes.getCreatedby().trim() : "" );
+								requestnoteVo.setNoteId(requestnotes.getId());
+								requestnoteVo.setMessage(requestnotes.getMessage() != null ? requestnotes.getMessage().trim() : "");
+								requestnoteVo.setCreatedon(requestnotes.getCreatedon()!= null ?  Dateconverter.convertDateToStringDDMMDDYYYY(requestnotes.getCreatedon()) : "");
+								requestnoteVo.setTime(requestnotes.getCreatedon()!= null ?  Dateconverter.convertTimeToStringhhmmss(requestnotes.getCreatedon()) : "");
+								
+								
+								requestnoteList.add(requestnoteVo);
+								Collections.sort(requestnoteList,requestNoteVo.NoteIdComparator );
+							}
+							}
+						
+							 
+						responseVo.setNoteList(requestnoteList);	
+						
+						
 						requestList.add(responseVo);
 					}
 					}			
@@ -264,7 +299,7 @@ public class ResponseImpl implements responseInterface {
 
 	@Override
 	public int updateResponsetById(String requestId, Integer stage,
-			Date completiondate,String userName) throws Exception {
+			Date completiondate,String userName,String message) throws Exception {
 		// TODO Auto-generated method stub
 		 Session session = null;
 		    Transaction tx = null;
@@ -272,7 +307,7 @@ public class ResponseImpl implements responseInterface {
 		   Request requestworkflow = null;
 		   Request request=null;
 		   int result = 0;
-			
+		   Requestnotes  requestnotes=null;
 				try
 				{
 					session = HibernateUtil.getSession();
@@ -294,6 +329,19 @@ public class ResponseImpl implements responseInterface {
 		            		
 		            	}
 		            	session.update(requestworkflow);
+		            	
+		            	
+		            	if(message !=null && ! message.trim().equals("")){	
+				           	requestnotes=new Requestnotes();
+			            		requestnotes.setRequest(requestworkflow);
+				            	requestnotes.setMessage(message);	            	
+				            	requestnotes.setCreatedby(userName);
+				            	requestnotes.setCreatedon(new Date());
+				            	session.save(requestnotes);
+				            	
+				            }
+		            	
+		            	
 		    			tx.commit();;
  			result = 1;
 				}
