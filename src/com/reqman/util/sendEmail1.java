@@ -74,39 +74,23 @@ public class sendEmail1 {
 		
 		try{			
 			sb.append("<h1>");
-			sb.append("Welcome to Collabor8,"+ firstName + "!");			
-			sb.append("</h1>");			
+			sb.append( firstName +", Welcome to Collabor8 !");				
+			sb.append("</h1>");	
 			sb.append("<br>");
 			sb.append("Your account has been created! You can Add the members' login URL as well as your account username and password below in this e-mail.To keep your account safe,");
 			sb.append("<br>");
-			sb.append("we recommend changing your password by going to "+temp+"Account"+temp+" after logging in.");
+			sb.append("Usage is very simple . Enter one or more team members email id and start logging requests for them.");
 			sb.append("<br>");
-			sb.append("<br>");
-			sb.append("If you encounter any problems logging in to your account or require any technical help using Collabor8, contact us at support@Collabor8.com and we'll be in");
-			sb.append("touch to assist you as soon as we can. For subscription, billing or training matters, reach out to Venkata@Collabor8.com for assistance.");
-			sb.append("<br>");
-			sb.append("Login URL");
-			sb.append("<br>");
-		//	sb.append("http://localhost:9002/ReqMan/faces/faces/eregisters.xhtml");
-			sb.append("<br>");
-			sb.append("Username");
-			sb.append("<br>");
-			sb.append(To);		
-			sb.append("<br>");
+			sb.append("Optionally use request categories , projects and types for better analysis and management. Get more information on Collabor8.com Feel free to writte to us at helpdesk@collabor8.com ");
 			sb.append("<h2>");
 			sb.append("  Thank you for registration. Your mail ("+To+") is under verification<br/>");
-			sb.append("</h21>");
+			sb.append("</h2>");
 			sb.append("<h1>");
 		    sb.append("  Please click <a href=\""+link+"\">here</a> or open below link in browser<br/>");
 		    sb.append("</h1>");			
 			sb.append("Thank You, "+firstName+".");
 			sb.append("<br>");
-			sb.append("<br>");
-			sb.append("Venkata Konidala");
-			sb.append("<br>");
-			sb.append("reqman.com");
-			sb.append("<br>");
-			sb.append("© reqman.com | support@Collabor8.com");
+			sb.append("support@Collabor8.com");
 			
 			content = sb.toString();
 		}

@@ -18,6 +18,7 @@ import javax.swing.JLabel;
 import com.reqman.dao.NewrequestInterface;
 import com.reqman.dao.UpdatestatusInterface;
 import com.reqman.daoimpl.NewrequestImpl;
+import com.reqman.daoimpl.RequesttypeMasterImpl;
 import com.reqman.daoimpl.UpdatestatusImpl;
 import com.reqman.vo.NewrequestVo;
 import com.reqman.vo.UpdatestatusVo;
@@ -29,8 +30,17 @@ import com.sendgrid.Request;
 import com.sendgrid.Response;
 import com.sendgrid.SendGrid;
 
-public class requestemail {
 
+
+public class requestemail {	
+	
+	
+	public void useremailid() throws Exception{
+		RequesttypeMasterImpl reinf = new RequesttypeMasterImpl();
+		List<String> emailList=reinf.AllUser();
+       System.out.println("requestemail--"+emailList );
+	}
+	
 	
 	@SuppressWarnings("null")
 	public String RequestGrid(String To, String emailid) throws Exception, IOException{
@@ -41,11 +51,9 @@ public class requestemail {
 		List<UpdatestatusVo> updatestatusListemail = new ArrayList<UpdatestatusVo>();
 		 NewrequestInterface newrequestInterface = new NewrequestImpl();	
          UpdatestatusInterface updatestatusInterface = new UpdatestatusImpl();
-			HttpSession session = SessionUtils.getSession();
-			String userName = (String)session.getAttribute("username");
-			System.out.println("--usersession--userName-->"+userName);
-			
-				
+					
+         String userName="";
+		 ;	
 		String userproject = null;
 		String usercategory= null;
 		String userrequesttype= null;
@@ -104,7 +112,8 @@ public class requestemail {
 			sb.append("</tr>");
 			
 		
-			updatestatusListemail = updatestatusInterface.getupdatestatusDetailsforemail(userName,title, description,userproject, usercategory, userrequesttype, createdby, changedate,completionpercentage,stage);			
+		
+			updatestatusListemail = updatestatusInterface.getupdatestatusDetailsforemail(emailid,title, description,userproject, usercategory, userrequesttype, createdby, changedate,completionpercentage,stage);			
 				
 				for (UpdatestatusVo updatestatusDB : updatestatusListemail) {
 
@@ -195,7 +204,7 @@ public class requestemail {
 			sb.append("</tr>");
 			
 		
-				requestListemail = newrequestInterface.getNewrequestDetailsforemail(userName,title, description,userproject, usercategory, userrequesttype, friendname, changedate,completionpercentage,stage);			
+				requestListemail = newrequestInterface.getNewrequestDetailsforemail(emailid,title, description,userproject, usercategory, userrequesttype, friendname, changedate,completionpercentage,stage);			
 				
 				for (NewrequestVo requestDB : requestListemail) {
 
@@ -280,16 +289,18 @@ public void friendemail(String To, String emailid) throws Exception {
 			throw new Exception(e);
 		}
 		
-	
+
     }  
 public static void main(String[] args) throws IOException 
 {
 	try{
 		String emailid = null;
-//requestemail rr= new requestemail();
+requestemail rr= new requestemail();
 //	rr.friendemail("hemantraghav012@gmail.com", "Sumit12");
 //	System.out.println("-password--"+emailid);
-	
+	rr.useremailid();
+	List<String> emailList = null;
+	System.out.println("requestemail--"+emailList);
 	/*String password1 = new sendEmail1().resetAccount("naveen.namburu@gmail.com", "Naveen Namburu");
 	System.out.println("-password1--"+password1);*/
 	}
@@ -297,5 +308,5 @@ public static void main(String[] args) throws IOException
 		e.printStackTrace();
 	}
 }
-
+	
 }
