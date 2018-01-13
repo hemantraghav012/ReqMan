@@ -4,18 +4,22 @@ import java.util.Date;
 
 import javax.management.relation.Role;
 
+import org.hibernate.Hibernate;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.Restrictions;
 import org.primefaces.model.UploadedFile;
 
+import com.reqman.beans.Login;
 import com.reqman.common.HibernateUtil;
 import com.reqman.dao.UserDetailsInterface;
 import com.reqman.pojo.Account;
+import com.reqman.pojo.Accountusers;
 import com.reqman.pojo.Roles;
 import com.reqman.pojo.Userroles;
 import com.reqman.pojo.Users;
+import com.reqman.util.RequestConstants;
 import com.reqman.util.forgotpasswordemail;
 import com.reqman.util.sendEmail1;
 import com.reqman.util.setinfoEmail;
@@ -23,48 +27,72 @@ import com.reqman.vo.UserupdateVo;
 
 public class UserDetailsImpl implements UserDetailsInterface {
 
-	public int validate(String userName, String password) throws Exception
+	
+	/* Login method for  validate emailid and password  */
+	@SuppressWarnings("null")
+	public int validate(String userName, String password,String userrole) throws Exception
     {
         Session session = null;
         SessionFactory hsf = null;
         Transaction tx = null;
         Users users = null;
+       
+    	RequesttypeMasterImpl reinf = new RequesttypeMasterImpl();
         int result = 0;
-        try {
+    	String roleName = "";
+    	 Login login = null;
+        try
+        {
             if(userName != null && !userName.trim().equals(""))
             {
-            	
-            	//hsf = HibernateSessionFactory.getSessionFactory();
-                //session = hsf.openSession();
             	session = HibernateUtil.getSession();
                 tx = session.beginTransaction();
                 users = (Users)session.createCriteria(Users.class)
                 		.add(Restrictions.eq("emailid", userName.toLowerCase().trim()).ignoreCase())
                 		.add(Restrictions.eq("password", password.toLowerCase().trim()).ignoreCase())
-                		.uniqueResult();
-                
-                if(users != null){
-                	
-                	tx.commit();
-                	result = 1;
-                }
-                else
-                {
-                	result = 2;
-                }
-		        
-            }
+                		.uniqueResult(); 
+             
+				
+             if(users != null)
+              {  
+            		roleName = reinf.getRoleNameByLoginId(userName);
+            		
+           	 }
+             
+             if(roleName != null && roleName.trim().equalsIgnoreCase(RequestConstants.REQUESTOR_ROLE))
+             {            	 
+             	result = 3;
+             }
+             
+             else if(roleName != null && roleName.trim().equalsIgnoreCase(RequestConstants.TEAM_MEMBER))
+             {            	
+              	result = 4;
+              }
+             else if(roleName != null && roleName.trim().equalsIgnoreCase(RequestConstants.ACCOUNT_ADMIN_ROLE))
+             {            	
+               	result = 2;             	 
+             }
+             else if(roleName != null && roleName.trim().equalsIgnoreCase(RequestConstants.APP_ADMIN_ROLE))
+             {            	
+               	result = 1; 
+             }
+           
+             tx.commit();
+                 }
+               
             
-        } catch (Exception e) {
+        } catch (Exception e)
+           {
         	if(tx != null)
             tx.rollback();
             e.printStackTrace();
-            result = 3;
+            result = 5;
             throw new Exception(e);
-        } finally {
+            } finally 
+            {
         	if(session != null)
             session.close();
-        }
+        	}
 		
 		return result;
     	
@@ -84,6 +112,7 @@ public class UserDetailsImpl implements UserDetailsInterface {
         Roles roles=null;
         roles= new Roles();
         userrolesDetails = new Userroles();
+        Accountusers accountusers=null;
         try {
         	session = HibernateUtil.getSession();
             tx = session.beginTransaction();
@@ -99,12 +128,9 @@ public class UserDetailsImpl implements UserDetailsInterface {
             }
             else
             {
-            	
             	hashkey = new sendEmail1().createAccount(emailid, firstname);
-     			System.out.println("-password--"+hashkey);
-            
+     			System.out.println("-hashkey--"+hashkey);
             	
-     			System.out.println("-password--"+password);
             	users = new Users();
             	users.setEmailid(emailid);
             	users.setFirstname(firstname != null ? firstname.trim() : "");
@@ -115,7 +141,7 @@ public class UserDetailsImpl implements UserDetailsInterface {
             	users.setCreatedon(new Date());
             	users.setStatus(true);
             	users.setHashkey(hashkey != null ? hashkey.trim() : "");
-            	users.setPhoto(photo.getContents());
+            //	users.setPhoto(photo.getContents());
             	session.save(users);
             	
             	emailArr = emailid.split("@");
@@ -136,6 +162,12 @@ public class UserDetailsImpl implements UserDetailsInterface {
                 		session.save(accountDetails);
                 	}
 
+            		accountusers = new Accountusers();
+                     accountusers.setAccount(accountDetails);
+                     accountusers.setUsers(users);
+                     session.save(accountusers);
+                	
+                	
             	}
             	if(roles != null && userrolesDetails != null) {
             		roles=(Roles)session.createCriteria(Roles.class)
@@ -147,7 +179,6 @@ public class UserDetailsImpl implements UserDetailsInterface {
             		userrolesDetails.setUsers(users);
             		session.save(userrolesDetails);
             	}
-            	
             	tx.commit();
             	result = 3;
             }
@@ -223,7 +254,9 @@ public class UserDetailsImpl implements UserDetailsInterface {
 		 Session session = null; 
 		    Transaction tx = null;
 		    Users users = null;
-		    int result = 0;    
+		    RequesttypeMasterImpl reinf = new RequesttypeMasterImpl();
+	        int result = 0;
+	    	String roleName = "";   
 		   
 		    try {
 		    	session = HibernateUtil.getSession();
@@ -237,14 +270,44 @@ public class UserDetailsImpl implements UserDetailsInterface {
 	            users.setFirstname(firstname);
 	            users.setLastname(lastname);
 	            users.setShortname(shortname);
-	            users.setPassword(password);
-	            
+	            users.setPassword(password);	            
 				users.setPhoto(photo.getContents());
 			
 	            	session.update(users);
 	    			tx.commit();
-	    			result = 1;
-	            }     
+	    			
+	    			 if(users != null)
+	                 {  
+	               		roleName = reinf.getRoleNameByLoginId(emailid);
+	                   	
+	               	 }
+	                
+	                if(roleName != null && roleName.trim().equalsIgnoreCase(RequestConstants.REQUESTOR_ROLE))
+	                {
+	               	
+	                	result = 3;
+	                }
+	                
+	                else if(roleName != null && roleName.trim().equalsIgnoreCase(RequestConstants.TEAM_MEMBER))
+	                {
+	             
+	                 	result = 4;
+	                 }
+	                else if(roleName != null && roleName.trim().equalsIgnoreCase(RequestConstants.ACCOUNT_ADMIN_ROLE))
+	                {
+	               
+	                  	result = 2; 
+	               	 
+	                }
+	                else if(roleName != null && roleName.trim().equalsIgnoreCase(RequestConstants.APP_ADMIN_ROLE))
+	                {
+	               	
+	                  	result = 1; 
+	                }
+	                
+	                    }
+	            
+	
 		        
 		    } catch (Exception e) {
 		    	if(tx != null)
@@ -368,6 +431,7 @@ public class UserDetailsImpl implements UserDetailsInterface {
 	        Roles roles=null;
 	        roles= new Roles();
 	        userrolesDetails = new Userroles();
+	        Accountusers accountusers=null;
 	        try {
 	        	session = HibernateUtil.getSession();
 	            tx = session.beginTransaction();
@@ -416,10 +480,14 @@ public class UserDetailsImpl implements UserDetailsInterface {
 	                		session.save(accountDetails);
 	                	}
 
+	            	 	accountusers = new Accountusers();
+	                     accountusers.setAccount(accountDetails);
+	                     accountusers.setUsers(users);
+	                     session.save(accountusers);
+	                	
+	                	
 	            	}
-		if(roles != null && userrolesDetails != null) {
-	                    
-	            		
+	             	if(roles != null && userrolesDetails != null) {            		
 	            		
 	            		roles=(Roles)session.createCriteria(Roles.class)
 	                    		.add(Restrictions.eq("id", 3))
@@ -510,9 +578,9 @@ public class UserDetailsImpl implements UserDetailsInterface {
 	                		.uniqueResult();
 	                
 	                if(users != null){
-	                	//hashkey = new sendEmail1().createAccount(emailid, emailid);
+	                	
 	                	hashkey=new forgotpasswordemail().createAccount(emailid, emailid);
-	                //	hashkey = new setinfoEmail().createAccount2(emailid, emailid);
+	             
 	                	tx.commit();
 	                	result = 1;
 	                }
@@ -591,13 +659,16 @@ public class UserDetailsImpl implements UserDetailsInterface {
 	        SessionFactory hsf = null;
 	        Transaction tx = null;
 	        Users users = null;
+	        RequesttypeMasterImpl reinf = new RequesttypeMasterImpl();
 	        int result = 0;
+	    	String roleName = "";
 	        String emailArr[] = {};
 	        String account = "";
 	        Account accountDetails = new Account();
 	        Userroles userrolesDetails=null;
 	        Roles roles=null;
 	        roles= new Roles();
+	        Accountusers accountusers= null;
 	        userrolesDetails = new Userroles();
 	        try {
 	        	session = HibernateUtil.getSession();
@@ -607,12 +678,35 @@ public class UserDetailsImpl implements UserDetailsInterface {
 	            		.add(Restrictions.eq("emailid", googleemail.toLowerCase().trim()).ignoreCase())
 	            		.uniqueResult();
 	            
-                  if(users != null){
-                	
-                	tx.commit();
-                	result = 1;
-	            }
-	           
+	            if(users != null)
+	              {  
+	            		roleName = reinf.getRoleNameByLoginId(googleemail);
+	                	
+	            	 }
+	             
+	             if(roleName != null && roleName.trim().equalsIgnoreCase(RequestConstants.REQUESTOR_ROLE))
+	             {
+	            	  	result = 3;
+	             }
+	             
+	             else if(roleName != null && roleName.trim().equalsIgnoreCase(RequestConstants.TEAM_MEMBER))
+	             {
+	            	
+	              	result = 4;
+	              }
+	             else if(roleName != null && roleName.trim().equalsIgnoreCase(RequestConstants.ACCOUNT_ADMIN_ROLE))
+	             {
+	            	
+	               	result = 2; 
+	            	 
+	             }
+	             else if(roleName != null && roleName.trim().equalsIgnoreCase(RequestConstants.APP_ADMIN_ROLE))
+	             {
+	            	
+	               	result = 1   ; 
+	             }
+	             
+	            
 	            else
 	            {
 	            	
@@ -642,6 +736,12 @@ public class UserDetailsImpl implements UserDetailsInterface {
 	                		session.save(accountDetails);
 	                	}
 
+	            	 	accountusers = new Accountusers();
+	                     accountusers.setAccount(accountDetails);
+	                     accountusers.setUsers(users);
+	                     session.save(accountusers);
+	                	
+	                	
 	            	}
 	            	if(roles != null && userrolesDetails != null) {
 	            		roles=(Roles)session.createCriteria(Roles.class)
@@ -654,14 +754,41 @@ public class UserDetailsImpl implements UserDetailsInterface {
 	            		session.save(userrolesDetails);
 	            	}
 	            	
-	            	tx.commit();
-	            	result = 3;
+	            	 if(users != null)
+	                 {  
+	               		roleName = reinf.getRoleNameByLoginId(googleemail);
+	                   	
+	               	 }
+	                
+	                if(roleName != null && roleName.trim().equalsIgnoreCase(RequestConstants.REQUESTOR_ROLE))
+	                {
+	               	 
+	                	result = 3;
+	                }
+	                
+	                else if(roleName != null && roleName.trim().equalsIgnoreCase(RequestConstants.TEAM_MEMBER))
+	                {
+	               	 
+	                 	result = 4;
+	                 }
+	                else if(roleName != null && roleName.trim().equalsIgnoreCase(RequestConstants.ACCOUNT_ADMIN_ROLE))
+	                {
+	               	
+	                  	result =2; 
+	               	 
+	                }
+	                else if(roleName != null && roleName.trim().equalsIgnoreCase(RequestConstants.APP_ADMIN_ROLE))
+	                {
+	               	
+	                  	result = 1; 
+	                }
+	                tx.commit(); 
 	            }
 	        } catch (Exception e) {
 	        	if(tx != null)
 	            tx.rollback();
 	            e.printStackTrace();
-	            result = 4;
+	            result = 5;
 	            throw new Exception(e);
 	        } finally {
 	        	if(session != null)

@@ -137,7 +137,7 @@ public class ResponseImpl implements responseInterface {
 						responseVo.setUserproject(userProject);
 						responseVo.setUserrequesttype(userRequestType);
 						responseVo.setCreatedby(requestDB.getCreatedby());
-					
+					responseVo.setCreatedate(requestDB.getDatecreated());
 						
 						if(requestDB != null && requestDB.getStatus() != null 
 								&& requestDB.getStatus().booleanValue() == true )
@@ -271,7 +271,7 @@ public class ResponseImpl implements responseInterface {
 					}
 				 else if(request.getRequeststatus()==3)
 					{
-						responseVo.setStage("Send Back");
+						responseVo.setStage("Returned");
 					}
 				 else if(request.getRequeststatus()==1){
 					 responseVo.setStage("Request");

@@ -203,16 +203,16 @@ public class ProjectMasterImpl implements ProjectMasterInterface{
                 			}
                 			else
                 			{
-                				projectVo.setStatus("InActive");
+                				projectVo.setStatus("In-Active");
                 			}
                 			
                 			if(userprojectDB.getProjectaccess().equals(true))
                 			{
-                				projectVo.setProjectaccess("Employee");
+                				projectVo.setProjectaccess("Task Owner Only");
                 			}
                 			else
                 			{
-                				projectVo.setProjectaccess("ALL");
+                				projectVo.setProjectaccess("All Project Team");
                 			}
                 			
                 			counter++;
@@ -373,7 +373,7 @@ public class ProjectMasterImpl implements ProjectMasterInterface{
                 			}
                 			else
                 			{
-                				projectVo.setStatus("InActive");
+                				projectVo.setStatus("In-Active");
                 			}
                 			counter++;
                 			projectList1.add(projectVo);
@@ -436,7 +436,7 @@ public class ProjectMasterImpl implements ProjectMasterInterface{
                 			}
                 			else
                 			{
-                				projectVo.setStatus("InActive");
+                				projectVo.setStatus("In-Active");
                 			}
                 			counter++;
                 			projectList1.add(projectVo);
@@ -479,7 +479,7 @@ public class ProjectMasterImpl implements ProjectMasterInterface{
             
             if(userprojectTemp != null)
             {   
-            	if(oldValue != null && oldValue.trim().equalsIgnoreCase("InActive") 
+            	if(oldValue != null && oldValue.trim().equalsIgnoreCase("In-Active") 
             			&& newValue != null && newValue.trim().equalsIgnoreCase("Active"))
             	{
             		userprojectTemp.setStatus(true);
@@ -487,22 +487,22 @@ public class ProjectMasterImpl implements ProjectMasterInterface{
             	}
             	
             	if(oldValue != null && oldValue.trim().equalsIgnoreCase("Active") 
-            			&& newValue != null && newValue.trim().equalsIgnoreCase("InActive"))
+            			&& newValue != null && newValue.trim().equalsIgnoreCase("In-Active"))
             	{
             		userprojectTemp.setStatus(false);
             	}
             	
             	
             	 
-            	if(oldValue != null && oldValue.trim().equalsIgnoreCase("ALL") 
-            			&& newValue != null && newValue.trim().equalsIgnoreCase("Employee"))
+            	if(oldValue != null && oldValue.trim().equalsIgnoreCase("All Project Team") 
+            			&& newValue != null && newValue.trim().equalsIgnoreCase("Task Owner Only"))
             	{
             		userprojectTemp.setProjectaccess(true);
             		
             	}
             	
-            	if(oldValue != null && oldValue.trim().equalsIgnoreCase("Employee") 
-            			&& newValue != null && newValue.trim().equalsIgnoreCase("All"))
+            	if(oldValue != null && oldValue.trim().equalsIgnoreCase("Task Owner Only") 
+            			&& newValue != null && newValue.trim().equalsIgnoreCase("All Project Team"))
             	{
             		userprojectTemp.setProjectaccess(false);
             	}

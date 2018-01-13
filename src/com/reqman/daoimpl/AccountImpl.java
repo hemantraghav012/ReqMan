@@ -65,7 +65,7 @@ public class AccountImpl implements AccountInterface {
             			}
             			else
             			{
-            				accountVo.setStatus("InActive");
+            				accountVo.setStatus("In Active");
             			}
 						
 						

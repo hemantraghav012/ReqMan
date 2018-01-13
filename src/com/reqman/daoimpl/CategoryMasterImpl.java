@@ -198,7 +198,7 @@ public class CategoryMasterImpl implements CategoryMasterInterface{
                 			}
                 			else
                 			{
-                				categoryVo.setStatus("InActive");
+                				categoryVo.setStatus("In-Active");
                 			}
                 			counter++;
                 			categoryList.add(categoryVo);
@@ -249,7 +249,7 @@ public class CategoryMasterImpl implements CategoryMasterInterface{
     			}
     			else
     			{
-    				categoryVo.setStatus("InActive");
+    				categoryVo.setStatus("In-Active");
     			}
     			
     			tx.commit();
@@ -351,7 +351,7 @@ public class CategoryMasterImpl implements CategoryMasterInterface{
                 			}
                 			else
                 			{
-                				categoryVo.setStatus("InActive");
+                				categoryVo.setStatus("In-Active");
                 			}
                 			
                 			categoryList1.add(categoryVo);
@@ -411,7 +411,7 @@ public class CategoryMasterImpl implements CategoryMasterInterface{
                 			}
                 			else
                 			{
-                				categoryVo.setStatus("InActive");
+                				categoryVo.setStatus("In-Active");
                 			}
                 			
                 			categoryList2.add(categoryVo);
@@ -453,7 +453,7 @@ public class CategoryMasterImpl implements CategoryMasterInterface{
             
             if(usercategoryTemp != null)
             {   
-            	if(oldValue != null && oldValue.trim().equalsIgnoreCase("InActive") 
+            	if(oldValue != null && oldValue.trim().equalsIgnoreCase("In-Active") 
             			&& newValue != null && newValue.trim().equalsIgnoreCase("Active"))
             	{
             		usercategoryTemp.setStatus(true);
@@ -461,7 +461,7 @@ public class CategoryMasterImpl implements CategoryMasterInterface{
             	}
             	
             	if(oldValue != null && oldValue.trim().equalsIgnoreCase("Active") 
-            			&& newValue != null && newValue.trim().equalsIgnoreCase("InActive"))
+            			&& newValue != null && newValue.trim().equalsIgnoreCase("In-Active"))
             	{
             		usercategoryTemp.setStatus(false);
             	}

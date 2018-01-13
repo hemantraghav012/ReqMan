@@ -116,23 +116,23 @@ public class UserroleImpl implements UserroleInterface{
 		{
            	session = HibernateUtil.getSession();
             tx = session.beginTransaction();
-  /*          userroleTemp = (Userroles)session.createCriteria(Userroles.class)
+            userroleTemp = (Userroles)session.createCriteria(Userroles.class)
             		.add(Restrictions.eq("id", updateUserroleid))
-            		.uniqueResult();*/
-        	roles=(Roles)session.createCriteria(Roles.class)
-    				.add(Restrictions.eq("id", updateUserroleid))
             		.uniqueResult();
-            if(roles != null)
+            Hibernate.initialize(roles);
+            Hibernate.initialize(userroleTemp.getRoles());
+            if( userroleTemp != null)
             {   
             	if(oldValue != null && newValue != null )
             	{
             		
-            	
+            		roles=(Roles)session.createCriteria(Roles.class)
+            				.add(Restrictions.eq("name", newValue ))
+                    		.uniqueResult();
             		userroleTemp.setRoles(roles);
-            		
             	}
-            	
             	session.update(userroleTemp);
+            	
             	tx.commit();
             	result = 1;
             	

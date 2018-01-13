@@ -1,5 +1,9 @@
 package com.reqman.daoimpl;
 
+import java.io.PrintWriter;
+import java.math.BigInteger;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
@@ -9,9 +13,11 @@ import java.util.List;
 import java.util.ListIterator;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.TimeUnit;
 
 import org.hibernate.Criteria;
 import org.hibernate.Hibernate;
+import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.Projections;
@@ -28,15 +34,20 @@ import com.reqman.pojo.Userproject;
 import com.reqman.pojo.Userrequesttype;
 import com.reqman.pojo.Users;
 import com.reqman.util.Dateconverter;
+import com.reqman.util.RequestConstants;
 import com.reqman.util.requestemail;
-
 import com.reqman.util.sendEmail1;
 import com.reqman.util.sendEmailonfriend;
+import com.reqman.vo.BarchartVo;
 import com.reqman.vo.NewrequestVo;
 import com.reqman.vo.requestNoteVo;
 
 
 public class NewrequestImpl implements NewrequestInterface {
+
+	private static final String Good = null;
+
+
 
 	@SuppressWarnings({ "unchecked", "unused" })
 	@Override
@@ -273,8 +284,8 @@ public class NewrequestImpl implements NewrequestInterface {
 				//search date range
 				if(startDate != null && endDate !=null)
 				{
-					crit.add(Restrictions.ge("datecreated", startDate)); 
-					crit.add(Restrictions.lt("datecreated", endDate));
+					crit.add(Restrictions.ge("datecreated", Dateconverter.getMinTimeByDate(startDate))); 
+					crit.add(Restrictions.lt("datecreated", Dateconverter.getMaxTimeByDate(endDate)));
 			
 				}
 				List<Request> requesPojoList = (List<Request>)crit.list();
@@ -364,7 +375,7 @@ public class NewrequestImpl implements NewrequestInterface {
 						}
 					 else if(requestDB.getRequeststatus()==3)
 						{
-						 newrequestVo.setStage("Send Back");
+						 newrequestVo.setStage("Returned");
 						}
 					 else if(requestDB.getRequeststatus()==1){
 						 newrequestVo.setStage("Request");
@@ -377,7 +388,7 @@ public class NewrequestImpl implements NewrequestInterface {
 						 newrequestVo.setStage("Completed");
 					 }
 					 else if(requestDB.getRequeststatus()==6){
-						 newrequestVo.setStage("Cancelled");
+						 newrequestVo.setStage("Cancel");
 					 }
 					 else if(requestDB.getRequeststatus()==7){
 						 newrequestVo.setStage("Hold");
@@ -574,6 +585,32 @@ public class NewrequestImpl implements NewrequestInterface {
 					newrequestVo.setFileName(request.getFilename());
 					newrequestVo.setFriendName(name);
 					newrequestVo.setCompletionpercentage(request.getCompletionpercentage());
+					if(request.getRequeststatus()==1){
+						newrequestVo.setStage("Request");
+					}
+					else if(request.getRequeststatus()==2){
+						newrequestVo.setStage("Accepted");
+					}
+					else if(request.getRequeststatus()==3){
+						newrequestVo.setStage("Returned");
+					}
+					else if(request.getRequeststatus()==4){
+						newrequestVo.setStage("In-progress");
+					}
+					else if(request.getRequeststatus()==5){
+						newrequestVo.setStage("Completed");
+					}
+					else if(request.getRequeststatus()==6){
+						newrequestVo.setStage("Cancel");
+					}
+					else if(request.getRequeststatus()==7){
+						newrequestVo.setStage("Hold");
+					}
+					else if(request.getRequeststatus()==8){
+						newrequestVo.setStage("Close");
+					}
+					
+					
 					if(request.getStatus() == true)
 					{
 						newrequestVo.setStatus("Active");
@@ -640,7 +677,7 @@ public class NewrequestImpl implements NewrequestInterface {
 		            	requestworkflow.setDescription(description);		            	
 		            	requestworkflow.setCompletiondate(completiondate);
 		            	//requestworkflow.setUserfriendlist(userfriendlist);
-		            	if(userproject != null)
+		        	if(userproject != null)
 						{
 							userproject1 = (Userproject)session.createCriteria(Userproject.class)
 									.add(Restrictions.eq("id", userproject))
@@ -675,9 +712,9 @@ public class NewrequestImpl implements NewrequestInterface {
 							
 							requestworkflow.setUserfriendlist(userfriend1);
 						}
-
+		            	 if(stage !=null ){
 		            	requestworkflow.setRequeststatus(stage);
-		         
+		            	 }
 		            	session.update(requestworkflow);
 		            	
 		            if(message !=null && ! message.trim().equals("")){	
@@ -716,93 +753,7 @@ public class NewrequestImpl implements NewrequestInterface {
 
 
 	
-	@SuppressWarnings("unchecked")
-	@Override
-	public Map<String, Integer> barchart(String userName) throws Exception {
-		// TODO Auto-generated method stub
-		 Session session = null;
-		    Transaction tx = null;		
-		   Users  usersTemp1=null;		  
-		   Request request=null;
-		   int result = 0;
-		   Set<String> friendNameset = new HashSet<String>();
-		   Map<String, Integer> requestmap = new HashMap<String, Integer>();
-				try
-				{
-					session = HibernateUtil.getSession();
-		            tx = session.beginTransaction();
-		            usersTemp1 = (Users) session
-							.createCriteria(Users.class)
-							.add(Restrictions.eq("emailid",
-									userName.toLowerCase().trim()).ignoreCase())								
-							.uniqueResult();
-
-		            
-					if (usersTemp1 != null) {
-
-						 					
-						List<Request> requesPojoList1 = (List<Request>) session
-								.createCriteria(Request.class)
-								.add(Restrictions.eq("createdby",
-										userName.toLowerCase().trim()).ignoreCase())
-										.add(Restrictions.eq("requeststatus", 4))
-																			
-								.list();
-						
-					 int count1=0;
-						String shortName = "";
-						String lastName = "";
-						String friendemail = "";
-						if (requesPojoList1 != null && requesPojoList1.size() != 0) {
-							
-							for (Request requestDB : requesPojoList1) {
-								
-								 NewrequestVo	newrequestVo = new NewrequestVo();
-							shortName = "";
-								lastName = "";
-								friendemail = "";
-
-
-								Hibernate.initialize(requestDB.getUserfriendlist());
-								
-		
-								
-								if(requestDB != null && requestDB.getUserfriendlist() != null 
-										&& requestDB.getUserfriendlist().getUsersByFriendid() != null )								{
-									shortName = requestDB.getUserfriendlist().getUsersByFriendid().getShortname() != null 
-											? requestDB.getUserfriendlist().getUsersByFriendid().getShortname() : "";
-								
-								}
-								if(requestDB.getUserfriendlist().getRequests() !=null  && requestDB.getUserfriendlist().getRequests().size() !=0  ){
-									
-									count1=requestDB.getUserfriendlist().getRequests().size();
-									}
-							System.out.println("friend name is ==" +count1);
-								friendNameset.add(shortName);
-	                        	  requestmap.put(shortName,count1);
-								
-							}
-						}
-					}
-				}
-		            catch(Exception e)
-		    		{
-		    			e.printStackTrace();
-		    			if(tx != null){
-		    				tx.rollback();
-		    			}
-		    			result = 2;
-		    		}
-		    		finally 
-		    		{
-		            	if(session != null)
-		                session.close();
-		    	    }
-
-		
-		return requestmap;
-	}
-
+	
 
 	@Override
 	public List<NewrequestVo> getallproject(String userName) throws Exception {
@@ -828,6 +779,7 @@ public class NewrequestImpl implements NewrequestInterface {
 			if (usersTemp != null) {
 
 
+				@SuppressWarnings("unchecked")
 				List<Request> requesPojoList = (List<Request>) session
 						.createCriteria(Request.class)
 						.add(Restrictions.eq("createdby",
@@ -842,7 +794,7 @@ public class NewrequestImpl implements NewrequestInterface {
 				String name = "";
 				if (requesPojoList != null && requesPojoList.size() != 0) {
 					for (Request requestDB : requesPojoList) {
-						if(requestDB.getUserproject().getProjectaccess()==true){
+						if(requestDB.getUserproject() != null && requestDB.getUserproject().getProjectaccess()==true){
 						
 						
 						userCategory = "";
@@ -913,7 +865,7 @@ public class NewrequestImpl implements NewrequestInterface {
 						}
 					 else if(requestDB.getRequeststatus()==3)
 						{
-						 newrequestVo.setStage("Send Back");
+						 newrequestVo.setStage("Returned");
 						}
 					 else if(requestDB.getRequeststatus()==1){
 						 newrequestVo.setStage("Request");
@@ -923,10 +875,10 @@ public class NewrequestImpl implements NewrequestInterface {
 					 }
 						
 					 else if(requestDB.getRequeststatus()==5){
-						 newrequestVo.setStage("Completed");
+						 newrequestVo.setStage("Complete");
 					 }
 					 else if(requestDB.getRequeststatus()==6){
-						 newrequestVo.setStage("Cancelled");
+						 newrequestVo.setStage("Cancel");
 					 }
 					 else if(requestDB.getRequeststatus()==7){
 						 newrequestVo.setStage("Hold");
@@ -1154,7 +1106,7 @@ public class NewrequestImpl implements NewrequestInterface {
 						}
 					 else if(requestDB.getRequeststatus()==3)
 						{
-						 newrequestVo.setStage("Send Back");
+						 newrequestVo.setStage("Returned");
 						}
 					 else if(requestDB.getRequeststatus()==1){
 						 newrequestVo.setStage("Request");
@@ -1167,7 +1119,7 @@ public class NewrequestImpl implements NewrequestInterface {
 						 newrequestVo.setStage("Completed");
 					 }
 					 else if(requestDB.getRequeststatus()==6){
-						 newrequestVo.setStage("Cancelled");
+						 newrequestVo.setStage("Cancel");
 					 }
 					 else if(requestDB.getRequeststatus()==7){
 						 newrequestVo.setStage("Hold");
@@ -1359,7 +1311,7 @@ public class NewrequestImpl implements NewrequestInterface {
 						}
 					 else if(requestDB.getRequeststatus()==3)
 						{
-						 newrequestVo.setStage("Send Back");
+						 newrequestVo.setStage("Returned");
 						}
 					 else if(requestDB.getRequeststatus()==1){
 						 newrequestVo.setStage("Request");
@@ -1372,7 +1324,7 @@ public class NewrequestImpl implements NewrequestInterface {
 						 newrequestVo.setStage("Completed");
 					 }
 					 else if(requestDB.getRequeststatus()==6){
-						 newrequestVo.setStage("Cancelled");
+						 newrequestVo.setStage("Cancel");
 					 }
 					 else if(requestDB.getRequeststatus()==7){
 						 newrequestVo.setStage("Hold");
@@ -1474,6 +1426,171 @@ public class NewrequestImpl implements NewrequestInterface {
 		return requestList;
 	}
 	
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public Map<String, BigInteger> piechart(String userName) throws Exception {
+		// TODO Auto-generated method stub
+		 Map<String, BigInteger> requestmap = new HashMap<String, BigInteger>();
+		    Session session = null;
+		    Transaction tx = null;		
+		    Users  usersTemp1=null;			  
+		    List<Object[]> rows = null;
+		    SQLQuery query = null;
+		    String sqlQuery = "";
+		    BigInteger countfriendemail=null;	
+		    String friendemail=null;
+		    
+		    int result=0;
+		  
+				try
+				{
+				session = HibernateUtil.getSession();
+		        tx = session.beginTransaction();
+		            usersTemp1 = (Users) session.createCriteria(Users.class)
+		            		.add(Restrictions.eq("emailid",userName.toLowerCase().trim()).ignoreCase())
+							.uniqueResult();
+					if (usersTemp1 != null)
+					{
+						 sqlQuery = " select (select u1.emailid from reqman.users as u1,reqman.userfriendlist as uf1  where "
+                                  + " u1.id=uf1.friendid and u1.status=true and uf1.status=true and uf1.id=r.friendid), count(r.id) from reqman.request as r" 
+                                  + " where r.status=true and r.requeststatus in (2,4,5) and r.friendid in "
+                                  + " (select uf.id from reqman.users as u,reqman.userfriendlist as uf where u.id=uf.userid "
+                                  + " and u.status=true and uf.status=true and u.emailid='"+userName+"') group by r.friendid";    
+				          query = session.createSQLQuery(sqlQuery);
+				          rows = query.list();
+				            
+				            if(rows != null && rows.size() != 0)
+				            {	
+				            	String feiend="";
+				            	for(Object[] row : rows)
+				            	{
+				            		countfriendemail = (BigInteger) row[1];
+				            		friendemail = (String) row[0];				            				
+	                        	  requestmap.put(friendemail,countfriendemail);								
+							     }
+						    }
+					  }
+				   }
+		            catch(Exception e)
+		    		{
+		    			e.printStackTrace();
+		    			if(tx != null)
+		    			{
+		    				tx.rollback();
+		    			}
+		    			result = 2;
+		    		}
+		    		finally 
+		    		{
+		            	if(session != null)
+		                session.close();
+		    	    }
+
+		
+		return requestmap;
+	}
+	
+	
+	public Map<String,Double> barchart(String userName) throws Exception {
+		  // TODO Auto-generated method stub
+		   Map<String, Double> requestbarmap = new HashMap<String, Double>();
+		   Session session = null;
+		      Transaction tx = null;  
+		     Users  usersTemp1=null;    
+		     Request request=null;
+		     int result = 0;
+		     List<Object[]> rows = null;
+		      SQLQuery query = null;
+		      String sqlQuery = "";
+		      BigInteger percentageDB=null; 
+		      BigInteger countDB=null; 
+		      Boolean grade=null;
+		      Double currentpercentage=0.0;
+		      String friendemail=null;
+		      
+		    try
+		    {
+		     session = HibernateUtil.getSession();
+		           tx = session.beginTransaction();
+		               usersTemp1 = (Users) session.createCriteria(Users.class)
+		                 .add(Restrictions.eq("emailid",userName.toLowerCase().trim()).ignoreCase())
+		        .uniqueResult();
+		      if (usersTemp1 != null)
+		      {
+	 sqlQuery = " select (select u1.firstname from reqman.users as u1,reqman.userfriendlist as uf1 where "
+               +" u1.id=uf1.friendid and u1.status=true and uf1.status=true and uf1.id=r.friendid),"
+               +" (sum((r.completionpercentage*100)/(100 /(DATE_PART('day',r.completiondate-r.acceptdate))"
+               +" *(DATE_PART('day',CURRENT_TIMESTAMP-r.acceptdate))))) / count(r.id ) as average"
+               +" from reqman.request as r  "
+	           +" where r.status=true and r.requeststatus in (4)and DATE_PART('day',CURRENT_TIMESTAMP-r.acceptdate) != 0 and r.friendid in" 
+		       +" (select uf.id from reqman.users as u,reqman.userfriendlist as uf where u.id=uf.userid "
+			   +" and u.status=true and uf.status=true and u.emailid='"+userName+"') group by r.friendid";
+	 
+		               query = session.createSQLQuery(sqlQuery);
+		               rows = query.list();
+		                 
+		           if(rows != null && rows.size() != 0)
+		             { 
+		                  
+		                  for(Object[] row : rows)
+		                  {
+		                    friendemail = (String) row[0]; 
+		                   currentpercentage=(Double) row[1];
+		                
+		                 
+		                   requestbarmap.put(friendemail,currentpercentage); 
+		                    
+		                   
+		                 }
+		              }
+		           }
+		        }
+		              catch(Exception e)
+		        {
+		         e.printStackTrace();
+		         if(tx != null){
+		          tx.rollback();
+		         }
+		         result = 2;
+		        }
+		        finally 
+		        {
+		               if(session != null)
+		                  session.close();
+		           }
+
+		  
+		  return requestbarmap;
+		 }
+
+	
+	
+	public static void main(String args[]) throws Exception
+	{
+	//	NewrequestImpl reinf = new NewrequestImpl();
+	//	String userName="hemantraghav012@gmail.com";
+		//List<Integer> requestIdList = reinf.getRequestListByUser();
+		//reinf.barchart(userName);
+//		Map<String,Integer> requestbarmap=reinf.barchart("hemantraghav012@gmail.com");
+//	System.out.println("-Email id->"+requestbarmap);
+		
+	
+	/*	SimpleDateFormat myFormat = new SimpleDateFormat("dd MM yyyy");
+		String inputString1 = "23 01 1997";
+		String inputString2 = "27 01 1997";
+
+		try {
+		    Date date1 = myFormat.parse(inputString1);
+		    Date date2 = myFormat.parse(inputString2);
+		    long diff = date2.getTime() - date1.getTime();
+		    System.out.println ("Days: " + TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS));
+		} catch (ParseException e) {
+		    e.printStackTrace();
+		}*/
+		
+		
+	}
 
 
 }

@@ -155,7 +155,7 @@ public class UpdatestatusImpl implements UpdatestatusInterface {
 						 updatestatusVo.setStage("Completed");
 					 }
 					 else if(requestDB.getRequeststatus()==6){
-						 updatestatusVo.setStage("Cancelled");
+						 updatestatusVo.setStage("Cancel");
 					 }
 					 else if(requestDB.getRequeststatus()==7){
 						 updatestatusVo.setStage("Hold");
@@ -537,7 +537,7 @@ public class UpdatestatusImpl implements UpdatestatusInterface {
     							}
     						}
     						if(requestDB.getStatus()==true && (requestDB.getRequeststatus() == 2 ||requestDB.getRequeststatus()==4
-    								||requestDB.getRequeststatus()==5 ||requestDB.getRequeststatus()==8)){
+    								||requestDB.getRequeststatus()==5 )){
     						updatestatusVo.setTitle(requestDB.getTitle() != null ? requestDB.getTitle().trim() : "");
     						updatestatusVo.setDescription(requestDB.getDescription() != null ? requestDB.getDescription().trim() : "");
     						updatestatusVo.setCompletiondate(requestDB.getCompletiondate() != null ?  Dateconverter.convertDateToStringDDMMDDYYYY(requestDB.getCompletiondate()) : "");
@@ -938,7 +938,7 @@ public class UpdatestatusImpl implements UpdatestatusInterface {
 						 updatestatusVo.setStage("Completed");
 					 }
 					 else if(requestDB.getRequeststatus()==6){
-						 updatestatusVo.setStage("Cancelled");
+						 updatestatusVo.setStage("Cancel");
 					 }
 					 else if(requestDB.getRequeststatus()==7){
 						 updatestatusVo.setStage("Hold");

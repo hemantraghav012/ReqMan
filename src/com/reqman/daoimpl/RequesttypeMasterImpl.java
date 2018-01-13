@@ -2,8 +2,13 @@ package com.reqman.daoimpl;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
+import org.hibernate.Hibernate;
 import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -12,10 +17,13 @@ import org.hibernate.criterion.Restrictions;
 
 import com.reqman.common.HibernateUtil;
 import com.reqman.dao.requesttypeMasterInterface;
+import com.reqman.pojo.Request;
 import com.reqman.pojo.Requesttype;
+import com.reqman.pojo.Userfriendlist;
 import com.reqman.pojo.Userrequesttype;
 import com.reqman.pojo.Users;
 import com.reqman.util.RequestConstants;
+import com.reqman.vo.NewrequestVo;
 import com.reqman.vo.RequesttypeVo;
 
 
@@ -199,7 +207,7 @@ public class RequesttypeMasterImpl implements requesttypeMasterInterface{
                 			}
                 			else
                 			{
-                				requesttypeVo.setStatus("InActive");
+                				requesttypeVo.setStatus("In-Active");
                 			}
                 			counter++;
                 			requesttypeList.add(requesttypeVo);
@@ -251,7 +259,7 @@ RequesttypeVo requesttypeVo = new RequesttypeVo();
     			}
     			else
     			{
-    				requesttypeVo.setStatus("InActive");
+    				requesttypeVo.setStatus("In-Active");
     			}
     			
     			tx.commit();
@@ -353,7 +361,7 @@ RequesttypeVo requesttypeVo = new RequesttypeVo();
                 			}
                 			else
                 			{
-                				requesttypeVo.setStatus("InActive");
+                				requesttypeVo.setStatus("In-Active");
                 			}
                 			counter++;
                 			requesttypeList1.add(requesttypeVo);
@@ -413,7 +421,7 @@ RequesttypeVo requesttypeVo = new RequesttypeVo();
                 			}
                 			else
                 			{
-                				requesttypeVo.setStatus("InActive");
+                				requesttypeVo.setStatus("In-Active");
                 			}
                 			counter++;
                 			requesttypeList1.add(requesttypeVo);
@@ -455,7 +463,7 @@ RequesttypeVo requesttypeVo = new RequesttypeVo();
             
             if(userrequesttypeTemp != null)
             {   
-            	if(oldValue != null && oldValue.trim().equalsIgnoreCase("InActive") 
+            	if(oldValue != null && oldValue.trim().equalsIgnoreCase("In-Active") 
             			&& newValue != null && newValue.trim().equalsIgnoreCase("Active"))
             	{
             		userrequesttypeTemp.setStatus(true);
@@ -463,7 +471,7 @@ RequesttypeVo requesttypeVo = new RequesttypeVo();
             	}
             	
             	if(oldValue != null && oldValue.trim().equalsIgnoreCase("Active") 
-            			&& newValue != null && newValue.trim().equalsIgnoreCase("InActive"))
+            			&& newValue != null && newValue.trim().equalsIgnoreCase("In-Active"))
             	{
             		userrequesttypeTemp.setStatus(false);
             	}
@@ -633,17 +641,81 @@ RequesttypeVo requesttypeVo = new RequesttypeVo();
 	}
 
 
+	@SuppressWarnings("null")
+	public List<String> AllUser() throws Exception {
+		// TODO Auto-generated method stub
+		ArrayList<String> emailList=new ArrayList<String>();
+		   Session session = null;
+		   Transaction tx = null;	 	
+	       String emailid=null;
+		   StringBuffer sb = new StringBuffer();
+		   List<String> rows = null;
+		   SQLQuery query = null;
+		   String sqlQuery = "";
+		   int result=0;
+			
+				try
+				{
+					session = HibernateUtil.getSession();
+		            tx = session.beginTransaction();		           					 					
+
+				sb.append("select distinct u.emailid from reqman.users as u, reqman.userfriendlist as uf,"
+						+"reqman.request as r where u.id=uf.friendid and uf.id=r.friendid and r.status=true and"
+						+ " r.requeststatus=1;");						
+				
+				 sqlQuery = sb.toString();
+		            query =  session.createSQLQuery(sqlQuery);
+		            
+		            rows = query.list();
+		            
+		            if(rows != null && rows.size() != 0)
+		            {
+		            	for(String row : rows)
+		            	{
+		            		emailid = (String) (row!= null ? row : "");
+		            	
+		            		emailList.add(emailid);
+		            		System.out.println("jj"+emailList);
+		            		System.out.println(emailid);
+		            	}
+		            }
+
+		            	tx.commit();
+				}
+		            catch(Exception e)
+		    		{
+		    			e.printStackTrace();
+		    			if(tx != null){
+		    				tx.rollback();
+		    			}
+		    			result = 2;
+		    		}
+		    		finally 
+		    		{
+		            	if(session != null)
+		                session.close();
+		    	    }
+
+		
+		return emailList;
+	}
+
+	
+	
+	
 	
 
 	public static void main(String args[]) throws Exception
 	{
-		RequesttypeMasterImpl reinf = new RequesttypeMasterImpl();
-		String emaiilId = "naveen.namburu1@yahoo.com";
-		String roleName = reinf.getRoleNameByLoginId("naveen.namburu1@yahoo.com");
+	//	RequesttypeMasterImpl reinf = new RequesttypeMasterImpl();
+	//	String emaiilId = "naveen.namburu1@yahoo.com";
+	//	String roleName = reinf.getRoleNameByLoginId("naveen.namburu1@yahoo.com");
+		//reinf.AllUser("hemantraghav012@gmail.com");
+		//List<Integer> requestIdList = reinf.getRequestListByUser();
+	//	List<String> emailList=reinf.AllUser();
+	//System.out.println("-Email id->"+emailList);
 		
-		List<Integer> requestIdList = reinf.getRequestListByRole(roleName, emaiilId);
 		
-		System.out.println("-roleName->"+roleName);
 	}
 
 	

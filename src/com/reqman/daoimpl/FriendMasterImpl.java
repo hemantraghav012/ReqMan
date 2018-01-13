@@ -26,8 +26,12 @@ import org.primefaces.model.chart.PieChartModel;
 
 
 
+
+
 import com.reqman.common.HibernateUtil;
 import com.reqman.dao.FriendMasterInterface;
+import com.reqman.pojo.Account;
+import com.reqman.pojo.Accountusers;
 import com.reqman.pojo.Category;
 import com.reqman.pojo.Project;
 import com.reqman.pojo.Roles;
@@ -55,11 +59,15 @@ public class FriendMasterImpl implements FriendMasterInterface {
 	        SessionFactory hsf = null;
 	        Transaction tx = null;
 	      Users users = null;
-	      Userroles userrolesDetails=null;
+	       int result = 0;
+	        String emailArr[] = {};
+	        String account = "";
+	        Account accountDetails = new Account();
+	        Userroles userrolesDetails=null;
 	        Roles roles=null;
 	        roles= new Roles();
 	        userrolesDetails = new Userroles();
-	        int result = 0;
+	        Accountusers accountusers=null;
 	        try {
 	        	session = HibernateUtil.getSession();
 	            tx = session.beginTransaction();
@@ -90,8 +98,32 @@ public class FriendMasterImpl implements FriendMasterInterface {
 	            	  users.setStatus(true);
 	            	session.save(users);
 	            	
+	            	emailArr = emailid.split("@");
+	            	if(emailArr != null && emailArr.length >= 2)
+	            	{
+	                	accountDetails = (Account)session.createCriteria(Account.class)
+	            		.add(Restrictions.eq("name", emailArr[1].toLowerCase().trim()).ignoreCase())
+	            		.add(Restrictions.eq("status", true))
+	            		.uniqueResult();
+	                	
+	                	if(accountDetails == null)
+	                	{
+	                		accountDetails = new Account();
+	                		accountDetails.setName(emailArr[1].trim());
+	                		accountDetails.setStatus(true);
+	                		accountDetails.setCreatedby("SYSTEM");
+	                		accountDetails.setDatecreated(new Date());
+	                		session.save(accountDetails);
+	                	}
+
+	            		accountusers = new Accountusers();
+	                     accountusers.setAccount(accountDetails);
+	                     accountusers.setUsers(users);
+	                     session.save(accountusers);
+	                	
+	                	
+	            	}
 	            	if(roles != null && userrolesDetails != null) {
-	            		
 	            		roles=(Roles)session.createCriteria(Roles.class)
 	                    		.add(Restrictions.eq("id", 3))
 	                    		.uniqueResult();
@@ -136,7 +168,13 @@ public class FriendMasterImpl implements FriendMasterInterface {
 	        roles= new Roles();
 	        userrolesDetails = new Userroles();
 	        int result = 0;
-	     
+	        String emailArr[] = {};
+	        String account = "";
+	        Account accountDetails = new Account();
+	       
+	        roles= new Roles();
+	        userrolesDetails = new Userroles();
+	        Accountusers accountusers=null;
 	        Userfriendlist userfriendlist = null;
 	        try {
 	        	session = HibernateUtil.getSession();
@@ -156,10 +194,12 @@ public class FriendMasterImpl implements FriendMasterInterface {
 	            if(users != null)
 	            {
 	            	Userfriendlist userfriendExist = null;
-	            	if(users.getUserfriendlistsForFriendid() != null && users.getUserfriendlistsForFriendid().size() != 0){
+	            	if(users.getUserfriendlistsForFriendid() != null && users.getUserfriendlistsForFriendid().size() != 0)
+	            	{
 	            		for(Userfriendlist userfriendDB : users.getUserfriendlistsForFriendid())
 	            		{
-	            			if(userfriendDB != null && userfriendDB.getUsersByUserid() != null && userfriendDB.getUsersByUserid().getEmailid() != null){
+	            			if(userfriendDB != null && userfriendDB.getUsersByUserid() != null && userfriendDB.getUsersByUserid().getEmailid() != null)
+	            			{
 	            				if(userfriendDB.getUsersByUserid().getEmailid().trim().equalsIgnoreCase(userName))
 	            				{
 	            					userfriendExist = userfriendDB;
@@ -179,9 +219,7 @@ public class FriendMasterImpl implements FriendMasterInterface {
 	            	}
 	            	else
 	            	{
-	            		sendEmailonfriend sef=new sendEmailonfriend();
-	                	sef.friendemail(frienduser, friendfirstname,usename);
-	                	
+	            		
 	            		userfriendlist = new Userfriendlist();
 	            		userfriendlist.setUsersByFriendid(users);
 	            users = (Users)session.createCriteria(Users.class)
@@ -192,6 +230,8 @@ public class FriendMasterImpl implements FriendMasterInterface {
 	            		userfriendlist.setCreatedby(userName != null ? userName.trim() : "");
 	            		userfriendlist.setDatecreated(new Date());
 	                	session.save(userfriendlist);
+	                	sendEmailonfriend sef=new sendEmailonfriend();
+	                	sef.friendemail(frienduser, frienduser,usename);
 	                	
 	                	result = 3;
 	                	tx.commit();
@@ -199,9 +239,7 @@ public class FriendMasterImpl implements FriendMasterInterface {
 	            }
 	            else
 	            {
-	            	hashkey = new setinfoEmail().createAccount2(frienduser, frienduser);
-	            	//hashkey = new sendEmail1().createAccount(frienduser, frienduser);
-	     			System.out.println("-password--"+hashkey);
+	            	
 	            
 	            	sendEmailonfriend sef=new sendEmailonfriend();
                 	sef.friendemail(frienduser, friendfirstname,usename);	            	
@@ -220,9 +258,35 @@ public class FriendMasterImpl implements FriendMasterInterface {
 	            	users.setHashkey(hashkey != null ? hashkey.trim() : "");           	
 	            	
 	            	session.save(users);
-	            	
-                    if(roles != null && userrolesDetails != null) {
-	            		
+	            	hashkey = new setinfoEmail().createAccount2(frienduser, frienduser);
+	            	//hashkey = new sendEmail1().createAccount(frienduser, frienduser);
+	     			System.out.println("-password--"+hashkey);
+	            	emailArr = frienduser.split("@");
+	            	if(emailArr != null && emailArr.length >= 2)
+	            	{
+	                	accountDetails = (Account)session.createCriteria(Account.class)
+	            		.add(Restrictions.eq("name", emailArr[1].toLowerCase().trim()).ignoreCase())
+	            		.add(Restrictions.eq("status", true))
+	            		.uniqueResult();
+	                	
+	                	if(accountDetails == null)
+	                	{
+	                		accountDetails = new Account();
+	                		accountDetails.setName(emailArr[1].trim());
+	                		accountDetails.setStatus(true);
+	                		accountDetails.setCreatedby("SYSTEM");
+	                		accountDetails.setDatecreated(new Date());
+	                		session.save(accountDetails);
+	                	}
+
+	            		accountusers = new Accountusers();
+	                     accountusers.setAccount(accountDetails);
+	                     accountusers.setUsers(users);
+	                     session.save(accountusers);
+	                	
+	                	
+	            	}
+	            	if(roles != null && userrolesDetails != null) {
 	            		roles=(Roles)session.createCriteria(Roles.class)
 	                    		.add(Restrictions.eq("id", 3))
 	                    		.uniqueResult();
@@ -334,7 +398,7 @@ public class FriendMasterImpl implements FriendMasterInterface {
                 			}
                 			else
                 			{
-                				friendVo.setStatus("InActive");
+                				friendVo.setStatus("In-Active");
                 			}
                 			counter++;
                 			friendList.add(friendVo);
@@ -389,7 +453,7 @@ public class FriendMasterImpl implements FriendMasterInterface {
     			}
     			else
     			{
-    				friendVo.setStatus("InActive");
+    				friendVo.setStatus("In-Active");
     			}
     			
     			tx.commit();
@@ -496,7 +560,7 @@ public class FriendMasterImpl implements FriendMasterInterface {
                 			}
                 			else
                 			{
-                				friendVo.setStatus("InActive");
+                				friendVo.setStatus("In-Active");
                 			}
                 			counter++;
                 			friendList1.add(friendVo);
@@ -560,7 +624,7 @@ public class FriendMasterImpl implements FriendMasterInterface {
                 			}
                 			else
                 			{
-                				friendVo.setStatus("InActive");
+                				friendVo.setStatus("In-Active");
                 			}
                 			counter++;
                 			friendList1.add(friendVo);
@@ -603,7 +667,7 @@ public class FriendMasterImpl implements FriendMasterInterface {
             
             if(userfriendlistTemp != null)
             {   
-            	if(oldValue != null && oldValue.trim().equalsIgnoreCase("InActive") 
+            	if(oldValue != null && oldValue.trim().equalsIgnoreCase("In-Active") 
             			&& newValue != null && newValue.trim().equalsIgnoreCase("Active"))
             	{
             		userfriendlistTemp.setStatus(true);
@@ -611,7 +675,7 @@ public class FriendMasterImpl implements FriendMasterInterface {
             	}
             	
             	if(oldValue != null && oldValue.trim().equalsIgnoreCase("Active") 
-            			&& newValue != null && newValue.trim().equalsIgnoreCase("InActive"))
+            			&& newValue != null && newValue.trim().equalsIgnoreCase("In-Active"))
             	{
             		userfriendlistTemp.setStatus(false);
             	}
