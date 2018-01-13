@@ -5,7 +5,8 @@
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
        xmlns:p="http://primefaces.org/ui"
-      xmlns:ui="http://java.sun.com/jsf/facelets">
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:c="http://java.sun.com/jsp/jstl/core">
 
 
 <h:head>
@@ -20,6 +21,11 @@
 <script type="text/javascript" src="resource/js/bootstrap.js"/>
 <script type="text/javascript" src="resource/js/jquery.js"/>
 <title>View/Modify Request</title>
+<style type="text/css"> 
+.radiobuttonspace span { padding-right: 10px; } 
+.radiobuttonspace td { width: 100px; } 
+
+</style> 
 
 </h:head>
 <h:body>
@@ -51,30 +57,69 @@
 
  <div class=" row form-group " >
  <div class="col-sm-2 control-label"><h:outputLabel>Description:</h:outputLabel></div>
-<div class=" col-sm-10"><h:inputTextarea id="address" value="#{createrequest.description}"    
- cols="19" rows="3" class="  form-control" /></div>
+<div class=" col-sm-10">
+
+  <c:choose>
+  <c:when test="#{createrequest.stage eq 8 }"> 
+<h:inputTextarea id="address" value="#{createrequest.description}"    
+ cols="19" rows="3" class="  form-control" readonly="true" disabled="true" />
+ </c:when>
+ 
+<c:otherwise>
+<h:inputTextarea id="address" value="#{createrequest.description}"    
+ cols="19" rows="3" class="form-control" />
+</c:otherwise>
+
+ </c:choose>
+ </div>
 <h:message for="address"  style="color:red;margin:6px;"/>
 </div>
 
  
  
  <div class="row form-grop">
- <div class="col-sm-2 control-label" style="padding-left: 0px;">
- <h:outputLabel>Team Member:</h:outputLabel>
+ <div class="col-sm-2 control-label">
+ <h:outputLabel style="margin-top:0.1em;">Team Member:</h:outputLabel>
 </div>
  <div class="col-sm-4 control-label" >
-   <p:selectOneMenu  id="multiple" value="#{createrequest.userfriend}" style=" border-style: none;">
-                     <f:selectItem itemLabel="#{createrequest.newrequestVo.friendName}" itemValue="" />
-                                <f:selectItems value="#{friendbean.friendList}" var="friend" itemLabel="#{friend.emailid}"  itemValue="#{friend.userFriendId}"  />                               
-                                </p:selectOneMenu >
-                              <h:message for="multiple"  style="color:red;margin:6px;"/>
- </div>
- <div class="col-sm-2 control-label">
- <h:outputLabel style="white-space:nowrap;">Completion Date:</h:outputLabel>
- </div>
-<div class="col-sm-4"> 
-<p:calendar id="completiondate" value="#{createrequest.completiondate}" style=" border: 0;"   pattern="dd/MM/yyyy HH:mm:ss"  required="true" requiredMessage="* Please enter completion Date"  />
+ 
+ <c:choose>
+  <c:when test="#{createrequest.stage eq 8 }">
 
+   <p:selectOneMenu  id="multiple" value="#{createrequest.userfriend}" style=" border:0;width:100%;" 
+   readonly="true" disabled="true">
+             <f:selectItem itemLabel="#{createrequest.newrequestVo.friendName}" itemValue="" />
+            <f:selectItems value="#{friendbean.friendList}" var="friend" itemLabel="#{friend.emailid}"  itemValue="#{friend.userFriendId}"  />                               
+             </p:selectOneMenu >
+                                </c:when>
+                                
+                                <c:otherwise>                                
+                                 <p:selectOneMenu  id="multiple" value="#{createrequest.userfriend}" style=" border:0;width:100%; ">
+                                   <f:selectItem itemLabel="#{createrequest.newrequestVo.friendName}" itemValue="" />
+                                <f:selectItems value="#{friendbean.friendList}" var="friend" itemLabel="#{friend.emailid}"  itemValue="#{friend.userFriendId}"  />                               
+                                </p:selectOneMenu>                        
+                                
+                                </c:otherwise>
+                                </c:choose>
+                            
+ </div>
+     
+                                
+   <h:message for="multiple"  style="color:red;margin:8px;"/>
+ <div class="col-sm-2 control-label">
+ <h:outputLabel style="margin-top:0px;" >Completion Date:</h:outputLabel>
+ </div>
+<div class="col-sm-4">
+
+ <c:choose>
+  <c:when test="#{createrequest.stage eq 8 }"> 
+<p:calendar id="completiondate" value="#{createrequest.completiondate}" style=" border: 0;"  mindate="#{createrequest.endDate}"  pattern="dd-MM-yyyy" mask="true"  required="true" requiredMessage="* Please enter completion Date" readonly="true" disabled="true" />
+</c:when>
+<c:otherwise>
+<p:calendar id="completiondate" value="#{createrequest.completiondate}" style=" border: 0;"   mindate="#{createrequest.endDate}"  pattern="dd-MM-yyyy" mask="true"  required="true" requiredMessage="* Please enter completion Date"  />
+
+</c:otherwise>
+</c:choose>
  </div>
  <h:message for="completiondate"  style="color:red;margin:8px;"/>
  </div>
@@ -86,11 +131,27 @@
 <h:outputLabel>Project:</h:outputLabel>
 </div>
  <div class=" col-sm-4">
- 
- <p:selectOneMenu id="project" value="#{createrequest.userproject}" style=" border: 0;" >
+ <c:choose>
+  <c:when test="#{createrequest.stage eq 8 }"> 
+ <p:selectOneMenu id="project" value="#{createrequest.userproject}" style=" border: 0;"  readonly="true" disabled="true">
             <f:selectItem itemLabel="#{createrequest.newrequestVo.userproject}" itemValue="" />
            <f:selectItems value="#{projectbean.projectList}" var="project" itemLabel="#{project.name}"  itemValue="#{project.userProjectId}"/>
         </p:selectOneMenu>
+        </c:when>
+        
+        <c:otherwise>
+        
+         <p:selectOneMenu id="project" value="#{createrequest.userproject}" style=" border: 0;"  >
+            <f:selectItem itemLabel="#{createrequest.newrequestVo.userproject}" itemValue="" />
+           <f:selectItems value="#{projectbean.projectList}" var="project" itemLabel="#{project.name}"  itemValue="#{project.userProjectId}"/>
+        </p:selectOneMenu>
+        
+        </c:otherwise>
+        
+        </c:choose>
+        
+        
+        
 </div>
  <h:message for="project"  style="color:red;margin:8px;"/>
  <div class="col-sm-2 control-label"> 
@@ -98,11 +159,27 @@
  <h:outputLabel>Category:</h:outputLabel>
  </div>
  <div class=" col-sm-4">
-      <p:selectOneMenu  value="#{createrequest.usercategory}"  style="  border: none;">
+  <c:choose>
+  <c:when test="#{createrequest.stage eq 8 }"> 
+      <p:selectOneMenu  value="#{createrequest.usercategory}"  style="  border: none;" readonly="true" disabled="true">
             <f:selectItem itemLabel="#{createrequest.newrequestVo.usercategory}" itemValue="" />
            <f:selectItems value="#{categorybean.categoryList}"  var="category" itemLabel="#{category.name}"
                           itemValue="#{category.userCategoryId}"/>
         </p:selectOneMenu>
+        
+        </c:when>
+        <c:otherwise>
+          <p:selectOneMenu  value="#{createrequest.usercategory}"  style="  border: none;" >
+            <f:selectItem itemLabel="#{createrequest.newrequestVo.usercategory}" itemValue="" />
+           <f:selectItems value="#{categorybean.categoryList}"  var="category" itemLabel="#{category.name}"
+                          itemValue="#{category.userCategoryId}"/>
+        </p:selectOneMenu>
+        
+        
+        </c:otherwise>
+        
+        </c:choose>
+        
 
 </div>
  <h:message   style="color:red;margin:8px;"/>
@@ -114,10 +191,27 @@
  <h:outputLabel style="white-space:nowrap;">Type:</h:outputLabel>
  </div>
  <div class=" col-sm-4">
- <p:selectOneMenu id="requesttype" value="#{createrequest.userrequesttype}"  style=" border: 0;" >
+  <c:choose>
+  <c:when test="#{createrequest.stage eq 8 }"> 
+ 
+ <p:selectOneMenu id="requesttype" value="#{createrequest.userrequesttype}"  style=" border: 0;" readonly="true" disabled="true">
             <f:selectItem itemLabel="#{createrequest.newrequestVo.userrequesttype}" itemValue="" />
             <f:selectItems value="#{requesttypebean.requesttypeList}" var="requesttype" itemLabel="#{requesttype.name}"  itemValue="#{requesttype.userRequesttypeId}"/>
         </p:selectOneMenu>
+        </c:when>
+        <c:otherwise>
+         <p:selectOneMenu id="requesttype" value="#{createrequest.userrequesttype}"  style=" border: 0;" >
+            <f:selectItem itemLabel="#{createrequest.newrequestVo.userrequesttype}" itemValue="" />
+            <f:selectItems value="#{requesttypebean.requesttypeList}" var="requesttype" itemLabel="#{requesttype.name}"  itemValue="#{requesttype.userRequesttypeId}"/>
+        </p:selectOneMenu>
+        
+        </c:otherwise>
+        
+        </c:choose>
+        
+        
+        
+        
 </div>
  <h:message for="requesttype"  style="color:red;margin:8px;"/>
  
@@ -127,43 +221,128 @@
 </div>
 
     <div class=" row form-group " >
-<div class="col-sm-2 control-label" style="padding-top:0cm;"><h:outputLabel>Notes: </h:outputLabel></div>
+<div class="col-sm-2 control-label" ><h:outputLabel>Notes: </h:outputLabel></div>
 <div class=" col-sm-10"><h:inputTextarea id="message" value="#{createrequest.message}"    
- cols="19" rows="3" class="  form-control" /></div>
+ cols="19" rows="3" class="form-control" /></div>
 <h:message for="message"  style="color:red;margin:6px;"/>
 
  </div>
 
 
+
 <div class=" row form-group ">
  <div class="col-sm-2 control-label" style="padding-top:0cm;"><h:outputLabel>Stage: </h:outputLabel></div>
 <div class=" col-sm-6"> 
-<h:selectOneRadio value = "#{createrequest.stage}" id="stage" required="true"    requiredMessage="* Please enter status"> 
-   <f:selectItem itemValue = "6" itemLabel = "Cancelled &nbsp; &nbsp;&nbsp; &nbsp;" /> 
-   <f:selectItem itemValue = "7" itemLabel = "Holded &nbsp; &nbsp;&nbsp; &nbsp;" /> 
-   <f:selectItem itemValue = "8" itemLabel = "Closed &nbsp; &nbsp;&nbsp; &nbsp;" /> 
+<h:selectOneRadio value = "#{createrequest.stage}" id="stage" styleClass="radiobuttonspace" requiredMessage="* Please enter status" > 
+
+<c:choose>
+
+<c:when test="#{createrequest.stage eq 1}">
+    <f:selectItem   itemValue = "1" itemLabel = "&nbsp; Request"   /> 
+    <f:selectItem   itemValue = "7" itemLabel = "&nbsp; Hold" /> 
+    <f:selectItem   itemValue = "6" itemLabel = "&nbsp; Cancel" /> 
+    </c:when>
+
+<c:when test="#{createrequest.stage eq 2}">
+    <f:selectItem   itemValue = "2" itemLabel = "&nbsp; Accepted" /> 
+    <f:selectItem   itemValue = "7" itemLabel = "&nbsp; Hold" /> 
+    <f:selectItem   itemValue = "6" itemLabel = "&nbsp; Cancel" /> 
+    </c:when>
+
+
+
+<c:when test="#{createrequest.stage eq 3}">
+    <f:selectItem   itemValue = "3" itemLabel = "&nbsp;  Returned"/> 
+    <f:selectItem   itemValue = "1" itemLabel = "&nbsp;  Re-Send Request"/>  
+    </c:when>
+    
+<c:when test="#{createrequest.stage eq 4}">
+    <f:selectItem   itemValue = "4" itemLabel = "&nbsp; In-Progress" />
+    <f:selectItem   itemValue = "7" itemLabel = "&nbsp; Hold" /> 
+    <f:selectItem   itemValue = "6" itemLabel = "&nbsp; Cancel" />      
+    </c:when>
+    
+<c:when test="#{createrequest.stage eq 5}">
+     <f:selectItem   itemValue = "5" itemLabel = "&nbsp; Completed" /> 
+     <f:selectItem   itemValue = "8" itemLabel = "&nbsp; Close" />     
+    </c:when>
+    
+ <c:when test="#{createrequest.stage eq 6}">
+     <f:selectItem   itemValue = "6" itemLabel = "&nbsp; Cancel" /> 
+     <f:selectItem   itemValue = "1" itemLabel = "&nbsp; Request" /> 
+     <f:selectItem   itemValue = "7" itemLabel = "&nbsp; Hold" /> 
+        
+    </c:when>
+    
+<c:when test="#{createrequest.stage eq 7 }">
+     <f:selectItem   itemValue = "7" itemLabel = "&nbsp; Hold" /> 
+     <f:selectItem   itemValue = "1" itemLabel = "&nbsp; Re-Send Request" /> 
+     <f:selectItem   itemValue = "6" itemLabel = "&nbsp; Cancel" /> 
+    </c:when>
+    
+   <c:when test="#{createrequest.stage eq 8 }">   
+     <f:selectItem   itemValue = "8" itemLabel = "&nbsp; Closed" /> 
    
+    </c:when>
+
+   <c:otherwise >   
+   <f:selectItem itemValue = "1" itemDisabled="true" />  
+   <f:selectItem itemValue = "2" itemDisabled="true"/>      
+   <f:selectItem itemValue = "3" itemDisabled="true"/> 
+   <f:selectItem itemValue = "4" itemDisabled="true" />    
+   <f:selectItem itemValue = "5" itemDisabled="true"/> 
+   <f:selectItem itemValue = "6" itemDisabled="true"/>
+   <f:selectItem itemValue = "7" itemDisabled="true"/> 
+   <f:selectItem itemValue = "8" itemDisabled="true" /> 
+</c:otherwise>
+
+</c:choose>
 </h:selectOneRadio> </div>
  <h:message for="status"  style="color:red;margin:8px;"/> 
  </div>
 
 
- <div class=" row form-group ">
- <div class="col-sm-2 control-label" style="padding-top:0cm;"><h:outputLabel>Status: </h:outputLabel></div>
+
+ <div class=" row form-group">
+ <div class="col-sm-2 control-label" style="padding-top:0cm;">
+ <h:outputLabel  >Status: </h:outputLabel></div>
 <div class=" col-sm-6"> 
-<h:selectOneRadio value = "#{createrequest.status}" id="status" required="true"    requiredMessage="* Please enter status"> 
-   <f:selectItem itemValue = "true" itemLabel = "Active &nbsp; &nbsp;&nbsp; &nbsp;" /> 
-   <f:selectItem itemValue = "false" itemLabel = "In Active"  />
+<h:selectOneRadio value = "#{createrequest.status}" id="status" required="true"  styleClass="radiobuttonspace"  requiredMessage="* Please enter status"> 
+  <c:choose>
+  <c:when test="#{createrequest.stage eq 8 }">   
+   <f:selectItem itemValue = "true" itemLabel = "&nbsp; Active" itemDisabled="true" /> 
+   <f:selectItem itemValue = "false" itemLabel = "&nbsp; In-Active" itemDisabled="true" />
+   </c:when>
+   <c:otherwise>
+    <f:selectItem itemValue = "true" itemLabel = "&nbsp; Active" /> 
+   <f:selectItem itemValue = "false" itemLabel = "&nbsp; In-Active" />
+  
    
+   </c:otherwise>
+   </c:choose>
 </h:selectOneRadio> </div>
  <h:message for="status"  style="color:red;margin:8px;"/> 
  </div><br></br>
- 
 
+
+
+ 
 
  <div class=" row form-group ">
  <div class="col-sm-3 .col-sm-offset-3"></div>
- <div class="col-sm-4 "><h:commandButton action="#{createrequest.updateRequest}" value="Update" class="btn fontsize btn-success btn-block"></h:commandButton></div>
+ <div class="col-sm-4 ">
+  <c:choose>
+  <c:when test="#{createrequest.stage eq 8 }"> 
+
+ </c:when>
+ <c:otherwise>
+ <h:commandButton action="#{createrequest.updateRequest}" value="Update" class="btn fontsize btn-success btn-block"></h:commandButton>
+ 
+ 
+ </c:otherwise>
+ 
+ </c:choose>
+ </div>
 
  <div class="col-sm-4 ">
 <h:link value="Back to Request List" style="text-decoration:none; color:#fff;" outcome="request" class="btn fontsize btn-primary btn-block"/>

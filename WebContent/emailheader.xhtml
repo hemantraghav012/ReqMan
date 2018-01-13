@@ -5,6 +5,7 @@
       xmlns:f="http://java.sun.com/jsf/core"  
          xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
       xmlns:ui="http://java.sun.com/jsf/facelets">
+      <ui:composition>
       <h:head>
 <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
@@ -21,12 +22,12 @@
 </h:head>
 
 <h:body >
-<ui:composition>
+
 <div class="navbar  navbar-default navbar-fixed-top top_menu" >
 <div class="container-fluid ">
 <div class="navbar-header">
 <a class= "navbar-brand " href="index.xhtml" style="color:#f4df41; font-size:32px; font-weight: bold; ">
- <img  src="resource/image/C8 logo.jpeg" class="img-responsive" alt="C8" style="width:180px; height:55px;margin-top:-15px;" ></img>
+ <img  src="resource/image/C8 logo.jpeg" class="img-responsive" alt="C8"  ></img>
 
 </a>
 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -39,13 +40,14 @@
 
 <div class="collapse navbar-collapse margin_menu" >
 
-<a style="color:blue; font-size:32px; font-weight: bold;  text-decoration:none; " class="pull-right">Work smart, Save time</a>
+<a style="color:blue; margin:5px; font-size:24px; font-weight: bold;  text-decoration:none; " class="pull-right">Work smart, Save time</a>
 </div>
 </div>
 </div>
 
-       </ui:composition>
+     
       <!-- -end of header --> 
       </h:body>
+        </ui:composition>
       </html>
      

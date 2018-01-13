@@ -40,6 +40,7 @@
    </div>    
        <div class="container">
        <h:form class="form-horizontal">
+       
        <div class="row">
        <div class="col-sm-3">
          <p:chart type="pie" model="#{categorybean.piechart}" style="width:300px;height:300px" />
@@ -49,14 +50,6 @@
          <p:chart type="pie" model="#{projectbean.piechart}" style="width:300px;height:300px" />
        </div>
        
-  <div class="col-sm-1"></div>
-       
-         <div class="col-sm-5">
-      <p:chart type="bar" model="#{createrequest.barModel}" style="width:500px;height:300px"/>
-       </div>
-       </div>
-  
-   <div class="row">
        <div class="col-sm-3">
          <p:chart type="pie" model="#{requesttypebean.piechart}" style="width:300px;height:300px" />
        </div>
@@ -64,16 +57,23 @@
          <div class="col-sm-3">
          <p:chart type="pie" model="#{friendbean.piechart}" style="width:300px;height:300px" />
        </div>
-       
- <!-- <div class="col-sm-1"></div>
-       
-         <div class="col-sm-5">
-      <p:chart type="bar" model="#{createrequest.horizontalBarModel}" style="height:300px"/> 
-       </div>-->
        </div>
-  
-  
-  
+       
+         <div class="row">
+         
+          <div class="col-sm-5">
+          <p:chart type="pie" model="#{createrequest.piechart}" style="width:500px;height:300px"/>
+           </div>
+        
+         <div class="col-sm-5">
+      <p:chart id="p2" type="bar" model="#{createrequest.barModel}"  style="height:400px"/> 
+       </div> 
+       
+        
+       </div>
+
+ <br></br>
+  <br></br><br></br>
 </h:form>
  </div>
        

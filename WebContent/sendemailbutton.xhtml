@@ -21,33 +21,22 @@
 </h:head>
 
 <h:body >
-<div class="navbar  navbar-default navbar-fixed-top top_menu" >
-<div class="container-fluid ">
-<div class="navbar-header">
-<a class= "navbar-brand " href="index.xhtml" style="color:#f4df41; font-size:32px; font-weight: bold; ">Collabor8</a>
-<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-<span class="icon-bar"></span>
-<span class="icon-bar"></span>
-<span class="icon-bar"></span>
-</button>
-
+   <div id="emailheader">
+	<ui:insert name="emailheader">
+		<ui:include src="emailheader.xhtml" />
+	</ui:insert>
 </div>
-
-<div class="collapse navbar-collapse margin_menu" >
-
-<a style="color:blue; font-size:32px; font-weight: bold;  text-decoration:none; " class="pull-right">Work smart, Save time</a>
-</div>
-</div>
-</div>
+       
+      <!-- -end of header --> 
 
        
       <!-- -end of header --> 
       <div style="margin-top: 3.5cm; text-align:center;font-weight: bold;">
       
       <span  style="font-size: 46px; " >
-      <span  style="color: rgb(83, 83, 83);">You need to </span>
-      <span ><font color="#4ea362">confirm</font></span>
-      <span ><font color="#535353"> your e-mail</font></span>
+      <span  style="color: rgb(83, 83, 83);">Please verify your</span>
+      <span ><font color="#4ea362">email</font></span>
+      <span ><font color="#535353">from you in-box</font></span>
       </span>
       </div>
        <div class="container" style="margin-top: 2.5cm;">
@@ -55,20 +44,19 @@
       <div class= "row" >
       <div class="col-sm-4" style="background-color: green; color:white;">
       <h1>Step 1.</h1>
-      <h3>Go to your e-mail inbox</h3>
-      <h4>in a few minutes, goto your inbox.</h4>
-           <br></br>     <br></br>
+       <h4>Go to your e-mail inbox</h4>
+         <br></br>     
       </div>
         <div class="col-sm-4" style="background-color: black; color:white;">
          <h1>Step 2.</h1>
-      <h3>Open  the confirmation e-mail.</h3>
-      <h4>It has the subject line"please Confim.."</h4>
-      <br></br>     <br></br>
+      <h4>Open the confirmation email having</h4>
+      
+      <br></br>     
         </div>
           <div class="col-sm-4" style="background-color: green;color:white;">
               <h1>Step 3.</h1>
-      <h3>Click the confirmation link</h3>
-      <h4>Click on the inside the e-mail and you'll be set password! "</h4>
+      <h4>Click the link and set your password</h4>
+      
            <br></br>
           </div>
       </div>

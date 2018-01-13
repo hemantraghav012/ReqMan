@@ -41,19 +41,30 @@ function setUsersHiddenValue(new_value)
 </div>
        
       <!-- -end of header --> 
-      <div class="container accountgrid">
+      <div class="container userrolegrid" >
+      
+      
+      
       
       <h:form id="userroleForm">
     <div class="ui-fluid">
 <p:growl id="msgs" showDetail="true"/>
  <h:inputHidden id="userroleid" value="#{userrole.userroleid}" ></h:inputHidden>
  
+  <div class="row">
+      
+      	<div class="col-sm-7">
+      		<h1><span style=";font-size:25px;margin-left: 3px;">Manage User Roles List</span></h1>
+      	</div>
+      </div>
+ 
+
  
 	      <p:dataTable id="userroleTable" var="userrole" value="#{userrolebean.userroleList}" draggableColumns="true" 
 	     resizableColumns="true" 
-	     reflow="true" scrollable="true" scrollHeight="300" rows="10"  paginator="true"  editable="true" editMode="cell"   	       
+	     reflow="true" scrollable="true" scrollHeight="370"   paginator="true"  editable="true" editMode="cell" scrollWidth="100%"  	       
 	      paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" 
-	      rowsPerPageTemplate="5,10,15" class="table table-striped table-hover table-bordered" 	     
+	      rowsPerPageTemplate="30,50,105" class="table table-striped table-hover table-bordered" 	     
 	     style="margin-top:5px; margin-left:0px; " filteredValue="#{userrolebean.filtereduserroleList}" 	     
 	     widgetVar="userroleListTable">
 			
@@ -64,7 +75,7 @@ function setUsersHiddenValue(new_value)
 			
 			
 			<p:column filterBy="#{userrole.userroleid}" sortBy="#{userrole.userroleid}" headerText="userrole Id"  
-			 filterMatchMode="contains"   style="padding: 0px 0px 0px 3px;">
+			 filterMatchMode="contains"   style="padding: 0px 0px 0px 3px; width:125px;">
 				<f:facet name="header">
 					<h:outputText value="userrole Id"  />
 				</f:facet>
@@ -82,15 +93,15 @@ function setUsersHiddenValue(new_value)
 			
 		
 			<p:column filterBy="#{userrole.rolename}" sortBy="#{userrole.rolename}" headerText="Role Name"  
-			 filterMatchMode="contains"   style="padding: 0px 0px 0px 3px;">
+			 filterMatchMode="contains"   style="padding: 0px 0px 0px 3px; width:175px;">
 				  <p:cellEditor>
                  <f:facet name="output"><h:outputText value="#{userrole.rolename}" /></f:facet>
                <f:facet name="input">
                    <p:selectOneMenu value="#{userrole.rolename}" onclick='setUsersHiddenValue(#{userrole.userroleid})' style="width:185px">
-                        <f:selectItem  itemLabel="Account Admin" itemValue="1" />
-                         <f:selectItem  itemLabel="Application Admin" itemValue="2" />
-                         <f:selectItem   itemLabel="Requestor" itemValue="3" />
-                          <f:selectItem  itemLabel="Team Member" itemValue="4" />
+                        <f:selectItem  itemLabel="Application Admin" itemValue="Application Admin" />
+                         <f:selectItem  itemLabel="Account Admin" itemValue="Account Admin" />
+                         <f:selectItem   itemLabel="Requestor" itemValue="Requestor" />
+                          <f:selectItem  itemLabel="Team Member" itemValue="Team Member" />
                    </p:selectOneMenu>
                </f:facet>    </p:cellEditor>
 			</p:column>

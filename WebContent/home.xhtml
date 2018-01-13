@@ -1,7 +1,9 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" 	xmlns:h="http://java.sun.com/jsf/html">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" 	
+xmlns:p="http://primefaces.org/ui"
+xmlns:h="http://java.sun.com/jsf/html">
 <h:head>
 <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
@@ -16,14 +18,17 @@
 	<title>Collabor8 Home</title>
 </h:head>
 <h:body >
-	
 <div id="header">
 	<ui:insert name="header">
 		<ui:include src="header.xhtml" />
 	</ui:insert>
 </div>
-       
-      <!-- -end of header --> 
+      <!-- end of header -->
+      
+
+    
+      <!-- end of top menu -->
+  
       
    <h:form >
       
@@ -32,10 +37,10 @@
 	  
 	 <div class="row">
 	   <div class="col-sm-6" >
-     <p style="padding-left: 10px;font-size:20px;color:black"> Welcome to ReqMan, #{login.user} #{register.googleemail}!</p>
+     <p style="padding-left: 10px;font-size:20px;color:black"> Welcome to Collabor8 !</p>
       <h3 style="color:#808080; padding-left: 10px;">Here’s how to get started:</h3>  
      
-      <div style="font-size:20px;  LINE-HEIGHT:50px;" class="honelink">			
+      <div style="font-size:20px;  LINE-HEIGHT:50px;" class="honelink">		
    
 
 <p  style="border:2px;text-align:center; border-style:solid; background-color:#4682B4; " ><h:commandLink value=" Create New Request " style="color:white;text-decoration:none; "  action="#{createrequest.createRequest}"/></p>

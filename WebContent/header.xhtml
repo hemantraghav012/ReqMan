@@ -1,8 +1,13 @@
 <?xml version='1.0' encoding='UTF-8' ?>
+
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"	xmlns:h="http://java.sun.com/jsf/html"	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough" 
-	   xmlns:ui="http://java.sun.com/jsf/facelets"	   xmlns:f="http://java.sun.com/jsf/core"   xmlns:p="http://primefaces.org/ui">
+	   xmlns:ui="http://java.sun.com/jsf/facelets"	   xmlns:f="http://java.sun.com/jsf/core"  
+	    xmlns:p="http://primefaces.org/ui"
+	  xmlns:c="http://java.sun.com/jsp/jstl/core"
+	  >
 <h:head>
 <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
@@ -12,95 +17,90 @@
 <link rel="stylesheet" href="resource/mystyle/newproject.css"/>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script type="text/javascript" src="resource/js/bootstrap.js"/>
+<link rel="stylesheet" href="resource/mystyle/friendmaster.css"/>
 <script type="text/javascript" src="resource/js/jquery.js"/>
 <title> header</title>
 </h:head>
 <h:body>
 <ui:composition>
 
-<div class="navbar  navbar-default navbar-fixed-top top_menu" >
+<h:form>
+<div class="navbar  navbar-default navbar-fixed-top top_menu " >
 <div class="container-fluid ">
 <div class="navbar-header">
 <a class= "navbar-brand " href="home.xhtml" style="font-weight: bold;">
- <img  src="resource/image/C8 logo.jpeg" class="img-responsive" alt="C8" style="width:180px; height:55px;margin-top:-15px;" ></img>
-
+ <img  src="resource/image/C8 logo.jpeg" class="img-responsive" alt="C8" ></img>
 </a>
-<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-responsive-collapse">
 <span class="icon-bar"></span>
 <span class="icon-bar"></span>
 <span class="icon-bar"></span>
 </button>
-
 </div>
 
-<div class="collapse navbar-collapse margin_menu">
-<h:form >
-<ul class="nav navbar-nav">
-
-<li> <h:link  style="color:#faebd1; font-weight: bold;   background: rgba(255,255,255,0.1);  border: 0.5px solid;" class="glyphicon glyphicon-home"  id="nav-sign-up" outcome="home" /> </li>
+<div class="collapse navbar-collapse navbar-responsive-collapse margin_menu">
+<ul class="nav navbar-nav navbar-left">
+<li> <h:link  style="color:#faebd1; font-weight: bold;   background: rgba(255,255,255,0.2);  " class="glyphicon glyphicon-home"  id="nav-sign-up4" outcome="home" /> </li>
 <li><h:link value="Dashboard " style="color:#faebd1; font-weight: bold;" outcome="dashboard"/> </li>
 <li><h:commandLink value="  Request" style="color:#faebd1; font-weight: bold;" action="#{createrequest.createRequestPage}"/></li>
 <li><h:commandLink value=" Respond to New Request" style="color:#faebd1; font-weight: bold;" action="#{responsebean.responsePage}"/></li>
 <li><h:commandLink value=" Update Task Progress" style="color:#faebd1; font-weight: bold;" action="#{updatestatusbean.updatestatusPage}"/></li>
-<li> <h:link value=" Suggestion  " style="color:#faebd1; font-weight: bold;" outcome="suggestion" /> </li>
-
-<!--<li> <h:link value=" Request " style="color:#faebd1; font-weight: bold;" outcome="request" /> </li>
-<li><h:link value="Response  " style="color:#faebd1; font-weight: bold;" outcome="responsetonewrequest"/> </li>
-<li><h:link value="Update Task Status " style="color:#faebd1; font-weight: bold;" outcome="updatestatustask"/> </li>
- <li> <h:link value="See Status " style="color:#faebd1; font-weight: bold;" outcome="login" /> </li>
-<li> <h:link value="Respond to New Request  " style="color:#faebd1; font-weight: bold;" outcome="login" /> </li> -->
 
 
-
-
- <li class="dropdown " >
- <a class="dropdown-toggle " data-toggle="dropdown" style="color:#faebd1; font-weight: bold; background-color:#f36c00;">Request Masters
-   <span class="caret">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></a>         
-<ul class="dropdown-menu" style="color:#faebd1; font-weight: bold;background-color:#f36c00; color:#fff;">         
-  <li ><h:commandLink value=" Team List " style="color:#faebd1;font-weight: bold; text-align:left;" class="btn btn-block hover-item" action="#{friendbean.friendPage}" /></li> 
-<li><h:commandLink value=" Request Category List" style="color:#faebd1; font-weight: bold;text-align:left;" class="btn btn-block hover-item" action="#{categorybean.categoryPage}"/></li>
-<li ><h:commandLink value=" Request Project List" style="color:#faebd1;font-weight: bold;text-align:left;" class="btn btn-block hover-item" action="#{projectbean.projectPage}" /></li>
- <li ><h:commandLink value=" Request Type List " style="color:#faebd1;font-weight: bold;text-align:left;" class="btn btn-block hover-item" action="#{requesttypebean.requesttypePage}" /></li> 
-
-<li> <h:link value="Roles  " style="color:#faebd1; font-weight: bold;" outcome="createroles" /> </li> 
- <li> <h:link value="User Roles  " style="color:#faebd1; font-weight: bold;" outcome="userrole" /> </li> 
-  <li> <h:link value="Account  " style="color:#faebd1; font-weight: bold;" outcome="account" /> </li> 
- <li> <h:link value="App Admin  " style="color:#faebd1; font-weight: bold;" outcome="appadminusers" /> </li> 
-
-  </ul>        
-</li>      
-
-
-
-
-</ul>
-  </h:form>  
-<ul class="nav navbar-nav navbar-right">
- <!-- <li><p:graphicImage url="resource/image/22.jpg" width="40px" height="51px;"/>        </li>  -->
- <li><p:graphicImage value="#{login.imageFromDB}" width="40px" height="51px;"/>        </li> 
  <li class="dropdown">
- <a class="dropdown-toggle " data-toggle="dropdown" style="color:#faebd1; font-weight: bold; background-color:#f36c00;"><h:outputLabel value="Welcome"></h:outputLabel> <span class="caret"></span></a>         
+ <a  class="dropdown-toggle  hover-item" data-toggle="dropdown"  style="color:#faebd1; font-weight: bold; background-color:#f36c00;">Master-Info
+   <span class="caret">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></a> 
+<ul class="dropdown-menu" style="color:#faebd1; font-weight: bold;background-color:#f36c00; color:#fff;">   
+      
+ <c:choose>
+ 
+<c:when test="#{userroleset eq 1}">
+<li ><h:commandLink value=" Team Member List " style="color:#faebd1;font-weight: bold; text-align:left;" class="btn btn-block hover-item" action="#{friendbean.friendPage}" /></li> 
+<li><h:commandLink value="Category List" style="color:#faebd1; font-weight: bold;text-align:left;" class="btn btn-block hover-item" action="#{categorybean.categoryPage}"/></li>
+<li ><h:commandLink value="Project List" style="color:#faebd1;font-weight: bold;text-align:left;" class="btn btn-block hover-item" action="#{projectbean.projectPage}" /></li>
+ <li ><h:commandLink value="Type List " style="color:#faebd1;font-weight: bold;text-align:left;" class="btn btn-block hover-item" action="#{requesttypebean.requesttypePage}" /></li> 
+<li> <h:link value="Roles" style="color:#faebd1; font-weight: bold;" outcome="createroles"/></li> 
+<li> <h:link value="User Roles" style="color:#faebd1; font-weight: bold;" outcome="userrole"/></li> 
+<li> <h:link value="Account" style="color:#faebd1; font-weight: bold;" outcome="account"/></li> 
+<li> <h:link value="Account Users" style="color:#faebd1; font-weight: bold;" outcome="accountuser"/></li> 
+<li> <h:link value="App Admin" style="color:#faebd1; font-weight: bold;" outcome="appadminusers"/></li> 
+</c:when>
+    
+<c:otherwise>
+<li ><h:commandLink value="Team Member List " style="color:#faebd1;font-weight: bold; text-align:left;" class="btn btn-block hover-item" action="#{friendbean.friendPage}" /></li> 
+<li><h:commandLink value="Category List" style="color:#faebd1; font-weight: bold;text-align:left;" class="btn btn-block hover-item" action="#{categorybean.categoryPage}"/></li>
+<li ><h:commandLink value="Project List" style="color:#faebd1;font-weight: bold;text-align:left;" class="btn btn-block hover-item" action="#{projectbean.projectPage}" /></li>
+<li ><h:commandLink value="Type List " style="color:#faebd1;font-weight: bold;text-align:left;" class="btn btn-block hover-item" action="#{requesttypebean.requesttypePage}" /></li> 
+</c:otherwise>
 
-<ul class="dropdown-menu" style="color:#faebd1; font-weight: bold; background-color:#f36c00;">         
-<li><span class="btn btn-block hover-item disabled" style="color:#faebd1;font-weight: bold; text-align:center">#{login.user} #{register.googleemail}</span></li>
-<h:form>
-<li><h:commandLink action="#{userupdate.modifyAction()}" value="myprofile" style="color:#fff;font-weight: bold;"  class="btn btn-block hover-item"></h:commandLink></li>
-</h:form>
-<h:form>
-<li><h:commandLink action="#{login.logout}" value="Logout" style="color:#faebd1;font-weight: bold;"  class="btn btn-block hover-item"></h:commandLink></li>
-</h:form>
+</c:choose>
+  </ul>        
+</li> 
+
+</ul>
+   
+<ul class="nav navbar-nav navbar-right">
+ <li><p:graphicImage value="#{login.imageFromDB}"  class="img-responsive heightandwidth img-rounded" /></li> 
+ <li class="dropdown">
+ <a class="dropdown-toggle  hover-item" data-toggle="dropdown"  style="color:#faebd1; font-weight: bold; background-color:#f36c00;"> #{username} <span class="caret"></span></a>         
+
+<ul class="dropdown-menu" style="color:#faebd1; font-weight: bold;background-color:#f36c00; color:#fff;">      
+<li><span class="btn btn-block hover-item disabled" style="color:#faebd1;font-weight: bold;text-align:left;">#{username}</span></li>
+<li><h:link value=" Suggestion" style="color:#faebd1; font-weight: bold;" outcome="suggestion"/></li>
+<li><h:commandLink action="#{userupdate.modifyAction()}" value="myprofile" style="color:#fff;font-weight: bold;text-align:left;"  class="btn btn-block hover-item"></h:commandLink></li>
+<li><h:commandLink action="#{login.logout}" value="Logout" style="color:#faebd1;font-weight: bold;text-align:left;"  class="btn btn-block hover-item"></h:commandLink></li>
+
 </ul> 
-       
-</li>      
+</li>    
 </ul>
 
 </div>
 </div>
 </div>
 
-    
-      <!-- end of top menu -->
   
+      <!-- end of top menu -->
+  </h:form>
  </ui:composition>
 
  </h:body>

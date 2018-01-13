@@ -62,14 +62,18 @@ color:blue;
 				  
 				  
    <div><h:messages style = "color:red;margin:8px;" /></div>
-     <h:outputText>Email Id</h:outputText>
-     <h:inputText   value="#{login.user}" id="emailid" required="true" requiredMessage="* Please enter your emaid id" validatorMessage="Invalid email format"> <f:validateRegex
-		pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" p:placeholder="Please enter emailid" /> </h:inputText>
+   
+     <h:outputText class="form-group">Email Id</h:outputText>
+
+     <h:inputText   value="#{login.user}" id="emailid" required="true"  class="form-control"  requiredMessage="* Please enter your emaid id"
+      validatorMessage="Invalid email format">
+       <f:validateRegex	pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" p:placeholder="Email-id" />
+		 </h:inputText>
 				 <h:message for="emailid"  style="color:red;margin:8px;"/> 
     
     
-    <h:outputText>Password</h:outputText>
-     <h:inputSecret  value="#{login.pwd}" id="password" required="true" requiredMessage="* Please enter your password" p:placeholder="Please enter password"></h:inputSecret>
+    <h:outputText class="form-group">Password</h:outputText>
+     <h:inputSecret  value="#{login.pwd}" id="password"  class="form-control" required="true" requiredMessage="* Please enter your Password" p:placeholder="Password"></h:inputSecret>
 		 <h:message for="password"  style="color:red;margin:8px;"/> 
      
  

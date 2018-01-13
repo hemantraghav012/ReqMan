@@ -17,7 +17,7 @@
 <script type="text/javascript" src="resource/js/bootstrap.js"/>
 <script type="text/javascript" src="resource/js/jquery.js"/>
 
-	<title>Create New Request On Team Member</title>
+	<title>Create New Request </title>
 </h:head>
 <h:body>
 	<div id="header">
@@ -79,29 +79,30 @@
  <h:outputLabel style="white-space:nowrap;">Completion Date:</h:outputLabel>
  </div>
 <div class="col-sm-4"> 
-<p:calendar id="completiondate" value="#{createrequest.completiondate}" style=" border: 0;"   pattern="dd/MM/yyyy HH:mm:ss"  required="true" requiredMessage="* Please enter completion Date"  />
+<p:calendar id="completiondate" value="#{createrequest.completiondate}" p:placeholder="DD-MM-YYYY" mindate="#{createrequest.endDate}" style=" border: 0;"  pattern="dd-MM-yyyy" mask="true" required="true" requiredMessage="* Please enter completion Date"  />
 
  </div>
  <h:message for="completiondate"  style="color:red;margin:8px;"/>
  
  <div class="col-sm-2 control-label"> 
 
- <h:outputLabel>Category:</h:outputLabel>
+ <h:outputLabel>Category:&nbsp;<span   data-toggle="tooltip" title="Categorize your requests for better monitoring and reporting. E.g. High / Medium / Low priority." style="margin-top:2px;" class="pull-right glyphicon glyphicon-info-sign"></span>
+ </h:outputLabel> 
  </div>
  <div class=" col-sm-4">
       <p:selectOneMenu  value="#{createrequest.usercategory}"  style="  border: none;">
             <f:selectItem itemLabel="Select" itemValue="" />
            <f:selectItems value="#{categorybean.categoryList1}"  var="category" itemLabel="#{category.name}"
                           itemValue="#{category.userCategoryId}"/>
+      
         </p:selectOneMenu>
-
 </div>
  <h:message   style="color:red;margin:8px;"/>
 </div>
 
  <div class=" row form-group ">
 <div class="col-sm-2 control-label">
-<h:outputLabel>Project:</h:outputLabel>
+<h:outputLabel>Project:&nbsp;<span   data-toggle="tooltip" title="Use Projects to assign your requests for better project visibility , collaboration, reporting and management. E.g. New product launch , New software etc." style="margin-top:2px;" class="pull-right glyphicon glyphicon-info-sign"></span></h:outputLabel>
 </div>
  <div class=" col-sm-4">
  
@@ -117,7 +118,7 @@
  
  
  <div class="col-sm-2 control-label">
- <h:outputLabel style="white-space:nowrap;">Type:</h:outputLabel>
+ <h:outputLabel style="white-space:nowrap;">Type: &nbsp;<span   data-toggle="tooltip" title="Create Types for your requests for better monitoring and reporting. E.g. Minutes of meeting , Audit Points, etc. Only active Types will appear in the new request screen." style="margin-top:2px;" class="pull-right glyphicon glyphicon-info-sign"></span></h:outputLabel>
  </div>
  <div class=" col-sm-4">
  <p:selectOneMenu id="requesttype" value="#{createrequest.userrequesttype}"  style=" border: 0;" >

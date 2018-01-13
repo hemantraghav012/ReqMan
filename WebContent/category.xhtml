@@ -20,6 +20,15 @@
 <script type="text/javascript" src="resource/js/bootstrap.js"/>
 <script type="text/javascript" src="resource/js/jquery.js"/>
 <title>New Category</title>
+ <style type="text/css">
+        .ui-growl {
+            
+            top:60px;
+            Right:20px;
+            width:301px;
+            z-index:9999;
+        }
+    </style>
 
 <script>
 
@@ -63,66 +72,79 @@ function setCategoryHiddenValue(new_value)
   
       <div class="col-sm-7  addteammember" >
 
-  <h:form class="form-horizontal" >
+  <h:form class="form-horizontal">
+
   <h2 style="  margin-bottom:30px; margin-top:0px; text-align:center" > Create New Category</h2>
 
-<div><h:messages style = "color:red;margin:8px;" /></div>
+
 
  <div class=" row form-group ">
   <div class="col-sm-3 control-label"><h:outputLabel  >Category Name :</h:outputLabel></div>
-<div class=" col-sm-9"> <h:inputText value="#{categorybean.categoryName}" maxlength="20" class="  form-control"  id="categoryname"  required="true" requiredMessage="* Please enter category name"/><span style="color:red;">Please enter upto 20 characters.</span></div>
- <h:message for="categoryname"  style="color:red;margin:8px;"/> 
-</div><br></br>
-
-
- <div class=" row form-group ">
- <div class="col-sm-3 .col-sm-offset-2"></div>
- <div class="col-sm-9 "><h:commandButton action="#{categorybean.saveCategory}" value="Submit" class="btn fontsize btn-success btn-block"></h:commandButton></div>
+<div class=" col-sm-7"> <h:inputText value="#{categorybean.categoryName}" maxlength="20" class="  form-control"  id="categoryname"  required="true" requiredMessage="* Please enter category name"/><span style="color:red;">Please enter upto 20 characters.</span></div>
 
 </div>
 
 
+ <div class=" row form-group ">
+ <div class="col-sm-3 .col-sm-offset-2"></div>
+ <div class="col-sm-7 "><h:commandButton action="#{categorybean.saveCategory}" value="Submit" class="btn fontsize btn-success btn-block"></h:commandButton></div>
+
+</div>
+
 
 </h:form>
+
   
  
             <hr ></hr>
-<h:form id="categoryForm">
+ <h:form id="categoryForm">
+<p:growl id="messages" showDetail="true" sticky="true" autoUpdate="true"/>
+
       <div  class="gridmargin">
  		<h:inputHidden id="categoryId" value="#{categorybean.categoryId}" ></h:inputHidden>
-      
-      
-      		<h3 style="text-align:center;">Manage Request Category List</h3>
-      	<br></br>	(Only active category will be available for transaction)
-      
-      	
-
+      	(Only active category will be available for transaction)
 <div class="ui-fluid">
-<p:growl id="msgs" showDetail="true"/>
+
 	     <p:dataTable id="categoryTable" var="category" value="#{categorybean.categoryList}" editable="true" editMode="cell" 
-	     reflow="true" scrollable="true" scrollHeight="250" 
-	     sortBy="#{category.status},#{category.name}" 
-	     class="table table-striped table-hover table-bordered" 
-	     style="margin-top:5px; " filteredValue="#{categorybean.filteredCategoryList}" 
-	     widgetVar="categoryListTable">
+	     reflow="true" scrollable="true" scrollHeight="250"   sortBy="#{category.status},#{category.name}" 
+	     class="table table-striped table-hover table-bordered" style="margin-top:20px;" 
+	       resizableColumns="true" paginator="true" rows="25" rowsPerPageTemplate="25,35,50" 	
+	       paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" 
+	      filteredValue="#{categorybean.filteredCategoryList}"  widgetVar="categoryListTable">
+	
 	     
 	     <f:attribute name="updateCategoryId" value="#{category.userCategoryId}" />
-	      <p:ajax event="cellEdit" listener="#{categorybean.onCellEdit}" update=":categoryForm:msgs" />
+	      <p:ajax event="cellEdit" listener="#{categorybean.onCellEdit}" update=":categoryForm:messages" />
  
+	      <f:facet name="header">
+	    <div class="row" style="margin: -3px;">
+	  <div class="col-sm-4" style="margin-left: -17px" >
+	   <h:inputText id="globalFilter" onkeyup="PF('categoryListTable').filter() "  a:placeholder="Search on any field (s) "   class="form-control"  />
+		</div>
+			
+			<div class="col-sm-6">
+      		<span style=";font-size:22px;text-align:center;">Manage Category List</span>
+      	</div> 
+						
+			<div class="col-sm-2 pull-right" style="margin-right: -17px">
+			
+			 <h:commandLink id="excel">
+	     <img  src="resource/image/Excel.png" class="img-responsive pull-right " alt="Excel" style="width:35px;"></img>
+	        <p:dataExporter type="xls" target="categoryTable" fileName="category" postProcessor="#{categorybean.postProcessXLS}" />
+	    </h:commandLink>
+			
+			 <h:commandLink id="pdf" >
+	     <img  src="resource/image/pdf.png" class="img-responsive pull-right" alt="pdf" style="width:35px;"></img>
+	        <p:dataExporter type="pdf" target="categoryTable" fileName="category" preProcessor="#{categorybean.preProcessPDF}"/>
+	    </h:commandLink>		
+			</div>
+			
+			</div>
+		</f:facet> 
 	     
 	     
-	     <f:facet name="header" >
-			<p:outputPanel>
-			<div class="row">
-			
-				<div class= "col-sm-12">
-				<h:inputText id="globalFilter" onkeyup="PF('categoryListTable').filter() "   class="form-control"  />
-				 <p:watermark for="globalFilter"  value="Search with a keyword"  />
-				</div>
-				</div>
-			</p:outputPanel>
-		</f:facet>
-			
+	     
+	     
 	 
 			<p:column filterBy="#{category.name}" sortBy="#{category.name}" headerText="Category Name"  
 			filterStyle="display:none;" filterMatchMode="contains"   style="padding: 0px 0px 0px 3px;">
@@ -138,7 +160,7 @@ function setCategoryHiddenValue(new_value)
                <f:facet name="input">
                    <p:selectOneMenu value="#{category.status}" onclick='setCategoryHiddenValue(#{category.userCategoryId})' style="width:125px">
                        <f:selectItem   itemLabel="Active" itemValue="Active" />
-                        <f:selectItem  itemLabel="InActive" itemValue="InActive" />
+                        <f:selectItem  itemLabel="In-Active" itemValue="In-Active" />
                    </p:selectOneMenu>
                </f:facet>    </p:cellEditor>
           </p:column>
@@ -154,16 +176,6 @@ function setCategoryHiddenValue(new_value)
    </p:contextMenu> 
 	</div>
 
-	<div>
-		<strong>Export Data &nbsp;</strong>
-	    <h:commandButton id="excel" class="btn btn-primary fontsize" value="Excel">
-	        <p:dataExporter type="xls" target="categoryTable" fileName="category" postProcessor="#{categorybean.postProcessXLS}" />
-	    </h:commandButton>
-	 	&nbsp;
-	    <h:commandButton id="pdf" class="btn btn-primary fontsize" value="Pdf">
-	        <p:dataExporter type="pdf" target="categoryTable" fileName="category" preProcessor="#{categorybean.preProcessPDF}" />
-	    </h:commandButton>
-	</div>
 
 </div><!-- end oc container -->
       
@@ -175,8 +187,10 @@ function setCategoryHiddenValue(new_value)
       
         <div class="col-sm-5" style="background-color:#fff;margin-top:0px;">
        <div class="textbox">
-       <p style=" ">Active request categories can be use for classifying the requests.
-                           These categories can be used to filter your requests and managed them effective.</p>
+       <p>
+      Categorize your requests for better monitoring and reporting. E.g. High / Medium / Low priority,  Electrical / Mechanical work etc. Only active categories will appear in the new request screen.
+                           
+        </p>
     </div>
     <br></br>
     <div>

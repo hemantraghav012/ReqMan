@@ -2,101 +2,126 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Frameset//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-frameset.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
  xmlns:ui="http://java.sun.com/jsf/facelets" 
-  xmlns:f="http://java.sun.com/jsf/core"
-    xmlns:p="http://primefaces.org/ui"
- 	xmlns:h="http://java.sun.com/jsf/html">
-      <h:head>
+ xmlns:f="http://java.sun.com/jsf/core"
+xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
+ xmlns:h="http://java.sun.com/jsf/html">
+ 
+ <h:head>
 <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
 <link rel="stylesheet" href="resource/css/bootstrap.css"/>
 <link rel="stylesheet" href="resource/mystyle/home.css"/>
 <link rel="stylesheet" href="resource/mystyle/onlyhome.css"/>
- <link rel="stylesheet" href="resource/mystyle/register.css"/>
- <link rel="stylesheet" href="resource/mystyle/button.css"/>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<link rel="stylesheet" href="resource/mystyle/register.css"/>
+<link rel="stylesheet" href="resource/mystyle/button.css"/>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script type="text/javascript" src="resource/js/bootstrap.js"/>
 <script type="text/javascript" src="resource/js/jquery.js"/>
-<title>Register</title>
+<title>Sign up</title>
 </h:head>
 
 <h:body >
+
+ <!-- -Start header Section --> 
  <div id="indexheader">
 	<ui:insert name="indexheader">
-		<ui:include src="indexheader.xhtml" />
+	<ui:include src="indexheader.xhtml" />
 	</ui:insert>
-</div>
-       
-      <!-- -end of header --> 
+</div>       
+ <!-- -end of header --> 
   
 
-
-<div class="container registerfield" style="margin-top:30px;" >
-
+ <!-- Start page content -->  
+<div class="container registerfield" style="margin-top:30px;">
 <div class="row">
-<div class=" col-sm-6" >
-<h2 style="font-weight: bold;  text-align:center; "> Start your free 30-day trial.</h2>
+
+ <!-- Set Image --> 
+<div class=" col-sm-6">
+<h2 style="font-weight:bold;text-align:center;line-height:55px;"> Start your free 30-day trial.</h2>
 <br></br>
-<img  src="https://i.imgur.com/cCjkIgq.jpg" class="img-responsive img-thumbnail" alt="collabor8" style="width:100%;height: 450px; " ></img>
-     
+<img   src="resource/image/register.jpeg"  class="img-responsive " alt="collabor8" style="width:100%;"></img>     
+</div>
+ <!--End of Image Section --> 
+ 
+ 
+ <!--Set information --> 
+<div class=" col-sm-6">
+<h2 style="font-weight: bold; padding-left:15px;line-height:50px;margin-bottom:-20px; "> Create an account</h2>
+<h3 style="padding-left:15px;">Fully functional. No credit card required.</h3> 
+<div class="registerfieldforinputboxlen" style="padding-left:15px;line-height:35px;">
+
+ <!--User Information Form Start --> 
+ <h:form enctype="multipart/form-data" class="form-horizontal">
+   
+<div>
+<!--Display Error -->
+<h:messages style = "color:red;margin:8px;" />
 </div>
 
-
-
-<div class=" col-sm-6" style="LINE-HEIGHT:40px;">
-<h2 style="font-weight: bold; padding-left:15px; "> Create an account</h2>
-<h3 style="padding-left:15px;">Fully functional. No credit card required.</h3>
-<br></br>
-       <h:form enctype="multipart/form-data" class="form-horizontal">
-
-<div><h:messages style = "color:red;margin:8px;" /></div>
-
- <div class=" row form-group registerfieldname">
- <div class="col-sm-2 control-label"><h:outputLabel  >Email Id:</h:outputLabel></div>
-<div class=" col-sm-6"> <h:inputText value="#{register.emailid}" class="  form-control" p:placeholder="Email Id"  id="emailid" required="true" requiredMessage="* Please enter your email id" validatorMessage="Invalid email format"> <f:validateRegex
-		pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" /></h:inputText></div>
+<!--Enter User Email -->
+<h:outputLabel>Email Id:</h:outputLabel>
+ <h:inputText value="#{register.emailid}" class="form-control" p:placeholder="Email Id" id="emailid" required="true" requiredMessage="* Please enter your Email Id" validatorMessage="Invalid Email Format">
+ 
+ <!--Email Validation -->
+  <f:validateRegex	pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+  </h:inputText>
  <h:message for="emailid"  style="color:red;margin:8px;"/> 
+<!--End User Email -->
 
-</div>
-
- <div class=" row form-group registerfieldname">
-<div class="col-sm-2 control-label"><h:outputLabel>First Name:</h:outputLabel></div>
-<div class=" col-sm-6"><h:inputText value="#{register.firstname}"  p:placeholder="First Name" class="form-control" id="firstname" required="true" requiredMessage="* Please enter your first name"></h:inputText></div>
+<!--Enter User First Name -->
+<h:outputLabel>First Name:</h:outputLabel>
+<h:inputText value="#{register.firstname}"  p:placeholder="First Name" class="form-control" id="firstname"
+ required="true" requiredMessage="* Please Enter Your First Name">
+ </h:inputText>
  <h:message for="firstname"  style="color:red;margin:8px;"/> 
-</div>
+<!--Enter User First Name -->
 
- <div class=" row form-group registerfieldname">
-<div class="col-sm-2 control-label"><h:outputLabel>Last Name:</h:outputLabel></div>
-<div class="col-sm-6"><h:inputText value="#{register.lastname}"  p:placeholder="Last Name" class="form-control" id="lastname" required="true" requiredMessage="* Please enter your last name"></h:inputText></div>
+<!--Enter User Last Name -->
+<h:outputLabel>Last Name:</h:outputLabel>
+<h:inputText value="#{register.lastname}"  p:placeholder="Last Name" class="form-control" id="lastname" 
+required="true" requiredMessage="* Please Enter Your Last Name">
+</h:inputText>
  <h:message for="lastname"  style="color:red;margin:8px;"/> 
-</div>
+<!--Enter User Last Name -->
 
- <div class=" row form-group registerfieldname">
-<div class="col-sm-2 control-label"><h:outputLabel>Short Name:</h:outputLabel></div>
-<div class="col-sm-6"><h:inputText value="#{register.shortname}" p:placeholder="Short Name"  maxlength="4" class="form-control" id="shortname" required="true" requiredMessage="* Please enter your short name"></h:inputText><span style="color:red;">Please enter upto 4 characters</span></div>
+<!--Enter User Short Name -->
+<h:outputLabel>Short Name:</h:outputLabel>
+<h:inputText value="#{register.shortname}" p:placeholder="Short Name"  class="form-control" id="shortname"
+ required="true" requiredMessage="* Please Enter Your Short Name"  maxlength="4">
+ </h:inputText>
+ <span style="color:red;">Please enter upto 4 characters</span>
  <h:message for="shortname"  style="color:red;margin:8px;"/> 
-</div>
+<!--Enter UserShort Name -->
+ 
+ <!--submit button -->
+<h:commandLink action="#{register.submit()}" value="Sign up" class="btn fontsize btn-success btn-block">
+</h:commandLink>
+ <!--After Submit Call Submit() method in the register class in the bean package -->
 
-
- <div class=" row form-group ">
- <div class="col-sm-2 .col-sm-offset-2"></div>
-<div class="col-sm-6 "><h:commandLink action="#{register.submit()}" value="Register" class="btn fontsize btn-success btn-block"></h:commandLink></div>
-</div>
-
+<br></br><br></br>
 </h:form>
+ <!--End user Form-->
+ 
+</div>
+<!--End of register field length div--> 
 
 </div>
-
+ <!--End of Set information --> 
+ 
 </div>
+ <!--end of row --> 
+ 
 </div>
+<!-- End page content --> 
 
-
+ <!--Footer Section Start --> 
   <div id="footer">
 	<ui:insert name="footer">
-		<ui:include src="footerpage.xhtml" />
+	<ui:include src="footerpage.xhtml" />
 	</ui:insert>
-</div>
-       
-      <!-- -end of footer --> 
+</div>       
+<!-- -end of footer --> 
+
 </h:body>
 </html>
