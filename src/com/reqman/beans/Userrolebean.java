@@ -24,7 +24,6 @@ import com.reqman.vo.UserroleVo;
 
 
 @ManagedBean(name="userrolebean",eager = true)
-@RequestScoped
 @ViewScoped
 public class Userrolebean implements Serializable {
 

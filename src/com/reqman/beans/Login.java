@@ -32,6 +32,16 @@ public class Login implements Serializable {
 	private String pwd;
 	private String msg;
 	private String user;
+    private String userrole;
+    
+	
+	public String getUserrole() {
+		return userrole;
+	}
+
+	public void setUserrole(String userrole) {
+		this.userrole = userrole;
+	}
 
 	public String getPwd() {
 		return pwd;
@@ -63,23 +73,46 @@ public class Login implements Serializable {
 		int result = 0;
 		
 		try{
-			result = userImpl.validate(user, pwd);
+			result = userImpl.validate(user, pwd,userrole);
 			//boolean valid = LoginDAO.validate(user, pwd);
 			if (result == 1) {
 				HttpSession session = SessionUtils.getSession();
 				session.setAttribute("username", user);
+				session.setAttribute("userroleset", result);
+				//for App admin
+				return "home";
 				
+			} 
+			
+			else if (result == 2) {
+				HttpSession session = SessionUtils.getSession();
+				session.setAttribute("username", user);
+				session.setAttribute("userroleset",  result);
+				//For Account admin
 				return "home";
 			} 
 			
+			else if (result ==3) {
+				HttpSession session = SessionUtils.getSession();
+				session.setAttribute("username", user);
+				session.setAttribute("userroleset",  result);
+				//For Requestor
+				return "home";
+			} 
 			
-			
+			else if (result == 4) {
+				HttpSession session = SessionUtils.getSession();
+				session.setAttribute("username", user);
+				session.setAttribute("userroleset",  result);
+				//For Team Member
+				return "home";
+			} 
 			
 			else {
 				FacesContext.getCurrentInstance().addMessage(
 						null,
 						new FacesMessage(FacesMessage.SEVERITY_WARN,
-								"Incorrect Username and Passowrd",
+								"Incorrect Username and Password",
 								"Please enter correct username and Password"));
 				return "login";
 				

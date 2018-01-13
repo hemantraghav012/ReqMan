@@ -6,6 +6,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
+import java.math.BigInteger;
 import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -15,6 +16,7 @@ import java.util.Comparator;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -44,6 +46,7 @@ import org.primefaces.model.chart.AxisType;
 import org.primefaces.model.chart.BarChartModel;
 import org.primefaces.model.chart.ChartSeries;
 import org.primefaces.model.chart.HorizontalBarChartModel;
+import org.primefaces.model.chart.PieChartModel;
 
 import com.lowagie.text.BadElementException;
 import com.lowagie.text.Document;
@@ -98,15 +101,15 @@ public class CreateRequestbean implements Serializable
      private  String message;     
      private Date startDate;
      private Date endDate;
-    private Integer userfriend;
-    
+     private Integer userfriend;
+   
      private Integer[]  searchteammember;
      private Integer[]  searchcategory;
      private Integer[]  searchproject;
      private Integer[]  searchtype;
      private Integer[]  searchstage;
      
-     
+     private PieChartModel piechart;
      
      
      
@@ -137,7 +140,8 @@ public class CreateRequestbean implements Serializable
 			setFilteredRequestList(newrequestList);
 			setFilteredCloseRequestList(closerequestList);
 			createBarModels();
-			
+			 createPieModels();
+			 
 		}
 		catch(Exception e)
 		{
@@ -147,6 +151,40 @@ public class CreateRequestbean implements Serializable
 	}
 		
 
+	
+	
+	
+	
+	
+	
+	 private void createPieModels() {
+	        piechart = new PieChartModel();	     	        
+	        Map<String,BigInteger> requestmap = new HashMap<String,BigInteger>();
+			 try { 
+			 HttpSession session = SessionUtils.getSession();
+				String userName = (String)session.getAttribute("username");			
+					requestmap = newrequestInterface.piechart(userName );
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}	      
+                 if(requestmap !=null)
+                   {
+		        for(Map.Entry m:requestmap.entrySet())
+		        {  
+		        	String friendemailid= (String) m.getKey();
+		        	BigInteger countfriendemailid= (BigInteger) m.getValue();
+		        	 piechart.set(friendemailid,countfriendemailid);
+		         }  
+		       
+	    piechart.setTitle("Request");
+	    piechart.setLegendPosition("ne");	   
+	    piechart.setShowDataLabels(true);
+	 }
+	
+	 }
+	
+	
 	public String daterange()
 	{
 		try
@@ -154,12 +192,7 @@ public class CreateRequestbean implements Serializable
 			newrequestList = new ArrayList<NewrequestVo>();
 			System.out.println("--create new request-->");
 			HttpSession session = SessionUtils.getSession();
-			String userName = (String)session.getAttribute("username");
-			System.out.println("--usersession--userName-->"+startDate);
-			System.out.println("--usersession--userName-->"+endDate);
-			
-			
-			System.out.println("--usersession--userName-->"+userName);
+			String userName = (String)session.getAttribute("username");			
 			newrequestList = newrequestInterface.getNewrequestDetails(userName,startDate,endDate);
 			
 		}
@@ -170,133 +203,61 @@ public class CreateRequestbean implements Serializable
 		return "request";
 	}
 	
-	
-	
-	
-	
-	
-	
-	
-	
+		//Start Bar chart 
 	 private void createBarModels() {
 	        createBarModel();
-	      //  createHorizontalBarModel();
-	    }
-	
-	/* private void createHorizontalBarModel() {
-	        horizontalBarModel = new HorizontalBarChartModel();
-	 
-	        ChartSeries boys = new ChartSeries();
-	        boys.setLabel("Request");
-	       
-	        Map<String, Integer> requestmap = new HashMap<String, Integer>();
-			 try {
-			       
-			        
-			 HttpSession session = SessionUtils.getSession();
-				String userName = (String)session.getAttribute("username");			
-				System.out.println("--usersession--userNam122e-->"+userName);
-	        	
-				requestmap = newrequestInterface.barchart(userName );
-				} catch (Exception e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-	      
-
-		        for(Map.Entry m:requestmap.entrySet()){  
-		        	
-		        	String requestnumber= (String) m.getKey();
-		        	Integer friendemailid= (Integer) m.getValue();
-		        	
-		        	   System.out.println(requestnumber+" "+friendemailid);  
-		        	   boys.set(requestnumber,friendemailid);
-		        	  }  
-		      
-				
-		   	       
-		
-		        horizontalBarModel.addSeries(boys);
-		      
-		        horizontalBarModel.addSeries(boys);
-	        horizontalBarModel.addSeries(boys);
-	      
-	         
-	        horizontalBarModel.setTitle("Request on Team Member");
-	        horizontalBarModel.setLegendPosition("e");
-	        horizontalBarModel.setStacked(true);
-	         
-	        Axis xAxis = horizontalBarModel.getAxis(AxisType.X);
-	        xAxis.setLabel("request");
-	        
-	        xAxis.setMin(0);
-	        xAxis.setMax(20);
-	         
-	        Axis yAxis = horizontalBarModel.getAxis(AxisType.Y);
-	        yAxis.setLabel("team member");        
-	    }
-	
-	*/
+	      	    }
 	
 	 private void createBarModel() {
 			// TODO Auto-generated method stub
-		 barModel = initBarModel();
-	        
-	        barModel.setTitle("Task in Progress");
-	        barModel.setLegendPosition("ne");
-	       
+		    barModel = initBarModel();	        
+	       barModel.setTitle("Schedule Performance");
+	      
+	    // barModel.setLegendPosition("ne");
+	         
 	        Axis xAxis = barModel.getAxis(AxisType.X);
-	        xAxis.setLabel("Team member");
+	        xAxis.setLabel("Team Member Name");
 	         
 	        Axis yAxis = barModel.getAxis(AxisType.Y);
-	        yAxis.setLabel("Number of Request");
-	        yAxis.setMin(0);
-	       // yAxis.setMax(20);
+	        yAxis.setLabel("PerFormance in % Age");
+	        yAxis.setMin(0.0 );
+	       // yAxis.setMax(4);
 		}
-
-	 
 
 		@SuppressWarnings({ "unchecked", "rawtypes" })
 		private BarChartModel initBarModel() {
-		 Map<String, Integer> requestmap = new HashMap<String, Integer>();
-			 try {
-			       
-			        
-			 HttpSession session = SessionUtils.getSession();
+		 Map<String,Double> requestbarmap = new HashMap<String,Double>();
+	
+			 try 
+			  {	       
+			    HttpSession session = SessionUtils.getSession();
 				String userName = (String)session.getAttribute("username");			
-				System.out.println("--usersession--userNam122e-->"+userName);
-	        	
-				requestmap = newrequestInterface.barchart(userName );
-				} catch (Exception e) {
+				requestbarmap = newrequestInterface.barchart(userName );
+			  } catch (Exception e)
+			    {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
-				}
-			
+				 }			
 			
 			// TODO Auto-generated method stub BarChartModel model = new BarChartModel();
-			 BarChartModel model = new BarChartModel();
+			 BarChartModel model = new BarChartModel();				 
+			   ChartSeries chartseries1 = new ChartSeries();	
+			    
+			  //1 for Poor
 			 
-			
-			 
-	       ChartSeries boys = new ChartSeries();
-	        boys.setLabel("Request");
-	    
-	        for(Map.Entry m:requestmap.entrySet()){  
-	        	
-	        	String requestnumber= (String) m.getKey();
-	        	Integer friendemailid= (Integer) m.getValue();
-	        	
-	        	   System.out.println(requestnumber+" "+friendemailid);  
-	        	   boys.set(requestnumber,friendemailid);
-	        	  }  
+			  
+	            for(Map.Entry m:requestbarmap.entrySet())
+	            {  
+	        	  String requestnumber= (String) m.getKey();
+	        	  Double friendemailid= (Double) m.getValue();	
+	        	  
+	        	   chartseries1.set(requestnumber,friendemailid);
+	          }
+	            
+	          model.addSeries(chartseries1);
+	          
+	      return model;
 	      
-			
-	   	       
-	
-	        model.addSeries(boys);
-	      
-	         
-	        return model;
 		}
 
 		
@@ -413,11 +374,25 @@ public class CreateRequestbean implements Serializable
         	     setCompletiondate(newrequestVo.getCompletiondate());
         	     setUserproject(newrequestVo.getProject());
         	     setUsercategory(newrequestVo.getCategory());
-        	     setUserrequesttype(newrequestVo.getRequesttype());
+        	     if(newrequestVo.getStage().trim().equalsIgnoreCase("Request")){
+        	    	 setStage(1);
+        	     } else if(newrequestVo.getStage().trim().equalsIgnoreCase("Accepted")){
+        	    	 setStage(2);
+        	     } else  if(newrequestVo.getStage().trim().equalsIgnoreCase("Returned")){
+        	    	 setStage(3);
+        	     } else  if(newrequestVo.getStage().trim().equalsIgnoreCase("In-progress")){
+        	    	 setStage(4);
+        	     } else  if(newrequestVo.getStage().trim().equalsIgnoreCase("Completed")){
+        	    	 setStage(5);
+        	     } else  if(newrequestVo.getStage().trim().equalsIgnoreCase("Cancel")){
+        	    	 setStage(6);
+        	     } else  if(newrequestVo.getStage().trim().equalsIgnoreCase("Hold")){
+        	    	 setStage(7);
+        	     } else  if(newrequestVo.getStage().trim().equalsIgnoreCase("Close")){
+        	    	 setStage(8);
+        	     }
         	     setUserfriend(newrequestVo.getUserfriend());
-        	     setStage(newrequestVo.getRequeststage());
         		 setStatus(true);
-        		
         		
         	}
         	else
@@ -429,9 +404,24 @@ public class CreateRequestbean implements Serializable
         		setUsercategory(newrequestVo.getCategory());
             	setUserrequesttype(newrequestVo.getRequesttype());
             	setUserfriend(newrequestVo.getUserfriend());
-            	setStage(newrequestVo.getRequeststage());
+            	  if(newrequestVo.getStage().trim().equalsIgnoreCase("Request")){
+        	    	 setStage(1);
+        	     } else if(newrequestVo.getStage().trim().equalsIgnoreCase("Accepted")){
+        	    	 setStage(2);
+        	     } else  if(newrequestVo.getStage().trim().equalsIgnoreCase("Returned")){
+        	    	 setStage(3);
+        	     } else  if(newrequestVo.getStage().trim().equalsIgnoreCase("In-progress")){
+        	    	 setStage(4);
+        	     } else  if(newrequestVo.getStage().trim().equalsIgnoreCase("Completed")){
+        	    	 setStage(5);
+        	     } else  if(newrequestVo.getStage().trim().equalsIgnoreCase("Cancel")){
+        	    	 setStage(6);
+        	     } else  if(newrequestVo.getStage().trim().equalsIgnoreCase("Hold")){
+        	    	 setStage(7);
+        	     } else  if(newrequestVo.getStage().trim().equalsIgnoreCase("Close")){
+        	    	 setStage(8);
+        	     }
         		setStatus(false);
-        		 
         	}
         	
         	FacesContext.getCurrentInstance()
@@ -454,7 +444,7 @@ public class CreateRequestbean implements Serializable
 			System.out.println("--updateRequest-project-"+userproject);
 			System.out.println("--updateRequest-category-"+usercategory);
 			System.out.println("--updateRequest-requesttype	-"+userrequesttype);
-			
+			System.out.println("--updateRequest-requesttype	-"+title);
 			
 			System.out.println("--updateRequesr requestid-"+requestId);
 			HttpSession session = SessionUtils.getSession();
@@ -476,7 +466,7 @@ public class CreateRequestbean implements Serializable
         	
         	if(result == 1)
         	{
-        		newrequestList = newrequestInterface.getNewrequestDetails(userName,startDate,endDate);
+        		newrequestList =newrequestInterface.getNewrequestDetails(userName,startDate,endDate);
     				}
         	
 		}
@@ -492,7 +482,6 @@ public class CreateRequestbean implements Serializable
 		}
 		return "request";
 	}
-	
 	
 	
 	
@@ -957,8 +946,20 @@ public class CreateRequestbean implements Serializable
 		}
 
 
-		
-		
+		public PieChartModel getPiechart() {
+			return piechart;
+		}
+
+
+		public void setPiechart(PieChartModel piechart) {
+			this.piechart = piechart;
+		}
+
+
+
+
+
+
 	
 	
 }

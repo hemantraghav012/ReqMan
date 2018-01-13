@@ -43,13 +43,13 @@ public class Register implements Serializable{
 	
 	public String submit()
 	{
-		System.out.println("--emailid--"+emailid);
 		
+		//is declared as type UserDetailsInterface(interface) and the object it references is of type UserDetailsImpl(class).
 		UserDetailsInterface userImpl = new UserDetailsImpl();
 		
 		int result = 0;
 		try{
-		
+		//Pass all value through registerbean class to userImpl Interface and call saveUser() method
 			result = userImpl.saveUser(emailid, password, firstname, lastname, shortname,hashkey,photo);
 			
 			//boolean valid = LoginDAO.validate(user, pwd);
@@ -157,14 +157,42 @@ public class Register implements Serializable{
 			result = userImpl.saveUserthrowgoogle(googleemail);
 			System.out.println("--emailid--"+googleemail);
 			//boolean valid = LoginDAO.validate(user, pwd);
-			if (result == 1) {
-				HttpSession session = SessionUtils.getSession();
-				session.setAttribute("username", googleemail);
-				
-				return "home";
 			
-			}
-			if (result == 2) {
+				
+				if (result == 1) {
+					HttpSession session = SessionUtils.getSession();
+					session.setAttribute("username", googleemail);
+					session.setAttribute("userroleset", result);
+					//For App admin 
+					return "home";
+				} 
+				
+				else if (result == 2) {
+					HttpSession session = SessionUtils.getSession();
+					session.setAttribute("username",googleemail);
+					session.setAttribute("userroleset", result);
+					//For Account Admin 
+					return "home";
+				} 
+				
+				else if (result ==3) {
+					HttpSession session = SessionUtils.getSession();
+					session.setAttribute("username",googleemail);
+					session.setAttribute("userroleset", result);
+					//for Requestor
+					return "home";
+				} 
+				
+				else if (result == 4) {
+					HttpSession session = SessionUtils.getSession();
+					session.setAttribute("username",googleemail);
+					session.setAttribute("userroleset", result);
+					//For Team member
+					return "home";
+				} 
+			
+			
+		else if (result == 5) {
 				FacesContext.getCurrentInstance().addMessage(
 						null,
 						new FacesMessage(FacesMessage.SEVERITY_WARN,
@@ -172,7 +200,7 @@ public class Register implements Serializable{
 								"User already created, please activate the user credentials before login the sytem"));
 				return "googlesignin";
 			}
-			if (result == 4) {
+		else {
 				FacesContext.getCurrentInstance().addMessage(
 						null,
 						new FacesMessage(FacesMessage.SEVERITY_WARN,
@@ -192,11 +220,10 @@ public class Register implements Serializable{
 			return "googlesignin";
 		}
 	
-		HttpSession session = SessionUtils.getSession();
-		session.setAttribute("username", googleemail);
 		
-		return "home";
+		
 	}
+	
 	
 	
 	

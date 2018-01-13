@@ -34,7 +34,6 @@ import com.reqman.vo.CategoryVo;
 import com.reqman.vo.ProjectVo;
 
 @ManagedBean(name="projectbean",eager = true)
-
 @ViewScoped
 public class Projectbean implements Serializable{
 
@@ -85,8 +84,9 @@ public class Projectbean implements Serializable{
 	    int random1 = projectList2.size(); // Method to get data from db
 	    int random2 = projectList1.size();  // Method to get data from db
 
-	    piechart.getData().put("false status", random1);
-	    piechart.getData().put("true Status", random2);	  
+	    piechart.getData().put("Active", random2);	
+	    piechart.getData().put("In-Active", random1);
+	    
 	    piechart.setTitle("Project Status");
 	    piechart.setLegendPosition("ne");
 	    //piechart.setSeriesColors("green,red");
@@ -151,31 +151,31 @@ public class Projectbean implements Serializable{
 				FacesContext.getCurrentInstance().addMessage(
 						null,
 						new FacesMessage(FacesMessage.SEVERITY_WARN,
-								"Project already exist",
-								"Project already exist"));
-				return "project";
+								"This project allready exists in your list. ",
+								"If inactive you can acivate the project status from the list shown below."));
+			//	return "project";
 			}
 			if(result == 2)
 			{
 				FacesContext.getCurrentInstance().addMessage(
 						null,
 						new FacesMessage(FacesMessage.SEVERITY_WARN,
-								"project already exist and in active, please activate by using modify project ",
-								"Project already exist and in active, please activate by using modify projec"));
-				return "project";
+								"This project allready exists in your list. ",
+								"If inactive you can acivate the project status from the list shown below."));
+			//	return "project";
 			}
 			if(result == 3)
 			{
 				
-			projectList = projectMasterInterface.getProjectDetails(userName);
 				
 				FacesContext.getCurrentInstance().addMessage(
 						null,
 						new FacesMessage(FacesMessage.SEVERITY_WARN,
-								"Project created  successfully.",
-								"Project created  successfully."));
+								"New Project added successfully.",
+								"New Project added successfully."));
 			}
 			
+			projectList = projectMasterInterface.getProjectDetails(userName);
 			
 		}
 		catch(Exception e)
@@ -207,7 +207,7 @@ public class Projectbean implements Serializable{
 	        if(newValue != null && !newValue.equals(oldValue)) 
 	        {
 	        	result = projectMasterInterface.updateProject(oldValue, newValue, updateprojectId);
-	            FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Cell Changed", "Old: " + oldValue + ", New:" + newValue);
+	            FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO,"The status/project access of the project has been change successfully.","Old status/project access is " + oldValue + ", status/project access " + newValue);
 	            FacesContext.getCurrentInstance().addMessage(null, msg);
 	        }
 		 }

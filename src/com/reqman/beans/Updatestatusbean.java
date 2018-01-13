@@ -159,7 +159,7 @@ public class Updatestatusbean implements Serializable {
 				System.out.println("--updateRequest-status-"+status);
 				System.out.println("--updateRequest-status-"+description);
 				System.out.println("--updateRequest-status-"+completiondate);
-				
+				System.out.println("--updateRequest-status-"+title);
 				
 				System.out.println("--updateRequesr requestid-"+requestId);
 				HttpSession session = SessionUtils.getSession();

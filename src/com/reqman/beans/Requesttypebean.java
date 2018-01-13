@@ -86,9 +86,10 @@ private  List<RequesttypeVo> requesttypeList2 = new ArrayList<RequesttypeVo>();
 	    int random1 = requesttypeList2.size(); // Method to get data from db
 	    int random2 = requesttypeList1.size();  // Method to get data from db
 
-	    piechart.getData().put("false status", random1);
-	    piechart.getData().put("true Status", random2);	  
-	    piechart.setTitle("Requesttype Status");
+	    piechart.getData().put("Active", random2);	
+	    piechart.getData().put("In-Active", random1);
+  
+	    piechart.setTitle("Type Status");
 	    piechart.setLegendPosition("ne");
 	    //piechart.setSeriesColors("green,red");
 	   // piechart.setFill(false);
@@ -148,30 +149,30 @@ private  List<RequesttypeVo> requesttypeList2 = new ArrayList<RequesttypeVo>();
 				FacesContext.getCurrentInstance().addMessage(
 						null,
 						new FacesMessage(FacesMessage.SEVERITY_WARN,
-								"requesttype already exist",
-								"requesttype already exist"));
-				return "requesttype";
+								"This type allready exists in your list. ",
+								"If inactive you can acivate the type status from the list shown below."));
+			//	return "requesttype";
 			}
 			if(result == 2)
 			{
 				FacesContext.getCurrentInstance().addMessage(
 						null,
 						new FacesMessage(FacesMessage.SEVERITY_WARN,
-								"requesttype already exist and in active, please activate by using modify requesttype ",
-								"requesttypeList already exist and in active, please activate by using modify requesttype"));
-				return "requesttype";
+								"This type allready exists in your list. ",
+								"If inactive you can acivate the type status from the list shown below."));
+				//return "requesttype";
 			}
 			if(result == 3)
 			{
 				
-				requesttypeList = requesttypeMasterInterface.getRequesttypeDetails(userName);
 				
 				FacesContext.getCurrentInstance().addMessage(
 						null,
 						new FacesMessage(FacesMessage.SEVERITY_WARN,
-								"requesttype created  successfully.",
-								"requesttype created  successfully."));
+								"New Type added successfully.",
+								"New Type added successfully."));
 			}
+			requesttypeList = requesttypeMasterInterface.getRequesttypeDetails(userName);
 			
 			
 		}
@@ -202,7 +203,7 @@ private  List<RequesttypeVo> requesttypeList2 = new ArrayList<RequesttypeVo>();
 	        if(newValue != null && !newValue.equals(oldValue)) 
 	        {
 	        	result = requesttypeMasterInterface.updateRequesttype(oldValue, newValue, updaterequesttypeId);
-	            FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Cell Changed", "Old: " + oldValue + ", New:" + newValue);
+	            FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO,"The status of the type has been change successfully.","Old status is " + oldValue + ", New status is " + newValue);
 	            FacesContext.getCurrentInstance().addMessage(null, msg);
 	        }
 		 }

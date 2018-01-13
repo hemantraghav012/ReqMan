@@ -81,8 +81,9 @@ public class Categorybean implements Serializable
 	    int random1 = categoryList2.size(); // Method to get data from db
 	    int random2 = categoryList1.size();  // Method to get data from db
 
-	    piechart.getData().put("false status", random1);
-	    piechart.getData().put("true Status", random2);	  
+	    piechart.getData().put("Active", random2);	
+	    piechart.getData().put("In-Actve", random1);
+	     
 	    piechart.setTitle("Category Status");
 	    piechart.setLegendPosition("ne");
 	    //piechart.setSeriesColors("green,red");
@@ -149,31 +150,31 @@ public class Categorybean implements Serializable
 				FacesContext.getCurrentInstance().addMessage(
 						null,
 						new FacesMessage(FacesMessage.SEVERITY_WARN,
-								"Category already exist",
-								"Category already exist"));
-				return "category";
+								"This Category allready exists in your list. ",
+								"If inactive you can acivate the category status from the list shown below."));
+				//return "category";
 			}
 			if(result == 2)
 			{
 				FacesContext.getCurrentInstance().addMessage(
 						null,
 						new FacesMessage(FacesMessage.SEVERITY_WARN,
-								"Category already exist and in active, please activate by using modify category ",
-								"Category already exist and in active, please activate by using modify category"));
-				return "category";
+								"This Category allready exists in your list. ",
+								"If inactive you can acivate the category status from the list shown below."));
+			//	return "category";
 			}
 			if(result == 3)
 			{
 				
-				categoryList = categoryMasterInterface.getCategoryDetails(userName);
 				
 				FacesContext.getCurrentInstance().addMessage(
 						null,
 						new FacesMessage(FacesMessage.SEVERITY_WARN,
-								"Category created  successfully.",
-								"Category created  successfully."));
+								"New Category added successfully.",
+								"New Category added successfully."));
 			}
 			
+			categoryList = categoryMasterInterface.getCategoryDetails(userName);
 			
 		}
 		catch(Exception e)
@@ -204,7 +205,7 @@ public class Categorybean implements Serializable
 	        if(newValue != null && !newValue.equals(oldValue)) 
 	        {
 	        	result = categoryMasterInterface.updateCategory(oldValue, newValue, updatecategoryId);
-	            FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Cell Changed", "Old: " + oldValue + ", New:" + newValue);
+	            FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO,"The status of the category has been change successfully.","Old status is " + oldValue + ", New status is " + newValue);
 	            FacesContext.getCurrentInstance().addMessage(null, msg);
 	        }
 		 }

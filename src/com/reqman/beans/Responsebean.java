@@ -75,6 +75,8 @@ public class Responsebean implements Serializable{
 			System.out.println("--usersession--userName-->"+userName);						
 			responseList = responseInterface.getresponseDetails(userName);
 			setFilteredResponseList(responseList);
+			
+			
 			 
 		}
 		catch(Exception e)

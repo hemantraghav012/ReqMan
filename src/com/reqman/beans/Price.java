@@ -54,7 +54,7 @@ public class Price implements Serializable {
 		int result = 0;
 		
 		try{
-			result = userImpl.validate(user, pwd);
+			//result = userImpl.validate(user, pwd);
 			//boolean valid = LoginDAO.validate(user, pwd);
 			if (result == 1) {
 				HttpSession session = SessionUtils.getSession();

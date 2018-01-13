@@ -9,6 +9,7 @@ import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
+import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
 
@@ -39,7 +40,7 @@ import com.reqman.vo.ProjectVo;
 
 
 @ManagedBean(name="friendbean",eager = true)
-@RequestScoped
+@ViewScoped
 public class Friendbean implements Serializable{
 	
 	/**
@@ -98,9 +99,10 @@ private  List<FriendVo> friendList = new ArrayList<FriendVo>();
 	     	        
 	    int random1 = friendList2.size(); // Method to get data from db
 	    int random2 = friendList1.size();  // Method to get data from db
-
-	    piechart.getData().put("false status", random1);
-	    piechart.getData().put("true Status", random2);	  
+	    
+	    piechart.getData().put("Active", random2);	
+	    piechart.getData().put("In-Active", random1);
+	  
 	    piechart.setTitle("Friend Status");
 	    piechart.setLegendPosition("ne");
 	    //piechart.setSeriesColors("green,red");
@@ -139,7 +141,7 @@ private  List<FriendVo> friendList = new ArrayList<FriendVo>();
 		{
 			e.printStackTrace();
 		}
-		return "addfriend";
+		return "friend";
 	}
 	
 	
@@ -149,8 +151,7 @@ private  List<FriendVo> friendList = new ArrayList<FriendVo>();
 		UserSession usersession = new UserSession();
 		try
 		{
-			friendList = new ArrayList<FriendVo>();
-			
+			friendList = new ArrayList<FriendVo>();		
 			
 			HttpSession session = SessionUtils.getSession();
 			String userName = (String)session.getAttribute("username");
@@ -163,32 +164,32 @@ private  List<FriendVo> friendList = new ArrayList<FriendVo>();
 				FacesContext.getCurrentInstance().addMessage(
 						null,
 						new FacesMessage(FacesMessage.SEVERITY_WARN,
-								"friend already exist",
-								"friendt already exist"));
-				return "addfriend";
+								"This team member allready exists in your list. ",
+								"If inactive you can acivate the team member status from the list shown below."));
+				//return "friend";
 			}
 			if(result == 2)
 			{
 				FacesContext.getCurrentInstance().addMessage(
 						null,
 						new FacesMessage(FacesMessage.SEVERITY_WARN,
-								"friend already exist and in active, please activate by using modify friend ",
-								"friend already exist and in active, please activate by using modify friend"));
-				return "addfriend";
+								"This team member allready exists in your list. ",
+								"If inactive you can acivate the team member status from the list shown below."));
+				//return "friend";
 			}
 			if(result == 3)
 			{
 				
-			friendList = friendMasterInterface.getUsersDetails(userName);
-				
+			
 				FacesContext.getCurrentInstance().addMessage(
 						null,
 						new FacesMessage(FacesMessage.SEVERITY_WARN,
-								"friend created  successfully.",
-								"friend created  successfully."));
+								"Team member is added successfully.",
+								"Team member is added successfully."));
 			}
 			
-			
+			friendList = friendMasterInterface.getUsersDetails(userName);
+				
 		}
 		catch(Exception e)
 		{
@@ -198,7 +199,7 @@ private  List<FriendVo> friendList = new ArrayList<FriendVo>();
 					new FacesMessage(FacesMessage.SEVERITY_WARN,
 							"Server Error "+e.getMessage(),
 							"Server Error "+e.getMessage()));
-			return "addfriend";
+			return "friend";
 		}
 		return "friend";
 	}
@@ -221,7 +222,7 @@ private  List<FriendVo> friendList = new ArrayList<FriendVo>();
 	        if(newValue != null && !newValue.equals(oldValue)) 
 	        {
 	        	result = friendMasterInterface.updateFriend(oldValue, newValue, updatefriendId);
-	            FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Cell Changed", "Old: " + oldValue + ", New:" + newValue);
+	            FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "The status of the team member has been change successfully.","Old status is " + oldValue + ", New status is " + newValue);
 	            FacesContext.getCurrentInstance().addMessage(null, msg);
 	        }
 		 }

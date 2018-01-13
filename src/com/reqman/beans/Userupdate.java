@@ -95,7 +95,33 @@ public class Userupdate implements Serializable{
 	        
 	        	result = userImpl.updateUsers(userName,firstname,lastname,shortname,password,photo);
 	        	
-	        	if(result == 2)
+	        	
+	        	if (result == 1) {
+	        		//For App admin
+					return "home";
+					
+				} 
+				
+				else if (result == 2) {
+					//for Account Admin
+					return "home";
+					
+				} 
+				
+				else if (result ==3) {
+					//For Requestor
+					return "home";
+					
+				} 
+				
+				else if (result == 4) {
+					//For Team member
+					return "home";
+					
+				} 
+	        	
+	        	
+	        	else
 	        	{
 	        		FacesContext.getCurrentInstance().addMessage(
 							null,
@@ -117,7 +143,7 @@ public class Userupdate implements Serializable{
 								"Problem while modifying the Category"));
 				return "myprofile.xhtml";
 			}
-			return "home";
+			
 		}
 		
 		
