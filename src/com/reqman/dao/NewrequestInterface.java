@@ -28,7 +28,7 @@ public interface NewrequestInterface {
 	public int updateRequestById(String requestId, Boolean status,
 			String description, Date completiondate, UploadedFile attachment, Float completionpercentage, Integer stage,String message, String userName, Integer userproject, Integer usercategory, Integer userrequesttype, Integer userfriend)throws Exception;
 
-	public Map barchart(String userName)throws Exception;
+	public Map piechart(String userName)throws Exception;
 
 	public List<NewrequestVo> getallproject(String userName)throws Exception;
 
@@ -41,7 +41,8 @@ public interface NewrequestInterface {
 
 	public List<NewrequestVo> getColserequestDetails(String userName) throws Exception;
 
-	
+	public Map barchart(String userName)throws Exception;
+
 
 	
 
