@@ -28,12 +28,20 @@ public class ResponseVo{
 	private String createdby;
 	private Date changedate;
 	private List<requestNoteVo> noteList;
-	
+	private Date createdate;
 	
 	
 	
 
 	
+
+	public Date getCreatedate() {
+		return createdate;
+	}
+
+	public void setCreatedate(Date createdate) {
+		this.createdate = createdate;
+	}
 
 	public List<requestNoteVo> getNoteList() {
 		return noteList;
