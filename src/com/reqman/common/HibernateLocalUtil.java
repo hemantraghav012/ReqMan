@@ -7,6 +7,7 @@ import org.hibernate.cfg.Configuration;
 import org.hibernate.service.ServiceRegistry;
 
 import com.reqman.pojo.Account;
+import com.reqman.pojo.Accountusers;
 import com.reqman.pojo.Audittrail;
 import com.reqman.pojo.Category;
 import com.reqman.pojo.Menu;
@@ -30,7 +31,7 @@ import com.reqman.pojo.Userusertype;
 import com.reqman.pojo.UserusertypeId;
 
 public class HibernateLocalUtil {
-	 private static SessionFactory sessionFactory;
+	  private static SessionFactory sessionFactory;
 		private static Session session;
 
 	    public static SessionFactory getSessionFactory() {
@@ -52,7 +53,7 @@ public class HibernateLocalUtil {
 	    	    configuration.addAnnotatedClass(Project.class);
 	    	    configuration.addAnnotatedClass(Request.class);
 	    	    configuration.addAnnotatedClass(Requesttype.class);
-	    	    //configuration.addAnnotatedClass(Requestworkflow.class);
+	    	    configuration.addAnnotatedClass(Accountusers.class);
 	    	    configuration.addAnnotatedClass(Rolemenus.class);
 	    	    configuration.addAnnotatedClass(RolemenusId.class);
 	    	    configuration.addAnnotatedClass(Roles.class);
