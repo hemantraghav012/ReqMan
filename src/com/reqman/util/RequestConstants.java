@@ -10,6 +10,12 @@ public class RequestConstants
 	
 	public static final String TEAM_MEMBER = "Team Member";
 	
+	public static final Integer REQUESTOR_ROLE_ID = 3;
 	
+	public static final Integer ACCOUNT_ADMIN_ROLE_ID = 2;
+	
+	public static final Integer APP_ADMIN_ROLE_ID = 1;
+	
+	public static final Integer TEAM_MEMBER_ID = 4;
 	
 }

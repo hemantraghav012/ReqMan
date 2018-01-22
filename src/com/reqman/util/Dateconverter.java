@@ -93,6 +93,19 @@ public class Dateconverter {
 	        }
 	        return startDate;
 	    }
+	    
+	    public static Date covertStringToDateYYYYMMDD(String dateInString) {
+	        try {
+	            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+	            sdf.setLenient(false);
+	            Date date = sdf.parse(dateInString);
+	            return date;
+	        } catch (Exception e) {
+	            e.printStackTrace();
+	            return null;
+	        }
+	    }
+
 	 
 	 
 	 

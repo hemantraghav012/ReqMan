@@ -54,9 +54,8 @@ public class UserDetailsImpl implements UserDetailsInterface {
              
 				
              if(users != null)
-              {  
-            		roleName = reinf.getRoleNameByLoginId(userName);
-            		
+             {  
+            	roleName = reinf.getRoleNameByLoginId(userName);
            	 }
              
              if(roleName != null && roleName.trim().equalsIgnoreCase(RequestConstants.REQUESTOR_ROLE))
@@ -163,13 +162,13 @@ public class UserDetailsImpl implements UserDetailsInterface {
                 	}
 
             		accountusers = new Accountusers();
-                     accountusers.setAccount(accountDetails);
-                     accountusers.setUsers(users);
-                     session.save(accountusers);
-                	
-                	
+                    accountusers.setAccount(accountDetails);
+                    accountusers.setUsers(users);
+                    session.save(accountusers);
             	}
-            	if(roles != null && userrolesDetails != null) {
+            	
+            	if(roles != null && userrolesDetails != null) 
+            	{
             		roles=(Roles)session.createCriteria(Roles.class)
                     		.add(Restrictions.eq("id", 3))
                     		.uniqueResult();
@@ -179,6 +178,7 @@ public class UserDetailsImpl implements UserDetailsInterface {
             		userrolesDetails.setUsers(users);
             		session.save(userrolesDetails);
             	}
+            	
             	tx.commit();
             	result = 3;
             }

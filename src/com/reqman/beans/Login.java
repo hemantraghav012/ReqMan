@@ -6,6 +6,7 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.Map;
 
 import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
@@ -18,9 +19,13 @@ import javax.servlet.http.HttpSession;
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
 
+import com.reqman.dao.SubscribeInterface;
 import com.reqman.dao.UserDetailsInterface;
+import com.reqman.daoimpl.SubscribeImpl;
 import com.reqman.daoimpl.UserDetailsImpl;
+import com.reqman.rest.client.UserProfileAPIClient;
 import com.reqman.util.SessionUtils;
+import com.reqman.vo.zoho.subscription.hostpage.RootObject;
 
 @ManagedBean(name = "login", eager = true)
 @SessionScoped
@@ -33,6 +38,7 @@ public class Login implements Serializable {
 	private String msg;
 	private String user;
     private String userrole;
+    private String hostedpage_id;
     
 	
 	public String getUserrole() {
@@ -71,8 +77,25 @@ public class Login implements Serializable {
 	public String validateUsernamePassword() {
 		UserDetailsInterface userImpl = new UserDetailsImpl();
 		int result = 0;
-		
+		UserProfileAPIClient client = new UserProfileAPIClient();
+		RootObject rootObject = null;
+		SubscribeInterface subscripeInf = new SubscribeImpl();
 		try{
+			
+			Map<String,String> ff = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
+			System.out.println("--ff-->"+ff);
+			
+			//Fetching the payment details
+			if(hostedpage_id != null)
+			{
+				rootObject = client.getUserSubscription(hostedpage_id);
+				
+				if(rootObject != null)
+				{
+					result = subscripeInf.saveSubscription(rootObject, user);
+				}
+			}
+
 			result = userImpl.validate(user, pwd,userrole);
 			//boolean valid = LoginDAO.validate(user, pwd);
 			if (result == 1) {
@@ -189,5 +212,13 @@ public class Login implements Serializable {
 					"image/png");
 
 		}
+	}
+
+	public String getHostedpage_id() {
+		return hostedpage_id;
+	}
+
+	public void setHostedpage_id(String hostedpage_id) {
+		this.hostedpage_id = hostedpage_id;
 	}
 }
