@@ -545,3 +545,34 @@ ALTER TABLE reqman.accountusers
     OWNER to postgres;
 
 GRANT ALL ON TABLE reqman.accountusers TO postgres WITH GRANT OPTION;
+
+-- Table: reqman.customerpayment
+
+-- DROP TABLE reqman.customerpayment;
+
+CREATE TABLE reqman.customerpayment
+(
+    id bigint NOT NULL DEFAULT nextval('reqman.customerpayment_id_seq'::regclass),
+    productname character varying(200) COLLATE pg_catalog."default",
+    productid bigint,
+    subscriptionname character varying(200) COLLATE pg_catalog."default",
+    subscriptionid bigint,
+    customerid bigint,
+    userid integer,
+    currenttermstartat date,
+    currenttermend date,
+    status boolean,
+    createdon timestamp with time zone,
+    CONSTRAINT "pk_ customerpayment" PRIMARY KEY (id),
+    CONSTRAINT "fk_userid_ customerpayment" FOREIGN KEY (userid)
+        REFERENCES reqman.users (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+)
+WITH (
+    OIDS = FALSE
+)
+TABLESPACE pg_default;
+
+ALTER TABLE reqman.customerpayment
+    OWNER to postgres;
