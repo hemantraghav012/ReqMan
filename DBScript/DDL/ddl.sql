@@ -121,6 +121,8 @@ CREATE TABLE reqman.request
     acceptdate timestamp without time zone,
     updatedate timestamp without time zone,
     revisionnumber integer,
+  rating integer,
+feedback character varying(500) COLLATE "default".pg_catalog,
     approvedby character varying(50) COLLATE "default".pg_catalog,
     approveddate timestamp without time zone,
     CONSTRAINT pk_request_id PRIMARY KEY (id),
