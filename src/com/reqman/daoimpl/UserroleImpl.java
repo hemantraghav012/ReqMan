@@ -2,6 +2,7 @@ package com.reqman.daoimpl;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.hibernate.Hibernate;
 import org.hibernate.Session;
@@ -150,6 +151,12 @@ public class UserroleImpl implements UserroleInterface{
 	    }
 
 		return result;
+	}
+
+	@Override
+	public Map<String, Double> linechart(String userName) throws Exception {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 }

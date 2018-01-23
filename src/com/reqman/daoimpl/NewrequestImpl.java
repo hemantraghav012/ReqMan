@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.ListIterator;
 import java.util.Map;
 import java.util.Set;
+import java.util.TimeZone;
 import java.util.concurrent.TimeUnit;
 
 import org.hibernate.Criteria;
@@ -212,6 +213,9 @@ public class NewrequestImpl implements NewrequestInterface {
 					request.setRequeststatus(1);
 					request.setStatus(true);
 					request.setDatecreated(new Date());
+					request.setDatemodified(new Date());
+					request.setModifiedby(userName);			
+					
 					request.setDescription(description != null ? description.trim() : "");
 					
 					if(attachment != null && attachment.getContents() != null)
@@ -227,6 +231,7 @@ public class NewrequestImpl implements NewrequestInterface {
 					if(completiondate != null)
 					{
 						request.setCompletiondate(completiondate);
+											
 					}
 					
 					userfriendlistTemp = (Userfriendlist)session.createCriteria(Userfriendlist.class)
@@ -234,8 +239,6 @@ public class NewrequestImpl implements NewrequestInterface {
 							.uniqueResult();
 					
 					request.setUserfriendlist(userfriendlistTemp);
-					
-				
 					
 					
 					
@@ -265,7 +268,8 @@ public class NewrequestImpl implements NewrequestInterface {
 		Request request= null;
 		NewrequestVo newrequestVo = null;
 		requestNoteVo requestnoteVo=null;
-		RequesttypeMasterImpl reinf = new RequesttypeMasterImpl();
+		//RequesttypeMasterImpl reinf = new RequesttypeMasterImpl();
+		GetRolequery reinf = new GetRolequery();
 		List<Integer> requestIdList  = new ArrayList<Integer>();
 		String roleName = "";
 		try {
@@ -378,7 +382,7 @@ public class NewrequestImpl implements NewrequestInterface {
 						 newrequestVo.setStage("Returned");
 						}
 					 else if(requestDB.getRequeststatus()==1){
-						 newrequestVo.setStage("Request");
+						 newrequestVo.setStage("Requested");
 					 }
 					 else if(requestDB.getRequeststatus()==4){
 						 newrequestVo.setStage("In-progress");
@@ -404,7 +408,7 @@ public class NewrequestImpl implements NewrequestInterface {
 						}
 						else
 						{
-							newrequestVo.setStatus("In Active");
+							newrequestVo.setStatus("In-Active");
 						}
 						
 						newrequestVo.setNewRequestId(requestDB.getId());
@@ -585,8 +589,11 @@ public class NewrequestImpl implements NewrequestInterface {
 					newrequestVo.setFileName(request.getFilename());
 					newrequestVo.setFriendName(name);
 					newrequestVo.setCompletionpercentage(request.getCompletionpercentage());
+					newrequestVo.setRating(request.getRating());
+					newrequestVo.setFeedback(request.getFeedback());
+					
 					if(request.getRequeststatus()==1){
-						newrequestVo.setStage("Request");
+						newrequestVo.setStage("Requested");
 					}
 					else if(request.getRequeststatus()==2){
 						newrequestVo.setStage("Accepted");
@@ -617,7 +624,7 @@ public class NewrequestImpl implements NewrequestInterface {
 					}
 					else
 					{
-						newrequestVo.setStatus("In Active");
+						newrequestVo.setStatus("In-Active");
 					}
 	    			tx.commit();
 	            }
@@ -670,13 +677,19 @@ public class NewrequestImpl implements NewrequestInterface {
 		            			session.createCriteria(Request.class)
 		            			.add(Restrictions.eq("id", Integer.valueOf(requestId)))
 		            			.uniqueResult();
-		          
 		           
 		            if(requestworkflow != null ){
 		            	requestworkflow.setStatus(status);
-		            	requestworkflow.setDescription(description);		            	
-		            	requestworkflow.setCompletiondate(completiondate);
-		            	//requestworkflow.setUserfriendlist(userfriendlist);
+		            	requestworkflow.setDescription(description);
+		            	
+		            	
+		            	if(completiondate != null){
+				           	requestworkflow.setCompletiondate(completiondate);
+				            
+				        		}
+		           
+		            		
+		            	
 		        	if(userproject != null)
 						{
 							userproject1 = (Userproject)session.createCriteria(Userproject.class)
@@ -712,9 +725,18 @@ public class NewrequestImpl implements NewrequestInterface {
 							
 							requestworkflow.setUserfriendlist(userfriend1);
 						}
-		            	 if(stage !=null ){
+		            	 if(stage !=null && stage==8){
 		            	requestworkflow.setRequeststatus(stage);
+		            	requestworkflow.setApproveddate(new Date());
+		            	requestworkflow.setApprovedby(userName);
 		            	 }
+		            	 else{
+		            		 requestworkflow.setRequeststatus(stage); 
+		            	 }
+		            	 
+		            		requestworkflow.setDatemodified(new Date());
+				        	requestworkflow.setModifiedby(userName);
+		            	 
 		            	session.update(requestworkflow);
 		            	
 		            if(message !=null && ! message.trim().equals("")){	
@@ -728,6 +750,9 @@ public class NewrequestImpl implements NewrequestInterface {
 		            }
 		    			tx.commit();
  			result = 1;
+ 			
+ 			
+ 			
 				}
 		}
 		catch(Exception e)
@@ -754,6 +779,12 @@ public class NewrequestImpl implements NewrequestInterface {
 
 	
 	
+
+	private Date parse(String getDate) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 
 	@Override
 	public List<NewrequestVo> getallproject(String userName) throws Exception {
@@ -868,7 +899,7 @@ public class NewrequestImpl implements NewrequestInterface {
 						 newrequestVo.setStage("Returned");
 						}
 					 else if(requestDB.getRequeststatus()==1){
-						 newrequestVo.setStage("Request");
+						 newrequestVo.setStage("Requested");
 					 }
 					 else if(requestDB.getRequeststatus()==4){
 						 newrequestVo.setStage("In-progress");
@@ -894,7 +925,7 @@ public class NewrequestImpl implements NewrequestInterface {
 						}
 						else
 						{
-							newrequestVo.setStatus("In Active");
+							newrequestVo.setStatus("In-Active");
 						}
 						
 						newrequestVo.setNewRequestId(requestDB.getId());
@@ -1109,7 +1140,7 @@ public class NewrequestImpl implements NewrequestInterface {
 						 newrequestVo.setStage("Returned");
 						}
 					 else if(requestDB.getRequeststatus()==1){
-						 newrequestVo.setStage("Request");
+						 newrequestVo.setStage("Requested");
 					 }
 					 else if(requestDB.getRequeststatus()==4){
 						 newrequestVo.setStage("In-progress");
@@ -1135,7 +1166,7 @@ public class NewrequestImpl implements NewrequestInterface {
 						}
 						else
 						{
-							newrequestVo.setStatus("In Active");
+							newrequestVo.setStatus("In-Active");
 						}
 						
 						newrequestVo.setNewRequestId(requestDB.getId());
@@ -1314,7 +1345,7 @@ public class NewrequestImpl implements NewrequestInterface {
 						 newrequestVo.setStage("Returned");
 						}
 					 else if(requestDB.getRequeststatus()==1){
-						 newrequestVo.setStage("Request");
+						 newrequestVo.setStage("Requested");
 					 }
 					 else if(requestDB.getRequeststatus()==4){
 						 newrequestVo.setStage("In-progress");
@@ -1340,7 +1371,7 @@ public class NewrequestImpl implements NewrequestInterface {
 						}
 						else
 						{
-							newrequestVo.setStatus("In Active");
+							newrequestVo.setStatus("In-Active");
 						}
 						
 						newrequestVo.setNewRequestId(requestDB.getId());
@@ -1427,142 +1458,65 @@ public class NewrequestImpl implements NewrequestInterface {
 	}
 	
 	
-	@SuppressWarnings("unchecked")
+	
+	
 	@Override
-	public Map<String, BigInteger> piechart(String userName) throws Exception {
+	public int savefeedbackratingById(String requestId, String userName,
+			Integer rating, String feedback,Integer stage) throws Exception {
 		// TODO Auto-generated method stub
-		 Map<String, BigInteger> requestmap = new HashMap<String, BigInteger>();
+		
+		
 		    Session session = null;
-		    Transaction tx = null;		
-		    Users  usersTemp1=null;			  
-		    List<Object[]> rows = null;
-		    SQLQuery query = null;
-		    String sqlQuery = "";
-		    BigInteger countfriendemail=null;	
-		    String friendemail=null;
-		    
-		    int result=0;
-		  
+		    Transaction tx = null;	   
+		    Request requestworkflow = null;
+		    Request request=null;
+		    int result = 0;
+		    Requestnotes  requestnotes=null;
 				try
 				{
-				session = HibernateUtil.getSession();
-		        tx = session.beginTransaction();
-		            usersTemp1 = (Users) session.createCriteria(Users.class)
-		            		.add(Restrictions.eq("emailid",userName.toLowerCase().trim()).ignoreCase())
-							.uniqueResult();
-					if (usersTemp1 != null)
-					{
-						 sqlQuery = " select (select u1.emailid from reqman.users as u1,reqman.userfriendlist as uf1  where "
-                                  + " u1.id=uf1.friendid and u1.status=true and uf1.status=true and uf1.id=r.friendid), count(r.id) from reqman.request as r" 
-                                  + " where r.status=true and r.requeststatus in (2,4,5) and r.friendid in "
-                                  + " (select uf.id from reqman.users as u,reqman.userfriendlist as uf where u.id=uf.userid "
-                                  + " and u.status=true and uf.status=true and u.emailid='"+userName+"') group by r.friendid";    
-				          query = session.createSQLQuery(sqlQuery);
-				          rows = query.list();
-				            
-				            if(rows != null && rows.size() != 0)
-				            {	
-				            	String feiend="";
-				            	for(Object[] row : rows)
-				            	{
-				            		countfriendemail = (BigInteger) row[1];
-				            		friendemail = (String) row[0];				            				
-	                        	  requestmap.put(friendemail,countfriendemail);								
-							     }
-						    }
-					  }
-				   }
-		            catch(Exception e)
-		    		{
-		    			e.printStackTrace();
-		    			if(tx != null)
-		    			{
-		    				tx.rollback();
-		    			}
-		    			result = 2;
-		    		}
-		    		finally 
-		    		{
-		            	if(session != null)
-		                session.close();
-		    	    }
+					session = HibernateUtil.getSession();
+		            tx = session.beginTransaction();
+		            requestworkflow = (Request)
+		            			session.createCriteria(Request.class)
+		            			.add(Restrictions.eq("id", Integer.valueOf(requestId)))
+		            			.uniqueResult();
+		           
+		            if(requestworkflow != null ){
+		            	
+		            	
+		            		requestworkflow.setRating(rating);
+		            		requestworkflow.setFeedback(feedback);
+		            		requestworkflow.setRequeststatus(stage);
+		            	session.update(requestworkflow);
+		            	
+		           
+		    			tx.commit();
+			result = 1;
+			
+			
+			
+				}
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+			if(tx != null){
+				tx.rollback();
+			}
+			result = 2;
+		}
+		finally 
+		{
+  	if(session != null)
+      session.close();
+	    }
 
-		
-		return requestmap;
+		return result;
+	
+	
+
 	}
-	
-	
-	public Map<String,Double> barchart(String userName) throws Exception {
-		  // TODO Auto-generated method stub
-		   Map<String, Double> requestbarmap = new HashMap<String, Double>();
-		   Session session = null;
-		      Transaction tx = null;  
-		     Users  usersTemp1=null;    
-		     Request request=null;
-		     int result = 0;
-		     List<Object[]> rows = null;
-		      SQLQuery query = null;
-		      String sqlQuery = "";
-		      BigInteger percentageDB=null; 
-		      BigInteger countDB=null; 
-		      Boolean grade=null;
-		      Double currentpercentage=0.0;
-		      String friendemail=null;
-		      
-		    try
-		    {
-		     session = HibernateUtil.getSession();
-		           tx = session.beginTransaction();
-		               usersTemp1 = (Users) session.createCriteria(Users.class)
-		                 .add(Restrictions.eq("emailid",userName.toLowerCase().trim()).ignoreCase())
-		        .uniqueResult();
-		      if (usersTemp1 != null)
-		      {
-	 sqlQuery = " select (select u1.firstname from reqman.users as u1,reqman.userfriendlist as uf1 where "
-               +" u1.id=uf1.friendid and u1.status=true and uf1.status=true and uf1.id=r.friendid),"
-               +" (sum((r.completionpercentage*100)/(100 /(DATE_PART('day',r.completiondate-r.acceptdate))"
-               +" *(DATE_PART('day',CURRENT_TIMESTAMP-r.acceptdate))))) / count(r.id ) as average"
-               +" from reqman.request as r  "
-	           +" where r.status=true and r.requeststatus in (4)and DATE_PART('day',CURRENT_TIMESTAMP-r.acceptdate) != 0 and r.friendid in" 
-		       +" (select uf.id from reqman.users as u,reqman.userfriendlist as uf where u.id=uf.userid "
-			   +" and u.status=true and uf.status=true and u.emailid='"+userName+"') group by r.friendid";
-	 
-		               query = session.createSQLQuery(sqlQuery);
-		               rows = query.list();
-		                 
-		           if(rows != null && rows.size() != 0)
-		             { 
-		                  
-		                  for(Object[] row : rows)
-		                  {
-		                    friendemail = (String) row[0]; 
-		                   currentpercentage=(Double) row[1];
-		                
-		                 
-		                   requestbarmap.put(friendemail,currentpercentage); 
-		                    
-		                   
-		                 }
-		              }
-		           }
-		        }
-		              catch(Exception e)
-		        {
-		         e.printStackTrace();
-		         if(tx != null){
-		          tx.rollback();
-		         }
-		         result = 2;
-		        }
-		        finally 
-		        {
-		               if(session != null)
-		                  session.close();
-		           }
 
-		  
-		  return requestbarmap;
-		 }
 
 	
 	
@@ -1592,5 +1546,7 @@ public class NewrequestImpl implements NewrequestInterface {
 		
 	}
 
+
+	
 
 }

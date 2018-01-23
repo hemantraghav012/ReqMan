@@ -131,7 +131,7 @@ public class ResponseImpl implements responseInterface {
 						if(requestDB.getStatus()==true && requestDB.getRequeststatus()==1){
 						responseVo.setTitle(requestDB.getTitle() != null ? requestDB.getTitle().trim() : "");
 						responseVo.setDescription(requestDB.getDescription() != null ? requestDB.getDescription().trim() : "");
-						responseVo.setCompletiondate(requestDB.getCompletiondate() != null ?  Dateconverter.convertDateToStringDDMMDDYYYY(requestDB.getCompletiondate()) : "");
+						responseVo.setChangedate(requestDB.getCompletiondate() != null ?  Dateconverter.convertDateToStringDDMMDDYYYY(requestDB.getCompletiondate()) : "");
 						responseVo.setFriendName(name);
 						responseVo.setUsercategory(userCategory);
 						responseVo.setUserproject(userProject);
@@ -146,7 +146,7 @@ public class ResponseImpl implements responseInterface {
 						}
 						else
 						{
-							responseVo.setStatus("In Active");
+							responseVo.setStatus("In-Active");
 						}
 						
 						responseVo.setNewRequestId(requestDB.getId());
@@ -261,8 +261,7 @@ public class ResponseImpl implements responseInterface {
 					responseVo.setUserproject(userProject);
 					responseVo.setUserrequesttype(userRequestType);
 					responseVo.setDescription(request.getDescription());
-					responseVo.setCompletiondate(request.getCompletiondate() != null ?  Dateconverter.convertDateToStringDDMMDDYYYY(request.getCompletiondate()) : "");
-					//responseVo.setAttachment((UploadedFile) (requestworkflow.getAttachment() !=null ? requestworkflow.getAttachment() :""));
+					responseVo.setCompletiondate(request.getCompletiondate());
 					responseVo.setFileName(request.getFilename());
 			
 					if(request.getRequeststatus()==2)
@@ -274,7 +273,7 @@ public class ResponseImpl implements responseInterface {
 						responseVo.setStage("Returned");
 					}
 				 else if(request.getRequeststatus()==1){
-					 responseVo.setStage("Request");
+					 responseVo.setStage("Requested");
 				 }
 	    			tx.commit();
 	            }
@@ -319,8 +318,11 @@ public class ResponseImpl implements responseInterface {
 		          
 		           
 		            if(requestworkflow != null ){
-		            	
-		           //	requestworkflow.setDescription(description);
+		            
+		            	if(completiondate != null){
+		           	requestworkflow.setCompletiondate(completiondate);
+		        	  	
+		            	}
 		            	
 		            	requestworkflow.setRequeststatus(stage);
                      if(stage==2){
@@ -328,6 +330,9 @@ public class ResponseImpl implements responseInterface {
                     	
 		            		
 		            	}
+                     requestworkflow.setDatemodified(new Date());
+ 		        	requestworkflow.setModifiedby(userName);
+ 		           
 		            	session.update(requestworkflow);
 		            	
 		            	

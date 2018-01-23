@@ -71,7 +71,7 @@ public class RoleMasterImpl implements RoleMasterInterface {
 	}
 
 	@Override
-	public int savecategory(Integer id, String name) throws Exception {
+	public int getsaverole(Integer id, String name) throws Exception {
 		// TODO Auto-generated method stub
 		 Session session = null;
 	        SessionFactory hsf = null;

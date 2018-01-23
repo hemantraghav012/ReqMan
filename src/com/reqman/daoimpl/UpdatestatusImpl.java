@@ -174,7 +174,7 @@ public class UpdatestatusImpl implements UpdatestatusInterface {
 						}
 						else
 						{
-							updatestatusVo.setStatus("In Active");
+							updatestatusVo.setStatus("In-Active");
 						}
 						
 						updatestatusVo.setNewRequestId(requestDB.getId());
@@ -372,7 +372,8 @@ public class UpdatestatusImpl implements UpdatestatusInterface {
 		            			stage=5;
 		            			requestworkflow.setRequeststatus(stage);		            		
 		            	}
-		            		
+		            	requestworkflow.setModifiedby(userName);
+		            	requestworkflow.setDatemodified(new Date());
 		            	
 		            	session.update(requestworkflow);
 		            	
@@ -555,7 +556,7 @@ public class UpdatestatusImpl implements UpdatestatusInterface {
     						}
     						else
     						{
-    							updatestatusVo.setStatus("In Active");
+    							updatestatusVo.setStatus("In-Active");
     						}
     						
     						updatestatusVo.setNewRequestId(requestDB.getId());
@@ -778,7 +779,7 @@ public class UpdatestatusImpl implements UpdatestatusInterface {
 						}
 						else
 						{
-							updatestatusVo.setStatus("In Active");
+							updatestatusVo.setStatus("In-Active");
 						}
 						
 						updatestatusVo.setNewRequestId(requestDB.getId());
@@ -956,7 +957,7 @@ public class UpdatestatusImpl implements UpdatestatusInterface {
 						}
 						else
 						{
-							updatestatusVo.setStatus("In Active");
+							updatestatusVo.setStatus("In-Active");
 						}
 						
 						updatestatusVo.setNewRequestId(requestDB.getId());

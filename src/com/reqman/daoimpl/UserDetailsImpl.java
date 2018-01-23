@@ -36,8 +36,7 @@ public class UserDetailsImpl implements UserDetailsInterface {
         SessionFactory hsf = null;
         Transaction tx = null;
         Users users = null;
-       
-    	RequesttypeMasterImpl reinf = new RequesttypeMasterImpl();
+        GetRolequery reinf = new GetRolequery();
         int result = 0;
     	String roleName = "";
     	 Login login = null;
@@ -254,7 +253,7 @@ public class UserDetailsImpl implements UserDetailsInterface {
 		 Session session = null; 
 		    Transaction tx = null;
 		    Users users = null;
-		    RequesttypeMasterImpl reinf = new RequesttypeMasterImpl();
+		    GetRolequery reinf = new GetRolequery();
 	        int result = 0;
 	    	String roleName = "";   
 		   
@@ -659,7 +658,7 @@ public class UserDetailsImpl implements UserDetailsInterface {
 	        SessionFactory hsf = null;
 	        Transaction tx = null;
 	        Users users = null;
-	        RequesttypeMasterImpl reinf = new RequesttypeMasterImpl();
+	        GetRolequery reinf = new GetRolequery();
 	        int result = 0;
 	    	String roleName = "";
 	        String emailArr[] = {};
