@@ -29,6 +29,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
+import javax.faces.event.ActionEvent;
 import javax.faces.event.PhaseId;
 import javax.servlet.http.HttpSession;
 
@@ -38,6 +39,7 @@ import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.hssf.util.HSSFColor;
+import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
 import org.primefaces.model.UploadedFile;
@@ -52,7 +54,9 @@ import com.lowagie.text.BadElementException;
 import com.lowagie.text.Document;
 import com.lowagie.text.DocumentException;
 import com.lowagie.text.PageSize;
+import com.reqman.dao.NewRequestqueryInterface;
 import com.reqman.dao.NewrequestInterface;
+import com.reqman.daoimpl.NewRequestquery;
 import com.reqman.daoimpl.NewrequestImpl;
 import com.reqman.pojo.Request;
 import com.reqman.util.Dateconverter;
@@ -102,7 +106,8 @@ public class CreateRequestbean implements Serializable
      private Date startDate;
      private Date endDate;
      private Integer userfriend;
-   
+   private Integer rating;
+   private String feedback;
      private Integer[]  searchteammember;
      private Integer[]  searchcategory;
      private Integer[]  searchproject;
@@ -111,7 +116,7 @@ public class CreateRequestbean implements Serializable
      
      private PieChartModel piechart;
      
-     
+     private  NewRequestqueryInterface newrequestqueryInterface = new NewRequestquery();
      
      
 	@PostConstruct
@@ -163,7 +168,7 @@ public class CreateRequestbean implements Serializable
 			 try { 
 			 HttpSession session = SessionUtils.getSession();
 				String userName = (String)session.getAttribute("username");			
-					requestmap = newrequestInterface.piechart(userName );
+					requestmap = newrequestqueryInterface.piechart(userName );
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -232,7 +237,7 @@ public class CreateRequestbean implements Serializable
 			  {	       
 			    HttpSession session = SessionUtils.getSession();
 				String userName = (String)session.getAttribute("username");			
-				requestbarmap = newrequestInterface.barchart(userName );
+				requestbarmap = newrequestqueryInterface.barchart(userName );
 			  } catch (Exception e)
 			    {
 					// TODO Auto-generated catch block
@@ -243,7 +248,7 @@ public class CreateRequestbean implements Serializable
 			 BarChartModel model = new BarChartModel();				 
 			   ChartSeries chartseries1 = new ChartSeries();	
 			    
-			  //1 for Poor
+			  //1 for Good
 			 
 			  
 	            for(Map.Entry m:requestbarmap.entrySet())
@@ -367,14 +372,15 @@ public class CreateRequestbean implements Serializable
             //addMessage("Welcome to Primefaces!!");
         	setRequestId(requestId);
         	newrequestVo = newrequestInterface.getRequestById(requestId);      	
-			
+        	System.out.println("--rating	-"+rating);
+			System.out.println("--feedback	-"+feedback);
         	if(newrequestVo != null && newrequestVo.getStatus().trim().equalsIgnoreCase("Active")){
         		 setTitle(newrequestVo.getTitle() != null ? newrequestVo.getTitle(): "");
         		 setDescription(newrequestVo.getDescription() != null ? newrequestVo.getDescription() : "");        		
         	     setCompletiondate(newrequestVo.getCompletiondate());
         	     setUserproject(newrequestVo.getProject());
         	     setUsercategory(newrequestVo.getCategory());
-        	     if(newrequestVo.getStage().trim().equalsIgnoreCase("Request")){
+        	     if(newrequestVo.getStage().trim().equalsIgnoreCase("Requested")){
         	    	 setStage(1);
         	     } else if(newrequestVo.getStage().trim().equalsIgnoreCase("Accepted")){
         	    	 setStage(2);
@@ -392,6 +398,9 @@ public class CreateRequestbean implements Serializable
         	    	 setStage(8);
         	     }
         	     setUserfriend(newrequestVo.getUserfriend());
+        	    // setRating(newrequestVo.getRating());
+        	    // setFeedback(newrequestVo.getFeedback());
+        	     
         		 setStatus(true);
         		
         	}
@@ -404,7 +413,7 @@ public class CreateRequestbean implements Serializable
         		setUsercategory(newrequestVo.getCategory());
             	setUserrequesttype(newrequestVo.getRequesttype());
             	setUserfriend(newrequestVo.getUserfriend());
-            	  if(newrequestVo.getStage().trim().equalsIgnoreCase("Request")){
+            	  if(newrequestVo.getStage().trim().equalsIgnoreCase("Requested")){
         	    	 setStage(1);
         	     } else if(newrequestVo.getStage().trim().equalsIgnoreCase("Accepted")){
         	    	 setStage(2);
@@ -421,6 +430,9 @@ public class CreateRequestbean implements Serializable
         	     } else  if(newrequestVo.getStage().trim().equalsIgnoreCase("Close")){
         	    	 setStage(8);
         	     }
+            	//  setRating(newrequestVo.getRating());
+         	   //  setFeedback(newrequestVo.getFeedback());
+         	    
         		setStatus(false);
         	}
         	
@@ -438,8 +450,8 @@ public class CreateRequestbean implements Serializable
 	{
 		int result = 0;
 		try{
-			System.out.println("--updateRequest-status-"+status);
-			System.out.println("--updateRequest-status-"+description);
+			System.out.println("--updateRequest-status-"+rating);
+			System.out.println("--updateRequest-status-"+feedback);
 			System.out.println("--updateRequest-status-"+completiondate);
 			System.out.println("--updateRequest-project-"+userproject);
 			System.out.println("--updateRequest-category-"+usercategory);
@@ -450,7 +462,8 @@ public class CreateRequestbean implements Serializable
 			HttpSession session = SessionUtils.getSession();
 			String userName = (String)session.getAttribute("username");			
 			System.out.println("--usersession--userName-->"+userName);
-			
+			System.out.println("--rating	-"+rating);
+			System.out.println("--feedback	-"+feedback);
         	result = newrequestInterface.updateRequestById(requestId,status,description, completiondate,attachment, 
         			completionpercentage,stage,message,userName,userproject,usercategory,userrequesttype,userfriend);
         	
@@ -483,7 +496,109 @@ public class CreateRequestbean implements Serializable
 		return "request";
 	}
 	
-	
+	public String savefeedbackRating(ActionEvent event)
+	{
+		int result = 0;
+		try{
+			
+			System.out.println("--rating	-"+rating);
+			System.out.println("--feedback	-"+feedback);
+			System.out.println("--updateRequesr requestid-"+requestId);
+			HttpSession session = SessionUtils.getSession();
+			String userName = (String)session.getAttribute("username");			
+			System.out.println("--usersession--userName-->"+userName);
+			System.out.println("--rating	-"+rating);
+			System.out.println("--feedback	-"+feedback);
+			newrequestVo = newrequestInterface.getRequestById(requestId);      	
+        	
+			if(newrequestVo != null && newrequestVo.getStatus().trim().equalsIgnoreCase("Active")){
+       		 setTitle(newrequestVo.getTitle() != null ? newrequestVo.getTitle(): "");
+       		 setDescription(newrequestVo.getDescription() != null ? newrequestVo.getDescription() : "");        		
+       	     setCompletiondate(newrequestVo.getCompletiondate());
+       	     setUserproject(newrequestVo.getProject());
+       	     setUsercategory(newrequestVo.getCategory());
+       	     if(newrequestVo.getStage().trim().equalsIgnoreCase("Requested")){
+       	    	 setStage(1);
+       	     } else if(newrequestVo.getStage().trim().equalsIgnoreCase("Accepted")){
+       	    	 setStage(2);
+       	     } else  if(newrequestVo.getStage().trim().equalsIgnoreCase("Returned")){
+       	    	 setStage(3);
+       	     } else  if(newrequestVo.getStage().trim().equalsIgnoreCase("In-progress")){
+       	    	 setStage(4);
+       	     } else  if(newrequestVo.getStage().trim().equalsIgnoreCase("Completed")){
+       	    	 setStage(5);
+       	     } else  if(newrequestVo.getStage().trim().equalsIgnoreCase("Cancel")){
+       	    	 setStage(6);
+       	     } else  if(newrequestVo.getStage().trim().equalsIgnoreCase("Hold")){
+       	    	 setStage(7);
+       	     } else  if(newrequestVo.getStage().trim().equalsIgnoreCase("Close")){
+       	    	 setStage(8);
+       	     }
+       	     setUserfriend(newrequestVo.getUserfriend());
+       	     
+       		 setStatus(true);
+       		
+       	}
+       	else
+       	{
+       		setTitle(newrequestVo.getTitle() != null ? newrequestVo.getTitle(): "");
+       		setDescription(newrequestVo.getDescription() != null ? newrequestVo.getDescription() : "");
+       		setCompletiondate(newrequestVo.getCompletiondate());
+       		setUserproject(newrequestVo.getProject());
+       		setUsercategory(newrequestVo.getCategory());
+           	setUserrequesttype(newrequestVo.getRequesttype());
+           	setUserfriend(newrequestVo.getUserfriend());
+           	  if(newrequestVo.getStage().trim().equalsIgnoreCase("Requested")){
+       	    	 setStage(1);
+       	     } else if(newrequestVo.getStage().trim().equalsIgnoreCase("Accepted")){
+       	    	 setStage(2);
+       	     } else  if(newrequestVo.getStage().trim().equalsIgnoreCase("Returned")){
+       	    	 setStage(3);
+       	     } else  if(newrequestVo.getStage().trim().equalsIgnoreCase("In-progress")){
+       	    	 setStage(4);
+       	     } else  if(newrequestVo.getStage().trim().equalsIgnoreCase("Completed")){
+       	    	 setStage(5);
+       	     } else  if(newrequestVo.getStage().trim().equalsIgnoreCase("Cancel")){
+       	    	 setStage(6);
+       	     } else  if(newrequestVo.getStage().trim().equalsIgnoreCase("Hold")){
+       	    	 setStage(7);
+       	     } else  if(newrequestVo.getStage().trim().equalsIgnoreCase("Close")){
+       	    	 setStage(8);
+       	     }
+           	   
+       		setStatus(false);
+       	}
+       	
+			
+			
+			
+        	result = newrequestInterface.savefeedbackratingById(requestId,userName,rating,feedback,stage);
+        	//setRequestId(requestId);
+        	
+        	if(result == 2)
+        	{
+        		FacesContext.getCurrentInstance().addMessage(
+						null,
+						new FacesMessage(FacesMessage.SEVERITY_WARN,
+								"Problem while modifying the Category",
+								"Problem while modifying the Category"));
+				return "modifyrequest.xhtml";
+        	}
+        	
+        	
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+			FacesContext.getCurrentInstance().addMessage(
+					null,
+					new FacesMessage(FacesMessage.SEVERITY_WARN,
+							"Problem while modifying the Category",
+							"Problem while modifying the Category"));
+			return "modifyrequest.xhtml";
+		}
+		return "request.xhtml";
+	}
 	
 	
 	 public StreamedContent fileDownloadView() { 
@@ -953,6 +1068,29 @@ public class CreateRequestbean implements Serializable
 
 		public void setPiechart(PieChartModel piechart) {
 			this.piechart = piechart;
+		}
+
+
+
+		public Integer getRating() {
+			return rating;
+		}
+
+
+
+		public void setRating(Integer rating) {
+			this.rating = rating;
+		}
+
+
+
+		public String getFeedback() {
+			return feedback;
+		}
+
+
+		public void setFeedback(String feedback) {
+			this.feedback = feedback;
 		}
 
 

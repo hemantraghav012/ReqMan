@@ -62,26 +62,9 @@ public class Rolebean implements Serializable{
 		{
 			roleList = new ArrayList<RoleVo>();
 			
-			result = roleMasterInterface.savecategory(id,name);
+			result = roleMasterInterface.getsaverole(id,name);
 			
-			if(result == 1)
-			{
-				FacesContext.getCurrentInstance().addMessage(
-						null,
-						new FacesMessage(FacesMessage.SEVERITY_WARN,
-								"Category already exist",
-								"Category already exist"));
-				return "createroles";
-			}
-			if(result == 2)
-			{
-				FacesContext.getCurrentInstance().addMessage(
-						null,
-						new FacesMessage(FacesMessage.SEVERITY_WARN,
-								"Category already exist and in active, please activate by using modify category ",
-								"Category already exist and in active, please activate by using modify category"));
-				return "createroles";
-			}
+			
 			if(result == 3)
 			{
 				HttpSession session = SessionUtils.getSession();
@@ -92,8 +75,8 @@ public class Rolebean implements Serializable{
 				FacesContext.getCurrentInstance().addMessage(
 						null,
 						new FacesMessage(FacesMessage.SEVERITY_WARN,
-								"Category created  successfully.",
-								"Category created  successfully."));
+								"Role created  successfully.",
+								"Role created  successfully."));
 			}
 			
 			

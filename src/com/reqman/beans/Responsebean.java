@@ -120,13 +120,15 @@ public void modifyAction() {
 			
         	if(responseVo != null && responseVo.getStage().trim().equalsIgnoreCase("Request")){
         		setTitle(responseVo.getTitle() != null ? responseVo.getTitle(): "");
-        		setDescription(responseVo.getDescription() != null ? responseVo.getDescription() : "");        		
+        		setDescription(responseVo.getDescription() != null ? responseVo.getDescription() : "");  
+        		setCompletiondate(responseVo.getCompletiondate());
           		setStage(1);
         
         	}
         	else if(responseVo != null && responseVo.getStage().trim().equalsIgnoreCase("Accepted")){
         		setTitle(responseVo.getTitle() != null ? responseVo.getTitle(): "");
-        		setDescription(responseVo.getDescription() != null ? responseVo.getDescription() : "");        		
+        		setDescription(responseVo.getDescription() != null ? responseVo.getDescription() : "");
+        		setCompletiondate(responseVo.getCompletiondate());
           		setStage(2);
         
         	
@@ -136,9 +138,11 @@ public void modifyAction() {
         	{
         		setTitle(responseVo.getTitle() != null ? responseVo.getTitle(): "");
         		setDescription(responseVo.getDescription() != null ? responseVo.getDescription() : "");
+        		setCompletiondate(responseVo.getCompletiondate());
         		setStage(3);
         	
         	}
+        	System.out.println("modify action"+completiondate);
         	
         	FacesContext.getCurrentInstance()
             .getExternalContext().dispatch("modifyresponse.xhtml");
@@ -163,7 +167,7 @@ public void modifyAction() {
 			HttpSession session = SessionUtils.getSession();
 			String userName = (String)session.getAttribute("username");			
 			System.out.println("--usersession--userName-->"+userName);
-			
+			System.out.println("--usersession--userName-->"+completiondate);
         	result = responseInterface.updateResponsetById(requestId,stage, completiondate,userName,message);
         	
         	if(result == 2)
