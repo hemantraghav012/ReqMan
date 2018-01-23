@@ -125,3 +125,14 @@
   width: 50px;
 }
 
+
+.paddingleft{
+	padding-left:0px;
+	
+}
+ @media screen and (max-width: 750px)  {
+  .paddingleft {
+       
+        padding-left:15px;
+    }
+ }
