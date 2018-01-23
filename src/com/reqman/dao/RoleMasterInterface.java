@@ -8,6 +8,6 @@ public interface RoleMasterInterface {
 
 	public	List<RoleVo> getroleDetails(String userName)throws Exception;
 
-public int savecategory(Integer id, String name) throws Exception;
+public int getsaverole(Integer id, String name) throws Exception;
 
 }

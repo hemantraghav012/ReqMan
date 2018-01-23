@@ -22,17 +22,15 @@ public interface NewrequestInterface {
 
 	public List<NewrequestVo> getNewrequestDetails(String userName,	Date startDate, Date endDate)
 			throws Exception;
-
+	
 	public NewrequestVo getRequestById(String requestId)throws Exception;
-
+	
 	public int updateRequestById(String requestId, Boolean status,
-			String description, Date completiondate, UploadedFile attachment, Float completionpercentage, Integer stage,String message, String userName, Integer userproject, Integer usercategory, Integer userrequesttype, Integer userfriend)throws Exception;
-
-	public Map piechart(String userName)throws Exception;
+			String description, Date completiondate, UploadedFile attachment, Float completionpercentage, Integer stage,
+			String message, String userName, Integer userproject, Integer usercategory, Integer userrequesttype, 
+			Integer userfriend)throws Exception;
 
 	public List<NewrequestVo> getallproject(String userName)throws Exception;
-
-	
 
 	public List<NewrequestVo> getNewrequestDetailsforemail(String userName,
 			String title, String description, String userproject,
@@ -41,24 +39,10 @@ public interface NewrequestInterface {
 
 	public List<NewrequestVo> getColserequestDetails(String userName) throws Exception;
 
-	public Map barchart(String userName)throws Exception;
+	public int savefeedbackratingById(String requestId, String userName,
+			Integer rating, String feedback, Integer stage)throws Exception;
 
 
-	
-
-	
-	
-
-
-
-
-	
-
-	
-
-	
-
-	
 
 	
 }
