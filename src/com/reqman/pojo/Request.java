@@ -5,6 +5,7 @@ package com.reqman.pojo;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -26,9 +27,7 @@ import javax.persistence.UniqueConstraint;
 @Table(name = "request")
 public class Request implements java.io.Serializable {
 
-	/**
-	 * 
-	 */
+	
 	private static final long serialVersionUID = 7850920915635663322L;
 	private int id;
 	private Usercategory usercategory;
@@ -53,7 +52,8 @@ public class Request implements java.io.Serializable {
 	private String approvedby;
 	private Date approveddate;
 	private Set<Requestnotes> requestnoteses = new HashSet<Requestnotes>(0);
-
+    private Integer rating;
+    private String feedback;
 	public Request() {
 	}
 
@@ -61,6 +61,11 @@ public class Request implements java.io.Serializable {
 		this.id = id;
 	}
 
+	
+	
+	
+	
+	
 	public Request(int id, Usercategory usercategory,
 			Userfriendlist userfriendlist, Userproject userproject,
 			Userrequesttype userrequesttype, String title, String description,
@@ -69,7 +74,8 @@ public class Request implements java.io.Serializable {
 			Date datemodified, String modifiedby, String filename,
 			int completionpercentage, Date acceptdate, Date updatedate,
 			Integer revisionnumber, String approvedby, Date approveddate,
-			Set<Requestnotes> requestnoteses) {
+			Set<Requestnotes> requestnoteses, Integer rating, String feedback) {
+		super();
 		this.id = id;
 		this.usercategory = usercategory;
 		this.userfriendlist = userfriendlist;
@@ -93,7 +99,11 @@ public class Request implements java.io.Serializable {
 		this.approvedby = approvedby;
 		this.approveddate = approveddate;
 		this.requestnoteses = requestnoteses;
+		this.rating = rating;
+		this.feedback = feedback;
 	}
+
+	
 
 	@Id
 	 @GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -313,5 +323,24 @@ public class Request implements java.io.Serializable {
 	public void setRequestnoteses(Set<Requestnotes> requestnoteses) {
 		this.requestnoteses = requestnoteses;
 	}
+	@Column(name = "rating", length = 50)
+	public Integer getRating() {
+		return rating;
+	}
 
+	public void setRating(Integer rating) {
+		this.rating = rating;
+	}
+	@Column(name = "feedback", length = 500)
+	public String getFeedback() {
+		return feedback;
+	}
+
+	public void setFeedback(String feedback) {
+		this.feedback = feedback;
+	}
+
+	
+	
+	
 }
