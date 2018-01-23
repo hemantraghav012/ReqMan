@@ -17,6 +17,7 @@ import javax.swing.JLabel;
 
 import com.reqman.dao.NewrequestInterface;
 import com.reqman.dao.UpdatestatusInterface;
+import com.reqman.daoimpl.GetRolequery;
 import com.reqman.daoimpl.NewrequestImpl;
 import com.reqman.daoimpl.RequesttypeMasterImpl;
 import com.reqman.daoimpl.UpdatestatusImpl;
@@ -36,7 +37,7 @@ public class requestemail {
 	
 	
 	public void useremailid() throws Exception{
-		RequesttypeMasterImpl reinf = new RequesttypeMasterImpl();
+		GetRolequery reinf = new GetRolequery();
 		List<String> emailList=reinf.AllUser();
        System.out.println("requestemail--"+emailList );
 	}
