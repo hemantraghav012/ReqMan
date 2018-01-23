@@ -35,6 +35,8 @@ public class NewrequestVo implements Serializable
 	private Integer requesttype;
 	private Integer userfriend;
 	private Integer requeststage;
+	private Integer rating;
+	private String feedback;
 	
 	
 	
@@ -42,7 +44,26 @@ public class NewrequestVo implements Serializable
 	
 	
 	
-	
+	public Integer getRating() {
+		return rating;
+	}
+
+
+	public void setRating(Integer rating) {
+		this.rating = rating;
+	}
+
+
+	public String getFeedback() {
+		return feedback;
+	}
+
+
+	public void setFeedback(String feedback) {
+		this.feedback = feedback;
+	}
+
+
 	public Integer getRequeststage() {
 		return requeststage;
 	}

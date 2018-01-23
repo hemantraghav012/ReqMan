@@ -18,7 +18,7 @@ public class ResponseVo{
 	private String userproject;
 	private String userrequesttype;
 	//private StreamedContent attachment;
-	private String completiondate;
+	private Date completiondate;
 	private String status;
 	private String friendName;
 	private byte[] file;
@@ -26,10 +26,10 @@ public class ResponseVo{
 	private UploadedFile attachment;
 	private Float completionpercentage;
 	private String createdby;
-	private Date changedate;
+	
 	private List<requestNoteVo> noteList;
 	private Date createdate;
-	
+	private String changedate;
 	
 	
 
@@ -124,11 +124,13 @@ public class ResponseVo{
 		this.completionpercentage = completionpercentage;
 	}
 
-	public Date getChangedate() {
+	
+
+	public String getChangedate() {
 		return changedate;
 	}
 
-	public void setChangedate(Date changedate) {
+	public void setChangedate(String changedate) {
 		this.changedate = changedate;
 	}
 
@@ -164,11 +166,13 @@ public class ResponseVo{
 		this.userrequesttype = userrequesttype;
 	}
 
-	public String getCompletiondate() {
+	
+
+	public Date getCompletiondate() {
 		return completiondate;
 	}
 
-	public void setCompletiondate(String completiondate) {
+	public void setCompletiondate(Date completiondate) {
 		this.completiondate = completiondate;
 	}
 
