@@ -15,15 +15,7 @@
 <link rel="stylesheet" href="resource/mystyle/button.css"/>
 <script type="text/javascript" src="resource/js/bootstrap.js"/>
 <script type="text/javascript" src="resource/js/jquery.js"/>
-<style type="text/css">
-        .ui-growl {
-            
-            top:60px;
-            Right:20px;
-            width:301px;
-            z-index:9999;
-        }
-    </style>
+
 <title>Response To Request</title>
 
 <script>
@@ -119,12 +111,12 @@ function setRequestHiddenValue(new_value)
 				<h:outputText value="#{response.description}" style="display: inline;"   />
 </p:column>
  
-<p:column filterBy="#{response.completiondate}"  sortBy="#{response.completiondate}"  headerText="Due Date"    
+<p:column filterBy="#{response.completiondate}"  sortBy="#{response.changedate}"  headerText="Due Date"    
 			 filterMatchMode="contains"   pattern="dd-MMM-yyyy"  style="text-overflow: ellipsis; white-space: nowrap;padding: 0px 0px 0px 3px; ">
 				<f:facet name="header">
 					<h:outputText value="Due Date" />
 				</f:facet>
-				<h:outputText value="#{response.completiondate}" pattern="dd-MMM-yyyy" />
+				<h:outputText value="#{response.changedate}" pattern="dd-MMM-yyyy" />
 			</p:column>
     
     
@@ -188,11 +180,11 @@ onclick="PrimeFaces.monitorDownload(start, stop);setRequestHiddenValue(#{respons
      </p:commandLink>
        
 
- <p:dialog  header="View Notes" exportable="false" widgetVar="#{response.newRequestId}" varStatus="status" modal="true" responsive = "true">
+ <p:dialog  header="View Notes"  widgetVar="#{response.newRequestId}" varStatus="status" modal="true" responsive = "true">
       
       
        <div class="container">
-        <h:form  id="requestForm">   
+          
          
 <p:dataTable id="noteTable" var="noteview"  value = "#{response.noteList}" scrollable="true" scrollHeight="300"    >
 
@@ -211,7 +203,7 @@ onclick="PrimeFaces.monitorDownload(start, stop);setRequestHiddenValue(#{respons
     </p:column>
 </p:dataTable>
          
-       </h:form>    
+   
        </div>
 </p:dialog> 
 

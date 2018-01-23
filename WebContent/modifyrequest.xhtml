@@ -17,13 +17,13 @@
 <link rel="stylesheet" href="resource/css/bootstrap.css"/>
 <link rel="stylesheet" href="resource/mystyle/home.css"/>
 <link rel="stylesheet" href="resource/mystyle/createcategory.css"/>
- <link rel="stylesheet" href="resource/mystyle/button.css"/>
+<link rel="stylesheet" href="resource/mystyle/button.css"/>
 <script type="text/javascript" src="resource/js/bootstrap.js"/>
 <script type="text/javascript" src="resource/js/jquery.js"/>
 <title>View/Modify Request</title>
 <style type="text/css"> 
 .radiobuttonspace span { padding-right: 10px; } 
-.radiobuttonspace td { width: 100px; } 
+.radiobuttonspace td { width: 170px; } 
 
 </style> 
 
@@ -37,9 +37,15 @@
 </div>
        
       <!-- -end of header --> 
-      
+         <h:messages style = "color:red;margin:8px;" />
       	
         <div class="ui-fluid">
+        
+        <h:messages style = "color:red;margin:8px;" />
+        
+        
+        
+        
             <p:panelGrid columns="1"  layout="grid" styleClass="ui-panelgrid-blank ui-fluid" style=" border: 0;">
                
      
@@ -107,7 +113,7 @@
                                 
    <h:message for="multiple"  style="color:red;margin:8px;"/>
  <div class="col-sm-2 control-label">
- <h:outputLabel style="margin-top:0px;" >Completion Date:</h:outputLabel>
+ <h:outputLabel style="margin-top:0px;" >Due  Date:</h:outputLabel>
  </div>
 <div class="col-sm-4">
 
@@ -228,17 +234,15 @@
 
  </div>
 
-
-
 <div class=" row form-group ">
  <div class="col-sm-2 control-label" style="padding-top:0cm;"><h:outputLabel>Stage: </h:outputLabel></div>
 <div class=" col-sm-6"> 
-<h:selectOneRadio value = "#{createrequest.stage}" id="stage" styleClass="radiobuttonspace" requiredMessage="* Please enter status" > 
+<h:selectOneRadio value = "#{createrequest.stage}" id="stage" styleClass="radiobuttonspace" onclick="PF('dlg').show();" requiredMessage="* Please enter status" > 
 
 <c:choose>
 
 <c:when test="#{createrequest.stage eq 1}">
-    <f:selectItem   itemValue = "1" itemLabel = "&nbsp; Request"   /> 
+    <f:selectItem   itemValue = "1" itemLabel = "&nbsp; Requested"   /> 
     <f:selectItem   itemValue = "7" itemLabel = "&nbsp; Hold" /> 
     <f:selectItem   itemValue = "6" itemLabel = "&nbsp; Cancel" /> 
     </c:when>
@@ -264,12 +268,17 @@
     
 <c:when test="#{createrequest.stage eq 5}">
      <f:selectItem   itemValue = "5" itemLabel = "&nbsp; Completed" /> 
-     <f:selectItem   itemValue = "8" itemLabel = "&nbsp; Close" />     
+     <f:selectItem   itemValue = "8" itemLabel = "&nbsp; Close"   /> 
+        
+     
     </c:when>
+    
+  
+    
     
  <c:when test="#{createrequest.stage eq 6}">
      <f:selectItem   itemValue = "6" itemLabel = "&nbsp; Cancel" /> 
-     <f:selectItem   itemValue = "1" itemLabel = "&nbsp; Request" /> 
+     <f:selectItem   itemValue = "1" itemLabel = "&nbsp; Requested" /> 
      <f:selectItem   itemValue = "7" itemLabel = "&nbsp; Hold" /> 
         
     </c:when>
@@ -298,11 +307,39 @@
 
 </c:choose>
 </h:selectOneRadio> </div>
- <h:message for="status"  style="color:red;margin:8px;"/> 
+ <h:message for="stage"  style="color:red;margin:8px;"/> 
  </div>
+ 
+ 
+ <p:dialog header="Overall Rating For Task" widgetVar="dlg" modal="true" responsive = "true"  appendToBody="true">
 
 
+<div style="background-color: #FFF;">
 
+ 
+ 
+ <h:inputHidden value="#{createrequest.requestId}"></h:inputHidden>
+ <br></br>   
+     <p:rating id ="rating" value="#{createrequest.rating}"/>     
+   
+    <h:outputLabel >Feedback</h:outputLabel> <br></br> 
+      <h:inputTextarea id="inputfeedback"  value="#{createrequest.feedback}" cols="10" rows="3" class=" form-control"  >
+      <p:watermark for="inputfeedback" value="Please Enter Your Feedback.." />       
+      </h:inputTextarea>  
+      <br></br>
+        <h:commandButton actionListener="#{createrequest.savefeedbackRating}" value="Submit" class="btn fontsize btn-success btn-block"  >
+        </h:commandButton>
+     
+<br></br>
+</div>
+
+
+     </p:dialog>
+       
+     
+ 
+ 
+ 
  <div class=" row form-group">
  <div class="col-sm-2 control-label" style="padding-top:0cm;">
  <h:outputLabel  >Status: </h:outputLabel></div>
@@ -336,8 +373,10 @@
 
  </c:when>
  <c:otherwise>
- <h:commandButton action="#{createrequest.updateRequest}" value="Update" class="btn fontsize btn-success btn-block"></h:commandButton>
- 
+ <h:commandButton action="#{createrequest.updateRequest}" value="Update" class="btn fontsize btn-success btn-block"  ></h:commandButton>
+   
+
+
  
  </c:otherwise>
  
@@ -356,6 +395,7 @@
 
       </p:panelGrid>
       </div>
+     
 </h:body>
 	
 </html>

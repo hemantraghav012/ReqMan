@@ -41,100 +41,105 @@
 
  <div class=" row form-group ">
  <div class="col-sm-2 control-label"><h:outputLabel><span style="color:red;">* </span> Title:</h:outputLabel></div>
-<div class=" col-sm-10"> <h:inputText value="#{createrequest.title}"   class="  form-control"  id="title" required="true" requiredMessage="* Please enter Title" /></div>
- <h:message for="title"  style="color:red;margin:8px;"/> 
-
+<div class=" col-sm-10"> <h:inputText value="#{createrequest.title}"   class="  form-control"  id="title" required="true" requiredMessage="* Please enter Title" />
+ <h:message for="title"  style="color:red;"/>
+</div>
 </div>
 
  <div class=" row form-group " >
  <div class="col-sm-2 control-label"><h:outputLabel>Description:</h:outputLabel></div>
-<div class=" col-sm-10"><h:inputTextarea id="address" value="#{createrequest.description}"    
- cols="19" rows="3" class="  form-control" /></div>
-<h:message for="address"  style="color:red;margin:6px;"/>
-</div>
-
- 
+<div class=" col-sm-10"><h:inputTextarea id="address" value="#{createrequest.description}"  
+ cols="19" rows="3" class="  form-control" />
+ <h:message for="address"  style="color:red;"/>
+ </div>
+</div> 
  
  <div class="row form-grop">
- <div class="col-sm-2 control-label" style="padding-left: 0px;">
+ <div class="col-sm-2 control-label paddingleft" >
  <h:outputLabel><span style="color:red;">*</span>Team Member(s):<br></br><span style="color:red;">P/s select 1 or more</span></h:outputLabel>
 </div>
  <div class="col-sm-10 control-label" >
  <p:selectCheckboxMenu id="multiple" value="#{createrequest.userfriendlist}" label="friend add" multiple="true"
-     filter="true" filterMatchMode="startsWith"  style=" border-style: none;"  required="true" requiredMessage="* Please Select Team Member" >
-                                <f:selectItems value="#{friendbean.friendList1}" var="friend" itemLabel="#{friend.emailid}"  itemValue="#{friend.userFriendId}"  />                               
-                                </p:selectCheckboxMenu>
-                              <h:message for="multiple"  style="color:red;margin:6px;"/>
- </div>
- </div>
+                      filter="true" filterMatchMode="startsWith"  style=" border-style: none;"  required="true" 
+                      requiredMessage="* Please Select Team Member" >
+<f:selectItems value="#{friendbean.friendList1}" var="friend" itemLabel="#{friend.emailid}"  itemValue="#{friend.userFriendId}" />                               
+ </p:selectCheckboxMenu>
 
-
- <br></br>
- 
- 
- 
+ </div>
+  <h:message for="multiple"  style="color:red;margin-left:15px;" />
+ </div>
 
 <div class=" row form-group ">
  <div class="col-sm-2 control-label">
  <h:outputLabel style="white-space:nowrap;">Completion Date:</h:outputLabel>
  </div>
 <div class="col-sm-4"> 
-<p:calendar id="completiondate" value="#{createrequest.completiondate}" p:placeholder="DD-MM-YYYY" mindate="#{createrequest.endDate}" style=" border: 0;"  pattern="dd-MM-yyyy" mask="true" required="true" requiredMessage="* Please enter completion Date"  />
-
- </div>
- <h:message for="completiondate"  style="color:red;margin:8px;"/>
+<p:calendar id="completiondate" value="#{createrequest.completiondate}" p:placeholder="DD-MM-YYYY" 
+             mindate="#{createrequest.endDate}"  style=" border: 0;"  pattern="dd-MM-yyyy" mask="true" />
+<h:message for="completiondate"  style="color:red;"/>
+ </div> 
  
- <div class="col-sm-2 control-label"> 
-
- <h:outputLabel>Category:&nbsp;<span   data-toggle="tooltip" title="Categorize your requests for better monitoring and reporting. E.g. High / Medium / Low priority." style="margin-top:2px;" class="pull-right glyphicon glyphicon-info-sign"></span>
+ <div class="col-sm-2 control-label">
+ <h:outputLabel>Category:&nbsp;
+ <span   data-toggle="tooltip" title="Categorize your requests for better monitoring and reporting. E.g. High / Medium / Low priority." 
+ style="margin-top:2px;" class="pull-right glyphicon glyphicon-info-sign"></span>
  </h:outputLabel> 
  </div>
  <div class=" col-sm-4">
-      <p:selectOneMenu  value="#{createrequest.usercategory}"  style="  border: none;">
+  <p:selectOneMenu id ="category" value="#{createrequest.usercategory}"  style="border: none;">
             <f:selectItem itemLabel="Select" itemValue="" />
-           <f:selectItems value="#{categorybean.categoryList1}"  var="category" itemLabel="#{category.name}"
-                          itemValue="#{category.userCategoryId}"/>
-      
+            <f:selectItems value="#{categorybean.categoryList1}"  var="category" itemLabel="#{category.name}"
+                          itemValue="#{category.userCategoryId}"/>      
         </p:selectOneMenu>
+ <h:message for="category"  style="color:red;"/>
 </div>
- <h:message   style="color:red;margin:8px;"/>
 </div>
 
  <div class=" row form-group ">
 <div class="col-sm-2 control-label">
-<h:outputLabel>Project:&nbsp;<span   data-toggle="tooltip" title="Use Projects to assign your requests for better project visibility , collaboration, reporting and management. E.g. New product launch , New software etc." style="margin-top:2px;" class="pull-right glyphicon glyphicon-info-sign"></span></h:outputLabel>
+<h:outputLabel>Project:&nbsp;
+<span   data-toggle="tooltip" title="Use Projects to assign your requests for better project visibility , collaboration, reporting and management. E.g. New product launch , New software etc." 
+style="margin-top:2px;" class="pull-right glyphicon glyphicon-info-sign"></span>
+</h:outputLabel>
 </div>
- <div class=" col-sm-4">
- 
+ <div class=" col-sm-4"> 
  <p:selectOneMenu id="project" value="#{createrequest.userproject}" style=" border: 0;" >
-            <f:selectItem itemLabel="Select" itemValue="" />
-           <f:selectItems value="#{projectbean.projectList1}" var="project" itemLabel="#{project.name}"  itemValue="#{project.userProjectId}"/>
+           <f:selectItem itemLabel="Select" itemValue="" />
+           <f:selectItems value="#{projectbean.projectList1}" var="project" itemLabel="#{project.name}" 
+                          itemValue="#{project.userProjectId}"/>
         </p:selectOneMenu>
+ <h:message for="project"  style="color:red;"/>
 </div>
- <h:message for="project"  style="color:red;margin:8px;"/>
- 
- 
- 
- 
  
  <div class="col-sm-2 control-label">
- <h:outputLabel style="white-space:nowrap;">Type: &nbsp;<span   data-toggle="tooltip" title="Create Types for your requests for better monitoring and reporting. E.g. Minutes of meeting , Audit Points, etc. Only active Types will appear in the new request screen." style="margin-top:2px;" class="pull-right glyphicon glyphicon-info-sign"></span></h:outputLabel>
+ <h:outputLabel style="white-space:nowrap;">Type:&nbsp;
+ <span   data-toggle="tooltip" title="Create Types for your requests for better monitoring and reporting. E.g. Minutes of meeting , Audit Points, etc. Only active Types will appear in the new request screen." 
+ style="margin-top:2px;" class="pull-right glyphicon glyphicon-info-sign"></span>
+ </h:outputLabel>
  </div>
  <div class=" col-sm-4">
  <p:selectOneMenu id="requesttype" value="#{createrequest.userrequesttype}"  style=" border: 0;" >
             <f:selectItem itemLabel="Select" itemValue="" />
-            <f:selectItems value="#{requesttypebean.requesttypeList1}" var="requesttype" itemLabel="#{requesttype.name}"  itemValue="#{requesttype.userRequesttypeId}"/>
-        </p:selectOneMenu>
+            <f:selectItems value="#{requesttypebean.requesttypeList1}" var="requesttype" itemLabel="#{requesttype.name}"
+                           itemValue="#{requesttype.userRequesttypeId}"/>
+ </p:selectOneMenu>
+ <h:message for="requesttype"  style="color:red;"/>
 </div>
- <h:message for="requesttype"  style="color:red;margin:8px;"/>
+
 </div>
  <br></br>
 <div class=" row form-group ">
-<div class="col-sm-2 control-label"><h:outputLabel style="white-space:nowrap;">Attach File :</h:outputLabel></div>
-<div class="col-sm-4">
-<p:fileUpload value="#{createrequest.attachment}" mode="simple" />
+<div class="col-sm-2 control-label">
+<h:outputLabel style="white-space:nowrap;" id ="attach" >Attach File :</h:outputLabel></div>
+<div class="col-sm-7">
+
+ <p:fileUpload value="#{createrequest.attachment}" mode="simple" ></p:fileUpload>
+  
 </div>
 
+
+
+ 
 </div>
 
 

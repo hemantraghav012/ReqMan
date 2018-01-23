@@ -15,21 +15,12 @@
 <link rel="stylesheet" href="resource/mystyle/onlyhome.css"/>
 <link rel="stylesheet" href="resource/mystyle/home.css"/>
 <link rel="stylesheet" href="resource/mystyle/button.css"/>
-<link rel="stylesheet" href="resource/mystyle/friendmaster.css"/>
 <script type="text/javascript" src="resource/js/bootstrap.js"/>
 <script type="text/javascript" src="resource/js/jquery.js"/>
 
- <style type="text/css">
-        .ui-growl {
-            
-            top:60px;
-            Right:20px;
-            width:301px;
-            z-index:9999;
-        }
-    </style>
-
 	<title> Request </title>
+	
+	
 	
 	<script>
 
@@ -226,7 +217,7 @@ function setstartDateValue()
 			 filterMatchMode="in"  style="text-overflow: ellipsis; white-space: nowrap;padding: 0px 0px 0px 3px;">
 				<f:facet name="filter">
                 <p:selectCheckboxMenu label="Search" onchange="PF('newrequestListTable').filter()"  >
-                           <f:selectItem  itemLabel="Request" itemValue="Request" />
+                           <f:selectItem  itemLabel="Requested" itemValue="Requested" />
                            <f:selectItem   itemLabel="Accepted" itemValue="Accepted" />
                            <f:selectItem  itemLabel="Returned" itemValue="Returned" />                        
                            <f:selectItem   itemLabel="In-progress" itemValue="In-progress"/>
@@ -285,11 +276,11 @@ style="width:103px;font-size:12px;background-color: #e7e7e7; color: black;" >
     		View Notes
     		</p:commandLink> 
 
- <p:dialog  header="View Notes" exportable="false" widgetVar="#{request1.newRequestId}" varStatus="status" modal="true" responsive = "true">
+ <p:dialog  header="View Notes"  widgetVar="#{request1.newRequestId}" varStatus="status" modal="true" responsive = "true">
       
       
        <div class="container">
-        <h:form  id="requestForm">   
+        
          
 <p:dataTable id="noteTable" var="noteview"  value = "#{request1.noteList}" scrollable="true" scrollHeight="300"    >
     
@@ -309,7 +300,7 @@ style="width:103px;font-size:12px;background-color: #e7e7e7; color: black;" >
     </p:column>
 </p:dataTable>
          
-       </h:form>    
+          
        </div>
 </p:dialog> 
 
@@ -333,7 +324,15 @@ style="width:103px;font-size:12px;background-color: #e7e7e7; color: black;" >
 </p:dataTable>
 	    
 	</div>
-	
+	<script type="text/javascript">
+function start() {
+    PF('statusDialog').show();
+}
+ 
+function stop() {
+    PF('statusDialog').hide();
+}
+</script>
  
 
 <script type="text/javascript">
@@ -344,15 +343,7 @@ $(function() {
 
 
 
-<script type="text/javascript">
-function start() {
-    PF('statusDialog').show();
-}
- 
-function stop() {
-    PF('statusDialog').hide();
-}
-</script>
+
 
 
       </div><!-- end oc container -->

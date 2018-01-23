@@ -34,14 +34,10 @@
      <p:graphicImage value="#{login.imageFromDB}"  width="150px" height="150px"/>        
 
   
-      <ul class="nav  stacked"  >
-        <li class="active"><h:link value=" Basic Info" outcome="myprofile"></h:link>  </li>
-       <li class="active"><h:link value="Security" outcome="changepassword"></h:link> </li>
-     
-      </ul>
+    
     </nav>
     <div class="col-sm-10"  >   
-      <h1>Your Basic Info</h1>
+      <h1>Your personal details Info</h1>
     
     <hr></hr>
     
@@ -57,35 +53,39 @@
 
 </div>
 
+
+
+
+
  <div class=" row form-group ">
 <div class="col-sm-2 control-label"><h:outputLabel>Password:</h:outputLabel></div>
-<div class=" col-sm-6"><h:inputText value="#{userupdate.password}"  class="form-control" id="password" required="true" requiredMessage="* Please enter your first name"></h:inputText></div>
+<div class=" col-sm-6"><h:inputSecret value="#{userupdate.password}"  class="form-control" id="password" required="true" requiredMessage="* Please enter your password"></h:inputSecret></div>
  <h:message for="password"  style="color:red;margin:8px;"/> 
 </div>
 
 
  <div class=" row form-group ">
 <div class="col-sm-2 control-label"><h:outputLabel>First Name:</h:outputLabel></div>
-<div class=" col-sm-6"><h:inputText value="#{userupdate.firstname}"  class="form-control" id="firstname" required="true" requiredMessage="* Please enter your first name"></h:inputText></div>
+<div class=" col-sm-6"><h:inputText value="#{userupdate.firstname}"  class="form-control" id="firstname"  requiredMessage="* Please enter your first name"></h:inputText></div>
  <h:message for="firstname"  style="color:red;margin:8px;"/> 
 </div>
 
  <div class=" row form-group ">
 <div class="col-sm-2 control-label"><h:outputLabel>Last Name:</h:outputLabel></div>
-<div class="col-sm-6"><h:inputText value="#{userupdate.lastname}"  class="form-control" id="lastname" required="true" requiredMessage="* Please enter your last name"></h:inputText></div>
+<div class="col-sm-6"><h:inputText value="#{userupdate.lastname}"  class="form-control" id="lastname"  requiredMessage="* Please enter your last name"></h:inputText></div>
  <h:message for="lastname"  style="color:red;margin:8px;"/> 
 </div>
 
  <div class=" row form-group ">
 <div class="col-sm-2 control-label"><h:outputLabel>Short Name:</h:outputLabel></div>
-<div class="col-sm-6"><h:inputText value="#{userupdate.shortname}"  class="form-control" id="shortname" required="true" requiredMessage="* Please enter your last name"></h:inputText></div>
+<div class="col-sm-6"><h:inputText value="#{userupdate.shortname}"  class="form-control" id="shortname"  requiredMessage="* Please enter your short name"></h:inputText></div>
  <h:message for="shortname"  style="color:red;margin:8px;"/> 
 </div>
-<br></br>
+
 <div class=" row form-group ">
 <div class="col-sm-2 control-label"><h:outputLabel style="white-space:nowrap;">Profile Image :</h:outputLabel></div>
 <div class="col-sm-4">
-<p:fileUpload value="#{userupdate.photo}" mode="simple" />
+<p:fileUpload value="#{userupdate.photo}" mode="simple" class="form-control" style=" border-style: hidden;" />
 </div>
 
 </div>
@@ -94,29 +94,10 @@
 <div class="col-sm-6 "><h:commandLink action="#{userupdate.updateUserdetail}" value="submit" class="btn btn-lg btn-primary btn-block"></h:commandLink></div>
 </div>
  
-<h3 style="margin-top:0">Image</h3>
-<p:graphicImage value="#{login.imageFromDB}" />
- 
-
-
 </h:form>
-    
-  
-    
-   
-   
-     
     </div>
   </div>
       </div>
-      
-      
-      
-      
-      
-      
-      
-      
       
        
      

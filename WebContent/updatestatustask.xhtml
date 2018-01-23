@@ -212,7 +212,7 @@ style="width:121px;font-size:12px;background-color: #e7e7e7; color: black;" >
      
      	<p:commandLink id="nonAjax12" class="btn2 btn  fontsize" 
 				style="color:black; width:135px;font-size:12px;background-color:skyblue;"
-    onclick="PF('#{update1.newRequestId}').show(); ">
+    onclick="PF('#{update1.newRequestId}').show(); setRequestHiddenValue(#{update1.newRequestId}) ">
     		View Notes
     		</p:commandLink> 
      
@@ -223,7 +223,7 @@ style="width:121px;font-size:12px;background-color: #e7e7e7; color: black;" >
       
       
        <div class="container">
-        <h:form>   
+         
         
 <p:dataTable var="noteview"  value = "#{update1.noteList}" scrollable="true" scrollHeight="300"    >
     
@@ -241,7 +241,7 @@ style="width:121px;font-size:12px;background-color: #e7e7e7; color: black;" >
     </p:column>
 </p:dataTable>
           
-       </h:form>    
+        
        </div>
 </p:dialog> 
 

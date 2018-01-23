@@ -1,0 +1,63 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+ <html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+       xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+
+<h:head>
+
+<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<link rel="stylesheet" href="resource/css/bootstrap.css"/>
+<link rel="stylesheet" href="resource/mystyle/home.css"/>
+<link rel="stylesheet" href="resource/mystyle/createcategory.css"/>
+<link rel="stylesheet" href="resource/mystyle/button.css"/>
+<script type="text/javascript" src="resource/js/bootstrap.js"/>
+<script type="text/javascript" src="resource/js/jquery.js"/>
+<title>View/Modify Request</title>
+<style type="text/css"> 
+.radiobuttonspace span { padding-right: 10px; } 
+.radiobuttonspace td { width: 170px; } 
+
+</style> 
+
+</h:head>
+<h:body>
+hello
+<h:form>
+ <h:outputLink value="javascript:void(0)" onclick="PF('dlg3').show();" title="login">
+   click
+    </h:outputLink>
+ 
+<p:growl id="growl" showDetail="true" /> 
+<p:dialog header="Teammember Rating" widgetVar="dlg3" modal="true" height="300" width="700"  appendToBody="false">
+
+
+<div style="background-color: #FFF;">
+
+ <h:outputLabel >Feedback</h:outputLabel> <br></br>
+ <h:inputText value="#{createrequest.requestId}"></h:inputText>
+     <p:rating id ="rating" value="#{createrequest.rating}">
+     
+     </p:rating><br></br>    
+      <h:inputTextarea id="inputfeedback"  value="#{createrequest.feedback}" cols="10" rows="3" class=" form-control"  >
+      <p:watermark for="inputfeedback" value="Please Enter Your Feedback.." />       
+      </h:inputTextarea>  
+        <h:commandButton actionListener="#{createrequest.savefeedbackRating}" value="Send" class="btn fontsize btn-success btn-block"  >
+        </h:commandButton>
+     
+<br></br>
+</div>
+
+
+     </p:dialog>
+
+ </h:form>
+</h:body>
+</html>

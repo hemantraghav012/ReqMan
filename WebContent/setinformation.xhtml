@@ -60,7 +60,7 @@
 <br></br>
 <h:form class="form-horizontal" >
 
-<div><h:messages style = "color:red;margin:8px;" /></div>
+
 <h:inputHidden   value="#{setpassword.hash}"/>
  <div class=" row form-group registerfieldname">
  <div class="col-sm-2 control-label"><h:outputLabel  >Email Id:</h:outputLabel></div>
@@ -71,7 +71,7 @@
 </div>
 <div class=" row form-group registerfieldname">
 <div class="col-sm-2 control-label"><h:outputLabel>Password:</h:outputLabel></div>
-<div class="col-sm-6"><h:inputText value="#{setpassword.password}" p:placeholder="Password" class="form-control" id="password" required="true" requiredMessage="* Please enter your password"></h:inputText></div>
+<div class="col-sm-6"><h:inputSecret value="#{setpassword.password}" p:placeholder="Password" class="form-control" id="password" required="true" requiredMessage="* Please enter your password"></h:inputSecret></div>
  <h:message for="password"  style="color:red;margin:8px;"/> 
 </div>
  <div class=" row form-group registerfieldname">
