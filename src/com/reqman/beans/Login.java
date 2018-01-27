@@ -8,10 +8,8 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.util.Map;
 
-import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.imageio.ImageIO;
 import javax.servlet.http.HttpSession;
@@ -28,8 +26,7 @@ import com.reqman.util.SessionUtils;
 import com.reqman.vo.zoho.subscription.hostpage.RootObject;
 
 @ManagedBean(name = "login", eager = true)
-@SessionScoped
-@RequestScoped
+@javax.faces.view.ViewScoped
 public class Login implements Serializable {
 
 	private static final long serialVersionUID = 1094801825228386363L;
@@ -179,6 +176,10 @@ public class Login implements Serializable {
 			// Reading image from database assuming that product image (bytes)
 			// of product id I1 which is already stored in the database.
 			try {
+				if(user == null)
+				{
+					user = (String)session.getAttribute("username");
+				}
 				image = userImpl.getImageDetails(user);
 				if(image == null)
 				{
