@@ -1,11 +1,5 @@
 package com.reqman.beans;
 
-import java.awt.Graphics2D;
-import java.awt.image.BufferedImage;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.Serializable;
 
@@ -13,11 +7,8 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
-import javax.imageio.ImageIO;
 import javax.servlet.http.HttpSession;
 
-import org.primefaces.model.DefaultStreamedContent;
-import org.primefaces.model.StreamedContent;
 import org.primefaces.model.UploadedFile;
 
 import com.reqman.dao.UserDetailsInterface;
@@ -52,13 +43,13 @@ public class Userupdate implements Serializable{
 		  
 		  
 		  
-		public void modifyAction() throws IOException {
+		public String modifyAction() throws IOException {
 			
 	        try
 	        {
 	        	HttpSession session = SessionUtils.getSession();
 				 userName = (String)session.getAttribute("username");
-				System.out.println("--usersession--userName-->"+userName);
+				System.out.println("--modifyAction--userName-->"+userName);
 				setUserName(userName);
 	           
 	        	userupdateVo = userImpl.getUseremailid(userName);
@@ -67,16 +58,16 @@ public class Userupdate implements Serializable{
 	        	setLastname(userupdateVo.getLastname());
 	        	setPassword(userupdateVo.getPassword());
 	        	setShortname(userupdateVo.getShortname());
-	        	FacesContext.getCurrentInstance()
+	        	/*FacesContext.getCurrentInstance()
 	            .getExternalContext().dispatch("myprofile.xhtml");
-	        	
+	        	*/
 
 	        }
 	        catch(Exception e){
 	        	e.printStackTrace();
 	        	
 	        }
-	        
+	        return "myprofile.xhtml";
 	    }
 		
 		
