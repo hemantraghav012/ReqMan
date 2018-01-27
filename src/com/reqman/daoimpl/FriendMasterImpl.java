@@ -8,10 +8,19 @@ import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Projection;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.primefaces.model.chart.PieChartModel;
+
+
+
+
+
+
+
+
 
 
 
@@ -34,6 +43,7 @@ import com.reqman.pojo.Account;
 import com.reqman.pojo.Accountusers;
 import com.reqman.pojo.Category;
 import com.reqman.pojo.Project;
+import com.reqman.pojo.Request;
 import com.reqman.pojo.Roles;
 import com.reqman.pojo.Usercategory;
 import com.reqman.pojo.Userfriendlist;
@@ -46,6 +56,7 @@ import com.reqman.util.setinfoEmail;
 import com.reqman.vo.CategoryVo;
 import com.reqman.vo.FriendVo;
 import com.reqman.vo.ProjectVo;
+import com.reqman.vo.UserVo;
 
 public class FriendMasterImpl implements FriendMasterInterface {
 
@@ -698,7 +709,67 @@ public class FriendMasterImpl implements FriendMasterInterface {
 
 		return result;
 	}
-	
+
+
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<UserVo> AllUsers(String userName) throws Exception {
+		// TODO Auto-generated method stub
+		List<UserVo> getfriendList=null; 
+		UserVo userVo=null;
+		 Users users=null;
+		 Session session = null;
+		    Transaction tx = null;
+		    List<Integer> friendList = null;
+			try
+			{
+	           	session = HibernateUtil.getSession();
+	            tx = session.beginTransaction();
+	            users = (Users)session.createCriteria(Users.class)
+	            		.add(Restrictions.eq("emailid",userName.toLowerCase().trim()).ignoreCase())
+	            		.uniqueResult();
+	            
+	            Integer userid=users.getId();
+	            
+	            Criteria crit1 = session.createCriteria(Userfriendlist.class);
+	            crit1.add(Restrictions.eq("status", true));
+	            crit1.add(Restrictions.eq("usersByUserid.id", users.getId()));
+	            crit1.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
+	                    .setProjection(
+	                            Projections.distinct(Projections.projectionList()
+	                                    .add(Projections.property("usersByFriendid.id"))));
+	            friendList = (List<Integer>) crit1.list();	
+	            
+	        
+ 				
+				if(friendList != null && friendList.size() != 0)
+   				{
+					List<Users>  userList = (List<Users>) session.createCriteria(Users.class)
+    							      .add(Restrictions.in("id",friendList)).list();
+ 				 					
+    				
+ 					for(Users userDB : userList)
+            		{
+ 						userVo=new UserVo();
+ 						
+ 						userVo.setEmailid(userDB.getEmailid());
+ 						userVo.setUserId(userDB.getId());
+ 						
+            		}
+	            
+   				}
+	            
+	            tx.commit();  
+	        }  
+	        catch (Exception e)  
+	        {  
+	            e.printStackTrace();  
+	            session.getTransaction().rollback();  
+	        }  
+	        session.close();  
+	        return getfriendList;  
+	    }  
 
 
 

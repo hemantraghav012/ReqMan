@@ -289,7 +289,7 @@ public class NewrequestImpl implements NewrequestInterface {
 				if(startDate != null && endDate !=null)
 				{
 					crit.add(Restrictions.ge("datecreated", Dateconverter.getMinTimeByDate(startDate))); 
-					crit.add(Restrictions.lt("datecreated", Dateconverter.getMaxTimeByDate(endDate)));
+				    crit.add(Restrictions.lt("datecreated", Dateconverter.getMaxTimeByDate(endDate)));
 			
 				}
 				List<Request> requesPojoList = (List<Request>)crit.list();
