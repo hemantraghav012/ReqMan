@@ -1,0 +1,29 @@
+@CHARSET "ISO-8859-1";
+
+.ui-datatable thead th, .ui-datatable tbody td, .ui-datatable tfoot td {
+    border-style: 0px;
+   
+    
+}
+
+.ui-datatable-scrollable-header-box table, .ui-datatable-scrollable-footer-box table, .ui-datatable-scrollable-body table {
+
+    text-align:left;
+    
+}
+.width{
+	width:34px;
+}
+.ui-datatable thead td, .ui-datatable tbody td, .ui-datatable tfoot td .width{
+	
+	width:00px;
+}
+.viewsize{
+	width:105px;
+}
+.percentage{
+	width:60px;
+}
+.date{
+	width:100px;
+}
