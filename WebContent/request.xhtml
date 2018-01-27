@@ -15,6 +15,7 @@
 <link rel="stylesheet" href="resource/mystyle/onlyhome.css"/>
 <link rel="stylesheet" href="resource/mystyle/home.css"/>
 <link rel="stylesheet" href="resource/mystyle/button.css"/>
+<link rel="stylesheet" href="resource/mystyle/request.css"/>
 <script type="text/javascript" src="resource/js/bootstrap.js"/>
 <script type="text/javascript" src="resource/js/jquery.js"/>
 
@@ -38,7 +39,10 @@ function setstartDateValue()
 }
 </script>
 	
+	
+	
 </h:head>
+
 <h:body>
 
 <div id="header">
@@ -100,7 +104,7 @@ function setstartDateValue()
 	     <p:dataTable id="requestTable" var="request1" value="#{createrequest.newrequestList}" draggableColumns="true"
 	     reflow="true" scrollable="true" scrollHeight="300"  resizableColumns="true"  rows="25" rowsPerPageTemplate="25,35,50" 	         
 	      paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" 
-	       paginator="true"  sortBy="#{request1.status},#{request1.title}" 	    
+	       paginator="true"  sortBy="#{request1.status},#{request1.title}" 	 styleClass="table-reflow-desktop"
 	      class="table table-striped table-hover table-bordered" style="margin-top:5px; margin-left:0px;"
 	      filteredValue="#{createrequest.filteredRequestList}" widgetVar="newrequestListTable"	      
 	      rowStyleClass="#{request1.completionpercentage eq 100 ? 'green' : request1.stage eq 'Hold' ? 'red': null}" >
@@ -155,7 +159,7 @@ function setstartDateValue()
 				<h:outputText value="#{request1.description}" style="display: inline;"   />
 </p:column>
  
-<p:column filterBy="#{request1.changedate}" sortBy="#{request1.changedate}" headerText="Due Date"    
+<p:column filterBy="#{request1.changedate}" sortBy="#{request1.changedate}" headerText="Due Date"    class="date"
 			 filterMatchMode="contains"   pattern="dd-MMM-yyyy"  style="text-overflow: ellipsis; white-space: nowrap;padding: 0px 0px 0px 3px;">
 				<f:facet name="header">
 					<h:outputText value="Due Date" />
@@ -230,7 +234,7 @@ function setstartDateValue()
 				<h:outputText value="#{request1.stage}" style="display: inline;"   />
 			</p:column>
     
-     <p:column filterBy="#{request1.completionpercentage}"  sortBy="#{request1.completionpercentage}"  headerText="% Age Completion" 
+     <p:column filterBy="#{request1.completionpercentage}"  sortBy="#{request1.completionpercentage}"  headerText="% Age Completion" class="percentage"
 			 filterMatchMode="contains"  style="text-overflow: ellipsis; white-space: nowrap; padding: 0px 0px 0px 3px;">
 				<f:facet name="header">
 					<h:outputText value="% Age Completion" />
@@ -254,26 +258,27 @@ function setstartDateValue()
 			
    
     
- <p:column headerText="Attachment" exportable="false" style="padding: 0px 0px 0px 0px;" >
+ <p:column headerText="Attached" exportable="false" class="width"
+ style="padding: 0px 0px 0px 0px; text-overflow: ellipsis; white-space: nowrap; "   >
        <p:dialog widgetVar="statusDialog" header="Status" draggable="false" closable="false" resizable="false">
       
 </p:dialog>
 	<p:commandLink  class="btn  fontsize"   ajax="false"
  onclick="PrimeFaces.monitorDownload(start, stop);setRequestHiddenValue(#{request1.newRequestId})"
-style="width:103px;font-size:12px;background-color: #e7e7e7; color: black;" >
+style="font-size:12px;background-color: #e7e7e7; color: black;" >
         <p:fileDownload value="#{createrequest.fileDownloadView()}" />
-        Download
+       <span class="glyphicon glyphicon-download-alt"></span>
     </p:commandLink >
     </p:column>
     
     
   
-   <p:column headerText="Notes" exportable="false"  style="padding: 0px 0px 0px 0px;" >
+   <p:column headerText="Note" exportable="false"  style="padding: 0px 0px 0px 0px;" class="width" >
    
-   	<p:commandLink id="nonAjax1" class="btn2 btn  fontsize" 
-				style="color:black; width:103px;font-size:12px;background-color:skyblue;"
+   	<p:commandLink id="nonAjax1"  class="btn  fontsize "
+				style="font-size:12px;background-color: skyblue; color: black;"
      onclick="PF('#{request1.newRequestId}').show();setRequestHiddenValue(#{request1.newRequestId}) ">
-    		View Notes
+    	 <span class="glyphicon glyphicon-envelope"></span> 
     		</p:commandLink> 
 
  <p:dialog  header="View Notes"  widgetVar="#{request1.newRequestId}" varStatus="status" modal="true" responsive = "true">
@@ -309,12 +314,12 @@ style="width:103px;font-size:12px;background-color: #e7e7e7; color: black;" >
      
      
      
- <p:column headerText="View / Modify" exportable="false" style="padding: 0px 0px 0px 0px;"  >
+ <p:column headerText="View / Modify" exportable="false" style="padding: 0px 0px 0px 0px;" class="viewsize" >
          
 	    		
 	    		
 	    		<p:commandLink id="nonAjax" styleClass="btn btn-primary fontsize" 
-				style="color:white; width:103px; border-radius: none;font-size:12px;" onclick='setRequestHiddenValue(#{request1.newRequestId})' 
+				style="color:white;  border-radius: none;font-size:12px;" onclick='setRequestHiddenValue(#{request1.newRequestId})' 
 				action="#{createrequest.modifyAction()}" ajax="false" >
 	        		View / Update
 	    		</p:commandLink> 

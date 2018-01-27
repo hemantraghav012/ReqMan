@@ -13,6 +13,8 @@
 <link rel="stylesheet" href="resource/css/bootstrap.css"/>
 <link rel="stylesheet" href="resource/mystyle/home.css"/>
 <link rel="stylesheet" href="resource/mystyle/button.css"/>
+
+<link rel="stylesheet" href="resource/mystyle/request.css"/>
 <script type="text/javascript" src="resource/js/bootstrap.js"/>
 <script type="text/javascript" src="resource/js/jquery.js"/>
 
@@ -111,7 +113,7 @@ function setRequestHiddenValue(new_value)
 				<h:outputText value="#{response.description}" style="display: inline;"   />
 </p:column>
  
-<p:column filterBy="#{response.completiondate}"  sortBy="#{response.changedate}"  headerText="Due Date"    
+<p:column filterBy="#{response.completiondate}"  sortBy="#{response.changedate}"  headerText="Due Date"   class="date"
 			 filterMatchMode="contains"   pattern="dd-MMM-yyyy"  style="text-overflow: ellipsis; white-space: nowrap;padding: 0px 0px 0px 3px; ">
 				<f:facet name="header">
 					<h:outputText value="Due Date" />
@@ -161,22 +163,22 @@ function setRequestHiddenValue(new_value)
     
    
     
-     <p:column headerText="Attachment" exportable="false" style="padding: 0px 0px 0px 0px;" >
+     <p:column headerText="Attachment" exportable="false" style="padding: 0px 0px 0px 0px;" class="width" >
        <p:dialog widgetVar="statusDialog" header="Status" draggable="false" closable="false" resizable="false">   
 </p:dialog>
 	<p:commandLink id="nonAjax2" class="btn2 btn  fontsize"  ajax="false"
-				style="color:black; width:135px;font-size:12px;background-color:#e7e7e7; color: black;"
+				style="color:black; font-size:12px;background-color:#e7e7e7; color: black;"
 onclick="PrimeFaces.monitorDownload(start, stop);setRequestHiddenValue(#{response.newRequestId})" >
         <p:fileDownload value="#{responsebean.fileDownloadView()}" />
-        Download
+       <span class="glyphicon glyphicon-download-alt"></span>
     </p:commandLink >
     </p:column>
     
-      <p:column headerText="Notes" exportable="false"  style="padding: 0px 0px 0px 0px;" >
+      <p:column headerText="Notes" exportable="false"  style="padding: 0px 0px 0px 0px;" class="width">
       	<p:commandLink id="nonAjax1" class="btn2 btn  fontsize" 
-				style="color:black; width:135px;font-size:12px;background-color:skyblue;"
+				style="color:black; font-size:12px;background-color:skyblue;"
      onclick="PF('#{response.newRequestId}').show();setRequestHiddenValue(#{response.newRequestId})">
-     View Notes
+     <span class="glyphicon glyphicon-envelope"></span> 
      </p:commandLink>
        
 
@@ -211,9 +213,9 @@ onclick="PrimeFaces.monitorDownload(start, stop);setRequestHiddenValue(#{respons
      
     
     
-     <p:column headerText="View / Modify" exportable="false" style="padding: 0px 0px 0px 0px; ">
+     <p:column headerText="View / Modify" exportable="false" style="padding: 0px 0px 0px 0px; "  class="viewsize">
 <p:commandLink id="nonAjax" styleClass="btn btn-primary fontsize" 
-				style="color:white; width:132px; border-radius: none;font-size:12px;" onclick='setRequestHiddenValue(#{response.newRequestId})' 
+				style="color:white; border-radius: none;font-size:12px;" onclick='setRequestHiddenValue(#{response.newRequestId})' 
 				action="#{responsebean.modifyAction()}" ajax="false" >
 	        		View / Update
 	    		</p:commandLink>  

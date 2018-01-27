@@ -15,6 +15,8 @@
 <link rel="stylesheet" href="resource/mystyle/onlyhome.css"/>
 <link rel="stylesheet" href="resource/mystyle/home.css"/>
 <link rel="stylesheet" href="resource/mystyle/button.css"/>
+
+<link rel="stylesheet" href="resource/mystyle/request.css"/>
 <script type="text/javascript" src="resource/js/bootstrap.js"/>
 <script type="text/javascript" src="resource/js/jquery.js"/>
 <style type="text/css">
@@ -141,7 +143,7 @@ function setRequestHiddenValue(new_value)
 				<h:outputText value="#{update1.description}" style="display: inline;"   />
 </p:column>
  
-<p:column filterBy="#{update1.completiondate}" sortBy="#{update1.completiondate}" headerText="Due Date"   
+<p:column filterBy="#{update1.completiondate}" sortBy="#{update1.completiondate}" headerText="Due Date" class="date"  
 			 filterMatchMode="contains"   pattern="dd-MMM-yyyy"  style="text-overflow: ellipsis; white-space: nowrap;padding: 0px 0px 0px 3px;">
 				<f:facet name="header">
 					<h:outputText value="Due Date" />
@@ -179,11 +181,10 @@ function setRequestHiddenValue(new_value)
     
 
     
-     <p:column filterBy="#{update1.completionpercentage}" sortBy="#{update1.completionpercentage}"  headerText="% Age Completion"   
+     <p:column filterBy="#{update1.completionpercentage}" sortBy="#{update1.completionpercentage}"  headerText="% Age Completion"   class="percentage" 
 			 filterMatchMode="contains"  style="text-overflow: ellipsis; white-space: nowrap;padding: 0px 0px 0px 3px;">
 				<f:facet name="header">
-					<h:outputText value="% Age
-					                  Completion" />
+					<h:outputText value="% Age Completion" />
 				</f:facet>
 				<h:outputText value="#{update1.completionpercentage}%" style="display: inline;"   />
 			</p:column>
@@ -196,24 +197,24 @@ function setRequestHiddenValue(new_value)
 				</f:facet>
 				<h:outputText value="#{update1.createdby}" style="display: inline;"   />
 			</p:column>
-     <p:column headerText="Attachment" exportable="false" style="padding: 0px 0px 0px 0px;" >
+     <p:column headerText="Attachment" exportable="false" style="padding: 0px 0px 0px 0px;" class="width">
        <p:dialog widgetVar="statusDialog" header="Status" draggable="false" closable="false" resizable="false">
       
 </p:dialog>
 	<p:commandLink  class="btn  fontsize"   ajax="false"
  onclick="PrimeFaces.monitorDownload(start, stop);setRequestHiddenValue(#{update1.newRequestId})"
-style="width:121px;font-size:12px;background-color: #e7e7e7; color: black;" >
+style="font-size:12px;background-color: #e7e7e7; color: black;" >
         <p:fileDownload value="#{createrequest.fileDownloadView()}" />
-        Download
+        <span class="glyphicon glyphicon-download-alt"></span>
     </p:commandLink >
     </p:column>
    
-     <p:column headerText="View Notes" exportable="false"  style="padding: 0px 0px 0px 0px; ">
+     <p:column headerText="View Notes" exportable="false"  style="padding: 0px 0px 0px 0px; " class="width">
      
      	<p:commandLink id="nonAjax12" class="btn2 btn  fontsize" 
-				style="color:black; width:135px;font-size:12px;background-color:skyblue;"
+				style="color:black;font-size:12px;background-color:skyblue;"
     onclick="PF('#{update1.newRequestId}').show(); setRequestHiddenValue(#{update1.newRequestId}) ">
-    		View Notes
+    		 <span class="glyphicon glyphicon-envelope"></span> 
     		</p:commandLink> 
      
      
@@ -248,9 +249,9 @@ style="width:121px;font-size:12px;background-color: #e7e7e7; color: black;" >
      </p:column>
      
     
-     <p:column headerText="View / Modify" exportable="false" style="padding: 0px 0px 0px 0px; ">
+     <p:column headerText="View / Modify" exportable="false" style="padding: 0px 0px 0px 0px;"  class="viewsize">
 <p:commandLink id="nonAjax" styleClass="btn btn-primary fontsize" 
-				style="color:white; width:145px; border-radius: none;font-size:12px;" onclick='setRequestHiddenValue(#{update1.newRequestId})' 
+				style="color:white;  border-radius: none;font-size:12px;" onclick='setRequestHiddenValue(#{update1.newRequestId})' 
 				action="#{updatestatusbean.modifyAction()}" ajax="false" >
 	        		View / Update
 	    		</p:commandLink> 

@@ -54,7 +54,32 @@
  </div>
 </div> 
  
- <div class="row form-grop">
+
+<button type="button"  data-toggle="collapse" data-target=".friend">
+
+select
+</button>
+
+  <div class="row form-grop friend  collapse in ">
+ <div class="col-sm-2 control-label">
+ <h:outputLabel>Team Member:</h:outputLabel> 
+ </div>
+<div class=" col-sm-10">
+ <p:autoComplete value="#{createrequest.userfriendlist}" forceSelection="true" completeMethod="#{friendbean.friendList1}" 
+  multiple="true"   var="friend1" itemLabel="#{friend1.emailid}"  itemValue="#{friend1.id}" >
+  
+ <f:selectItems value="#{friendbean.friendList1}" var="friend" itemLabel="#{friend.emailid}"  itemValue="#{friend.userFriendId}" />                               
+ 
+
+ 
+ </p:autoComplete>
+ <h:message for="onlyone"  style="color:red;"/>
+</div>
+ </div>
+ 
+ 
+ 
+ <div class="row form-grop friend collapse  ">
  <div class="col-sm-2 control-label paddingleft" >
  <h:outputLabel><span style="color:red;">*</span>Team Member(s):<br></br><span style="color:red;">P/s select 1 or more</span></h:outputLabel>
 </div>
