@@ -5,9 +5,11 @@ import java.util.List;
 import org.primefaces.model.chart.PieChartModel;
 
 import com.reqman.pojo.Category;
+import com.reqman.pojo.Userfriendlist;
 import com.reqman.pojo.Users;
 import com.reqman.vo.FriendVo;
 import com.reqman.vo.ProjectVo;
+import com.reqman.vo.UserVo;
 
 
 
@@ -36,6 +38,9 @@ public FriendVo getUserFriendById(String friendId) throws Exception;
 
 	public int updateFriend(String oldValue, String newValue,
 			Integer updatefriendId)throws Exception;
+
+
+	public List<UserVo> AllUsers(String userName)throws Exception;
 
 
 
