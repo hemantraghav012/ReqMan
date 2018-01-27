@@ -29,6 +29,7 @@ import com.lowagie.text.PageSize;
 import com.reqman.dao.FriendMasterInterface;
 import com.reqman.daoimpl.FriendMasterImpl;
 import com.reqman.pojo.Category;
+import com.reqman.pojo.Userfriendlist;
 import com.reqman.pojo.Users;
 //import com.reqman.vo.EmailUtility;
 import com.reqman.util.SessionUtils;
@@ -36,6 +37,7 @@ import com.reqman.util.UserSession;
 import com.reqman.util.sendEmail1;
 import com.reqman.vo.FriendVo;
 import com.reqman.vo.ProjectVo;
+import com.reqman.vo.UserVo;
 
 
 
@@ -67,12 +69,14 @@ private  List<FriendVo> friendList = new ArrayList<FriendVo>();
 	private String password;
 	private String hashkey;
 	private FriendVo selectedFriend;
-	  private PieChartModel piechart;
-	
-	
+	private PieChartModel piechart;
+	private  List<UserVo> getfriendList ;
 	
 	 
 	
+	
+
+
 	@PostConstruct
     public void init() {
 		try
@@ -86,12 +90,29 @@ private  List<FriendVo> friendList = new ArrayList<FriendVo>();
 			friendList1 = friendMasterInterface.getUsersStatus(userName);
 			friendList2 = friendMasterInterface.getUsersfasleStatus(userName);
 			 createPieModels();
+			  getfriendList = friendMasterInterface.AllUsers(userName);
 		}
 		catch(Exception e)
 		{
 			e.printStackTrace();
 		}
 	}
+	
+	
+	
+	 public List<UserVo> getUsers() throws Exception  
+     {   
+		 HttpSession session = SessionUtils.getSession();
+			String userName = (String)session.getAttribute("username");
+			System.out.println("--usersession--userName-->"+userName); 
+        getfriendList = friendMasterInterface.AllUsers(userName); 
+        
+       // friendList1 = friendMasterInterface.getUsersStatus(userName);
+         
+         return   getfriendList;  
+     }  
+	
+	
 	
 	
 	 private void createPieModels() {
@@ -503,28 +524,20 @@ public void modifyAction() {
 	}
 
 
-	
+
+	public List<UserVo> getGetfriendList() {
+		return getfriendList;
+	}
 
 
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
+	public void setGetfriendList(List<UserVo> getfriendList) {
+		this.getfriendList = getfriendList;
+	}
+
+
+
+
 	
 	
 	
