@@ -14,6 +14,7 @@ import com.reqman.pojo.Customerpayment;
 import com.reqman.pojo.Menu;
 import com.reqman.pojo.Organisationdetails;
 import com.reqman.pojo.Project;
+import com.reqman.pojo.Publicemaildomains;
 import com.reqman.pojo.Request;
 import com.reqman.pojo.Requestnotes;
 import com.reqman.pojo.Requesttype;
@@ -44,7 +45,7 @@ public class HibernateUtil {
     	    configuration.setProperty("hibernate.connection.driver_class", "org.postgresql.Driver");
     	    configuration.setProperty("hibernate.connection.url", "jdbc:postgresql://localhost:5432/reqman");
     	    configuration.setProperty("hibernate.connection.username", "postgres");
-    	    configuration.setProperty("hibernate.connection.password", "3394");
+    	    configuration.setProperty("hibernate.connection.password", "admin123");
     	    configuration.setProperty("hibernate.show_sql", "true");
     	    configuration.setProperty("hibernate.default_schema", "reqman");
     	   configuration.setProperty("hibernate.hbm2ddl.auto", "update");
@@ -74,6 +75,7 @@ public class HibernateUtil {
     	    configuration.addAnnotatedClass(Account.class);
     	    configuration.addAnnotatedClass(Customerpayment.class);
     	    configuration.addAnnotatedClass(Organisationdetails.class);
+    	    configuration.addAnnotatedClass(Publicemaildomains.class);
             ServiceRegistry serviceRegistry
                 = new StandardServiceRegistryBuilder()
                     .applySettings(configuration.getProperties()).build();

@@ -16,6 +16,7 @@ import com.reqman.pojo.Customerpayment;
 import com.reqman.pojo.Menu;
 import com.reqman.pojo.Organisationdetails;
 import com.reqman.pojo.Project;
+import com.reqman.pojo.Publicemaildomains;
 import com.reqman.pojo.Request;
 import com.reqman.pojo.Requestnotes;
 import com.reqman.pojo.Requesttype;
@@ -56,7 +57,7 @@ public class HibernateUtilH {
         	    configuration.setProperty("hibernate.connection.password", dbUri.getUserInfo().split(":")[1]);
         	    configuration.setProperty("hibernate.show_sql", "true");
         	   // configuration.setProperty("hibernate.default_schema", "reqman");
-        	   configuration.setProperty("hibernate.hbm2ddl.auto", "update");
+        	   configuration.setProperty("hibernate.hbm2ddl.auto", "create");
         	    
         	    configuration.addAnnotatedClass(Audittrail.class);
         	    configuration.addAnnotatedClass(Category.class);
@@ -83,6 +84,7 @@ public class HibernateUtilH {
         	    configuration.addAnnotatedClass(Account.class);
         	    configuration.addAnnotatedClass(Customerpayment.class);
         	    configuration.addAnnotatedClass(Organisationdetails.class);
+        	    configuration.addAnnotatedClass(Publicemaildomains.class);
                 ServiceRegistry serviceRegistry
                     = new StandardServiceRegistryBuilder()
                         .applySettings(configuration.getProperties()).build();

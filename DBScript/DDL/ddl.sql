@@ -578,3 +578,26 @@ TABLESPACE pg_default;
 
 ALTER TABLE reqman.customerpayment
     OWNER to postgres;
+    
+-- Table: reqman.publicemaildomains
+
+-- DROP TABLE reqman.publicemaildomains;
+
+CREATE TABLE reqman.publicemaildomains
+(
+    id bigint NOT NULL DEFAULT nextval('reqman.publicemaildomains_id_seq'::regclass),
+    name character varying(100) COLLATE "default".pg_catalog,
+    status boolean,
+    datecreated timestamp without time zone,
+    createdby character varying(20) COLLATE "default".pg_catalog,
+    CONSTRAINT pk_publicemaildomains PRIMARY KEY (id)
+)
+WITH (
+    OIDS = FALSE
+)
+TABLESPACE pg_default;
+
+ALTER TABLE reqman.publicemaildomains
+    OWNER to postgres;
+
+GRANT ALL ON TABLE reqman.publicemaildomains TO postgres WITH GRANT OPTION;
