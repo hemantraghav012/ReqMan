@@ -235,7 +235,8 @@ public class NewrequestImpl implements NewrequestInterface {
 					}
 					
 					userfriendlistTemp = (Userfriendlist)session.createCriteria(Userfriendlist.class)
-							.add(Restrictions.eq("id", friendlist))
+							.add(Restrictions.eq("usersByUserid.id", users.getId()))
+							.add(Restrictions.eq("usersByFriendid.id", friendlist))
 							.uniqueResult();
 					
 					request.setUserfriendlist(userfriendlistTemp);

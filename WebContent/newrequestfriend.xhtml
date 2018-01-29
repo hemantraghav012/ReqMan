@@ -55,20 +55,22 @@
 </div> 
  
 
-<button type="button"  data-toggle="collapse" data-target=".friend">
-
-select
-</button>
 
   <div class="row form-grop friend  collapse in ">
  <div class="col-sm-2 control-label">
- <h:outputLabel>Team Member:</h:outputLabel> 
+ <h:outputLabel for="user">Team Member(s):</h:outputLabel> 
  </div>
 <div class=" col-sm-10">
- <p:autoComplete value="#{createrequest.userfriendlist}" forceSelection="true" completeMethod="#{friendbean.friendList1}" 
-  multiple="true"   var="friend1" itemLabel="#{friend1.emailid}"  itemValue="#{friend1.id}" >
+ <p:autoComplete id="user" multiple="true" value="#{createrequest.selectedUsers}" completeMethod="#{createrequest.getUserDetails}" 
+   var="friend1" itemLabel="#{friend1.name}" converter="requestFriendConverter"  itemValue="#{friend1}"  forceSelection="true" >
   
- <f:selectItems value="#{friendbean.friendList1}" var="friend" itemLabel="#{friend.emailid}"  itemValue="#{friend.userFriendId}" />                               
+ 		<p:column style="width:10%">
+             <h:outputText styleClass="ui-theme ui-theme-#{friend1.name}" />
+         </p:column>
+
+         <p:column>
+             <h:outputText value="#{friend1.name}" />
+         </p:column>                           
  
 
  
@@ -77,23 +79,6 @@ select
 </div>
  </div>
  
- 
- 
- <div class="row form-grop friend collapse  ">
- <div class="col-sm-2 control-label paddingleft" >
- <h:outputLabel><span style="color:red;">*</span>Team Member(s):<br></br><span style="color:red;">P/s select 1 or more</span></h:outputLabel>
-</div>
- <div class="col-sm-10 control-label" >
- <p:selectCheckboxMenu id="multiple" value="#{createrequest.userfriendlist}" label="friend add" multiple="true"
-                      filter="true" filterMatchMode="startsWith"  style=" border-style: none;"  required="true" 
-                      requiredMessage="* Please Select Team Member" >
-<f:selectItems value="#{friendbean.friendList1}" var="friend" itemLabel="#{friend.emailid}"  itemValue="#{friend.userFriendId}" />                               
- </p:selectCheckboxMenu>
-
- </div>
-  <h:message for="multiple"  style="color:red;margin-left:15px;" />
- </div>
-
 <div class=" row form-group ">
  <div class="col-sm-2 control-label">
  <h:outputLabel style="white-space:nowrap;">Completion Date:</h:outputLabel>

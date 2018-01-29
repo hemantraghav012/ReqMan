@@ -715,13 +715,15 @@ public class FriendMasterImpl implements FriendMasterInterface {
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<UserVo> AllUsers(String userName) throws Exception {
-		// TODO Auto-generated method stub
-		List<UserVo> getfriendList=null; 
+		List<UserVo> getfriendList = new ArrayList<UserVo>(); 
 		UserVo userVo=null;
 		 Users users=null;
 		 Session session = null;
 		    Transaction tx = null;
 		    List<Integer> friendList = null;
+		    String firstName = "";
+		    String lastName = "";
+		    String name = "";
 			try
 			{
 	           	session = HibernateUtil.getSession();
@@ -752,10 +754,28 @@ public class FriendMasterImpl implements FriendMasterInterface {
  					for(Users userDB : userList)
             		{
  						userVo=new UserVo();
- 						
+ 						name = "";
  						userVo.setEmailid(userDB.getEmailid());
  						userVo.setUserId(userDB.getId());
  						
+ 						firstName = userDB.getFirstname() != null ? userDB.getFirstname() : "";
+								
+						lastName = userDB.getLastname() != null ? userDB.getLastname() : "";
+								
+						if(firstName != null && !firstName.trim().equals(""))
+						{
+							name = firstName.trim();
+							userVo.setFirstname(firstName);
+						}
+						
+						if(lastName != null && !lastName.trim().equals(""))
+						{
+							name = name + " " +lastName.trim();
+							userVo.setLastname(lastName);
+							userVo.setName(name);
+						}
+						
+ 						getfriendList.add(userVo);
             		}
 	            
    				}

@@ -54,8 +54,10 @@ import com.lowagie.text.BadElementException;
 import com.lowagie.text.Document;
 import com.lowagie.text.DocumentException;
 import com.lowagie.text.PageSize;
+import com.reqman.dao.FriendMasterInterface;
 import com.reqman.dao.NewRequestqueryInterface;
 import com.reqman.dao.NewrequestInterface;
+import com.reqman.daoimpl.FriendMasterImpl;
 import com.reqman.daoimpl.NewRequestquery;
 import com.reqman.daoimpl.NewrequestImpl;
 import com.reqman.pojo.Request;
@@ -63,6 +65,7 @@ import com.reqman.util.Dateconverter;
 import com.reqman.util.SessionUtils;
 import com.reqman.util.UserSession;
 import com.reqman.vo.NewrequestVo;
+import com.reqman.vo.UserVo;
 import com.reqman.vo.requestNoteVo;
 import com.sun.el.parser.ParseException;
 
@@ -70,7 +73,6 @@ import com.sun.el.parser.ParseException;
 @ManagedBean(name="createrequest",eager = true)
 @RequestScoped
 @ViewScoped
-
 public class CreateRequestbean implements Serializable
 {
 	private static final long serialVersionUID = 3076255353187837257L;
@@ -106,8 +108,8 @@ public class CreateRequestbean implements Serializable
      private Date startDate;
      private Date endDate;
      private Integer userfriend;
-   private Integer rating;
-   private String feedback;
+     private Integer rating;
+     private String feedback;
      private Integer[]  searchteammember;
      private Integer[]  searchcategory;
      private Integer[]  searchproject;
@@ -117,6 +119,12 @@ public class CreateRequestbean implements Serializable
      private PieChartModel piechart;
      
      private  NewRequestqueryInterface newrequestqueryInterface = new NewRequestquery();
+     
+     private  List<UserVo> friendList;
+     
+     private FriendMasterInterface  friendMasterInterface = new FriendMasterImpl();
+     
+     private  List<UserVo> selectedUsers;
      
      
 	@PostConstruct
@@ -317,8 +325,26 @@ public class CreateRequestbean implements Serializable
 			newrequestList = new ArrayList<NewrequestVo>();
 			HttpSession session = SessionUtils.getSession();
 			String userName = (String) session.getAttribute("username");
+			
+			
 
-			System.out.println("friendlist" + userfriendlist);
+			System.out.println("friendlist" + selectedUsers);
+			System.out.println("friendlist" + friendList);
+			
+			if(selectedUsers != null && selectedUsers.size() != 0)
+			{
+				userfriendlist = new Integer[selectedUsers.size()];
+				int count = 0;
+				for(UserVo userVo : selectedUsers)
+				{
+					if(userVo != null && userVo.getUserId() != null)
+					{
+						userfriendlist[count] = userVo.getUserId();
+						
+						count++;
+					}
+				}
+			}
 
 			result = newrequestInterface.save(title, description, usercategory,	userproject, userrequesttype,
 					                                  attachment, userName,	completiondate, userfriendlist);
@@ -684,6 +710,34 @@ public class CreateRequestbean implements Serializable
         FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, summary,  null);
         FacesContext.getCurrentInstance().addMessage(null, message);
     }
+	
+	
+	 public List<UserVo> getUserDetails(String query) throws Exception  
+	 {
+		HttpSession session = SessionUtils.getSession();
+		List<UserVo> filteredUsers = new ArrayList<UserVo>();
+		String userName = (String) session.getAttribute("username");
+		System.out.println("--usersession--userName-->" + userName);
+		friendList = friendMasterInterface.AllUsers(userName);
+		
+		if(friendList != null && friendList.size() != 0 && query != null)
+		{
+			for(UserVo userVo : friendList)
+			{
+				if(userVo != null && userVo.getName() != null 
+						&& userVo.getName().toLowerCase().trim().matches("(.*)"+query.toLowerCase().trim()+"(.*)"))
+				{
+					filteredUsers.add(userVo);
+				}
+			}
+		}
+		//Str.matches("(.*)Tutorials(.*)"))
+
+		// friendList1 = friendMasterInterface.getUsersStatus(userName);
+
+		return filteredUsers;
+	}  
+
 
 
 	
@@ -1091,6 +1145,50 @@ public class CreateRequestbean implements Serializable
 
 		public void setFeedback(String feedback) {
 			this.feedback = feedback;
+		}
+
+
+
+
+
+
+
+
+		public List<UserVo> getFriendList() {
+			return friendList;
+		}
+
+
+
+
+
+
+
+
+		public void setFriendList(List<UserVo> friendList) {
+			this.friendList = friendList;
+		}
+
+
+
+
+
+
+
+
+		public List<UserVo> getSelectedUsers() {
+			return selectedUsers;
+		}
+
+
+
+
+
+
+
+
+		public void setSelectedUsers(List<UserVo> selectedUsers) {
+			this.selectedUsers = selectedUsers;
 		}
 
 

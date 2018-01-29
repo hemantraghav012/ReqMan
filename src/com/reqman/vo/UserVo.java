@@ -7,6 +7,7 @@ public class UserVo {
 	private String lastname;
 	private String shortname;
 	private Boolean status;
+	private String name;
 	
 	
 	public Integer getUserId() {
@@ -44,6 +45,12 @@ public class UserVo {
 	}
 	public void setStatus(Boolean status) {
 		this.status = status;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
 	}
 	
 	
