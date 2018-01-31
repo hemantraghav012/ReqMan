@@ -28,8 +28,8 @@ import com.reqman.util.SessionUtils;
 import com.reqman.vo.zoho.subscription.hostpage.RootObject;
 
 @ManagedBean(name = "login", eager = true)
-@SessionScoped
-@RequestScoped
+
+@javax.faces.view.ViewScoped
 public class Login implements Serializable {
 
 	private static final long serialVersionUID = 1094801825228386363L;
