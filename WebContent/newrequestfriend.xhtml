@@ -143,8 +143,8 @@ style="margin-top:2px;" class="pull-right glyphicon glyphicon-info-sign"></span>
 <h:outputLabel style="white-space:nowrap;" id ="attach" >Attach File :</h:outputLabel></div>
 <div class="col-sm-7">
 
- <p:fileUpload value="#{createrequest.attachment}" mode="simple" ></p:fileUpload>
-  
+ <p:fileUpload id="photo" value="#{createrequest.attachment}" mode="simple" ></p:fileUpload>
+   <h:message for="photo"  style="color:red;"/>
 </div>
 
 

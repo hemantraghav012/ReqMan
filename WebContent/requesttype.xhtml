@@ -73,12 +73,12 @@ function setRequesttypeHiddenValue(new_value)
 
   <h:form class="form-horizontal">
  
-  <h2 style="  margin-bottom:30px; margin-top:0px; text-align:center" >Create New  Type</h2>
+  <h2 style="  margin-bottom:30px; margin-top:0px; text-align:center" >Create New Type</h2>
 
 
 
  <div class=" row form-group ">
-<div class="col-sm-3 control-label"><h:outputLabel  >RequestType Name:</h:outputLabel></div>
+<div class="col-sm-3 control-label"><h:outputLabel  >Type Name:</h:outputLabel></div>
 <div class=" col-sm-7"> <h:inputText value="#{requesttypebean.requesttypeName}" maxlength="20" class="  form-control"  id="requesttypename"  required="true" requiredMessage="* Please enter user type "/><span style="color:red;">Please enter upto 20 characters.</span></div>
  <h:message for="requesttypename"  style="color:red;margin:8px;"/> 
 </div>
@@ -102,7 +102,7 @@ function setRequesttypeHiddenValue(new_value)
  <p:growl id="messages" showDetail="true" sticky="true" autoUpdate="true"/>
       <div  class="gridmargin">
  		<h:inputHidden id="requesttypeId" value="#{requesttypebean.requesttypeId}" ></h:inputHidden>
-   	(Only active type will be available for transaction)
+   	(Only active types will be available for transaction)
       
       	
 
@@ -148,9 +148,9 @@ function setRequesttypeHiddenValue(new_value)
 			</div>
 		</f:facet> 
 	     
-	        <p:column headerText="Requesttype Name" sortBy="#{requesttype.name}" filterBy="#{requesttype.name}" filterStyle="display:none;" filterMatchMode="contains" style="padding: 0px 0px 0px 3px;">
+	        <p:column headerText="Type Name" sortBy="#{requesttype.name}" filterBy="#{requesttype.name}" filterStyle="display:none;" filterMatchMode="contains" style="padding: 0px 0px 0px 3px;">
 	         <f:facet name="header">
-				<h:outputText value="Requesttype Name" />
+				<h:outputText value="Type Name" />
 				</f:facet>
 	            <h:outputText value="#{requesttype.name}" />
 	        </p:column>

@@ -64,14 +64,14 @@
 <div class=" col-sm-10">  
 
    
-  <p:inputNumber id="txt1" value="#{updatestatusbean.completionpercentage}" symbol=" %"  style="width:70px; "/>
+  <p:inputNumber id="txt1" value="#{updatestatusbean.completionpercentage}" symbol=" %" symbolPosition="s" style="width:70px; "/>
         <p:slider  for="txt1" style="background-color:green;"    minValue="0" maxValue="100" step="1"/></div>
 
  <h:message for="title"  style="color:red;margin:8px;" /> 
 </div>
 
 <div class=" row form-group ">
- <div class="col-sm-2 control-label"><h:outputLabel  >Completion Date:</h:outputLabel></div>
+ <div class="col-sm-2 control-label"><h:outputLabel  >Due Date:</h:outputLabel></div>
 <div class=" col-sm-4"> <h:inputText value="#{updatestatusbean.updatestatusVo.completiondate}"  readonly="true" disabled="true"  style="background-color:lightgrey;" class="  form-control"  id="completiondate"   requiredMessage="* Please enter Title"/></div>
  <h:message for="completiondate"  style="color:red;margin:8px;"/> 
  <div class="col-sm-2 control-label"><h:outputLabel  >Category:</h:outputLabel></div>

@@ -29,7 +29,13 @@
 <div class="container-fluid ">
 <div class="navbar-header">
 <a class= "navbar-brand " href="home.xhtml" style="font-weight: bold;">
+
+<p:graphicImage value="#{accountbean.logoFromDB}" stream="false" alt="Logo" class="img-responsive" style="margin-top:-0.9px;"   /> 
+ 
+<!-- 
  <img  src="resource/image/C8 logo.jpeg" class="img-responsive" alt="C8" ></img>
+ -->
+ 
 </a>
 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-responsive-collapse">
 <span class="icon-bar"></span>
@@ -81,7 +87,17 @@
 </ul>
    
 <ul class="nav navbar-nav navbar-right">
- <li><p:graphicImage value="#{login.imageFromDB}" stream="false" class="img-responsive heightandwidth img-rounded" /></li> 
+
+<li>
+<h:commandLink action="#{userupdate.modifyAction}" style="padding:0px;margin:0px;height:50px; width:50px; border: 1px solid #fff;">
+<p:graphicImage value="#{login.imageFromDB}" stream="false" alt="image"  style="padding:0px;margin:0px;" 
+width="50"  height="50"  />
+</h:commandLink>
+</li>
+<!--  
+ <li><p:graphicImage value="#{login.imageFromDB}" stream="false" alt="Profile-image" class="img-responsive heightandwidth img-rounded" style="background-color:white;"/></li> 
+ 
+ -->
  <li class="dropdown">
  <a class="dropdown-toggle  hover-item" data-toggle="dropdown"  style="color:#faebd1; font-weight: bold; background-color:#f36c00;"> #{username} <span class="caret"></span></a>         
 
@@ -91,6 +107,16 @@
 <li><h:commandLink action="#{userupdate.modifyAction}" value="myprofile" style="color:#fff;font-weight: bold;text-align:left;"  class="btn btn-block hover-item"></h:commandLink></li>
 <li><h:commandLink action="#{login.logout}" value="Logout" style="color:#faebd1;font-weight: bold;text-align:left;"  class="btn btn-block hover-item"></h:commandLink></li>
 
+ <c:choose>
+ 
+<c:when test="#{userroleset eq 2}">
+
+<li><h:commandLink action="#{accountbean.modifyAction}" value="Account Admin" style="color:#fff;font-weight: bold;text-align:left;"  class="btn btn-block hover-item"></h:commandLink></li>
+</c:when>
+<c:otherwise>
+
+</c:otherwise>
+</c:choose>
 </ul> 
 </li>    
 </ul>

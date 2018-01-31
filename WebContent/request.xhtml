@@ -142,34 +142,41 @@ function setstartDateValue()
 		</f:facet> 
 
  
- <p:column filterBy="#{request1.title}"  sortBy="#{request1.title}" headerText="Title"  
-			 filterMatchMode="contains"  style="text-overflow: ellipsis; white-space: nowrap; padding: 0px 0px 0px 3px;" >			 
+ <p:column filterBy="#{request1.title}"  sortBy="#{request1.title}" headerText="Title"   id="title"
+			 filterMatchMode="contains"  style="text-overflow: ellipsis; white-space: nowrap; padding: 0px 0px 0px 3px;">			 
 				<f:facet name="header" >
+				
+				<p:watermark for="title" value="Search..." />
 					 <h:outputText value="Title"/>
+					 
 				</f:facet>
 				<h:outputText value="#{request1.title}" style="display: inline;"/>
+      
+      
 </p:column>
  
  
- <p:column filterBy="#{request1.description}" sortBy="#{request1.description}" headerText="Description"  
+ <p:column filterBy="#{request1.description}" sortBy="#{request1.description}" headerText="Description"  id="description"
 			 filterMatchMode="contains"   style="text-overflow: ellipsis; white-space: nowrap;padding: 0px 0px 0px 3px;">
 				<f:facet name="header">
+				<p:watermark for="description" value="Search..." />
 					 <h:outputText value="Description" />
 				</f:facet>
 				<h:outputText value="#{request1.description}" style="display: inline;"   />
 </p:column>
  
-<p:column filterBy="#{request1.changedate}" sortBy="#{request1.changedate}" headerText="Due Date"    class="date"
+<p:column filterBy="#{request1.changedate}" sortBy="#{request1.changedate}" headerText="Due Date"    class="date" id="changedate"
 			 filterMatchMode="contains"   pattern="dd-MMM-yyyy"  style="text-overflow: ellipsis; white-space: nowrap;padding: 0px 0px 0px 3px;">
 				<f:facet name="header">
+					<p:watermark for="changedate" value="dd-mm-yyyy" />
 					<h:outputText value="Due Date" />
 				</f:facet>
-				<h:outputText value="#{request1.changedate}" pattern="dd-MMM-yyyy" />
+				<h:outputText value="#{request1.changedate}" pattern="dd-MMM-yyyy"/>
 			</p:column>
     
      <p:column headerText="Category"  filterBy="#{request1.usercategory}" sortBy="#{request1.usercategory}"  filterMatchMode="in">
             <f:facet name="filter">
-                <p:selectCheckboxMenu label="Search" onchange="PF('newrequestListTable').filter()"  >
+                <p:selectCheckboxMenu label="Search" onchange="PF('newrequestListTable').filter()"  style="font-size:10px;height:25px;" >
                    <f:selectItems value="#{categorybean.categoryList}"  var="category" itemLabel="#{category.name}"
                           itemValue="#{category.name}"/>
                 </p:selectCheckboxMenu>
@@ -184,7 +191,7 @@ function setstartDateValue()
      <p:column filterBy="#{request1.userproject}"  sortBy="#{request1.userproject}" headerText="Project"  
 			 filterMatchMode="in" >
 				<f:facet name="filter">
-                <p:selectCheckboxMenu label="Search" onchange="PF('newrequestListTable').filter()"  >
+                <p:selectCheckboxMenu label="Search" onchange="PF('newrequestListTable').filter()" style="font-size:11px;height:25px;" >
                   <f:selectItems value="#{projectbean.projectList}" var="project" itemLabel="#{project.name}"  itemValue="#{project.name}"/>
     
                 </p:selectCheckboxMenu>
@@ -197,7 +204,7 @@ function setstartDateValue()
      <p:column filterBy="#{request1.userrequesttype}"  sortBy="#{request1.userrequesttype}" headerText="Type"   
 			 filterMatchMode="in" style="text-overflow: ellipsis; white-space: nowrap;padding: 0px 0px 0px 3px;">
 				<f:facet name="filter">
-                <p:selectCheckboxMenu label="Search" onchange="PF('newrequestListTable').filter()"  >
+                <p:selectCheckboxMenu label="Search" onchange="PF('newrequestListTable').filter()" style="font-size:12px;height:25px;" >
                   <f:selectItems value="#{requesttypebean.requesttypeList}" var="requesttype" itemLabel="#{requesttype.name}"  itemValue="#{requesttype.name}"/>
      
                 </p:selectCheckboxMenu>
@@ -209,7 +216,7 @@ function setstartDateValue()
       <p:column filterBy="#{request1.friendName}"  sortBy="#{request1.friendName}"  headerText="Team Member"    
 			 filterMatchMode="in"  style="text-overflow: ellipsis; white-space: nowrap;padding: 0px 0px 0px 3px;">
 				<f:facet name="filter">
-                <p:selectCheckboxMenu label="Search" onchange="PF('newrequestListTable').filter()"  >
+                <p:selectCheckboxMenu label="Search" onchange="PF('newrequestListTable').filter()" style="font-size:12px;height:25px;" >
                   <f:selectItems value="#{friendbean.friendList}" var="friend" itemLabel="#{friend.name}"  itemValue="#{friend.name}"/>
      
                 </p:selectCheckboxMenu>
@@ -220,7 +227,7 @@ function setstartDateValue()
        <p:column filterBy="#{request1.stage}"  sortBy="#{request1.stage}"  headerText="Stage"  
 			 filterMatchMode="in"  style="text-overflow: ellipsis; white-space: nowrap;padding: 0px 0px 0px 3px;">
 				<f:facet name="filter">
-                <p:selectCheckboxMenu label="Search" onchange="PF('newrequestListTable').filter()"  >
+                <p:selectCheckboxMenu label="Search" onchange="PF('newrequestListTable').filter()" style="font-size:12px;height:25px;"  >
                            <f:selectItem  itemLabel="Requested" itemValue="Requested" />
                            <f:selectItem   itemLabel="Accepted" itemValue="Accepted" />
                            <f:selectItem  itemLabel="Returned" itemValue="Returned" />                        
@@ -234,9 +241,10 @@ function setstartDateValue()
 				<h:outputText value="#{request1.stage}" style="display: inline;"   />
 			</p:column>
     
-     <p:column filterBy="#{request1.completionpercentage}"  sortBy="#{request1.completionpercentage}"  headerText="% Age Completion" class="percentage"
+     <p:column filterBy="#{request1.completionpercentage}"  sortBy="#{request1.completionpercentage}"  headerText="% Age Completion" class="percentage" id="completionpercentage"
 			 filterMatchMode="contains"  style="text-overflow: ellipsis; white-space: nowrap; padding: 0px 0px 0px 3px;">
 				<f:facet name="header">
+				<p:watermark for="completionpercentage" value="Search" />
 					<h:outputText value="% Age Completion" />
 				</f:facet>
 				<h:outputText value="#{request1.completionpercentage}%" style="display: inline;"   />
@@ -248,7 +256,7 @@ function setstartDateValue()
      <p:column filterBy="#{request1.status}"  sortBy="#{request1.status}" 
 			headerText="Status"   filterMatchMode="in" style="padding: 0px 0px 0px 3px;" >
 				<f:facet name="filter">
-                <p:selectCheckboxMenu label="Search" onchange="PF('newrequestListTable').filter()"  >
+                <p:selectCheckboxMenu label="Search" onchange="PF('newrequestListTable').filter()" style="font-size:12px;height:25px;" >
                            <f:selectItem  itemLabel="Active" itemValue="Active" />
                              <f:selectItem  itemLabel="In Active" itemValue="In Active" />
                 </p:selectCheckboxMenu>

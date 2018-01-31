@@ -50,7 +50,7 @@ function setUsersHiddenValue(new_value)
       <h:form id="accountForm">
     <div class="ui-fluid">
 <p:growl id="msgs" showDetail="true"/>
- <h:inputHidden id="id" value="#{account.id}" ></h:inputHidden>
+ <h:inputHidden id="id" value="#{accountbean.id}" ></h:inputHidden>
  
  
 	      <p:dataTable id="accountTable" var="account" value="#{accountbean.accountList}" draggableColumns="true" 
@@ -95,7 +95,18 @@ function setUsersHiddenValue(new_value)
 				</f:facet>
 				<h:outputText value="#{account.status}" />
 			</p:column>
-	        
+	       
+	        <p:column headerText="View / Modify" exportable="false" style="padding: 0px 0px 0px 0px;" class="viewsize" >
+         
+	    		
+	    		
+	    		<p:commandLink id="nonAjax" styleClass="btn btn-primary fontsize" 
+				style="color:white;  border-radius: none;font-size:12px;" onclick='setUsersHiddenValue(#{account.id})' 
+				action="#{accountbean.modifyAction()}" ajax="false" >
+	        		View / Update
+	    		</p:commandLink> 
+	    		
+   </p:column> 
 	       
 	    </p:dataTable>
 	    
