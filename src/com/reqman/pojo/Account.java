@@ -34,6 +34,8 @@ public class Account implements java.io.Serializable {
 	private Boolean status;
 	private Date datecreated;
 	private String createdby;
+	private byte[] photo;
+	private String imagename;
 	private Set<Users> userses = new HashSet<Users>(0);
 
 	public Account() {
@@ -44,12 +46,14 @@ public class Account implements java.io.Serializable {
 	}
 
 	public Account(int id, String name, Boolean status, Date datecreated,
-			String createdby, Set<Users> userses) {
+			String createdby, byte[] photo, Set<Users> userses) {
 		this.id = id;
 		this.name = name;
 		this.status = status;
 		this.datecreated = datecreated;
 		this.createdby = createdby;
+		this.photo=photo;
+		this.imagename=imagename;
 		this.userses = userses;
 	}
 
@@ -99,6 +103,25 @@ public class Account implements java.io.Serializable {
 
 	public void setCreatedby(String createdby) {
 		this.createdby = createdby;
+	}
+
+	@Column(name = "logo")
+	public byte[] getPhoto() {
+		return photo;
+	}
+
+	public void setPhoto(byte[] photo) {
+		this.photo = photo;
+	}
+
+	
+	@Column(name = "imagename", length = 100)
+	public String getImagename() {
+		return imagename;
+	}
+
+	public void setImagename(String imagename) {
+		this.imagename = imagename;
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "account")
