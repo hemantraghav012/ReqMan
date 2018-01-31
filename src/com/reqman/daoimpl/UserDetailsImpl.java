@@ -269,9 +269,10 @@ public class UserDetailsImpl implements UserDetailsInterface {
 	            users.setFirstname(firstname);
 	            users.setLastname(lastname);
 	            users.setShortname(shortname);
-	            users.setPassword(password);	            
+	            users.setPassword(password);
+	        	if(photo.getFileName() !=null && ! photo.getFileName().isEmpty()){
 				users.setPhoto(photo.getContents());
-			
+	        	}
 	            	session.update(users);
 	    			tx.commit();
 	    			

@@ -9,7 +9,6 @@ import org.hibernate.Transaction;
 
 import com.reqman.common.HibernateUtil;
 import com.reqman.dao.GetrolequeryInterface;
-
 import com.reqman.util.RequestConstants;
 
 
@@ -220,7 +219,70 @@ public class GetRolequery implements GetrolequeryInterface{
 		
 		return emailList;
 	}
-
+//account user Admin
+	
 	
 
+	
+	public Integer getAccountideByLoginId(String loginId) throws Exception 
+	{
+	    Session session = null;
+	    Transaction tx = null;
+	    
+	    Integer accountid=0; 
+	    List<Object[]> rows = null;
+	    SQLQuery query = null;
+	    String sqlQuery = "";
+	    String roleId = "";
+	    try
+		{
+           	session = HibernateUtil.getSession();
+            tx = session.beginTransaction();
+            sqlQuery ="select u.emailid,ac.accountid from reqman.roles as r,reqman.accountusers as ac, reqman.account as acco,"
+            		+ "reqman.users as u,reqman.userroles as ur "
+            		+" where u.id=ur.userid and ur.roleid=r.id and ac.userid=u.id and "
+            		+" ac.accountid=acco.id and r.status=true and u.emailid='"+loginId+"'";
+            query = session.createSQLQuery(sqlQuery);
+            rows = query.list();
+            
+            if(rows != null && rows.size() != 0)
+            {
+            	for(Object[] row : rows)
+            	{
+            		roleId = row[0].toString();
+            		accountid = (Integer) row[1];
+            	}
+            }
+
+            	tx.commit();
+		}
+		catch(Exception e)
+		{
+			
+			e.printStackTrace();
+			if(tx != null)
+			{
+				tx.rollback();
+			}
+		}
+		finally 
+		{
+        	if(session != null)
+            session.close();
+	    }
+
+		return accountid;
+	}
+	
+	/*
+	public static void main(String args[]) throws Exception
+	{
+		
+		GetRolequery  gr=new GetRolequery();
+		gr.getAccountideByLoginId("hemantraghav012@outlook.com");
+		
+		Integer accountid = 0;
+		System.out.println("accounti:"+accountid);
+	}
+	*/
 }

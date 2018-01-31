@@ -7,12 +7,22 @@ import org.hibernate.Hibernate;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.Restrictions;
+import org.primefaces.model.UploadedFile;
 
 import com.reqman.common.HibernateUtil;
 import com.reqman.dao.AccountInterface;
 import com.reqman.pojo.Account;
+import com.reqman.pojo.Accountusers;
+import com.reqman.pojo.Request;
+import com.reqman.pojo.Requestnotes;
+import com.reqman.pojo.Usercategory;
+import com.reqman.pojo.Userfriendlist;
+import com.reqman.pojo.Userproject;
+import com.reqman.pojo.Userrequesttype;
 import com.reqman.pojo.Users;
 import com.reqman.vo.AccountVo;
+import com.reqman.vo.NewrequestVo;
+import com.reqman.vo.UserupdateVo;
 
 
 public class AccountImpl implements AccountInterface {
@@ -91,6 +101,164 @@ public class AccountImpl implements AccountInterface {
 
 		return requestList;
 	}
+	@Override
+	public AccountVo getAccountById(Integer id,String userName) throws Exception {
+		// TODO Auto-generated method stub
+		 Session session = null;
+		    Transaction tx = null;
+		    AccountVo  accountVo = new  AccountVo();
+		   Account accountTemp = null;
+		   Integer accountid=0;
+		   GetRolequery  gr=new GetRolequery();
+		  
+			try
+			{
+				 accountid= gr.getAccountideByLoginId(userName);
+				 
+	           	session = HibernateUtil.getSession();
+	            tx = session.beginTransaction();
+	            accountTemp = (Account)
+	            			session.createCriteria(Account.class)
+	            			.add(Restrictions.eq("id",  accountid))
+	            			.uniqueResult();
+	            
+	            accountVo.setName( accountTemp.getName());
+	            accountVo.setId(accountTemp.getId());
+	            accountVo.setImagename(accountTemp.getImagename());
+	         
+	            tx.commit();
+           
+ 		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+			if(tx != null){
+				tx.rollback();
+			}
+		}
+		finally 
+		{
+        	if(session != null)
+            session.close();
+	    }
+
+		return   accountVo;
+	
+	}
+
+	
+	@Override
+	public int updatelogo(String accountname, boolean status, Integer id, String userName, UploadedFile logo,String imagename) throws Exception {
+		// TODO Auto-generated method stub
+		
+		 Session session = null;
+		    Transaction tx = null;
+		   AccountVo  accountVo = new  AccountVo();
+		    Account account = null;
+		    Integer accountid=0;
+			   GetRolequery  gr=new GetRolequery();
+			  
+		    int result = 0;
+		   
+				try
+				{
+					 accountid= gr.getAccountideByLoginId(userName);
+					session = HibernateUtil.getSession();
+		            tx = session.beginTransaction();
+		            account = (Account)
+		            			session.createCriteria(Account.class)
+		            			.add(Restrictions.eq("id",  accountid))
+		            			.uniqueResult();
+		           
+		            if(  account != null ){
+		            	//account.setStatus(status);
+		            	if(logo.getFileName() !=null && ! logo.getFileName().isEmpty()){
+		            	account.setPhoto(logo.getContents());
+		            	account.setImagename(logo.getFileName());
+		            	}
+		            }
+		            	session.update(account);
+		
+		        		tx.commit();
+		     			result = 1;
+		     			
+		     			
+		     			
+		    				
+		    		}
+		    		catch(Exception e)
+		    		{
+		    			e.printStackTrace();
+		    			if(tx != null){
+		    				tx.rollback();
+		    			}
+		    			result = 2;
+		    		}
+		    		finally 
+		    		{
+		         	if(session != null)
+		             session.close();
+		    	    }
+
+		    		return result;
+		    	
+		    	
+
+		    	}
+	@Override
+	public byte[] getImageDetails(String userName) throws Exception {
+		// TODO Auto-generated method stub
+		
+			// TODO Auto-generated method stub
+		    Session session = null;
+		    Transaction tx = null;	  
+		   Account account=null; 		
+		   Integer accountid=0;
+		   GetRolequery  gr=new GetRolequery();
+		  
+		   
+		    byte[] imageBytes = null;
+			try
+			{
+				 accountid= gr.getAccountideByLoginId(userName);
+	           	session = HibernateUtil.getSession();
+	            tx = session.beginTransaction();
+	         
+	        
+	            account = (Account)session.createCriteria(Account.class)
+	            		.add(Restrictions.eq("id", accountid))
+	            		.uniqueResult();
+	            if(account != null){
+	            	if(account.getPhoto() != null)
+	            	{
+	            		imageBytes = account.getPhoto();
+	            	}
+	    			tx.commit();
+	            }
+	 		}
+			catch(Exception e)
+			{
+				e.printStackTrace();
+				if(tx != null){
+					tx.rollback();
+				}
+			}
+			finally 
+			{
+	        	if(session != null)
+	            session.close();
+		    }
+
+			return imageBytes;
+		
+		
+		}
+
+
+
+	
+
+
 	
 	
 
