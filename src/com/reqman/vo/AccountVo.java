@@ -2,6 +2,8 @@ package com.reqman.vo;
 
 import java.util.Date;
 
+import org.primefaces.model.UploadedFile;
+
 public class AccountVo {
 
 	private Integer id;
@@ -9,6 +11,17 @@ public class AccountVo {
 	private String status;
 	private Date  datecreated;
 	private String ceatedby;
+	private String imagename;
+	 
+	
+	
+	
+	public String getImagename() {
+		return imagename;
+	}
+	public void setImagename(String imagename) {
+		this.imagename = imagename;
+	}
 	public Integer getId() {
 		return id;
 	}
@@ -39,6 +52,7 @@ public class AccountVo {
 	public void setCeatedby(String ceatedby) {
 		this.ceatedby = ceatedby;
 	}
+	
 	
 	
 }
