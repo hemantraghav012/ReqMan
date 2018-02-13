@@ -18,4 +18,8 @@ public class RequestConstants
 	
 	public static final Integer TEAM_MEMBER_ID = 4;
 	
+	public static final String PLAN_INDIVIDUAL = "Individual";
+	
+	public static final String PLAN_ORGANIZATIONAL = "Organizational";
+	
 }

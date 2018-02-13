@@ -121,8 +121,8 @@ CREATE TABLE reqman.request
     acceptdate timestamp without time zone,
     updatedate timestamp without time zone,
     revisionnumber integer,
-     rating integer,
-    feedback character varying(500) COLLATE "default".pg_catalog,
+  rating integer,
+feedback character varying(500) COLLATE "default".pg_catalog,
     approvedby character varying(50) COLLATE "default".pg_catalog,
     approveddate timestamp without time zone,
     CONSTRAINT pk_request_id PRIMARY KEY (id),
@@ -556,9 +556,9 @@ GRANT ALL ON TABLE reqman.accountusers TO postgres WITH GRANT OPTION;
 CREATE TABLE reqman.customerpayment
 (
     id bigint NOT NULL DEFAULT nextval('reqman.customerpayment_id_seq'::regclass),
-    productname character varying(200) COLLATE pg_catalog."default",
+    productname character varying(200) COLLATE "default".pg_catalog,
     productid bigint,
-    subscriptionname character varying(200) COLLATE pg_catalog."default",
+    subscriptionname character varying(200) COLLATE "default".pg_catalog,
     subscriptionid bigint,
     customerid bigint,
     userid integer,
@@ -566,6 +566,8 @@ CREATE TABLE reqman.customerpayment
     currenttermend date,
     status boolean,
     createdon timestamp with time zone,
+    planname character varying(200) COLLATE "default".pg_catalog,
+    plancode character varying(200) COLLATE "default".pg_catalog,
     CONSTRAINT "pk_ customerpayment" PRIMARY KEY (id),
     CONSTRAINT "fk_userid_ customerpayment" FOREIGN KEY (userid)
         REFERENCES reqman.users (id) MATCH SIMPLE
@@ -578,8 +580,7 @@ WITH (
 TABLESPACE pg_default;
 
 ALTER TABLE reqman.customerpayment
-    OWNER to postgres;
-    
+    OWNER to postgres;    
 -- Table: reqman.publicemaildomains
 
 -- DROP TABLE reqman.publicemaildomains;
@@ -602,3 +603,30 @@ ALTER TABLE reqman.publicemaildomains
     OWNER to postgres;
 
 GRANT ALL ON TABLE reqman.publicemaildomains TO postgres WITH GRANT OPTION;
+
+-- Table: reqman.schdulejobs
+
+-- DROP TABLE reqman.schdulejobs;
+
+CREATE TABLE reqman.schdulejobs
+(
+    id integer NOT NULL DEFAULT nextval('reqman.schdulejobs_id_seq'::regclass),
+    jobname character varying(200) COLLATE "default".pg_catalog,
+    description character varying(200) COLLATE "default".pg_catalog,
+    day character varying(10) COLLATE "default".pg_catalog,
+    hour character varying(10) COLLATE "default".pg_catalog,
+    minute character varying(10) COLLATE "default".pg_catalog,
+    status boolean,
+    createdby character varying(50) COLLATE "default".pg_catalog,
+    createdon timestamp without time zone,
+    CONSTRAINT pk_schduledjobs PRIMARY KEY (id)
+)
+WITH (
+    OIDS = FALSE
+)
+TABLESPACE pg_default;
+
+ALTER TABLE reqman.schdulejobs
+    OWNER to postgres;
+
+GRANT ALL ON TABLE reqman.schdulejobs TO postgres WITH GRANT OPTION;

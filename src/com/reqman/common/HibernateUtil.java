@@ -21,6 +21,7 @@ import com.reqman.pojo.Requesttype;
 import com.reqman.pojo.Rolemenus;
 import com.reqman.pojo.RolemenusId;
 import com.reqman.pojo.Roles;
+import com.reqman.pojo.Schdulejobs;
 import com.reqman.pojo.Suggestion;
 import com.reqman.pojo.Usercategory;
 import com.reqman.pojo.Userfriendlist;
@@ -76,6 +77,7 @@ public class HibernateUtil {
     	    configuration.addAnnotatedClass(Customerpayment.class);
     	    configuration.addAnnotatedClass(Organisationdetails.class);
     	    configuration.addAnnotatedClass(Publicemaildomains.class);
+    	    configuration.addAnnotatedClass(Schdulejobs.class);
             ServiceRegistry serviceRegistry
                 = new StandardServiceRegistryBuilder()
                     .applySettings(configuration.getProperties()).build();

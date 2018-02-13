@@ -1,9 +1,8 @@
 package com.reqman.pojo;
 
-// Generated 18 Jan, 2018 11:02:49 PM by Hibernate Tools 4.3.1
+// Generated 12 Feb, 2018 7:22:07 PM by Hibernate Tools 4.3.1
 
 import java.util.Date;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -38,6 +37,8 @@ public class Customerpayment implements java.io.Serializable {
 	private Date currenttermend;
 	private Boolean status;
 	private Date createdon;
+	private String planname;
+	private String plancode;
 
 	public Customerpayment() {
 	}
@@ -49,7 +50,7 @@ public class Customerpayment implements java.io.Serializable {
 	public Customerpayment(long id, Users users, String productname,
 			Long productid, String subscriptionname, Long subscriptionid,
 			Long customerid, Date currenttermstartat, Date currenttermend,
-			Boolean status, Date createdon) {
+			Boolean status, Date createdon, String planname, String plancode) {
 		this.id = id;
 		this.users = users;
 		this.productname = productname;
@@ -61,6 +62,8 @@ public class Customerpayment implements java.io.Serializable {
 		this.currenttermend = currenttermend;
 		this.status = status;
 		this.createdon = createdon;
+		this.planname = planname;
+		this.plancode = plancode;
 	}
 
 	@Id
@@ -166,6 +169,24 @@ public class Customerpayment implements java.io.Serializable {
 
 	public void setCreatedon(Date createdon) {
 		this.createdon = createdon;
+	}
+
+	@Column(name = "planname", length = 200)
+	public String getPlanname() {
+		return this.planname;
+	}
+
+	public void setPlanname(String planname) {
+		this.planname = planname;
+	}
+
+	@Column(name = "plancode", length = 200)
+	public String getPlancode() {
+		return this.plancode;
+	}
+
+	public void setPlancode(String plancode) {
+		this.plancode = plancode;
 	}
 
 }
