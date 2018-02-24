@@ -54,6 +54,12 @@ public class Request implements java.io.Serializable {
 	private Set<Requestnotes> requestnoteses = new HashSet<Requestnotes>(0);
     private Integer rating;
     private String feedback;
+    private String priority;
+    private Integer weightage;
+    private String estimatedeffort;
+    private String actualeffort;
+    
+    
 	public Request() {
 	}
 
@@ -65,7 +71,7 @@ public class Request implements java.io.Serializable {
 	
 	
 	
-	
+
 	public Request(int id, Usercategory usercategory,
 			Userfriendlist userfriendlist, Userproject userproject,
 			Userrequesttype userrequesttype, String title, String description,
@@ -74,7 +80,9 @@ public class Request implements java.io.Serializable {
 			Date datemodified, String modifiedby, String filename,
 			int completionpercentage, Date acceptdate, Date updatedate,
 			Integer revisionnumber, String approvedby, Date approveddate,
-			Set<Requestnotes> requestnoteses, Integer rating, String feedback) {
+			Set<Requestnotes> requestnoteses, Integer rating, String feedback,
+			String priority, Integer weightage, String estimatedeffort,
+			String actualeffort) {
 		super();
 		this.id = id;
 		this.usercategory = usercategory;
@@ -101,9 +109,11 @@ public class Request implements java.io.Serializable {
 		this.requestnoteses = requestnoteses;
 		this.rating = rating;
 		this.feedback = feedback;
+		this.priority = priority;
+		this.weightage = weightage;
+		this.estimatedeffort = estimatedeffort;
+		this.actualeffort = actualeffort;
 	}
-
-	
 
 	@Id
 	 @GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -338,6 +348,38 @@ public class Request implements java.io.Serializable {
 
 	public void setFeedback(String feedback) {
 		this.feedback = feedback;
+	}
+	@Column(name = "priority", length = 50)
+	public String getPriority() {
+		return priority;
+	}
+
+	public void setPriority(String priority) {
+		this.priority = priority;
+	}
+	@Column(name = "weightage", length = 50)
+	public Integer getWeightage() {
+		return weightage;
+	}
+
+	public void setWeightage(Integer weightage) {
+		this.weightage = weightage;
+	}
+	@Column(name = "estimatedeffort", length = 100)
+	public String getEstimatedeffort() {
+		return estimatedeffort;
+	}
+
+	public void setEstimatedeffort(String estimatedeffort) {
+		this.estimatedeffort = estimatedeffort;
+	}
+	@Column(name = "actualeffort", length = 100)
+	public String getActualeffort() {
+		return actualeffort;
+	}
+
+	public void setActualeffort(String actualeffort) {
+		this.actualeffort = actualeffort;
 	}
 
 	
