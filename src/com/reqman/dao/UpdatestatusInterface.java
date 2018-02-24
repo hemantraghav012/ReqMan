@@ -6,6 +6,7 @@ import java.util.List;
 
 
 
+
 import com.reqman.vo.UpdatestatusVo;
 
 public interface UpdatestatusInterface {
@@ -14,7 +15,7 @@ public interface UpdatestatusInterface {
 
 	UpdatestatusVo getRequestById(String requestId) throws Exception;
 
-	int updateRequestById(String requestId, Date completiondate,int completionpercentage, Integer stage,String message, String userName) throws Exception;
+	int updateRequestById(String requestId, Date completiondate,int completionpercentage, Integer stage,String message, String userName, String actualeffort) throws Exception;
 
 	List<UpdatestatusVo> getallProject(String userName)throws Exception;
 
