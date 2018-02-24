@@ -22,7 +22,7 @@
 				<job-group>PendingRequestGroup</job-group>
 				<!-- It will run every 5 seconds -->
 			<!-- 	<cron-expression>0/5 * * * * ?</cron-expression> -->
-				<cron-expression>0 09 17 ? * WED</cron-expression>
+				<cron-expression>0 44 17 ? * FRI</cron-expression>
 
 
 				
