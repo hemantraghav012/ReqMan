@@ -190,7 +190,7 @@ public class Login implements Serializable {
 					
 					//ByteArrayOutputStream bos = new ByteArrayOutputStream();
 					BufferedImage img = ImageIO.read(context.getExternalContext()
-							.getResourceAsStream("/resource/image/22.jpg"));
+							.getResourceAsStream("/resource/image/avatar.png"));
 					int w = img.getWidth(null);
 					int h = img.getHeight(null);
 		 

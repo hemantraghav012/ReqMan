@@ -21,13 +21,15 @@ public class Requestnotesbean implements Serializable {
 	 /**
 	 * 
 	 */
+	/*
 	private static final long serialVersionUID = 5047237928136055515L;
 	private String requestId;	
 	private NewrequestVo newrequestVo = new NewrequestVo();
 	 private NewrequestInterface newrequestInterface = new NewrequestImpl();
 	 private String title;
 	 private String description;
-public void writeAction() {
+
+	 public void writeAction() {
 	
 		
 	try
@@ -103,7 +105,7 @@ public void setDescription(String description) {
 }
 
 
-
+*/
 	
 
 

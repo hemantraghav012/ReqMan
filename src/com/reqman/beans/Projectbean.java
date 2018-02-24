@@ -89,8 +89,7 @@ public class Projectbean implements Serializable{
 	    
 	    piechart.setTitle("Project Status");
 	    piechart.setLegendPosition("ne");
-	    //piechart.setSeriesColors("green,red");
-	   // piechart.setFill(false);
+	    
 	    piechart.setShowDataLabels(true);
 	 }
 	
@@ -152,7 +151,7 @@ public class Projectbean implements Serializable{
 						null,
 						new FacesMessage(FacesMessage.SEVERITY_WARN,
 								"This project allready exists in your list. ",
-								"If inactive you can acivate the project status from the list shown below."));
+								"If inactive you can active the project status from the list shown below."));
 			//	return "project";
 			}
 			if(result == 2)
@@ -161,7 +160,7 @@ public class Projectbean implements Serializable{
 						null,
 						new FacesMessage(FacesMessage.SEVERITY_WARN,
 								"This project allready exists in your list. ",
-								"If inactive you can acivate the project status from the list shown below."));
+								"If inactive you can active the project status from the list shown below."));
 			//	return "project";
 			}
 			if(result == 3)
@@ -170,9 +169,8 @@ public class Projectbean implements Serializable{
 				
 				FacesContext.getCurrentInstance().addMessage(
 						null,
-						new FacesMessage(FacesMessage.SEVERITY_WARN,
-								"New Project added successfully.",
-								"New Project added successfully."));
+						new FacesMessage(FacesMessage.SEVERITY_INFO,
+								"New Project added successfully.",""));
 			}
 			
 			projectList = projectMasterInterface.getProjectDetails(userName);
@@ -184,8 +182,7 @@ public class Projectbean implements Serializable{
 			FacesContext.getCurrentInstance().addMessage(
 					null,
 					new FacesMessage(FacesMessage.SEVERITY_WARN,
-							"Server Error "+e.getMessage(),
-							"Server Error "+e.getMessage()));
+							"Server Error "+e.getMessage(),""));
 			return "project";
 		}
 		return "project";
@@ -207,7 +204,7 @@ public class Projectbean implements Serializable{
 	        if(newValue != null && !newValue.equals(oldValue)) 
 	        {
 	        	result = projectMasterInterface.updateProject(oldValue, newValue, updateprojectId);
-	            FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO,"The status/project access of the project has been change successfully.","Old status/project access is " + oldValue + ", status/project access " + newValue);
+	            FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO,"The status/project access of the project has been changed successfully.","Old status/project access is " + oldValue + ", status/project access " + newValue);
 	            FacesContext.getCurrentInstance().addMessage(null, msg);
 	        }
 		 }
@@ -221,76 +218,7 @@ public class Projectbean implements Serializable{
 	    }
 	
 	
-	/*
 	
-	public void modifyAction() {
-		
-		ProjectVo projectVo = new ProjectVo();
-        
-        try{
-        	System.out.println("modify action"+ projectId);
-            //addMessage("Welcome to Primefaces!!");
-        	setProjectId(projectId);
-        	projectVo = projectMasterInterface.getUserProjectById(projectId);
-        	if(projectVo != null && projectVo.getStatus().trim().equalsIgnoreCase("Active")){
-        		setProjectName(projectVo.getName() != null ? projectVo.getName() : "");
-        		setStatus(true);
-        	}
-        	else
-        	{
-        		setProjectName(projectVo.getName() != null ? projectVo.getName() : "");
-        		setStatus(false);
-        	}
-        	
-        	FacesContext.getCurrentInstance()
-            .getExternalContext().dispatch("modifyproject.xhtml");
-
-        }
-        catch(Exception e){
-        	e.printStackTrace();
-        }
-        
-    }
-	
-	public String updateProject(){
-		int result = 0;
-		try{
-			System.out.println("--updateproject-status-"+status);
-			System.out.println("--updateProject-projectId-"+projectId);
-			HttpSession session = SessionUtils.getSession();
-			String userName = (String)session.getAttribute("username");
-			System.out.println("--usersession--userName-->"+userName);
-			
-        	result = projectMasterInterface.updateUserprojectById(projectId, status);
-        	
-        	if(result == 2){
-        		FacesContext.getCurrentInstance().addMessage(
-						null,
-						new FacesMessage(FacesMessage.SEVERITY_WARN,
-								"Problem while modifying the Project",
-								"Problem while modifying the Project"));
-				return "modifyproject.xhtml";
-        	}
-        	
-        	if(result == 1){
-        		projectList = projectMasterInterface.getProjectDetails(userName);
-        	}
-        	
-        	
-		}
-		catch(Exception e){
-			e.printStackTrace();
-			FacesContext.getCurrentInstance().addMessage(
-					null,
-					new FacesMessage(FacesMessage.SEVERITY_WARN,
-							"Problem while modifying the Project",
-							"Problem while modifying the Project"));
-			return "modifyproject.xhtml";
-		}
-		return "project";
-	}
-
-	*/
 	
 	public void postProcessXLS(Object document) {
         HSSFWorkbook wb = (HSSFWorkbook) document;

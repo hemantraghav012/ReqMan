@@ -151,7 +151,7 @@ public class Categorybean implements Serializable
 						null,
 						new FacesMessage(FacesMessage.SEVERITY_WARN,
 								"This Category allready exists in your list. ",
-								"If inactive you can acivate the category status from the list shown below."));
+								"If inactive you can active the category status from the list shown below."));
 				//return "category";
 			}
 			if(result == 2)
@@ -160,7 +160,7 @@ public class Categorybean implements Serializable
 						null,
 						new FacesMessage(FacesMessage.SEVERITY_WARN,
 								"This Category allready exists in your list. ",
-								"If inactive you can acivate the category status from the list shown below."));
+								"If inactive you can active the category status from the list shown below."));
 			//	return "category";
 			}
 			if(result == 3)
@@ -169,9 +169,8 @@ public class Categorybean implements Serializable
 				
 				FacesContext.getCurrentInstance().addMessage(
 						null,
-						new FacesMessage(FacesMessage.SEVERITY_WARN,
-								"New Category added successfully.",
-								"New Category added successfully."));
+						new FacesMessage(FacesMessage.SEVERITY_INFO,
+								"New Category added successfully.",""));
 			}
 			
 			categoryList = categoryMasterInterface.getCategoryDetails(userName);
@@ -184,7 +183,7 @@ public class Categorybean implements Serializable
 					null,
 					new FacesMessage(FacesMessage.SEVERITY_WARN,
 							"Server Error "+e.getMessage(),
-							"Server Error "+e.getMessage()));
+							""));
 			return "category";
 		}
 		return "category";
@@ -205,7 +204,7 @@ public class Categorybean implements Serializable
 	        if(newValue != null && !newValue.equals(oldValue)) 
 	        {
 	        	result = categoryMasterInterface.updateCategory(oldValue, newValue, updatecategoryId);
-	            FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO,"The status of the category has been change successfully.","Old status is " + oldValue + ", New status is " + newValue);
+	            FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO,"The status of the category has been changed successfully.","Old status is " + oldValue + ", New status is " + newValue);
 	            FacesContext.getCurrentInstance().addMessage(null, msg);
 	        }
 		 }
@@ -219,79 +218,6 @@ public class Categorybean implements Serializable
 	    }
 	
 	
-	
-	
-	public void modifyAction() {
-		
-		
-        try
-        {
-        	System.out.println("modify action"+categoryId);
-            //addMessage("Welcome to Primefaces!!");
-        	setCategoryId(categoryId);
-        	categoryVo = categoryMasterInterface.getUserCategoryById(categoryId);
-        	if(categoryVo != null && categoryVo.getStatus().trim().equalsIgnoreCase("Active")){
-        		
-        		setCategoryName(categoryVo.getName() != null ? categoryVo.getName() : "");
-        		setStatus(true);
-        	}
-        	else
-        	{
-        		setCategoryName(categoryVo.getName() != null ? categoryVo.getName() : "");
-        		setStatus(false);
-        	}
-        	
-        	FacesContext.getCurrentInstance()
-            .getExternalContext().dispatch("modifycategory.xhtml");
-
-        }
-        catch(Exception e){
-        	e.printStackTrace();
-        }
-        
-    }
-	
-	public String updateCategory()
-	{
-		int result = 0;
-		try{
-			System.out.println("--updateCategory-status-"+status);
-			System.out.println("--updateCategory-categoryId-"+categoryId);
-			HttpSession session = SessionUtils.getSession();
-			String userName = (String)session.getAttribute("username");
-			
-			System.out.println("--usersession--userName-->"+userName);
-			
-        	result = categoryMasterInterface.updateUserCategoryById(categoryId, status);
-        	
-        	if(result == 2)
-        	{
-        		FacesContext.getCurrentInstance().addMessage(
-						null,
-						new FacesMessage(FacesMessage.SEVERITY_WARN,
-								"Problem while modifying the Category",
-								"Problem while modifying the Category"));
-				return "modifycategory.xhtml";
-        	}
-        	
-        	if(result == 1)
-        	{
-        		categoryList = categoryMasterInterface.getCategoryDetails(userName);
-        	}
-        	
-		}
-		catch(Exception e)
-		{
-			e.printStackTrace();
-			FacesContext.getCurrentInstance().addMessage(
-					null,
-					new FacesMessage(FacesMessage.SEVERITY_WARN,
-							"Problem while modifying the Category",
-							"Problem while modifying the Category"));
-			return "modifycategory.xhtml";
-		}
-		return "category";
-	}
 	
 	public void postProcessXLS(Object document) {
         HSSFWorkbook wb = (HSSFWorkbook) document;

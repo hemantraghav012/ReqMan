@@ -60,7 +60,10 @@ public class Responsebean implements Serializable{
 	 private List<ResponseVo> filteredResponseList = new ArrayList<ResponseVo>();
 	 private ResponseVo responseVo = new ResponseVo();
 	 private  String message;  
-	 
+	 private String actualeffort;
+		private String estimatedeffort;
+		private String priority;
+		private Integer weightage;
 	 
 	@PostConstruct
    public void init() 
@@ -122,25 +125,28 @@ public void modifyAction() {
         		setTitle(responseVo.getTitle() != null ? responseVo.getTitle(): "");
         		setDescription(responseVo.getDescription() != null ? responseVo.getDescription() : "");  
         		setCompletiondate(responseVo.getCompletiondate());
+        		 setActualeffort(responseVo.getActualeffort());
           		setStage(1);
         
         	}
-        	else if(responseVo != null && responseVo.getStage().trim().equalsIgnoreCase("Accepted")){
+        	
+        	else if(responseVo != null && responseVo.getStage().trim().equalsIgnoreCase("Returned")){
         		setTitle(responseVo.getTitle() != null ? responseVo.getTitle(): "");
         		setDescription(responseVo.getDescription() != null ? responseVo.getDescription() : "");
         		setCompletiondate(responseVo.getCompletiondate());
+        		 setActualeffort(responseVo.getActualeffort());
+        		setStage(3);
+        	
+        	}
+        	else {
+        		setTitle(responseVo.getTitle() != null ? responseVo.getTitle(): "");
+        		setDescription(responseVo.getDescription() != null ? responseVo.getDescription() : "");
+        		setCompletiondate(responseVo.getCompletiondate());
+        		 setActualeffort(responseVo.getActualeffort());
           		setStage(2);
         
         	
         		
-        	}
-        	else
-        	{
-        		setTitle(responseVo.getTitle() != null ? responseVo.getTitle(): "");
-        		setDescription(responseVo.getDescription() != null ? responseVo.getDescription() : "");
-        		setCompletiondate(responseVo.getCompletiondate());
-        		setStage(3);
-        	
         	}
         	System.out.println("modify action"+completiondate);
         	
@@ -168,7 +174,7 @@ public void modifyAction() {
 			String userName = (String)session.getAttribute("username");			
 			System.out.println("--usersession--userName-->"+userName);
 			System.out.println("--usersession--userName-->"+completiondate);
-        	result = responseInterface.updateResponsetById(requestId,stage, completiondate,userName,message);
+        	result = responseInterface.updateResponsetById(requestId,stage, completiondate,userName,message,actualeffort);
         	
         	if(result == 2)
         	{
@@ -426,6 +432,38 @@ public void modifyAction() {
 
 	public void setMessage(String message) {
 		this.message = message;
+	}
+
+	public String getActualeffort() {
+		return actualeffort;
+	}
+
+	public void setActualeffort(String actualeffort) {
+		this.actualeffort = actualeffort;
+	}
+
+	public String getEstimatedeffort() {
+		return estimatedeffort;
+	}
+
+	public void setEstimatedeffort(String estimatedeffort) {
+		this.estimatedeffort = estimatedeffort;
+	}
+
+	public String getPriority() {
+		return priority;
+	}
+
+	public void setPriority(String priority) {
+		this.priority = priority;
+	}
+
+	public Integer getWeightage() {
+		return weightage;
+	}
+
+	public void setWeightage(Integer weightage) {
+		this.weightage = weightage;
 	}
 	
 	

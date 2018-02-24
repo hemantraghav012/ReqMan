@@ -105,9 +105,8 @@ private  List<FriendVo> friendList = new ArrayList<FriendVo>();
 		 HttpSession session = SessionUtils.getSession();
 			String userName = (String)session.getAttribute("username");
 			System.out.println("--usersession--userName-->"+userName); 
-        getfriendList = friendMasterInterface.AllUsers(userName); 
-        
-       // friendList1 = friendMasterInterface.getUsersStatus(userName);
+        getfriendList = friendMasterInterface.AllUsers(userName);        
+       
          
          return   getfriendList;  
      }  
@@ -126,8 +125,7 @@ private  List<FriendVo> friendList = new ArrayList<FriendVo>();
 	  
 	    piechart.setTitle("Friend Status");
 	    piechart.setLegendPosition("ne");
-	    //piechart.setSeriesColors("green,red");
-	   // piechart.setFill(false);
+	   
 	    piechart.setShowDataLabels(true);
 	 }
 	
@@ -186,7 +184,7 @@ private  List<FriendVo> friendList = new ArrayList<FriendVo>();
 						null,
 						new FacesMessage(FacesMessage.SEVERITY_WARN,
 								"This team member allready exists in your list. ",
-								"If inactive you can acivate the team member status from the list shown below."));
+								"If inactive you can active the team member status from the list shown below."));
 				//return "friend";
 			}
 			if(result == 2)
@@ -195,7 +193,7 @@ private  List<FriendVo> friendList = new ArrayList<FriendVo>();
 						null,
 						new FacesMessage(FacesMessage.SEVERITY_WARN,
 								"This team member allready exists in your list. ",
-								"If inactive you can acivate the team member status from the list shown below."));
+								"If inactive you can active the team member status from the list shown below."));
 				//return "friend";
 			}
 			if(result == 3)
@@ -204,9 +202,8 @@ private  List<FriendVo> friendList = new ArrayList<FriendVo>();
 			
 				FacesContext.getCurrentInstance().addMessage(
 						null,
-						new FacesMessage(FacesMessage.SEVERITY_WARN,
-								"Team member is added successfully.",
-								"Team member is added successfully."));
+						new FacesMessage(FacesMessage.SEVERITY_INFO,
+								"Team member is added successfully.",""));
 			}
 			
 			friendList = friendMasterInterface.getUsersDetails(userName);
@@ -218,8 +215,7 @@ private  List<FriendVo> friendList = new ArrayList<FriendVo>();
 			FacesContext.getCurrentInstance().addMessage(
 					null,
 					new FacesMessage(FacesMessage.SEVERITY_WARN,
-							"Server Error "+e.getMessage(),
-							"Server Error "+e.getMessage()));
+							"Server Error "+e.getMessage(),""));
 			return "friend";
 		}
 		return "friend";
@@ -243,7 +239,7 @@ private  List<FriendVo> friendList = new ArrayList<FriendVo>();
 	        if(newValue != null && !newValue.equals(oldValue)) 
 	        {
 	        	result = friendMasterInterface.updateFriend(oldValue, newValue, updatefriendId);
-	            FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "The status of the team member has been change successfully.","Old status is " + oldValue + ", New status is " + newValue);
+	            FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "The status of the team member has been changed successfully.","Old status is " + oldValue + ", New status is " + newValue);
 	            FacesContext.getCurrentInstance().addMessage(null, msg);
 	        }
 		 }
@@ -260,73 +256,7 @@ private  List<FriendVo> friendList = new ArrayList<FriendVo>();
 	
 	
 	
-	
-public void modifyAction() {
-		
-		FriendVo friendVo = new FriendVo();
-        
-        try{
-        	System.out.println("modify action"+ friendId);
-            //addMessage("Welcome to Primefaces!!");
-        	setFriendId(friendId);
-        	friendVo  = friendMasterInterface.getUserFriendById(friendId);
-        	if(friendVo  != null && friendVo .getStatus().trim().equalsIgnoreCase("Active")){
-        		setFrienduser(friendVo.getEmailid()  != null ? friendVo.getEmailid() : "");
-        		setStatus(true);
-        	}
-        	else
-        	{
-        		setFrienduser(friendVo.getEmailid() != null ? friendVo.getEmailid() : "");
-        		setStatus(false);
-        	}
-        	
-        	FacesContext.getCurrentInstance()
-            .getExternalContext().dispatch("modifyfriend.xhtml");
 
-        }
-        catch(Exception e){
-        	e.printStackTrace();
-        }
-        
-    }
-	
-	public String updateFriend(){
-		int result = 0;
-		try{
-			System.out.println("--updatefriend-status-"+status);
-			System.out.println("--updatefriend-projectId-"+friendId);
-			HttpSession session = SessionUtils.getSession();
-			String userName = (String)session.getAttribute("username");
-			System.out.println("--usersession--userName-->"+userName);
-			
-        	result =friendMasterInterface.updateUserFriendById(friendId, status);
-        	
-        	if(result == 2){
-        		FacesContext.getCurrentInstance().addMessage(
-						null,
-						new FacesMessage(FacesMessage.SEVERITY_WARN,
-								"Problem while modifying the friend",
-								"Problem while modifying the friend"));
-				return "modifyfriend.xhtml";
-        	}
-        	
-        	if(result == 1){
-        		friendList = friendMasterInterface.getUsersDetails(userName);
-        	}
-        	
-        	
-		}
-		catch(Exception e){
-			e.printStackTrace();
-			FacesContext.getCurrentInstance().addMessage(
-					null,
-					new FacesMessage(FacesMessage.SEVERITY_WARN,
-							"Problem while modifying the Friend",
-							"Problem while modifying the Friend"));
-			return "modifyfriend.xhtml";
-		}
-		return "friend";
-	}
 	
 
 	public void postProcessXLS(Object document) {

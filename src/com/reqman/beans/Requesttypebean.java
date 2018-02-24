@@ -150,7 +150,7 @@ private  List<RequesttypeVo> requesttypeList2 = new ArrayList<RequesttypeVo>();
 						null,
 						new FacesMessage(FacesMessage.SEVERITY_WARN,
 								"This type allready exists in your list. ",
-								"If inactive you can acivate the type status from the list shown below."));
+								"If inactive you can active the type status from the list shown below."));
 			//	return "requesttype";
 			}
 			if(result == 2)
@@ -159,7 +159,7 @@ private  List<RequesttypeVo> requesttypeList2 = new ArrayList<RequesttypeVo>();
 						null,
 						new FacesMessage(FacesMessage.SEVERITY_WARN,
 								"This type allready exists in your list. ",
-								"If inactive you can acivate the type status from the list shown below."));
+								"If inactive you can active the type status from the list shown below."));
 				//return "requesttype";
 			}
 			if(result == 3)
@@ -168,9 +168,9 @@ private  List<RequesttypeVo> requesttypeList2 = new ArrayList<RequesttypeVo>();
 				
 				FacesContext.getCurrentInstance().addMessage(
 						null,
-						new FacesMessage(FacesMessage.SEVERITY_WARN,
+						new FacesMessage(FacesMessage.SEVERITY_INFO,
 								"New Type added successfully.",
-								"New Type added successfully."));
+								""));
 			}
 			requesttypeList = requesttypeMasterInterface.getRequesttypeDetails(userName);
 			
@@ -183,7 +183,7 @@ private  List<RequesttypeVo> requesttypeList2 = new ArrayList<RequesttypeVo>();
 					null,
 					new FacesMessage(FacesMessage.SEVERITY_WARN,
 							"Server Error "+e.getMessage(),
-							"Server Error "+e.getMessage()));
+							""));
 			return "requesttype";
 		}
 		return "requesttype";
@@ -203,7 +203,7 @@ private  List<RequesttypeVo> requesttypeList2 = new ArrayList<RequesttypeVo>();
 	        if(newValue != null && !newValue.equals(oldValue)) 
 	        {
 	        	result = requesttypeMasterInterface.updateRequesttype(oldValue, newValue, updaterequesttypeId);
-	            FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO,"The status of the type has been change successfully.","Old status is " + oldValue + ", New status is " + newValue);
+	            FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO,"The status of the type has been changed successfully.","Old status is " + oldValue + ", New status is " + newValue);
 	            FacesContext.getCurrentInstance().addMessage(null, msg);
 	        }
 		 }
@@ -218,76 +218,6 @@ private  List<RequesttypeVo> requesttypeList2 = new ArrayList<RequesttypeVo>();
 	
 	
 	
-	
-	
-	
-	
-	public void modifyAction() {
-		
-		RequesttypeVo requesttypeVo = new RequesttypeVo();
-        
-        try{
-        	System.out.println("modify action"+requesttypeId);
-            //addMessage("Welcome to Primefaces!!");
-        	setRequesttypeId(requesttypeId);
-        	requesttypeVo = requesttypeMasterInterface.getUserRequesttypeById(requesttypeId);
-        	if(requesttypeVo != null && requesttypeVo.getStatus().trim().equalsIgnoreCase("Active")){
-        		setRequesttypeName(requesttypeVo.getName() != null ? requesttypeVo.getName() : "");
-        		setStatus(true);
-        	}
-        	else
-        	{
-        		setRequesttypeName(requesttypeVo.getName() != null ? requesttypeVo.getName() : "");
-        		setStatus(false);
-        	}
-        	
-        	FacesContext.getCurrentInstance()
-            .getExternalContext().dispatch("modifyrequesttype.xhtml");
-
-        }
-        catch(Exception e){
-        	e.printStackTrace();
-        }
-        
-    }
-	
-	public String updateRequesttype(){
-		int result = 0;
-		try{
-			System.out.println("--updateRequesttype-status-"+status);
-			System.out.println("--updateRequesttypeRequesttype-requesttypeId-"+requesttypeId);
-			HttpSession session = SessionUtils.getSession();
-			String userName = (String)session.getAttribute("username");
-			System.out.println("--usersession--userName-->"+userName);
-			
-        	result = requesttypeMasterInterface.updateUserRequesttypeById(requesttypeId, status);
-        	
-        	if(result == 2){
-        		FacesContext.getCurrentInstance().addMessage(
-						null,
-						new FacesMessage(FacesMessage.SEVERITY_WARN,
-								"Problem while modifying the requesttype",
-								"Problem while modifying the requesttype"));
-				return "modifyrequesttype.xhtml";
-        	}
-        	
-        	if(result == 1){
-        		requesttypeList = requesttypeMasterInterface.getRequesttypeDetails(userName);
-        	}
-        	
-        	
-		}
-		catch(Exception e){
-			e.printStackTrace();
-			FacesContext.getCurrentInstance().addMessage(
-					null,
-					new FacesMessage(FacesMessage.SEVERITY_WARN,
-							"Problem while modifying the requesttype",
-							"Problem while modifying the requesttype"));
-			return "modifyrequesttype.xhtml";
-		}
-		return "requesttype";
-	}
 
 	public void postProcessXLS(Object document) {
         HSSFWorkbook wb = (HSSFWorkbook) document;

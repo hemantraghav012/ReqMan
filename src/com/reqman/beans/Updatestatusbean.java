@@ -61,21 +61,20 @@ public class Updatestatusbean implements Serializable {
 	 private String requestId;
 	 private Boolean status;
 	 private StreamedContent file;
+	 private Integer requeststage;
+	 private String actualeffort;
+		private String estimatedeffort;
+		private String priority;
+		private Integer weightage;
+	 
 	 private List<UpdatestatusVo> updatestatusList = new ArrayList<UpdatestatusVo>();
-	 private List<UpdatestatusVo> updatestatusList3 = new ArrayList<UpdatestatusVo>();
+	 
 	 private List<UpdatestatusVo> filteredUpdateList = new ArrayList<UpdatestatusVo>();
 	 private UpdatestatusInterface updatestatusInterface = new UpdatestatusImpl();
 	 private  String message;
 	 private UpdatestatusVo updatestatusVo = new UpdatestatusVo();
-	 private List<UpdatestatusVo> completedtaskList = new ArrayList<UpdatestatusVo>();
-	 private List<UpdatestatusVo> filteredCompletedList = new ArrayList<UpdatestatusVo>();
 	
 
-
-	 
-	 
-	 
-	 
 	 
 	 
 	 @PostConstruct
@@ -89,12 +88,9 @@ public class Updatestatusbean implements Serializable {
 				HttpSession session = SessionUtils.getSession();
 				String userName = (String)session.getAttribute("username");
 				System.out.println("--usersession--userName-->"+userName);
-				updatestatusList = updatestatusInterface.getupdatestatusDetails(userName);
-				updatestatusList3 = updatestatusInterface.getallProject(userName);
+				updatestatusList = updatestatusInterface.getupdatestatusDetails(userName);			
 				setFilteredUpdateList(updatestatusList);
-				completedtaskList =new ArrayList<UpdatestatusVo>();
-				completedtaskList=updatestatusInterface.getcompletedtaskDetails(userName);
-				setFilteredCompletedList(completedtaskList); 
+				
 			}
 			catch(Exception e)
 			{
@@ -140,8 +136,8 @@ public class Updatestatusbean implements Serializable {
 	        		setTitle(updatestatusVo.getTitle() != null ? updatestatusVo.getTitle(): "");
 	        		setDescription(updatestatusVo.getDescription() != null ? updatestatusVo.getDescription() : "");
 	        		setCompletionpercentage(updatestatusVo.getCompletionpercentage());
-	          		
-	        	
+	        		 setActualeffort(updatestatusVo.getActualeffort());
+	        	setRequeststage(updatestatusVo.getRequeststage());
 	        	FacesContext.getCurrentInstance()
 	            .getExternalContext().dispatch("modifyupdatestatus.xhtml");
 
@@ -166,7 +162,7 @@ public class Updatestatusbean implements Serializable {
 				String userName = (String)session.getAttribute("username");			
 				System.out.println("--usersession--userName-->"+userName);
 				
-	        	result = updatestatusInterface.updateRequestById(requestId, completiondate, completionpercentage,stage,message,userName);
+	        	result = updatestatusInterface.updateRequestById(requestId, completiondate, completionpercentage,stage,message,userName,actualeffort);
 	        	
 	        	if(result == 2)
 	        	{
@@ -417,39 +413,64 @@ public class Updatestatusbean implements Serializable {
 
 
 
-		public List<UpdatestatusVo> getUpdatestatusList3() {
-			return updatestatusList3;
+		public String getActualeffort() {
+			return actualeffort;
 		}
 
 
 
-		public void setUpdatestatusList3(List<UpdatestatusVo> updatestatusList3) {
-			this.updatestatusList3 = updatestatusList3;
+		public void setActualeffort(String actualeffort) {
+			this.actualeffort = actualeffort;
 		}
 
 
 
-		public List<UpdatestatusVo> getCompletedtaskList() {
-			return completedtaskList;
+		public String getEstimatedeffort() {
+			return estimatedeffort;
 		}
 
 
 
-		public void setCompletedtaskList(List<UpdatestatusVo> completedtaskList) {
-			this.completedtaskList = completedtaskList;
+		public void setEstimatedeffort(String estimatedeffort) {
+			this.estimatedeffort = estimatedeffort;
 		}
 
 
 
-		public List<UpdatestatusVo> getFilteredCompletedList() {
-			return filteredCompletedList;
+		public String getPriority() {
+			return priority;
 		}
 
 
 
-		public void setFilteredCompletedList(List<UpdatestatusVo> filteredCompletedList) {
-			this.filteredCompletedList = filteredCompletedList;
+		public void setPriority(String priority) {
+			this.priority = priority;
 		}
+
+
+
+		public Integer getWeightage() {
+			return weightage;
+		}
+
+
+
+		public void setWeightage(Integer weightage) {
+			this.weightage = weightage;
+		}
+
+
+
+		public Integer getRequeststage() {
+			return requeststage;
+		}
+
+
+
+		public void setRequeststage(Integer requeststage) {
+			this.requeststage = requeststage;
+		}
+
 
 
 		
