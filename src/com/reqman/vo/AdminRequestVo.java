@@ -5,7 +5,7 @@ import java.util.List;
 
 import org.primefaces.model.UploadedFile;
 
-public class SeeAllRequestVo {
+public class AdminRequestVo {
 	private int newRequestId;
 	private String title;
 	private String description;

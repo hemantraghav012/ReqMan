@@ -37,13 +37,67 @@ public class NewrequestVo implements Serializable
 	private Integer requeststage;
 	private Integer rating;
 	private String feedback;
+	private Date modifydate;
+	private String actualeffort;
+	private String estimatedeffort;
+	private String priority;
+	private Integer weightage;
 	
 	
 	
 	
 	
 	
-	
+	public String getActualeffort() {
+		return actualeffort;
+	}
+
+
+	public void setActualeffort(String actualeffort) {
+		this.actualeffort = actualeffort;
+	}
+
+
+	public String getEstimatedeffort() {
+		return estimatedeffort;
+	}
+
+
+	public void setEstimatedeffort(String estimatedeffort) {
+		this.estimatedeffort = estimatedeffort;
+	}
+
+
+	public String getPriority() {
+		return priority;
+	}
+
+
+	public void setPriority(String priority) {
+		this.priority = priority;
+	}
+
+
+	public Integer getWeightage() {
+		return weightage;
+	}
+
+
+	public void setWeightage(Integer weightage) {
+		this.weightage = weightage;
+	}
+
+
+	public Date getModifydate() {
+		return modifydate;
+	}
+
+
+	public void setModifydate(Date modifydate) {
+		this.modifydate = modifydate;
+	}
+
+
 	public Integer getRating() {
 		return rating;
 	}
