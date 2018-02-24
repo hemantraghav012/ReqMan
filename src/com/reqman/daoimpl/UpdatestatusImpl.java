@@ -26,12 +26,15 @@ import com.reqman.vo.requestNoteVo;
 
 public class UpdatestatusImpl implements UpdatestatusInterface {
 
+	
+	//for show all data in grid (update tasks status )
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<UpdatestatusVo> getupdatestatusDetails(String userName) throws Exception{
 		// TODO Auto-generated method stub
 		List<UpdatestatusVo> requestList = new ArrayList<UpdatestatusVo>();
 		Users usersTemp = null;
+		Users usersDB = null;
 		Session session = null;
 		Transaction tx = null;
 		Request request=null;
@@ -70,7 +73,7 @@ public class UpdatestatusImpl implements UpdatestatusInterface {
            					requesPojoList = (List<Request>) session.createCriteria(Request.class)
             							      .add(Restrictions.in("userfriendlist.id",friendList)).list();
             				}
-            				
+            		String emailid="";		
 			    String userCategory = "";
 				String userProject = "";
 				String userRequestType= "";
@@ -79,6 +82,7 @@ public class UpdatestatusImpl implements UpdatestatusInterface {
 				String name = "";
 				if (requesPojoList != null && requesPojoList.size() != 0) {
 					for (Request requestDB : requesPojoList) {
+						emailid="";
 						userCategory = "";
 						userProject = "";
 						userRequestType= "";
@@ -111,15 +115,19 @@ public class UpdatestatusImpl implements UpdatestatusInterface {
 									? requestDB.getUserrequesttype().getRequesttype().getName() : "" ;
 						}
 						
-						if(requestDB != null && requestDB.getUserfriendlist() != null 
-								&& requestDB.getUserfriendlist().getUsersByFriendid() != null)
+						if(requestDB != null)
 						{
-							firstName = requestDB.getUserfriendlist().getUsersByFriendid().getFirstname() != null 
-									? requestDB.getUserfriendlist().getUsersByFriendid().getFirstname() : "";
-									
-							lastName = requestDB.getUserfriendlist().getUsersByFriendid().getLastname() != null 
-									? requestDB.getUserfriendlist().getUsersByFriendid().getLastname() : "";
-									
+							
+							usersTemp = (Users) session
+									.createCriteria(Users.class)
+									.add(Restrictions.eq("emailid",
+											requestDB.getCreatedby().trim()).ignoreCase())
+									.uniqueResult();
+							if(usersTemp !=null ){
+							emailid= usersTemp.getEmailid();
+							firstName=usersTemp.getFirstname();
+							lastName= usersTemp.getLastname();
+								
 							if(firstName != null && !firstName.trim().equals(""))
 							{
 								name = firstName.trim();
@@ -130,15 +138,35 @@ public class UpdatestatusImpl implements UpdatestatusInterface {
 								name = name + " " +lastName.trim();
 							}
 						}
+						}
+						
+		            
 						if(requestDB.getStatus()==true && (requestDB.getRequeststatus() == 2 ||requestDB.getRequeststatus()==4
 								||requestDB.getRequeststatus()==5 || requestDB.getRequeststatus()==7)){
 						updatestatusVo.setTitle(requestDB.getTitle() != null ? requestDB.getTitle().trim() : "");
 						updatestatusVo.setDescription(requestDB.getDescription() != null ? requestDB.getDescription().trim() : "");
 						updatestatusVo.setCompletiondate(requestDB.getCompletiondate() != null ?  Dateconverter.convertDateToStringDDMMDDYYYY(requestDB.getCompletiondate()) : "");
-						updatestatusVo.setFriendName(name);
+						updatestatusVo.setModifydate(requestDB.getDatemodified());
+						if(!name. equalsIgnoreCase("")){
+							updatestatusVo.setFriendName(name);
+							}else{
+								updatestatusVo.setFriendName(emailid);	
+							}
+						if(userCategory.equalsIgnoreCase("")){
+							updatestatusVo.setUsercategory("General");
+						}else{
 						updatestatusVo.setUsercategory(userCategory);
+						}
+						if(userProject.equalsIgnoreCase("")){
+							updatestatusVo.setUserproject("General");
+						}else{
 						updatestatusVo.setUserproject(userProject);
+						}
+						if(userRequestType.equalsIgnoreCase("")){
+							updatestatusVo.setUserrequesttype("General");	
+						}else{
 						updatestatusVo.setUserrequesttype(userRequestType);
+						}
 						updatestatusVo.setCreatedby(requestDB.getCreatedby());
 						updatestatusVo.setCompletionpercentage(requestDB.getCompletionpercentage());
 						
@@ -155,13 +183,13 @@ public class UpdatestatusImpl implements UpdatestatusInterface {
 						 updatestatusVo.setStage("Completed");
 					 }
 					 else if(requestDB.getRequeststatus()==6){
-						 updatestatusVo.setStage("Cancel");
+						 updatestatusVo.setStage("Cancelled");
 					 }
 					 else if(requestDB.getRequeststatus()==7){
 						 updatestatusVo.setStage("Hold");
 					 }
 					 else if(requestDB.getRequeststatus()==8){
-						 updatestatusVo.setStage("Close");
+						 updatestatusVo.setStage("Closed");
 					 }
 						
 						
@@ -178,46 +206,54 @@ public class UpdatestatusImpl implements UpdatestatusInterface {
 						}
 						
 						updatestatusVo.setNewRequestId(requestDB.getId());
+						
+
+						String createdbyfirstname = "";
+						String	createdbylastname = "";
+						String	createdbyname = "";
+						String	createdbyemailid="";
 						if(requestDB.getRequestnoteses() !=null && requestDB.getRequestnoteses().size() !=0){ 
 							
 							for(Requestnotes requestnotes : requestDB.getRequestnoteses()){
-							 firstName="";
-							 lastName="";
-							 name="";
+								createdbyfirstname = "";
+								createdbylastname = "";
+								createdbyname = "";
+								createdbyemailid="";
 							 
-							 if(usersTemp != null && requestnotes.getCreatedby() != null)
-								{
-									usersTemp = (Users)session.createCriteria(Users.class)
-											.add(Restrictions.eq("emailid",  requestnotes.getCreatedby()))
+								if (requestnotes.getCreatedby() != null) {
+									
+									usersDB = (Users) session.createCriteria(Users.class)
+											.add(Restrictions.eq("emailid",	requestnotes.getCreatedby()))
 											.uniqueResult();
-									
-									
-									firstName = usersTemp.getFirstname() != null 
-											? usersTemp.getFirstname() : "";
-											
-									lastName = usersTemp.getLastname() != null 
-											? usersTemp.getLastname() : "";
-											
-									if(firstName != null && !firstName.trim().equals(""))
-									{
-										name = firstName.trim();
+							createdbyemailid = usersDB.getEmailid() != null ? usersDB
+									.getEmailid() : "";
+                               createdbyfirstname = usersDB.getFirstname() != null ? usersDB
+											.getFirstname() : "";
+
+											createdbylastname = usersDB.getLastname() != null ? usersDB
+											.getLastname() : "";
+
+									if (createdbyfirstname != null
+											&& !createdbyfirstname.trim().equals("")) {
+										createdbyname = createdbyfirstname.trim();
 									}
-									
-									if(lastName != null && !lastName.trim().equals(""))
-									{
-										name = name + " " +lastName.trim();
+
+									if (createdbylastname != null
+											&& !createdbylastname.trim().equals("")) {
+										createdbyname = createdbyname + " " + createdbylastname.trim();
+									}
+									else{
+										createdbyname = createdbyemailid;
 									}
 									
 								}
-							 
-						
-								requestnoteVo=new requestNoteVo();
+                         		requestnoteVo=new requestNoteVo();
 								requestnoteVo.setNoteId(requestnotes.getId());
 								requestnoteVo.setMessage(requestnotes.getMessage() != null ? requestnotes.getMessage().trim() : "");
 								requestnoteVo.setCreatedon(requestnotes.getCreatedon()!= null ?  Dateconverter.convertDateToStringDDMMDDYYYY(requestnotes.getCreatedon()) : "");
 								requestnoteVo.setTime(requestnotes.getCreatedon()!= null ?  Dateconverter.convertTimeToStringhhmmss(requestnotes.getCreatedon()) : "");
 								
-								requestnoteVo.setCreatedby(name != null ? name:"" );
+								requestnoteVo.setCreatedby(createdbyname);
 								requestnoteList.add(requestnoteVo);
 								Collections.sort(requestnoteList,requestNoteVo.NoteIdComparator );
 							}
@@ -251,12 +287,13 @@ public class UpdatestatusImpl implements UpdatestatusInterface {
 	}
 
 
-
+//for display data in modify/view page 
 	@Override
 	public UpdatestatusVo getRequestById(String requestId) {
 		// TODO Auto-generated method stub
 		 Session session = null;
 		    Transaction tx = null;
+		    Users usersTemp = null;
 		   UpdatestatusVo  updatestatusVo = new  UpdatestatusVo();
 		   Request request = null;
 			try
@@ -268,10 +305,14 @@ public class UpdatestatusImpl implements UpdatestatusInterface {
 	            			.add(Restrictions.eq("id", Integer.valueOf(requestId)))
 	            			.uniqueResult();
 	            
+	            String emailid="";
+	            String firstName = "";
+				String lastName = "";
+				String name = "";
 	            String userCategory = "";
 				String userProject = "";
 				String userRequestType= "";            
-	          String status="";
+	             String status="";
 	            Hibernate.initialize(request);
 	            if(request != null){
 	            	if(request.getAttachment() != null && request.getAttachment().length != 0)
@@ -302,17 +343,67 @@ public class UpdatestatusImpl implements UpdatestatusInterface {
 	            	{
 	            		updatestatusVo.setFileName(request.getFilename().trim());
 	            	}
+	            	
+	            	if(request != null)
+					{
+						
+						usersTemp = (Users) session
+								.createCriteria(Users.class)
+								.add(Restrictions.eq("emailid",
+										request.getCreatedby().trim()).ignoreCase())
+								.uniqueResult();
+						if(usersTemp !=null ){
+						emailid= usersTemp.getEmailid();
+						firstName=usersTemp.getFirstname();
+						lastName= usersTemp.getLastname();
+							
+						if(firstName != null && !firstName.trim().equals(""))
+						{
+							name = firstName.trim();
+						}
+						
+						if(lastName != null && !lastName.trim().equals(""))
+						{
+							name = name + " " +lastName.trim();
+						}
+					}
+					}
+				
+	            		 
+					
 	            	updatestatusVo.setTitle(request.getTitle());
 	            	updatestatusVo.setNewRequestId(request.getId());
+	            	
+	            	if(!name. equalsIgnoreCase("")){
+						updatestatusVo.setFriendName(name);
+						}else{
+							updatestatusVo.setFriendName(emailid);	
+						}
+	            	
+	            	if(userCategory.equalsIgnoreCase("")){
+	            		updatestatusVo.setUsercategory("General");
+					}else{
 	            	updatestatusVo.setUsercategory(userCategory);
+					}
+	            	if(userProject.equalsIgnoreCase("")){
+	            		updatestatusVo.setUserproject("General");
+					}else{
 					updatestatusVo.setUserproject(userProject);
+					}
+	            	if(userRequestType.equalsIgnoreCase("")){
+	            		updatestatusVo.setUserrequesttype("General");
+					}else{
 					updatestatusVo.setUserrequesttype(userRequestType);
+					}
 					updatestatusVo.setDescription(request.getDescription());
 					updatestatusVo.setCompletiondate(request.getCompletiondate() != null ?  Dateconverter.convertDateToStringDDMMDDYYYY(request.getCompletiondate()) : "");
-					//updatestatusVo.setAttachment((UploadedFile) (requestworkflow.getAttachment() !=null ? requestworkflow.getAttachment() :""));
 					updatestatusVo.setFileName(request.getFilename());
 					updatestatusVo.setCompletionpercentage(request.getCompletionpercentage());
-					
+					updatestatusVo.setPriority(request.getPriority());
+					updatestatusVo.setWeightage(request.getWeightage());
+					updatestatusVo.setEstimatedeffort(request.getEstimatedeffort());			
+					updatestatusVo.setActualeffort(request.getActualeffort());
+					updatestatusVo.setRequeststage(request.getRequeststatus());
 	    			tx.commit();
 	            }
 	 		}
@@ -333,11 +424,11 @@ public class UpdatestatusImpl implements UpdatestatusInterface {
 		
 		}
 	
-
+//for update task status
 
 	@Override
 	public int updateRequestById(String requestId, Date completiondate,
-			int completionpercentage,Integer stage,String message, String userName) {
+			int completionpercentage,Integer stage,String message, String userName,String actualeffort) {
 		// TODO Auto-generated method stub
 		 Session session = null;
 		    Transaction tx = null;
@@ -374,7 +465,7 @@ public class UpdatestatusImpl implements UpdatestatusInterface {
 		            	}
 		            	requestworkflow.setModifiedby(userName);
 		            	requestworkflow.setDatemodified(new Date());
-		            	
+		            	requestworkflow.setActualeffort(actualeffort);
 		            	session.update(requestworkflow);
 		            	
 		             	
@@ -411,7 +502,7 @@ public class UpdatestatusImpl implements UpdatestatusInterface {
 
 	}
 
-
+// show common task for teammember
 
 	@SuppressWarnings("unchecked")
 	@Override
@@ -483,6 +574,7 @@ public class UpdatestatusImpl implements UpdatestatusInterface {
        					String firstName = "";
        					String lastName = "";
        					String name = "";
+       					String email="";
        			
     						
     						userCategory = "";
@@ -492,6 +584,8 @@ public class UpdatestatusImpl implements UpdatestatusInterface {
     						firstName = "";
     						lastName = "";
     						name = "";
+    						email="";
+    						
     						requestnoteList=new ArrayList<requestNoteVo>();
 
     						Hibernate.initialize(requestDB.getUsercategory());
@@ -521,6 +615,9 @@ public class UpdatestatusImpl implements UpdatestatusInterface {
     						if(requestDB != null && requestDB.getUserfriendlist() != null 
     								&& requestDB.getUserfriendlist().getUsersByFriendid() != null)
     						{
+    							email = requestDB.getUserfriendlist().getUsersByFriendid().getEmailid() != null 
+    									? requestDB.getUserfriendlist().getUsersByFriendid().getEmailid() : "";
+    							
     							firstName = requestDB.getUserfriendlist().getUsersByFriendid().getFirstname() != null 
     									? requestDB.getUserfriendlist().getUsersByFriendid().getFirstname() : "";
     									
@@ -542,7 +639,13 @@ public class UpdatestatusImpl implements UpdatestatusInterface {
     						updatestatusVo.setTitle(requestDB.getTitle() != null ? requestDB.getTitle().trim() : "");
     						updatestatusVo.setDescription(requestDB.getDescription() != null ? requestDB.getDescription().trim() : "");
     						updatestatusVo.setCompletiondate(requestDB.getCompletiondate() != null ?  Dateconverter.convertDateToStringDDMMDDYYYY(requestDB.getCompletiondate()) : "");
-    						updatestatusVo.setFriendName(name);
+    						
+    						if (!name.equalsIgnoreCase("")) {
+    							updatestatusVo.setFriendName(name);
+							} else {
+								updatestatusVo.setFriendName(email);
+							}
+    						
     						updatestatusVo.setUsercategory(userCategory);
     						updatestatusVo.setUserproject(userProject);
     						updatestatusVo.setUserrequesttype(userRequestType);
@@ -566,7 +669,7 @@ public class UpdatestatusImpl implements UpdatestatusInterface {
     							 firstName="";
     							 lastName="";
     							 name="";
-    							 
+    							 email="";
     							 if(usersTemp != null && requestnotes.getCreatedby() != null)
     								{
     									usersTemp = (Users)session.createCriteria(Users.class)
@@ -650,7 +753,7 @@ public class UpdatestatusImpl implements UpdatestatusInterface {
 		return requestList;
 	}
 
-
+//for send data details in email
 
 	@SuppressWarnings("unchecked")
 	@Override
@@ -809,7 +912,7 @@ public class UpdatestatusImpl implements UpdatestatusInterface {
 		return requestList;
 	}
 
-
+//show close  and cancel data in grid 
 
 	@Override
 	public List<UpdatestatusVo> getcompletedtaskDetails(String userName)

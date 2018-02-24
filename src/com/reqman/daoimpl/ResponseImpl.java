@@ -32,6 +32,7 @@ public class ResponseImpl implements responseInterface {
 			throws Exception {
 		List<ResponseVo> requestList = new ArrayList<ResponseVo>();
 		Users usersTemp = null;
+		Users usersDB = null;
 		Session session = null;
 		Transaction tx = null;
 		Request request=null;
@@ -49,8 +50,6 @@ public class ResponseImpl implements responseInterface {
 					.uniqueResult();
 		if (usersTemp != null) {
 			
-		//Integer id1=usersTemp.getId();	
-		
 						
 			Criteria crit1 = session.createCriteria(Userfriendlist.class);
             crit1.add(Restrictions.eq("status", true));
@@ -68,6 +67,7 @@ public class ResponseImpl implements responseInterface {
              						.add(Restrictions.in("userfriendlist.id",friendList)).list();
             
             		}
+            	String emailid="";
 			    String userCategory = "";
 				String userProject = "";
 				String userRequestType= "";
@@ -76,6 +76,7 @@ public class ResponseImpl implements responseInterface {
 				String name = "";
 				if (requesPojoList != null && requesPojoList.size() != 0) {
 					for (Request requestDB : requesPojoList) {
+						emailid="";
 						userCategory = "";
 						userProject = "";
 						userRequestType= "";
@@ -109,15 +110,19 @@ public class ResponseImpl implements responseInterface {
 									? requestDB.getUserrequesttype().getRequesttype().getName() : "" ;
 						}
 						
-						if(requestDB != null && requestDB.getUserfriendlist() != null 
-								&& requestDB.getUserfriendlist().getUsersByFriendid() != null)
+						if(requestDB != null)
 						{
-							firstName = requestDB.getUserfriendlist().getUsersByFriendid().getFirstname() != null 
-									? requestDB.getUserfriendlist().getUsersByFriendid().getFirstname() : "";
-									
-							lastName = requestDB.getUserfriendlist().getUsersByFriendid().getLastname() != null 
-									? requestDB.getUserfriendlist().getUsersByFriendid().getLastname() : "";
-									
+							
+							usersTemp = (Users) session
+									.createCriteria(Users.class)
+									.add(Restrictions.eq("emailid",
+											requestDB.getCreatedby().trim()).ignoreCase())
+									.uniqueResult();
+							if(usersTemp !=null ){
+							emailid= usersTemp.getEmailid();
+							firstName=usersTemp.getFirstname();
+							lastName= usersTemp.getLastname();
+								
 							if(firstName != null && !firstName.trim().equals(""))
 							{
 								name = firstName.trim();
@@ -128,16 +133,35 @@ public class ResponseImpl implements responseInterface {
 								name = name + " " +lastName.trim();
 							}
 						}
+						}
 						if(requestDB.getStatus()==true && requestDB.getRequeststatus()==1){
 						responseVo.setTitle(requestDB.getTitle() != null ? requestDB.getTitle().trim() : "");
 						responseVo.setDescription(requestDB.getDescription() != null ? requestDB.getDescription().trim() : "");
 						responseVo.setChangedate(requestDB.getCompletiondate() != null ?  Dateconverter.convertDateToStringDDMMDDYYYY(requestDB.getCompletiondate()) : "");
-						responseVo.setFriendName(name);
+						
+						if(!name. equalsIgnoreCase("")){
+							responseVo.setFriendName(name);
+							}else{
+								responseVo.setFriendName(emailid);	
+							}
+						if(userCategory.equalsIgnoreCase("")){
+							responseVo.setUsercategory("General");
+						}else{
 						responseVo.setUsercategory(userCategory);
+						}
+						if(userProject.equalsIgnoreCase("")){
+							responseVo.setUserproject("General");
+						}else{
 						responseVo.setUserproject(userProject);
+						}
+						if(userRequestType.equalsIgnoreCase("")){
+							responseVo.setUserrequesttype("General");	
+						}else{
 						responseVo.setUserrequesttype(userRequestType);
+						}
+						
 						responseVo.setCreatedby(requestDB.getCreatedby());
-					responseVo.setCreatedate(requestDB.getDatecreated());
+				     	responseVo.setCreatedate(requestDB.getDatecreated());
 						
 						if(requestDB != null && requestDB.getStatus() != null 
 								&& requestDB.getStatus().booleanValue() == true )
@@ -151,20 +175,51 @@ public class ResponseImpl implements responseInterface {
 						
 						responseVo.setNewRequestId(requestDB.getId());
 									
-						
+
+						String createdbyfirstname = "";
+						String	createdbylastname = "";
+						String	createdbyname = "";
+						String	createdbyemailid="";
 						if(requestDB.getRequestnoteses() !=null && requestDB.getRequestnoteses().size() !=0){ 
 							
 							for(Requestnotes requestnotes : requestDB.getRequestnoteses()){
-							 firstName="";
-							 lastName="";
-							 name="";
+								createdbyfirstname = "";
+								createdbylastname = "";
+								createdbyname = "";
+								createdbyemailid="";
 				
 							 
-														 
-							
+								if (requestnotes.getCreatedby() != null) {
+									
+									usersDB = (Users) session.createCriteria(Users.class)
+											.add(Restrictions.eq("emailid",	requestnotes.getCreatedby()))
+											.uniqueResult();
+							createdbyemailid = usersDB.getEmailid() != null ? usersDB
+									.getEmailid() : "";
+                               createdbyfirstname = usersDB.getFirstname() != null ? usersDB
+											.getFirstname() : "";
+
+											createdbylastname = usersDB.getLastname() != null ? usersDB
+											.getLastname() : "";
+
+									if (createdbyfirstname != null
+											&& !createdbyfirstname.trim().equals("")) {
+										createdbyname = createdbyfirstname.trim();
+									}
+
+									if (createdbylastname != null
+											&& !createdbylastname.trim().equals("")) {
+										createdbyname = createdbyname + " " + createdbylastname.trim();
+									}
+									else{
+										createdbyname = createdbyemailid;
+									}
+									
+								}
+
 								requestnoteVo=new requestNoteVo();
 							
-								requestnoteVo.setCreatedby(name);
+								requestnoteVo.setCreatedby(createdbyname);
 								//requestnoteVo.setCreatedby(requestnotes.getCreatedby() !=null ? requestnotes.getCreatedby().trim() : "" );
 								requestnoteVo.setNoteId(requestnotes.getId());
 								requestnoteVo.setMessage(requestnotes.getMessage() != null ? requestnotes.getMessage().trim() : "");
@@ -212,6 +267,7 @@ public class ResponseImpl implements responseInterface {
 		    Transaction tx = null;
 		   ResponseVo  responseVo = new  ResponseVo();
 		   Request request = null;
+			Users usersTemp = null;
 			try
 			{
 	           	session = HibernateUtil.getSession();
@@ -220,11 +276,14 @@ public class ResponseImpl implements responseInterface {
 	            			session.createCriteria(Request.class)
 	            			.add(Restrictions.eq("id", Integer.valueOf(requestId)))
 	            			.uniqueResult();
-	            
+	            String emailid="";
 	            String userCategory = "";
 				String userProject = "";
 				String userRequestType= "";            
 	          String status="";
+	          String firstName="";
+	          String lastName="";
+	          String name="";
 	            Hibernate.initialize(request);
 	            if(request != null){
 	            	if(request.getAttachment() != null && request.getAttachment().length != 0)
@@ -255,14 +314,65 @@ public class ResponseImpl implements responseInterface {
 	            	{
 	            		responseVo.setFileName(request.getFilename().trim());
 	            	}
+	            	
+	        		if(request != null)
+					{
+						
+						usersTemp = (Users) session
+								.createCriteria(Users.class)
+								.add(Restrictions.eq("emailid",
+										request.getCreatedby().trim()).ignoreCase())
+								.uniqueResult();
+						if(usersTemp !=null ){
+						emailid= usersTemp.getEmailid();
+						firstName=usersTemp.getFirstname();
+						lastName= usersTemp.getLastname();
+							
+						if(firstName != null && !firstName.trim().equals(""))
+						{
+							name = firstName.trim();
+						}
+						
+						if(lastName != null && !lastName.trim().equals(""))
+						{
+							name = name + " " +lastName.trim();
+						}
+					}
+					}
+				
+	            	
+	            	
 	            	responseVo.setTitle(request.getTitle());
 	            	responseVo.setNewRequestId(request.getId());
+
+	            	if(!name. equalsIgnoreCase("")){
+						responseVo.setFriendName(name);
+						}else{
+							responseVo.setFriendName(emailid);	
+						}
+	            	
+					if(userCategory.equalsIgnoreCase("")){
+						responseVo.setUsercategory("General");
+					}else{
 	            	responseVo.setUsercategory(userCategory);
+					}
+					if(userProject.equalsIgnoreCase("")){
+						responseVo.setUserproject("General");
+					}else{
 					responseVo.setUserproject(userProject);
+					}
+					if(userRequestType.equalsIgnoreCase("")){
+						responseVo.setUserrequesttype("General");
+					}else{
 					responseVo.setUserrequesttype(userRequestType);
+					}
 					responseVo.setDescription(request.getDescription());
 					responseVo.setCompletiondate(request.getCompletiondate());
 					responseVo.setFileName(request.getFilename());
+					responseVo.setPriority(request.getPriority());
+					responseVo.setWeightage(request.getWeightage());
+					responseVo.setEstimatedeffort(request.getEstimatedeffort());			
+					responseVo.setActualeffort(request.getActualeffort());
 			
 					if(request.getRequeststatus()==2)
 					{
@@ -298,7 +408,7 @@ public class ResponseImpl implements responseInterface {
 
 	@Override
 	public int updateResponsetById(String requestId, Integer stage,
-			Date completiondate,String userName,String message) throws Exception {
+			Date completiondate,String userName,String message, String actualeffort) throws Exception {
 		// TODO Auto-generated method stub
 		 Session session = null;
 		    Transaction tx = null;
@@ -332,7 +442,7 @@ public class ResponseImpl implements responseInterface {
 		            	}
                      requestworkflow.setDatemodified(new Date());
  		        	requestworkflow.setModifiedby(userName);
- 		           
+ 		        	requestworkflow.setActualeffort(actualeffort);
 		            	session.update(requestworkflow);
 		            	
 		            	

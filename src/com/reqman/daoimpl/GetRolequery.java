@@ -105,15 +105,16 @@ public class GetRolequery implements GetrolequeryInterface{
             else if(roleName != null && roleName.trim().equalsIgnoreCase(RequestConstants.ACCOUNT_ADMIN_ROLE))
             {
             	sb.append("select rq.id,uf.friendid from reqman.users as u, reqman.userfriendlist as uf,reqman.request as rq,reqman.roles as r,"
-            			+ "reqman.userroles as ur, reqman.accountusers as au, reqman.account as a where u.id=uf.userid and "
-            			+ "uf.id=rq.friendid and u.id=ur.userid and ur.roleid=r.id and au.userid=u.id and a.id=au.accountid "
-            			+ "and r.name = '"+roleName+"' and a.name='"+accountName+"'");
+            			+ "reqman.userroles as ur, reqman.accountusers as au, reqman.account as a where u.id=uf.userid and uf.id=rq.friendid "
+            			+ "and u.id=ur.userid and ur.roleid=r.id and au.userid=u.id and a.id=au.accountid and r.name = '"+roleName+"' "
+            			+ " and u.emailid='"+loginId+"'");
             }
             else if(roleName != null && roleName.trim().equalsIgnoreCase(RequestConstants.APP_ADMIN_ROLE))
             {
-            	sb.append("select rq.id,uf.friendid from reqman.users as u, reqman.userfriendlist as uf,reqman.request as rq,"
-            			+ "reqman.roles as r,reqman.userroles as ur where uf.id=rq.friendid and u.id=ur.userid and "
-            			+ "ur.roleid=r.id and r.name = '"+roleName+"'");
+            	sb.append("select rq.id,uf.friendid from reqman.users as u, reqman.userfriendlist as uf,reqman.request as rq,reqman.roles as r,"
+            			+ "reqman.userroles as ur, reqman.accountusers as au, reqman.account as a where u.id=uf.userid and uf.id=rq.friendid "
+            			+ "and u.id=ur.userid and ur.roleid=r.id and au.userid=u.id and a.id=au.accountid and r.name = '"+roleName+"' "
+            			+ " and u.emailid='"+loginId+"'");
             }
             else
             {
@@ -161,6 +162,110 @@ public class GetRolequery implements GetrolequeryInterface{
 	}
 
 
+	// for admin or account admin show request grid
+	@SuppressWarnings("unchecked")
+	public List<Integer> getAdminRequestListByRole(String roleName, String loginId) throws Exception 
+	{
+	    Session session = null;
+	    Transaction tx = null;
+	    List<Object[]> rows = null;
+	    SQLQuery query = null;
+	    String sqlQuery = "";
+	    Integer requestId = 0;
+	    Integer friendId = 0;
+	    
+	    StringBuffer sb = new StringBuffer();
+	    String[] accountArr = {};
+	    String accountName = "";
+	    List<Integer> requestIdList = new ArrayList<Integer>();
+	    try
+		{
+           	session = HibernateUtil.getSession();
+            tx = session.beginTransaction();
+            accountArr = loginId.split("@");
+            if(accountArr != null && accountArr.length > 1)
+            {
+            	accountName = accountArr[1];
+            }
+            
+           
+             if(roleName != null && roleName.trim().equalsIgnoreCase(RequestConstants.TEAM_MEMBER))
+            {
+            	sb.append("select rq.id,uf.friendid from reqman.users as u, reqman.userfriendlist as uf,reqman.request as rq,reqman.roles as r,"
+            			+ "reqman.userroles as ur, reqman.accountusers as au, reqman.account as a where u.id=uf.userid and uf.id=rq.friendid "
+            			+ "and u.id=ur.userid and ur.roleid=r.id and au.userid=u.id and a.id=au.accountid and r.name = 'Requestor' "
+            			+ "and u.emailid='"+loginId+"'");
+            }
+            else if(roleName != null && roleName.trim().equalsIgnoreCase(RequestConstants.ACCOUNT_ADMIN_ROLE))
+            {
+            	sb.append("select rq.id,uf.friendid from reqman.users as u, reqman.userfriendlist as uf,reqman.request as rq,reqman.roles as r,"
+            			+ "reqman.userroles as ur, reqman.accountusers as au, reqman.account as a where u.id=uf.userid and "
+            			+ "uf.id=rq.friendid and u.id=ur.userid and ur.roleid=r.id and au.userid=u.id and a.id=au.accountid "
+            			+ " and a.name='"+accountName+"'");
+            }
+            else if(roleName != null && roleName.trim().equalsIgnoreCase(RequestConstants.APP_ADMIN_ROLE))
+            {
+            	sb.append("select rq.id,uf.friendid from reqman.users as u, reqman.userfriendlist as uf,reqman.request as rq,"
+            			+ "reqman.roles as r,reqman.userroles as ur where uf.id=rq.friendid and u.id=ur.userid and "
+            			+ "ur.roleid=r.id ");
+            }
+            else
+            {
+            	sb.append("");
+            	
+            }
+            
+            if(sb.length() == 0)
+            {
+            	return requestIdList;
+            }
+            
+            sqlQuery = sb.toString();
+            query = session.createSQLQuery(sqlQuery);
+            rows = query.list();
+            
+            if(rows != null && rows.size() != 0)
+            {
+            	for(Object[] row : rows)
+            	{
+            		requestId = row[0] != null ? (Integer)row[0] : 0;
+            		friendId = row[1] != null ?  (Integer)row[1] : 0;
+            		requestIdList.add(requestId);
+            	}
+            }
+
+            	tx.commit();
+		}
+		catch(Exception e)
+		{
+			
+			e.printStackTrace();
+			if(tx != null)
+			{
+				tx.rollback();
+			}
+		}
+		finally 
+		{
+        	if(session != null)
+            session.close();
+	    }
+
+		return requestIdList;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	@SuppressWarnings("null")
 	public List<String> AllUser() throws Exception {
 		// TODO Auto-generated method stub
