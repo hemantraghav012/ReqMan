@@ -67,24 +67,38 @@ public class setinfoEmail {
 			String link = MAIL_REGISTRATION_SITE_LINK+"?emailid="+To+"&hash="+hashkey;
 			
 			try{
-				sb.append("<h1>");
+				sb.append("<h3>");
 				sb.append(emailid +", Welcome to Collabor8 !");		
-				sb.append("</h1>");	
-				sb.append("<br>");
-				sb.append("Your account has been created! You can Add the members' login URL as well as your account username and password below in this e-mail.To keep your account safe,");
-				sb.append("<br>");
-				sb.append("Usage is very simple . Enter one or more team members email id and start logging requests for them.");
-				sb.append("<br>");
-				sb.append("Optionally use request categories , projects and types for better analysis and management. Get more information on Collabor8.com Feel free to writte to us at helpdesk@collabor8.com ");
-				sb.append("<h2>");
-				sb.append("  Thank you for registration. Your mail ("+To+") is under verification<br/>");
-				sb.append("</h2>");
-				sb.append("<h1>");
-			    sb.append("  Please click <a href=\""+link+"\">here</a> or open below link in browser<br/>");
-			    sb.append("</h1>");			
-				sb.append("Thank You, "+emailid+".");
-				sb.append("<br>");
+				sb.append("</h3>");	
+				sb.append("<br></br>");	
+				sb.append("Your account has been created! Your email-id is your user id and you can set your password by clicking the");				
+				sb.append("<a href=\""+link+"\">link here.</a>");			
+				sb.append("<br></br>");			
+				sb.append("Collabor8 is simple to use.");				
+				sb.append("<h5");
+				sb.append("<br></br>");
+				sb.append("<ul>");			
+				sb.append("<li>");
+				sb.append("Enter one or more team members email id.");
+				sb.append("</li>");
+				sb.append("<li>");
+				sb.append("Attach documents to tasks and projects.");
+				sb.append("</li>");
+				sb.append("<li>");
+				sb.append("Start raising requests on them.");
+				sb.append("</li>");
+				sb.append("<li>");
+				sb.append("Optionally use request categories, projects and types for better analysis and management.");
+				sb.append("</li>");
+				sb.append("</ul>");
+				sb.append("</h5>");
+				sb.append("<br></br>");
+				sb.append("Get more information on Collabor8.com. Feel free to write to us at helpdesk@collabor8.com");
+				sb.append("<br></br>");
+				sb.append("Happy Collabor8ing!");
+				sb.append("<br></br>");
 				sb.append("support@Collabor8.com");
+				sb.append("<br></br>");
 				
 				content = sb.toString();
 			}

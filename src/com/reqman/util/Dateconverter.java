@@ -47,7 +47,7 @@ public class Dateconverter {
 		    Calendar cal = Calendar.getInstance();  
 		    cal.setTime(date);  
 		     
-		    cal.add(Calendar.MONTH, -1);
+		    cal.add(Calendar.YEAR, -1);
 
 		    Date preMonthDate = cal.getTime();
 			return preMonthDate;  
