@@ -1,0 +1,133 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:h="http://java.sun.com/jsf/html">
+<h:head>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<link rel="stylesheet" href="resource/css/bootstrap.css"/>
+<link rel="stylesheet" href="resource/mystyle/home.css"/>
+<link rel="stylesheet" href="resource/mystyle/onlyhome.css"/>
+<link rel="stylesheet" href="resource/mystyle/request.css"/>
+
+<script type="text/javascript" src="resource/js/bootstrap.js"/>
+<script type="text/javascript" src="resource/js/jquery.js"/>
+
+
+
+ <style type="text/css">
+        .ui-growl {
+            
+            top:60px;
+            Right:20px;
+            width:301px;
+        
+        }
+    </style>
+
+	<title>Schedule job</title>
+</h:head>
+<h:body>
+	<div id="header">
+		<ui:insert name="header">
+			<ui:include src="header.xhtml" />
+		</ui:insert>
+	</div>
+	<!-- end of header -->
+
+
+
+	<!-- end of top menu -->
+
+	<div class="ui-fluid"  style="background-color:lightgrey">
+		<p:panelGrid columns="1" layout="grid"
+			styleClass="ui-panelgrid-blank ui-fluid" style=" border: 0;">
+			<br></br>
+			<br></br>
+
+<h:form class="form-horizontal">
+
+<h2 style=" text-align: center;"> View/Modify Schedule Time</h2><br></br>
+     <h:inputHidden value = "#{schedulejob.schedulejobid}" id = "hiddenField" /> 
+
+
+
+				
+				<br></br>
+
+				<!-- Select Day  -->
+				<div style="background-color:lightgrey">
+			
+			
+				
+				
+<div class=" row form-group ">
+
+                   <div class="col-sm-2 control-label">
+                <h:outputLabel>&nbsp;&nbsp;&nbsp;&nbsp;id:</h:outputLabel><br></br>
+						<h:inputText class="  form-control" value="#{schedulejob.schedulejobid}"
+							 required="true" requiredMessage="* Please enter Title" />
+						<h:message for="title" style="color:red;" />
+						
+					</div>
+					<div class=" col-sm-1">
+					<h:outputLabel>&nbsp;&nbsp;&nbsp;&nbsp;Day:</h:outputLabel><br></br>
+						<h:inputText class="  form-control" value="#{schedulejob.day}"
+							 required="true" requiredMessage="* Please enter Title" />
+						<h:message for="title" style="color:red;" />
+					</div>
+					
+					<div class=" col-sm-1">
+					<h:outputLabel>&nbsp;&nbsp;&nbsp;&nbsp;Hour:</h:outputLabel><br></br>
+						<h:inputText class="  form-control" value="#{schedulejob.hour}"
+							 required="true" requiredMessage="* Please enter Title" />
+						<h:message for="title" style="color:red;" />
+					</div>
+				
+					<div class=" col-sm-1">
+						<h:outputLabel>&nbsp;&nbsp;&nbsp;&nbsp;Minute:</h:outputLabel><br></br>
+						<h:inputText class="  form-control" value="#{schedulejob.minute}"
+							 required="true" requiredMessage="* Please enter Title" />
+						<h:message for="title" style="color:red;" />
+					</div>
+
+
+					
+					<div class=" col-sm-2">
+					<h:outputLabel>&nbsp;&nbsp;&nbsp;&nbsp;Job Name:</h:outputLabel><br></br>
+						<h:inputText class="  form-control" value="#{schedulejob.jobname}"
+							 required="true" requiredMessage="* Please enter Title" />
+						<h:message for="title" style="color:red;" />
+					</div>
+
+					
+					<div class=" col-sm-2">
+					<h:outputLabel>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Description:</h:outputLabel><br></br>
+						<h:inputTextarea id="address"  value="#{schedulejob.description}"
+							cols="19" rows="2" class="  form-control" />
+						<h:message for="address" style="color:red;" />
+					</div>
+
+                      <div class="col-sm-2 control-label" style="text-align: right">
+                      <br></br>
+						<h:commandButton value="submit" action="#{schedulejob.updateSchedulejob}" class="btn fontsize btn-success btn-block"></h:commandButton>
+					</div> 
+
+				</div>
+				
+				
+</div>
+			</h:form>
+
+		</p:panelGrid>
+		<br></br>
+	</div>
+	</h:body>
+	</html>
+	

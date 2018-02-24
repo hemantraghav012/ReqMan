@@ -1,0 +1,252 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:h="http://java.sun.com/jsf/html">
+<h:head>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<link rel="stylesheet" href="resource/css/bootstrap.css"/>
+<link rel="stylesheet" href="resource/mystyle/home.css"/>
+<link rel="stylesheet" href="resource/mystyle/onlyhome.css"/>
+<link rel="stylesheet" href="resource/mystyle/request.css"/>
+
+<script type="text/javascript" src="resource/js/bootstrap.js"/>
+<script type="text/javascript" src="resource/js/jquery.js"/>
+
+
+
+ <style type="text/css">
+        .ui-growl {
+            
+            top:60px;
+            Right:20px;
+            width:301px;
+        
+        }
+    </style>
+
+<script>
+
+function setSchedulejobHiddenValue(new_value)
+{
+	
+	document.getElementById('schedulejobForm:schedulejobid').value = new_value;
+
+}
+
+</script>
+	<title>Schedule job</title>
+</h:head>
+<h:body>
+	<div id="header">
+		<ui:insert name="header">
+			<ui:include src="header.xhtml" />
+		</ui:insert>
+	</div>
+	<!-- end of header -->
+
+
+
+	<!-- end of top menu -->
+
+	<div class="ui-fluid"  style="background-color:lightgrey">
+		<p:panelGrid columns="1" layout="grid"
+			styleClass="ui-panelgrid-blank ui-fluid" style=" border: 0;">
+			<br></br>
+			<br></br>
+
+<h:form class="form-horizontal">
+
+				<h3 style="text-align: left">Schedule Time</h3>
+				<br></br>
+
+				<!-- Select Day  -->
+				<div style="background-color:lightgrey">
+			
+			
+				
+				
+<div class=" row form-group ">
+
+                   <div class="col-sm-2 control-label">
+               <br></br>						
+					</div>
+					<div class=" col-sm-1">
+					<h:outputLabel>&nbsp;&nbsp;&nbsp;&nbsp;Day:</h:outputLabel><br></br>
+						<h:inputText class="  form-control" value="#{schedulejob.day}"
+							 required="true" requiredMessage="* Please enter Title" />
+						<h:message for="title" style="color:red;" />
+					</div>
+					
+					<div class=" col-sm-1">
+					<h:outputLabel>&nbsp;&nbsp;&nbsp;&nbsp;Hour:</h:outputLabel><br></br>
+						<h:inputText class="  form-control" value="#{schedulejob.hour}"
+							 required="true" requiredMessage="* Please enter Title" />
+						<h:message for="title" style="color:red;" />
+					</div>
+				
+					<div class=" col-sm-1">
+						<h:outputLabel>&nbsp;&nbsp;&nbsp;&nbsp;Minute:</h:outputLabel><br></br>
+						<h:inputText class="  form-control" value="#{schedulejob.minute}"
+							 required="true" requiredMessage="* Please enter Title" />
+						<h:message for="title" style="color:red;" />
+					</div>
+
+
+					
+					<div class=" col-sm-2">
+					<h:outputLabel>&nbsp;&nbsp;&nbsp;&nbsp;Job Name:</h:outputLabel><br></br>
+						<h:inputText class="  form-control" value="#{schedulejob.jobname}"
+							 required="true" requiredMessage="* Please enter Title" />
+						<h:message for="title" style="color:red;" />
+					</div>
+
+					
+					<div class=" col-sm-2">
+					<h:outputLabel>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Description:</h:outputLabel><br></br>
+						<h:inputTextarea id="address"  value="#{schedulejob.description}"
+							cols="19" rows="2" class="  form-control" />
+						<h:message for="address" style="color:red;" />
+					</div>
+
+                      <div class="col-sm-2 control-label" style="text-align: right">
+                      <br></br>
+						<h:commandButton value="submit" action="#{schedulejob.save}" class="btn fontsize btn-success btn-block"></h:commandButton>
+					</div> 
+
+				</div>
+				
+				
+</div>
+			</h:form>
+
+		</p:panelGrid>
+		<br></br>
+	</div>
+
+<!-- start grid -->
+
+      <hr ></hr>
+ 
+
+ <div class="container accountgrid">
+      
+      <h:form id="schedulejobForm">
+    <div class="ui-fluid">
+<p:growl id="msgs" showDetail="true"/>
+ <h:inputHidden id="schedulejobid" value="#{schedulejob.schedulejobid}" ></h:inputHidden>
+ 
+ 
+	      <p:dataTable id="schedulejobTable" var="schedule" value="#{schedulejob.schedulejobList}" draggableColumns="true" 
+	     resizableColumns="true" 
+	     reflow="true" scrollable="true" scrollHeight="300" rows="10"  paginator="true"   	       
+	      paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" 
+	      rowsPerPageTemplate="5,10,15" class="table table-striped table-hover table-bordered" 	     
+	     style="margin-top:5px; margin-left:0px; " filteredValue="#{schedulejob.filteredschedulejobList}" 	     
+	     widgetVar="schedulejobListTable">
+			
+		
+
+
+<f:facet name="header">
+	    <div class="row" style="margin: -3px;">
+	  <div class="col-sm-3" style="margin-left: -17px" >
+	     <h:inputText id="globalFilter" onkeyup="PF('schedulejobListTable').filter()" a:placeholder="Search on any field (s) " class="form-control"  />
+			</div>
+				
+					<div class="col-sm-6">
+      		<span style=";font-size:22px;text-align:center;">Manage Request List</span>
+      	</div>  
+				
+						
+		
+			
+			</div>
+		</f:facet> 
+
+
+			
+	 
+			<p:column filterBy="#{schedule.day}" sortBy="#{schedule.day}" headerText="Day"  
+			 filterMatchMode="contains"   style="padding: 0px 0px 0px 3px;">
+				<f:facet name="header">
+					<h:outputText value="Day"  />
+				</f:facet>
+				<h:outputText value="#{schedule.day}" />
+			</p:column>
+			
+		
+			
+			<p:column filterBy="#{schedule.hour}" sortBy="#{schedule.hour}" headerText="Hour"  
+			 filterMatchMode="contains"   style="padding: 0px 0px 0px 3px;">
+				<f:facet name="header">
+					<h:outputText value="Hour"  />
+				</f:facet>
+				<h:outputText value="#{schedule.hour}" />
+			</p:column>
+			
+			
+			<p:column filterBy="#{schedule.minute}" sortBy="#{schedule.minute}" headerText="Minute"  
+			 filterMatchMode="contains"   style="padding: 0px 0px 0px 3px;">
+				<f:facet name="header">
+					<h:outputText value="Minute"  />
+				</f:facet>
+				<h:outputText value="#{schedule.minute}" />
+			</p:column>
+			
+			
+			<p:column filterBy="#{schedule.jobname}" sortBy="#{schedule.jobname}" headerText="Jobname"  
+			 filterMatchMode="contains"   style="padding: 0px 0px 0px 3px;">
+				<f:facet name="header">
+					<h:outputText value="Jobname"  />
+				</f:facet>
+				<h:outputText value="#{schedule.jobname}" />
+			</p:column>
+			
+			
+			<p:column filterBy="#{schedule.description}" sortBy="#{schedule.description}" headerText="Description"  
+			 filterMatchMode="contains"   style="padding: 0px 0px 0px 3px;">
+				<f:facet name="header">
+					<h:outputText value="Description"  />
+				</f:facet>
+				<h:outputText value="#{schedule.description}" />
+			</p:column>
+						
+		
+			 <p:column headerText="View / Modify" exportable="false" style="padding: 0px 0px 0px 0px;" class="viewsize" >
+         
+	    		
+	    		
+	    		<p:commandLink id="nonAjax" styleClass="btn btn-primary fontsize" 
+				style="color:white;  border-radius: none;font-size:12px;" onclick='setSchedulejobHiddenValue(#{schedule.schedulejobId})' 
+				action="#{schedulejob.modifyAction}" ajax="false" >
+	        		View / Update
+	    		</p:commandLink> 
+	    		
+   </p:column>
+	       
+	    </p:dataTable>
+	    
+	   
+	</div>
+
+	
+      
+      </h:form>
+      
+      
+      </div>  
+
+
+
+
+
+
+</h:body>
+</html>

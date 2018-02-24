@@ -15,6 +15,7 @@
 <link rel="stylesheet" href="resource/mystyle/onlyhome.css"/>
 <link rel="stylesheet" href="resource/mystyle/home.css"/>
 <link rel="stylesheet" href="resource/mystyle/button.css"/>
+<link rel="stylesheet" href="resource/mystyle/request.css"/>
 <script type="text/javascript" src="resource/js/bootstrap.js"/>
 <script type="text/javascript" src="resource/js/jquery.js"/>
 
@@ -58,9 +59,9 @@ function setstartDateValue()
       <div class="row">
         		
 	  
-          <div class="col-sm-3 pull-right" > 
+          <div class="col-sm-2 pull-right" > 
         		
-     			 <h:link value="Back TO Request" style="padding-bottom:5px;" class="btn fontsize btn-primary btn-block" outcome="request" /> 
+     			 <h:link value="Back To Request List" style="padding-bottom:5px;" class="btn fontsize btn-primary btn-block" outcome="request" /> 
      			
      			 	</div>		
         </div>
@@ -69,12 +70,12 @@ function setstartDateValue()
      <p:messages id="messages" showDetail="true"   autoUpdate="true"/>
 <div class="ui-fluid ">
 
-	     <p:dataTable id="requestTable" var="request1" value="#{createrequest.closerequestList}" draggableColumns="true"
-	     reflow="true" scrollable="true" scrollHeight="300"  resizableColumns="true"  rows="15"  paginator="true" 	         
+	     <p:dataTable id="requestTable" var="request1" value="#{closerequest.closerequestList}" draggableColumns="true"
+	     reflow="true" scrollable="true" scrollHeight="300"  resizableColumns="true"  rows="25"  paginator="true" 	         
 	      paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" 
-	      rowsPerPageTemplate="5,25,35,50"  sortBy="#{request1.stage},#{request1.status}" sortOrder="descending"	    
+	      rowsPerPageTemplate="25,35,50"  sortBy="#{request1.stage},#{request1.modifydate}" sortOrder="descending"	    
 	     class="table table-striped table-hover table-bordered" style="margin-top:5px; margin-left:0px;"
-	      filteredValue="#{createrequest.filteredCloseRequestList}" widgetVar="newrequestListTable">	     
+	      filteredValue="#{closerequest.filteredCloseRequestList}" widgetVar="newrequestListTable">	     
 	   
 	   
 	     <f:facet name="header">
@@ -95,12 +96,12 @@ function setstartDateValue()
 			
 			<h:commandLink id="excel">
 	     <img  src="resource/image/Excel.png" class="img-responsive pull-right" alt="Excel" style="width:35px;"></img>
-	        <p:dataExporter type="xls" target="requestTable" fileName="request1" postProcessor="#{createrequest.postProcessXLS}" />
+	        <p:dataExporter type="xls" target="requestTable" fileName="request1" postProcessor="#{closerequest.postProcessXLS}" />
 	    </h:commandLink>
 			
 			 <h:commandLink id="pdf" >
 	     <img  src="resource/image/pdf.png" class="img-responsive pull-right" alt="pdf" style="width:35px;"></img>
-	        <p:dataExporter type="pdf" target="requestTable" fileName="request1" preProcessor="#{createrequest.preProcessPDF}" />
+	        <p:dataExporter type="pdf" target="requestTable" fileName="request1" preProcessor="#{closerequest.preProcessPDF}" />
 	    </h:commandLink>			
 			</div>
 			
@@ -109,7 +110,7 @@ function setstartDateValue()
 	   
  
  <p:column filterBy="#{request1.title}"  sortBy="#{request1.title}" headerText="Title"  
-			 filterMatchMode="contains"  style="text-overflow: ellipsis; white-space: nowrap; padding: 0px 0px 0px 3px;" >			 
+			 filterMatchMode="contains"  style="text-overflow: ellipsis; white-space: nowrap; padding: 0px 0px 0px 0px;" >			 
 				<f:facet name="header" >
 					 <h:outputText value="Title"/>
 				</f:facet>
@@ -118,7 +119,7 @@ function setstartDateValue()
  
  
  <p:column filterBy="#{request1.description}" sortBy="#{request1.description}" headerText="Description"  
-			 filterMatchMode="contains"   style="text-overflow: ellipsis; white-space: nowrap;padding: 0px 0px 0px 3px;">
+			 filterMatchMode="contains"   style="text-overflow: ellipsis; white-space: nowrap;padding: 0px 0px 0px 0px;">
 				<f:facet name="header">
 					 <h:outputText value="Description" />
 				</f:facet>
@@ -126,16 +127,17 @@ function setstartDateValue()
 </p:column>
  
 <p:column filterBy="#{request1.changedate}" sortBy="#{request1.changedate}" headerText="Due Date"    
-			 filterMatchMode="contains"   pattern="dd-MMM-yyyy"  style="text-overflow: ellipsis; white-space: nowrap;padding: 0px 0px 0px 3px;">
+			 filterMatchMode="contains"   pattern="dd-MMM-yyyy"  style="text-overflow: ellipsis; white-space: nowrap;padding: 0px 0px 0px 0px;">
 				<f:facet name="header">
 					<h:outputText value="Due Date" />
 				</f:facet>
 				<h:outputText value="#{request1.changedate}" pattern="dd-MMM-yyyy" />
 			</p:column>
     
-     <p:column headerText="Category"  filterBy="#{request1.usercategory}" sortBy="#{request1.usercategory}"  filterMatchMode="in">
+     <p:column headerText="Category"  filterBy="#{request1.usercategory}" sortBy="#{request1.usercategory}"  filterMatchMode="in" style="text-overflow: ellipsis; white-space: nowrap;padding: 0px 0px 0px 0px;">
             <f:facet name="filter">
-                <p:selectCheckboxMenu label="Search" onchange="PF('newrequestListTable').filter()"  >
+                <p:selectCheckboxMenu label="Search" onchange="PF('newrequestListTable').filter()"  style="font-size:10px;height:25px;">
+                  <f:selectItem itemLabel="General" itemValue="General" />
                    <f:selectItems value="#{categorybean.categoryList}"  var="category" itemLabel="#{category.name}"
                           itemValue="#{category.name}"/>
                 </p:selectCheckboxMenu>
@@ -148,9 +150,10 @@ function setstartDateValue()
      
     
      <p:column filterBy="#{request1.userproject}"  sortBy="#{request1.userproject}" headerText="Project"  
-			 filterMatchMode="in" >
+			 filterMatchMode="in" style="text-overflow: ellipsis; white-space: nowrap;padding: 0px 0px 0px 0px;">
 				<f:facet name="filter">
-                <p:selectCheckboxMenu label="Search" onchange="PF('newrequestListTable').filter()"  >
+                <p:selectCheckboxMenu label="Search" onchange="PF('newrequestListTable').filter()" style="font-size:10px;height:25px;" >
+                  <f:selectItem itemLabel="General" itemValue="General" />
                   <f:selectItems value="#{projectbean.projectList}" var="project" itemLabel="#{project.name}"  itemValue="#{project.name}"/>
     
                 </p:selectCheckboxMenu>
@@ -161,9 +164,11 @@ function setstartDateValue()
     
    
      <p:column filterBy="#{request1.userrequesttype}"  sortBy="#{request1.userrequesttype}" headerText="Type"   
-			 filterMatchMode="in" style="text-overflow: ellipsis; white-space: nowrap;padding: 0px 0px 0px 3px;">
+			 filterMatchMode="in" style="text-overflow: ellipsis; white-space: nowrap;padding: 0px 0px 0px 0px;">
 				<f:facet name="filter">
-                <p:selectCheckboxMenu label="Search" onchange="PF('newrequestListTable').filter()"  >
+                 
+                <p:selectCheckboxMenu label="Search" onchange="PF('newrequestListTable').filter()"  style="font-size:10px;height:25px;">
+                 <f:selectItem itemLabel="General" itemValue="General" />
                   <f:selectItems value="#{requesttypebean.requesttypeList}" var="requesttype" itemLabel="#{requesttype.name}"  itemValue="#{requesttype.name}"/>
      
                 </p:selectCheckboxMenu>
@@ -173,9 +178,9 @@ function setstartDateValue()
     
     
       <p:column filterBy="#{request1.friendName}"  sortBy="#{request1.friendName}"  headerText="Team Member"    
-			 filterMatchMode="in"  style="text-overflow: ellipsis; white-space: nowrap;padding: 0px 0px 0px 3px;">
+			 filterMatchMode="in"  style="text-overflow: ellipsis; white-space: nowrap;padding: 0px 0px 0px 0px;">
 				<f:facet name="filter">
-                <p:selectCheckboxMenu label="Search" onchange="PF('newrequestListTable').filter()"  >
+                <p:selectCheckboxMenu label="Search" onchange="PF('newrequestListTable').filter()"  style="font-size:10px;height:25px;">
                   <f:selectItems value="#{friendbean.friendList}" var="friend" itemLabel="#{friend.name}"  itemValue="#{friend.name}"/>
      
                 </p:selectCheckboxMenu>
@@ -184,18 +189,18 @@ function setstartDateValue()
 			</p:column>
     
        <p:column filterBy="#{request1.stage}"  sortBy="#{request1.stage}"  headerText="Stage"  
-			 filterMatchMode="in"  style="text-overflow: ellipsis; white-space: nowrap;padding: 0px 0px 0px 3px;">
+			 filterMatchMode="in"  style="text-overflow: ellipsis; white-space: nowrap;padding: 0px 0px 0px 0px;">
 				<f:facet name="filter">
-                <p:selectCheckboxMenu label="Search" onchange="PF('newrequestListTable').filter()">                          
+                <p:selectCheckboxMenu label="Search" onchange="PF('newrequestListTable').filter()" style="font-size:10px;height:25px;">                          
                            <f:selectItem   itemLabel="Cancelled" itemValue="Cancelled" />                         
-                           <f:selectItem   itemLabel="Close" itemValue="Close" />
+                           <f:selectItem   itemLabel="Closed" itemValue="Closed" />
                 </p:selectCheckboxMenu>
             </f:facet>
 				<h:outputText value="#{request1.stage}" style="display: inline;"   />
 			</p:column>
     
-     <p:column filterBy="#{request1.completionpercentage}"  sortBy="#{request1.completionpercentage}"  headerText="% Age Completion" 
-			 filterMatchMode="contains"  style="text-overflow: ellipsis; white-space: nowrap; padding: 0px 0px 0px 3px;">
+     <p:column filterBy="#{request1.completionpercentage}"  sortBy="#{request1.completionpercentage}"  headerText="% Age Completion" class="percentage"
+			 filterMatchMode="contains"  style="text-overflow: ellipsis; white-space: nowrap; padding: 0px 0px 0px 0px;">
 				<f:facet name="header">
 					<h:outputText value="% Age Completion" />
 				</f:facet>
@@ -203,7 +208,7 @@ function setstartDateValue()
 			</p:column>
     
     
-    
+   <!--  
     
      <p:column filterBy="#{request1.status}"  sortBy="#{request1.status}" 
 			headerText="Status"   filterMatchMode="in" style="padding: 0px 0px 0px 3px;" >
@@ -215,29 +220,29 @@ function setstartDateValue()
             </f:facet>
 				<h:outputText value="#{request1.status}"  />
 			</p:column>
-			
+			-->
    
     
- <p:column headerText="Attachment" exportable="false" style="padding: 0px 0px 0px 0px;" >
-       <p:dialog widgetVar="statusDialog" header="Status" draggable="false" closable="false" resizable="false">
-      
+ <p:column headerText="Attached" exportable="false" class="width"
+ style="padding: 0px 0px 0px 0px; text-overflow: ellipsis; white-space: nowrap; ">
+      <p:dialog widgetVar="statusDialog" header="Status" draggable="false" closable="false" resizable="false">
+       
 </p:dialog>
 	<p:commandLink  class="btn  fontsize"   ajax="false"
  onclick="PrimeFaces.monitorDownload(start, stop);setRequestHiddenValue(#{request1.newRequestId})"
-style="width:103px;font-size:12px;background-color: #e7e7e7; color: black;" >
+style="font-size:12px;background-color: #e7e7e7; color: black;" >
         <p:fileDownload value="#{createrequest.fileDownloadView()}" />
-        Download
+      <span class="glyphicon glyphicon-download-alt"></span>
     </p:commandLink >
     </p:column>
     
     
   
-   <p:column headerText="Notes" exportable="false"  style="padding: 0px 0px 0px 0px;" >
+   <p:column headerText="Note" exportable="false"  style="padding: 0px 0px 0px 0px;" class="width" >
    
-   	<p:commandLink id="nonAjax1" class="btn2 btn  fontsize" 
-				style="color:black; width:103px;font-size:12px;background-color:skyblue;"
+   	<p:commandLink id="nonAjax1" 				
      onclick="PF('#{request1.newRequestId}').show();setRequestHiddenValue(#{request1.newRequestId}) ">
-    		View Notes
+    	  <img  src="resource/image/note.png" class="img-responsive pull-right " alt="notes" style="width:29px;"></img>
     		</p:commandLink> 
 
  <p:dialog  header="View Notes" exportable="false" widgetVar="#{request1.newRequestId}" varStatus="status" modal="true" responsive = "true">
@@ -273,12 +278,12 @@ style="width:103px;font-size:12px;background-color: #e7e7e7; color: black;" >
      
      
      
- <p:column headerText="View / Modify" exportable="false" style="padding: 0px 0px 0px 0px;"  >
+ <p:column headerText="View / Modify" exportable="false" style="padding: 0px 0px 0px 0px;" class="viewsize"  >
          
 	    		
 	    		
 	    		<p:commandLink id="nonAjax" styleClass="btn btn-primary fontsize" 
-				style="color:white; width:103px; border-radius: none;font-size:12px;" onclick='setRequestHiddenValue(#{request1.newRequestId})' 
+				style="color:white;  border-radius: none;font-size:12px;" onclick='setRequestHiddenValue(#{request1.newRequestId})' 
 				action="#{createrequest.modifyAction()}" ajax="false" >
 	        		View / Update
 	    		</p:commandLink> 
@@ -290,11 +295,6 @@ style="width:103px;font-size:12px;background-color: #e7e7e7; color: black;" >
 	</div>
 	
 
-<script type="text/javascript">
-$(function() {
-    $('input[name="daterange"]').daterangepicker();
-});
-</script>
 
 
 

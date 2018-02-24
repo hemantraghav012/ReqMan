@@ -28,7 +28,7 @@
             z-index:9999;
         }
     </style>
-	<title> Update Task Status </title>
+	<title>Update Tasks</title>
 	
 	<script>
 
@@ -62,10 +62,16 @@ function setRequestHiddenValue(new_value)
       	   		
 	  
           <div class="col-sm-6 pull-right" > 
-        	 <h:link value=" See project of your Team Member  " style="padding-bottom:5px;" class="btn1 btn  pull-right fontsize " outcome="commonproject" />  
-     	
-     		 <h:link value="View History" style="padding-bottom:5px;" class="btn2 btn pull-right fontsize" outcome="viewcompletedtask" /> 
-     				
+        	 <h:link value="Shared Project Tasks" style="padding-bottom:5px;"  class="btn1 btn  pull-right fontsize " outcome="commonproject" />  
+
+     			 	
+     		 <h:link value="View History" style="padding-bottom:5px;" class="btn2 btn pull-right fontsize" outcome="viewcompletedtask" >
+     		&nbsp;
+ <span   data-toggle="tooltip" 
+ title=" View details of past  tasks with closed status" 
+ style="margin-top:5px; margin-right:3px;font-size:16px;"
+  class="pull-right glyphicon glyphicon-info-sign"></span>
+     		 </h:link>
      			 	</div>		
         </div>
      
@@ -114,16 +120,6 @@ function setRequestHiddenValue(new_value)
 			
 			</div>
 		</f:facet> 
-
-
-
-
-
-
-
-
-
-
 
  
  <p:column filterBy="#{update1.title}"  sortBy="#{update1.title}" headerText="Title"  
@@ -190,12 +186,12 @@ function setRequestHiddenValue(new_value)
 			</p:column>
     
   
-     <p:column filterBy="#{update1.createdby}" sortBy="#{update1.createdby}"  headerText="Task From"  
+     <p:column filterBy="#{update1.friendName}" sortBy="#{update1.friendName}"  headerText="Task From"  
 			 filterMatchMode="contains"  style="text-overflow: ellipsis; white-space: nowrap;padding: 0px 0px 0px 3px;">
 				<f:facet name="header">
 					<h:outputText value="Task From" />
 				</f:facet>
-				<h:outputText value="#{update1.createdby}" style="display: inline;"   />
+				<h:outputText value="#{update1.friendName}" style="display: inline;"   />
 			</p:column>
      <p:column headerText="Attachment" exportable="false" style="padding: 0px 0px 0px 0px;" class="width">
        <p:dialog widgetVar="statusDialog" header="Status" draggable="false" closable="false" resizable="false">
@@ -211,10 +207,9 @@ style="font-size:12px;background-color: #e7e7e7; color: black;" >
    
      <p:column headerText="View Notes" exportable="false"  style="padding: 0px 0px 0px 0px; " class="width">
      
-     	<p:commandLink id="nonAjax12" class="btn2 btn  fontsize" 
-				style="color:black;font-size:12px;background-color:skyblue;"
+     	<p:commandLink id="nonAjax12" 				
     onclick="PF('#{update1.newRequestId}').show(); setRequestHiddenValue(#{update1.newRequestId}) ">
-    		 <span class="glyphicon glyphicon-envelope"></span> 
+    		      <img  src="resource/image/note.png" class="img-responsive pull-right " alt="notes" style="width:29px;"></img>
     		</p:commandLink> 
      
      

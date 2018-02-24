@@ -18,7 +18,7 @@
 <link rel="stylesheet" href="resource/mystyle/createcategory.css"/>
  <script type="text/javascript" src="resource/js/bootstrap.js"/>
 <script type="text/javascript" src="resource/js/jquery.js"/>
-<title>update Response</title>
+<title>Respond to New Requests</title>
 
 </h:head>
 
@@ -46,58 +46,140 @@
  
  <h:inputHidden value = "#{responsebean.requestId}" id = "hiddenField" /> 
  
- <div class="col-sm-2 control-label"><h:outputLabel  >Title:</h:outputLabel></div>
-<div class=" col-sm-10"> <h:inputText value="#{responsebean.title}" readonly="true" disabled="true"  style="background-color:lightgrey;" class="  form-control"  id="title"   requiredMessage="* Please enter Title"/></div>
+ <div class="col-sm-3 control-label"><h:outputLabel  >Title:</h:outputLabel></div>
+<div class=" col-sm-9"> <h:inputText value="#{responsebean.title}" readonly="true" disabled="true"  style="background-color:lightgrey;" class="  form-control"  id="title"   requiredMessage="* Please enter Title"/></div>
  <h:message for="title"  style="color:red;margin:8px;"/> 
 </div>
  
   <div class=" row form-group " >
- <div class="col-sm-2 control-label"><h:outputLabel>Description:</h:outputLabel></div>
-<div class=" col-sm-10"><h:inputTextarea id="address" value="#{responsebean.responseVo.description}" readonly="true" disabled="true" style="background-color:lightgrey;"   
+ <div class="col-sm-3 control-label"><h:outputLabel>Description:</h:outputLabel></div>
+<div class=" col-sm-9"><h:inputTextarea id="address" value="#{responsebean.responseVo.description}" readonly="true" disabled="true" style="background-color:lightgrey;"   
  cols="19" rows="3" class="  form-control" /></div>
 <h:message for="address"  style="color:red;margin:6px;"/>
 </div>
- 
+ <div class="row">
+<div class="col-sm-3 control-label"><h:outputLabel>Requestor Team Member:</h:outputLabel></div>
+<div class=" col-sm-9"> <h:inputText value="#{responsebean.responseVo.friendName}" readonly="true"  disabled="true" class="  form-control"  id="teammember"  style="background-color:lightgrey;"  requiredMessage="* Please enter Title"/></div>
+ <h:message for="teammember"  style="color:red;margin:8px;"/> 
+</div><br></br>
 
 <div class=" row form-group ">
- <div class="col-sm-2 control-label"><h:outputLabel  >Completion Date:</h:outputLabel></div>
-<div class=" col-sm-4">
+ <div class="col-sm-3 control-label"><h:outputLabel  >Agreed Completion Date:&nbsp;
+ <span   data-toggle="tooltip" 
+ title=" If this field is blank , enter the date  by which request can be fulfilled." 
+ style="margin-top:2px;" class="pull-right glyphicon glyphicon-info-sign"></span>
+ </h:outputLabel></div>
+<div class=" col-sm-3">
 <c:choose>
   <c:when test="#{responsebean.completiondate eq null }"> 
  <p:calendar id="completiondate" value="#{responsebean.completiondate}" style=" border: 0;" 
-   pattern="dd-MM-yyyy" mask="true"  required="true"  requiredMessage="* Please enter completion Date" />
+   pattern="dd-MM-yyyy" mask="true"  required="true"  requiredMessage="* Please enter completion Date" p:placeholder="DD-MM-YYYY" />
  </c:when>
  <c:otherwise>
   <p:calendar id="completiondate" value="#{responsebean.completiondate}" style=" border: 0;" readonly="true" disabled="true" 
-   pattern="dd-MM-yyyy" mask="true"  required="true"  requiredMessage="* Please enter completion Date" />
+   pattern="dd-MM-yyyy" mask="true"  required="true"  requiredMessage="* Please enter completion Date" p:placeholder="DD-MM-YYYY"/>
  </c:otherwise>
  
  </c:choose>
 
-
-</div>
  <h:message for="completiondate"  style="color:red;"/> 
+</div>
+
  
  <div class="col-sm-2 control-label"><h:outputLabel  >Category:</h:outputLabel></div>
-<div class=" col-sm-4"> <h:inputText value="#{responsebean.responseVo.usercategory}" readonly="true"  disabled="true" class="  form-control"  style="background-color:lightgrey;" id="usercategory"  required="true" requiredMessage="* Please enter Title"/></div>
- <h:message for="usercategory"  style="color:red;margin:8px;"/> 
-</div><br></br>
+<div class=" col-sm-4"> <h:inputText value="#{responsebean.responseVo.usercategory}" readonly="true"  disabled="true" class="  form-control"  style="background-color:lightgrey;" id="usercategory"  required="true" requiredMessage="* Please enter Title"/>
+<h:message for="usercategory"  style="color:red;margin:8px;"/> 
+</div>
+ 
+</div>
 
 <div class=" row form-group ">
  
- <div class="col-sm-2 control-label"><h:outputLabel  > Project:</h:outputLabel></div>
-<div class=" col-sm-4"> <h:inputText value="#{responsebean.responseVo.userproject}" readonly="true" disabled="true" class="  form-control"  id="userproject"  style="background-color:lightgrey;"  requiredMessage="* Please enter Title"/></div>
+ <div class="col-sm-3 control-label"><h:outputLabel  > Project:</h:outputLabel></div>
+<div class=" col-sm-3">
+ <h:inputText value="#{responsebean.responseVo.userproject}" readonly="true" disabled="true" class="  form-control"  id="userproject"  style="background-color:lightgrey;"  requiredMessage="* Please enter Title"/></div>
  <h:message for="userproject"  style="color:red;margin:8px;"/> 
 
 
  <div class="col-sm-2 control-label"><h:outputLabel>Type:</h:outputLabel></div>
 <div class=" col-sm-4"> <h:inputText value="#{responsebean.responseVo.userrequesttype}" readonly="true"  disabled="true" class="  form-control"  id="userrequesttype"  style="background-color:lightgrey;"  requiredMessage="* Please enter Title"/></div>
  <h:message for="userrequesttype"  style="color:red;margin:8px;"/> 
-</div><br></br>
+</div>
+
+
+ <div class=" row form-group ">
+
+ <div class="col-sm-2 control-label">
+ <h:outputLabel>Priority: &nbsp;
+ <span   data-toggle="tooltip" 
+ title="Team members can be advised to focus on requests as per  indicated priority." 
+ style="margin-top:2px;" class="pull-right glyphicon glyphicon-info-sign"></span>
+ </h:outputLabel> 
+ </div>
+<div class=" col-sm-4">
+ <h:inputText value="#{responsebean.responseVo.priority}" readonly="true"  disabled="true" class="  form-control"  id="priority"  style="background-color:lightgrey;"  requiredMessage="* Please enter Title"/>
+
+ <h:message for="priority"  style="color:red;"/>
+</div>
+
+ <div class="col-sm-2 control-label">
+ <h:outputLabel>Weightage: &nbsp;
+ <span   data-toggle="tooltip" 
+ title="Performance  can be improved by allocating  importance to individual tasks. Very usefull in project delivery." 
+ style="margin-top:2px;" class="pull-right glyphicon glyphicon-info-sign"></span>
+ 
+ </h:outputLabel> 
+ </div>
+<div class=" col-sm-4">
+ <h:inputText value="#{responsebean.responseVo.weightage}" readonly="true"  disabled="true" class="  form-control"  id="weightage"  style="background-color:lightgrey;"  requiredMessage="* Please enter Title"/>
+
+ <h:message for="weightage"  style="color:red;"/>
+</div>
+
+
+ </div>
+    <div class=" row form-group ">
+ <div class="col-sm-2 control-label">
+ <h:outputLabel > Estimated Effort:
+ <span   data-toggle="tooltip" 
+ title="Estimate the efforts required for this task ( in hours , days etc) to monitor efficiency and profitability. Comparison with Actual Efforts will also improve the accurcy of estimation " 
+ style="margin-top:2px;" class="pull-right glyphicon glyphicon-info-sign"></span>
+ 
+ </h:outputLabel> 
+ </div>
+<div class=" col-sm-4">
+<h:inputText value="#{responsebean.responseVo.estimatedeffort}" readonly="true"  disabled="true" class="  form-control"  id="estimatedeffort"  style="background-color:lightgrey;"  requiredMessage="* Please enter Title"/>
+ <h:message for="estimatedeffort"  style="color:red;"/>
+</div>
+
+ <div class="col-sm-2 control-label" >
+ <h:outputLabel>Actual Effort:&nbsp;
+ <span   data-toggle="tooltip" 
+ title="Record actual  efforts invested in the task ( in hours , days etc) . Comparison with estimated Efforts will also improve the accurcy of estimation over time." 
+ style="margin-top:2px;" class="pull-right glyphicon glyphicon-info-sign"></span>
+ </h:outputLabel> 
+ </div>
+<div class=" col-sm-4">
+<h:inputText value="#{responsebean.actualeffort}"  class="  form-control"  id="actualeffort"    requiredMessage="* Please enter actualeffort"/>
+
+ <h:message for="actualeffort"  style="color:red;"/>
+</div>
+
+
+
+</div>
+
+
+
+
 
  <div class=" row form-group " >
-<div class="col-sm-2 control-label" style="padding-top:0cm;"><h:outputLabel>Notes: </h:outputLabel></div>
-<div class=" col-sm-10"><h:inputTextarea id="message" value="#{responsebean.message}"    
+<div class="col-sm-3 control-label" style="padding-top:0cm;"><h:outputLabel>Notes:&nbsp;
+ <span   data-toggle="tooltip" 
+ title=" Enter any message to be shared with the requester. in case you can not accept the request or want the requester to change some details , put your comments here." 
+ style="margin-top:2px;" class="pull-right glyphicon glyphicon-info-sign"></span>
+</h:outputLabel></div>
+<div class=" col-sm-9"><h:inputTextarea id="message" value="#{responsebean.message}"    
  cols="19" rows="3" class="  form-control" /></div>
 <h:message for="message"  style="color:red;margin:6px;"/>
 
@@ -106,7 +188,10 @@
 
 
 <div class=" row form-group ">
- <div class="col-sm-2 control-label" style="padding-top:0cm;"><h:outputLabel>Stage: </h:outputLabel></div>
+ <div class="col-sm-3 control-label" style="padding-top:0cm;"><h:outputLabel>Stage:&nbsp;
+ <span   data-toggle="tooltip" 
+ title="Either accept the request , or return to requester with your comments in notes section." 
+ style="margin-top:2px;" class="pull-right glyphicon glyphicon-info-sign"></span> </h:outputLabel></div>
 <div class=" col-sm-6"> 
 <h:selectOneRadio value = "#{responsebean.stage}" id="stage" required="true"    requiredMessage="* Please enter stage"> 
   
@@ -131,7 +216,7 @@
  
 
 
-<h:link value="Back to Response List" style="text-decoration:none; color:#fff;" outcome="responsetonewrequest" class="btn fontsize btn-primary btn-block"/>
+<h:link value="Respond To New Requests" style="text-decoration:none; color:#fff;" outcome="responsetonewrequest" class="btn fontsize btn-primary btn-block"/>
 </div>
 </div>
 

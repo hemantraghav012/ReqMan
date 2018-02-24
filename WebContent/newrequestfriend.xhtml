@@ -5,6 +5,7 @@
  xmlns:ui="http://java.sun.com/jsf/facelets" 
   xmlns:f="http://java.sun.com/jsf/core"
     xmlns:p="http://primefaces.org/ui"
+    xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
  	xmlns:h="http://java.sun.com/jsf/html">
 <h:head>
 <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
@@ -35,20 +36,22 @@
                
      
        <h:form enctype="multipart/form-data" class="form-horizontal">
-      <div class="container fixedcontainerrequset" style=" margin-top:3cm; ">
- <span style="color:red;">* fields are mandatory</span> <h2 style=" text-align: center;">    Create New Request </h2><br></br>
+       <p:panel id="panel" style="border:0px;">
+       <p:focus context="panel"/>
+      <div class="container fixedcontainerrequset" style=" margin-top:2cm; ">
+  <h2 style=" text-align: center;">    Create New Request </h2><br></br>
       
 
  <div class=" row form-group ">
- <div class="col-sm-2 control-label"><h:outputLabel><span style="color:red;">* </span> Title:</h:outputLabel></div>
-<div class=" col-sm-10"> <h:inputText value="#{createrequest.title}"   class="  form-control"  id="title" required="true" requiredMessage="* Please enter Title" />
+ <div class="col-sm-3 control-label"><h:outputLabel><span style="color:red;">* </span> Title:</h:outputLabel></div>
+<div class=" col-sm-8"> <h:inputText value="#{createrequest.title}"   class="  form-control"  id="title" required="true" requiredMessage="* Please enter Title" />
  <h:message for="title"  style="color:red;"/>
 </div>
 </div>
 
  <div class=" row form-group " >
- <div class="col-sm-2 control-label"><h:outputLabel>Description:</h:outputLabel></div>
-<div class=" col-sm-10"><h:inputTextarea id="address" value="#{createrequest.description}"  
+ <div class="col-sm-3 control-label"><h:outputLabel>Description:</h:outputLabel></div>
+<div class=" col-sm-8"><h:inputTextarea id="address" value="#{createrequest.description}"  
  cols="19" rows="3" class="  form-control" />
  <h:message for="address"  style="color:red;"/>
  </div>
@@ -56,17 +59,18 @@
  
 
 
-  <div class="row form-grop friend  collapse in ">
- <div class="col-sm-2 control-label">
- <h:outputLabel for="user">Team Member(s):</h:outputLabel> 
+  <div class="row form-group ">
+ <div class="col-sm-3 control-label">
+ <h:outputLabel for="user">Team Member(s):&nbsp;
+ <span   data-toggle="tooltip" title="select one or more team members. Even your own name for To-Do tasks! Use this easy to select Auto-complete function." 
+ style="margin-top:2px;" class="pull-right glyphicon glyphicon-info-sign"></span>
+ </h:outputLabel> 
  </div>
-<div class=" col-sm-10">
+<div class=" col-sm-8">
  <p:autoComplete id="user" multiple="true" value="#{createrequest.selectedUsers}" completeMethod="#{createrequest.getUserDetails}" 
    var="friend1" itemLabel="#{friend1.name}" converter="requestFriendConverter"  itemValue="#{friend1}"  forceSelection="true" >
   
- 		<p:column style="width:10%">
-             <h:outputText styleClass="ui-theme ui-theme-#{friend1.name}" />
-         </p:column>
+ 		
 
          <p:column>
              <h:outputText value="#{friend1.name}" />
@@ -80,10 +84,16 @@
  </div>
  
 <div class=" row form-group ">
- <div class="col-sm-2 control-label">
- <h:outputLabel style="white-space:nowrap;">Completion Date:</h:outputLabel>
+ <div class="col-sm-3 control-label">
+ <h:outputLabel style="white-space:nowrap;">Requested Completion Date:&nbsp;
+ <span   data-toggle="tooltip" 
+ title="If left blank , team member must enter a date on accepting the request" 
+ style="margin-top:2px;" class="pull-right glyphicon glyphicon-info-sign"></span>
+ 
+ 
+ </h:outputLabel>
  </div>
-<div class="col-sm-4"> 
+<div class="col-sm-3"> 
 <p:calendar id="completiondate" value="#{createrequest.completiondate}" p:placeholder="DD-MM-YYYY" 
              mindate="#{createrequest.endDate}"  style=" border: 0;"  pattern="dd-MM-yyyy" mask="true" />
 <h:message for="completiondate"  style="color:red;"/>
@@ -95,7 +105,7 @@
  style="margin-top:2px;" class="pull-right glyphicon glyphicon-info-sign"></span>
  </h:outputLabel> 
  </div>
- <div class=" col-sm-4">
+ <div class=" col-sm-3">
   <p:selectOneMenu id ="category" value="#{createrequest.usercategory}"  style="border: none;">
             <f:selectItem itemLabel="Select" itemValue="" />
             <f:selectItems value="#{categorybean.categoryList1}"  var="category" itemLabel="#{category.name}"
@@ -106,13 +116,13 @@
 </div>
 
  <div class=" row form-group ">
-<div class="col-sm-2 control-label">
+<div class="col-sm-3 control-label">
 <h:outputLabel>Project:&nbsp;
 <span   data-toggle="tooltip" title="Use Projects to assign your requests for better project visibility , collaboration, reporting and management. E.g. New product launch , New software etc." 
 style="margin-top:2px;" class="pull-right glyphicon glyphicon-info-sign"></span>
 </h:outputLabel>
 </div>
- <div class=" col-sm-4"> 
+ <div class=" col-sm-3"> 
  <p:selectOneMenu id="project" value="#{createrequest.userproject}" style=" border: 0;" >
            <f:selectItem itemLabel="Select" itemValue="" />
            <f:selectItems value="#{projectbean.projectList1}" var="project" itemLabel="#{project.name}" 
@@ -127,7 +137,7 @@ style="margin-top:2px;" class="pull-right glyphicon glyphicon-info-sign"></span>
  style="margin-top:2px;" class="pull-right glyphicon glyphicon-info-sign"></span>
  </h:outputLabel>
  </div>
- <div class=" col-sm-4">
+ <div class=" col-sm-3">
  <p:selectOneMenu id="requesttype" value="#{createrequest.userrequesttype}"  style=" border: 0;" >
             <f:selectItem itemLabel="Select" itemValue="" />
             <f:selectItems value="#{requesttypebean.requesttypeList1}" var="requesttype" itemLabel="#{requesttype.name}"
@@ -139,18 +149,91 @@ style="margin-top:2px;" class="pull-right glyphicon glyphicon-info-sign"></span>
 </div>
  <br></br>
 <div class=" row form-group ">
-<div class="col-sm-2 control-label">
+<div class="col-sm-3 control-label">
 <h:outputLabel style="white-space:nowrap;" id ="attach" >Attach File :</h:outputLabel></div>
 <div class="col-sm-7">
 
  <p:fileUpload id="photo" value="#{createrequest.attachment}" mode="simple" ></p:fileUpload>
    <h:message for="photo"  style="color:red;"/>
 </div>
+</div>
 
 
+
+<div class="row">
+<div class="col-sm-3">
+<a type="button"  data-toggle="collapse" data-target=".friend" ><span style="color:blue; text-decoration:underline;">Advance Options...</span>
+</a>
+</div>
+</div>
+  <div class="row form-grop friend  collapse">
+ <div class="col-sm-3 control-label">
+ <h:outputLabel>Priority: &nbsp;
+ <span   data-toggle="tooltip" 
+ title="Team members can be advised to focus on requests as per  indicated priority." 
+ style="margin-top:2px;" class="pull-right glyphicon glyphicon-info-sign"></span>
+ </h:outputLabel> 
+ </div>
+<div class=" col-sm-3">
+<p:selectOneMenu  value="#{createrequest.priority}"  style=" border: 0;" >
+            <f:selectItem itemLabel="Select" itemValue="" />
+             <f:selectItem itemLabel="High" itemValue="High" />
+              <f:selectItem itemLabel="Medium" itemValue="Medium" />
+               <f:selectItem itemLabel="Low" itemValue="Low" />
+           
+ </p:selectOneMenu>
+ <h:message for="onlyone"  style="color:red;"/>
+</div>
+
+ <div class="col-sm-2 control-label">
+ <h:outputLabel>Weightage: &nbsp;
+ <span   data-toggle="tooltip" 
+ title="Performance  can be improved by allocating  importance to individual tasks. Very usefull in project delivery." 
+ style="margin-top:2px;" class="pull-right glyphicon glyphicon-info-sign"></span>
+ 
+ </h:outputLabel> 
+ </div>
+<div class=" col-sm-3">
+ <p:selectOneMenu  value="#{createrequest.weightage}"  style=" border: 0;" >
+            <f:selectItem itemLabel="Select" itemValue="" />
+             <f:selectItem itemLabel="1" itemValue="1" />
+              <f:selectItem itemLabel="2" itemValue="2" />
+               <f:selectItem itemLabel="3" itemValue="3" />
+                <f:selectItem itemLabel="4" itemValue="4" />
+                 <f:selectItem itemLabel="5" itemValue="5" />
+                  <f:selectItem itemLabel="6" itemValue="6" />
+                   <f:selectItem itemLabel="7" itemValue="7" />
+                    <f:selectItem itemLabel="8" itemValue="8" />          
+                   <f:selectItem itemLabel="9" itemValue="9" />
+                    <f:selectItem itemLabel="10" itemValue="10" />
+ </p:selectOneMenu>
+ <h:message for="onlyone"  style="color:red;"/>
+</div>
+
+ </div>
+  <br></br>
+   <div class="row form-grop friend  collapse">
+ <div class="col-sm-3 control-label">
+ <h:outputLabel> Estimated Effort: &nbsp;
+ <span   data-toggle="tooltip" 
+ title="Estimate the efforts required for this task ( in hours , days etc) to monitor efficiency and profitability. Comparison with Actual Efforts will also improve the accurcy of estimation " 
+ style="margin-top:2px;" class="pull-right glyphicon glyphicon-info-sign"></span>
+ 
+ </h:outputLabel> 
+ </div>
+<div class=" col-sm-3">
+<h:inputText  class="  form-control"   value="#{createrequest.estimatedeffort}" ></h:inputText>
+
+ <h:message for="estimateeffect"  style="color:red;"/>
+</div>
 
  
-</div>
+
+ </div>
+ 
+
+
+ <br></br>
 
 
 
@@ -162,7 +245,11 @@ style="margin-top:2px;" class="pull-right glyphicon glyphicon-info-sign"></span>
 </div>
 
 
+
+
+
    </div><!-- end of container -->
+   </p:panel>
 </h:form>
 
       </p:panelGrid>

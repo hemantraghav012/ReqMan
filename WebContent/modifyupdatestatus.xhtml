@@ -5,8 +5,8 @@
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
        xmlns:p="http://primefaces.org/ui"
-      xmlns:ui="http://java.sun.com/jsf/facelets">
-
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+ xmlns:c="http://java.sun.com/jsp/jstl/core">
 
 <h:head>
 
@@ -19,7 +19,7 @@
  <link rel="stylesheet" href="resource/mystyle/button.css"/>
 <script type="text/javascript" src="resource/js/bootstrap.js"/>
 <script type="text/javascript" src="resource/js/jquery.js"/>
-<title>View/Modify Request</title>
+<title>Update Tasks</title>
 
 </h:head>
 <h:body>
@@ -39,7 +39,18 @@
   
   <div  style="margin-top:1cm;"> 
   <h:form class="form-horizontal fixedcontainer " >
- <h2 style=" margin-bottom:1cm; text-align:center">  View/Modify Update Task Status</h2>
+  
+  <c:choose>
+  <c:when test="#{updatestatusbean.requeststage eq 8 }"> 
+ <h2 style=" margin-bottom:1cm; text-align:center">  View Completed Tasks</h2>
+ </c:when>
+ 
+ <c:otherwise>
+  <h2 style=" margin-bottom:1cm; text-align:center">  View/Modify Update Task Status</h2>
+ </c:otherwise>
+ </c:choose>
+ 
+ 
 <div><h:messages style = "color:red;margin:8px;" /></div>
 
 
@@ -48,31 +59,51 @@
  
  <h:inputHidden value = "#{updatestatusbean.requestId}" id = "hiddenField" /> 
  
- <div class="col-sm-2 control-label"><h:outputLabel  >Title:</h:outputLabel></div>
-<div class=" col-sm-10"> <h:inputText value="#{updatestatusbean.title}" readonly="true" disabled="true"  style="background-color:lightgrey;" class="  form-control"  id="title"   requiredMessage="* Please enter Title"/></div>
+ <div class="col-sm-3 control-label"><h:outputLabel  >Title:</h:outputLabel></div>
+<div class=" col-sm-9"> <h:inputText value="#{updatestatusbean.title}" readonly="true" disabled="true"  style="background-color:lightgrey;" class="  form-control"  id="title"   requiredMessage="* Please enter Title"/></div>
  <h:message for="title"  style="color:red;margin:8px;"/> 
 </div>
  <div class=" row form-group ">
 
- <div class="col-sm-2 control-label"><h:outputLabel>Description:</h:outputLabel></div>
-<div class=" col-sm-10"> <h:inputTextarea value="#{updatestatusbean.description}"  readonly="true" disabled="true"   class="  form-control"  id="discription" style="background-color:lightgrey;"  requiredMessage="* Please enter Title"/></div>
+ <div class="col-sm-3 control-label"><h:outputLabel>Description:</h:outputLabel></div>
+<div class=" col-sm-9"> <h:inputTextarea value="#{updatestatusbean.description}"  readonly="true" disabled="true"   class="  form-control"  id="discription" style="background-color:lightgrey;"  requiredMessage="* Please enter Title"/></div>
  <h:message for="description"  style="color:red;margin:8px;"/> 
 </div><br></br>
 
  <div class=" row form-group ">
-<div class="col-sm-2 control-label"><h:outputLabel>Percentage Completion:</h:outputLabel></div>
-<div class=" col-sm-10">  
+<div class="col-sm-3 control-label"><h:outputLabel>Percentage Completion:&nbsp;
+ <span   data-toggle="tooltip" 
+ title=" Update the progress of task  completion in the number field or using the slider." 
+ style="margin-top:2px;" class="pull-right glyphicon glyphicon-info-sign"></span>
 
-   
+</h:outputLabel></div>
+<div class=" col-sm-8">  
+
+  <c:choose>
+  <c:when test="#{updatestatusbean.requeststage eq 8 }"> 
+  
+  <p:inputNumber id="txt1" value="#{updatestatusbean.completionpercentage}" symbol=" %" symbolPosition="s"  readonly="true" disabled="true" style="width:70px; "/>
+<br></br><h:outputLabel style="margin-left:50%">Progress Slider</h:outputLabel>  <br></br>
+<p:slider  for="txt1" style="background-color:green;"  readonly="true" disabled="true"  minValue="0" maxValue="100" step="1"><span class="pull-left" style="margin-left: -15px;color:green;font-size:32px;margin-top:-20px;font-weight:bold;">-</span><span class="pull-right" style="margin-right: -20px;color:green;font-size:30px;margin-top:-16px;font-weight:bold; ">+</span></p:slider> 
+  
+  </c:when>
+  <c:otherwise>
+  
+
   <p:inputNumber id="txt1" value="#{updatestatusbean.completionpercentage}" symbol=" %" symbolPosition="s" style="width:70px; "/>
-        <p:slider  for="txt1" style="background-color:green;"    minValue="0" maxValue="100" step="1"/></div>
+<br></br><h:outputLabel style="margin-left:50%">Progress Slider</h:outputLabel>  <br></br>
+<p:slider  for="txt1" style="background-color:green;"    minValue="0" maxValue="100" step="1"><span class="pull-left" style="margin-left: -15px;color:green;font-size:32px;margin-top:-20px;font-weight:bold;">-</span><span class="pull-right" style="margin-right: -20px;color:green;font-size:30px;margin-top:-16px;font-weight:bold; ">+</span></p:slider> 
+
+  </c:otherwise>
+  </c:choose> 
+</div>
 
  <h:message for="title"  style="color:red;margin:8px;" /> 
 </div>
 
 <div class=" row form-group ">
- <div class="col-sm-2 control-label"><h:outputLabel  >Due Date:</h:outputLabel></div>
-<div class=" col-sm-4"> <h:inputText value="#{updatestatusbean.updatestatusVo.completiondate}"  readonly="true" disabled="true"  style="background-color:lightgrey;" class="  form-control"  id="completiondate"   requiredMessage="* Please enter Title"/></div>
+ <div class="col-sm-3 control-label"><h:outputLabel  >Due Date:</h:outputLabel></div>
+<div class=" col-sm-3"> <h:inputText value="#{updatestatusbean.updatestatusVo.completiondate}"  readonly="true" disabled="true"  style="background-color:lightgrey;" class="  form-control"  id="completiondate"   requiredMessage="* Please enter Title"/></div>
  <h:message for="completiondate"  style="color:red;margin:8px;"/> 
  <div class="col-sm-2 control-label"><h:outputLabel  >Category:</h:outputLabel></div>
 <div class=" col-sm-4"> <h:inputText value="#{updatestatusbean.updatestatusVo.usercategory}" readonly="true"  disabled="true" class="  form-control"  style="background-color:lightgrey;" id="usercategory"  required="true" requiredMessage="* Please enter Title"/></div>
@@ -81,8 +112,8 @@
 
 <div class=" row form-group ">
  
- <div class="col-sm-2 control-label"><h:outputLabel  > Project:</h:outputLabel></div>
-<div class=" col-sm-4"> <h:inputText value="#{updatestatusbean.updatestatusVo.userproject}" readonly="true" disabled="true" class="  form-control"  id="userproject"  style="background-color:lightgrey;"  requiredMessage="* Please enter Title"/></div>
+ <div class="col-sm-3 control-label"><h:outputLabel  > Project:</h:outputLabel></div>
+<div class=" col-sm-3"> <h:inputText value="#{updatestatusbean.updatestatusVo.userproject}" readonly="true" disabled="true" class="  form-control"  id="userproject"  style="background-color:lightgrey;"  requiredMessage="* Please enter Title"/></div>
  <h:message for="userproject"  style="color:red;margin:8px;"/> 
 
 
@@ -90,10 +121,99 @@
 <div class=" col-sm-4"> <h:inputText value="#{updatestatusbean.updatestatusVo.userrequesttype}" readonly="true"  disabled="true" class="  form-control"  id="userrequesttype"  style="background-color:lightgrey;"  requiredMessage="* Please enter Title"/></div>
  <h:message for="userrequesttype"  style="color:red;margin:8px;"/> 
 </div><br></br>
+ <div class=" row form-group " >
+ <div class="col-sm-3 control-label"><h:outputLabel>Requester Team Member:</h:outputLabel></div>
+<div class=" col-sm-3"> <h:inputText value="#{updatestatusbean.updatestatusVo.friendName}" readonly="true"  disabled="true" class="  form-control"  id="teammember"  style="background-color:lightgrey;"  requiredMessage="* Please enter Title"/></div>
+ <h:message for="teammember"  style="color:red;margin:8px;"/> 
+</div><br></br>
+
+
+<div class=" row form-group ">
+
+ <div class="col-sm-3 control-label">
+ <h:outputLabel>Priority: &nbsp;
+ <span   data-toggle="tooltip" 
+ title="Team members can be advised to focus on requests as per  indicated priority." 
+ style="margin-top:2px;" class="pull-right glyphicon glyphicon-info-sign"></span>
+ </h:outputLabel> 
+ </div>
+<div class=" col-sm-3">
+ <h:inputText value="#{updatestatusbean.updatestatusVo.priority}" readonly="true"  disabled="true" class="  form-control"  id="priority"  style="background-color:lightgrey;"  requiredMessage="* Please enter Title"/>
+
+ <h:message for="priority"  style="color:red;"/>
+</div>
+
+ <div class="col-sm-2 control-label">
+ <h:outputLabel>Weightage: &nbsp;
+ <span   data-toggle="tooltip" 
+ title="Performance  can be improved by allocating  importance to individual tasks. Very usefull in project delivery." 
+ style="margin-top:2px;" class="pull-right glyphicon glyphicon-info-sign"></span>
+ 
+ </h:outputLabel> 
+ </div>
+<div class=" col-sm-4">
+ <h:inputText value="#{updatestatusbean.updatestatusVo.weightage}" readonly="true"  disabled="true" class="  form-control"  id="weightage"  style="background-color:lightgrey;"  requiredMessage="* Please enter Title"/>
+
+ <h:message for="weightage"  style="color:red;"/>
+</div>
+
+
+ </div>
+    <div class=" row form-group ">
+ <div class="col-sm-3 control-label">
+ <h:outputLabel > Estimated Effort:
+ <span   data-toggle="tooltip" 
+ title="Estimate the efforts required for this task ( in hours , days etc) to monitor efficiency and profitability. Comparison with Actual Efforts will also improve the accurcy of estimation " 
+ style="margin-top:2px;" class="pull-right glyphicon glyphicon-info-sign"></span>
+ 
+ </h:outputLabel> 
+ </div>
+<div class=" col-sm-3">
+<h:inputText value="#{updatestatusbean.updatestatusVo.estimatedeffort}" readonly="true"  disabled="true" class="  form-control"  id="estimatedeffort"  style="background-color:lightgrey;"  requiredMessage="* Please enter Title"/>
+ <h:message for="estimatedeffort"  style="color:red;"/>
+</div>
+
+ <div class="col-sm-2 control-label" >
+ <h:outputLabel>Actual Effort:&nbsp;
+ <span   data-toggle="tooltip" 
+ title="Record actual  efforts invested in the task ( in hours , days etc) . Comparison with estimated Efforts will also improve the accurcy of estimation over time." 
+ style="margin-top:2px;" class="pull-right glyphicon glyphicon-info-sign"></span>
+ </h:outputLabel> 
+ </div>
+<div class=" col-sm-4">
+  <c:choose>
+  <c:when test="#{updatestatusbean.requeststage eq 8 }"> 
+  
+<h:inputText value="#{updatestatusbean.actualeffort}" readonly="true"  disabled="true"  class="  form-control"  id="actualeffort"    requiredMessage="* Please enter actualeffort"/>
+  
+  </c:when>
+  
+  <c:otherwise>
+  
+<h:inputText value="#{updatestatusbean.actualeffort}"  class="  form-control"  id="actualeffort"    requiredMessage="* Please enter actualeffort"/>
+  
+  </c:otherwise>
+  </c:choose>
+
+ <h:message for="actualeffort"  style="color:red;"/>
+</div>
+
+
+
+</div>
+
+
+
+
+
 
   <div class=" row form-group " >
-<div class="col-sm-2 control-label" style="padding-top:0cm;"><h:outputLabel>Notes: </h:outputLabel></div>
-<div class=" col-sm-10"><h:inputTextarea id="message" value="#{updatestatusbean.message}"    
+<div class="col-sm-3 control-label" style="padding-top:0cm;"><h:outputLabel>Notes: &nbsp;
+ <span   data-toggle="tooltip" 
+ title=" Enter any message to be shared with the requester. in case you can not accept the request or want the requester to change some details , put your comments here." 
+ style="margin-top:2px;" class="pull-right glyphicon glyphicon-info-sign"></span>
+ </h:outputLabel></div>
+<div class=" col-sm-9"><h:inputTextarea id="message" value="#{updatestatusbean.message}"    
  cols="19" rows="3" class="  form-control" /></div>
 <h:message for="message"  style="color:red;margin:6px;"/>
 
@@ -102,14 +222,20 @@
 
 
  <div class=" row form-group ">
- <div class="col-sm-3 .col-sm-offset-3"></div>
- <div class="col-sm-4 "><h:commandButton action="#{updatestatusbean.updateRequest}" value="Update" class="btn fontsize btn-success btn-block"></h:commandButton></div>
-
- <div class="col-sm-4 ">
+ <div class="col-sm-4 .col-sm-offset-3"></div>
+ <div class="col-sm-3 ">
  
+  <c:choose>
+  <c:when test="#{updatestatusbean.requeststage eq 8 }"> 
+ </c:when>
+ <c:otherwise>
+ <h:commandButton action="#{updatestatusbean.updateRequest}" value="Update" class="btn fontsize btn-success btn-block"></h:commandButton>
+ </c:otherwise>
+ </c:choose>
+ </div>
 
-
-<h:link value="Back to Update Task Status List" style="text-decoration:none; color:#fff;" outcome="updatestatustask" class="btn fontsize btn-primary btn-block"/>
+ <div class="col-sm-3 ">
+<h:link value="Back To Update Tasks List" style="text-decoration:none; color:#fff;" outcome="updatestatustask" class="btn fontsize btn-primary btn-block"/>
 </div>
 </div>
 

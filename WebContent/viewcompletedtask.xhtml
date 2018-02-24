@@ -14,6 +14,7 @@
 <link rel="stylesheet" href="resource/css/bootstrap.css"/>
 <link rel="stylesheet" href="resource/mystyle/onlyhome.css"/>
 <link rel="stylesheet" href="resource/mystyle/home.css"/>
+<link rel="stylesheet" href="resource/mystyle/request.css"/>
 <link rel="stylesheet" href="resource/mystyle/button.css"/>
 <script type="text/javascript" src="resource/js/bootstrap.js"/>
 <script type="text/javascript" src="resource/js/jquery.js"/>
@@ -50,9 +51,9 @@ function setRequestHiddenValue(new_value)
   <div class="row">
          		
 	  
-          <div class="col-sm-3 pull-right" > 
+          <div class="col-sm-2 pull-right" > 
         		
-     			 <h:link value="Back TO Update Task Status List " style="padding-bottom:5px;"  class="btn fontsize btn-primary btn-block"  outcome="updatestatustask" /> 
+     			 <h:link value="Back to update tasks" style="padding-bottom:5px;"  class="btn fontsize btn-primary btn-block"  outcome="updatestatustask" /> 
      			
      			 	</div>		
         </div>
@@ -61,14 +62,13 @@ function setRequestHiddenValue(new_value)
   
   <div class="ui-fluid ">
 
-	     <p:dataTable id="requestTable" var="update1" value="#{updatestatusbean.completedtaskList}" draggableColumns="true" resizableColumns="true"
-	     reflow="true" scrollable="true" scrollHeight="310" 
-	      rows="15"  paginator="true"   
-	      paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rowsPerPageTemplate="5,10,15"
-	     sortBy="#{update1.stage}" sortOrder="descending"
-	     class="table table-striped table-hover table-bordered" 
-	     style="margin-top:10px;  " filteredValue="#{updatestatusbean.filteredCompletedList}" 
-	     widgetVar="updatestatusListTable">
+	     <p:dataTable id="requestTable" var="update1" value="#{viewcompleted.completedtaskList}" draggableColumns="true"
+	     resizableColumns="true" reflow="true" scrollable="true" scrollHeight="310"  rows="15"  paginator="true"   
+	     paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" 
+	      class="table table-striped table-hover table-bordered" 
+	     rowsPerPageTemplate="25,35,50"  sortBy="#{update1.stage},#{update1.modifydate}" sortOrder="descending"	 style="margin-top:10px;"
+	     filteredValue="#{viewcompleted.filteredCompletedList}"  widgetVar="updatestatusListTable">
+	    
 	     
 
   <f:facet name="header">
@@ -89,12 +89,12 @@ function setRequestHiddenValue(new_value)
 			
 			  <h:commandLink id="excel">
          <img  src="resource/image/Excel.png" class="img-responsive pull-right" alt="Excel" style="width:35px;"></img>
-	        <p:dataExporter type="xls" target="requestTable" fileName="update1" postProcessor="#{updatestatusbean.postProcessXLS}" />
+	        <p:dataExporter type="xls" target="requestTable" fileName="update1" postProcessor="#{viewcompleted.postProcessXLS}" />
 	    </h:commandLink>
 			
 			   <h:commandLink id="pdf">
 	     <img  src="resource/image/pdf.png" class="img-responsive pull-right" alt="Excel" style="width:35px;"></img>
-	        <p:dataExporter type="pdf" target="requestTable" fileName="update1" preProcessor="#{updatestatusbean.preProcessPDF}" />
+	        <p:dataExporter type="pdf" target="requestTable" fileName="update1" preProcessor="#{viewcompleted.preProcessPDF}" />
 	    </h:commandLink>
 		
 			</div>
@@ -105,7 +105,7 @@ function setRequestHiddenValue(new_value)
 
  
  <p:column filterBy="#{update1.title}"  sortBy="#{update1.title}" headerText="Title"  
-			 filterMatchMode="contains"  style="text-overflow: ellipsis; white-space: nowrap; padding: 0px 0px 0px 3px;">			 
+			 filterMatchMode="contains"  style="text-overflow: ellipsis; white-space: nowrap; padding: 0px 0px 0px 0px;">			 
 				<f:facet name="header" >
 					 <h:outputText value="Title"/>
 				</f:facet>
@@ -114,15 +114,15 @@ function setRequestHiddenValue(new_value)
  
  
  <p:column filterBy="#{update1.description}"  sortBy="#{update1.description}" headerText="Description" 
-			 filterMatchMode="contains"   style="text-overflow: ellipsis; white-space: nowrap;padding: 0px 0px 0px 3px;">
+			 filterMatchMode="contains"   style="text-overflow: ellipsis; white-space: nowrap;padding: 0px 0px 0px 0px;">
 				<f:facet name="header">
 					 <h:outputText value="Description" />
 				</f:facet>
 				<h:outputText value="#{update1.description}" style="display: inline;"   />
 </p:column>
  
-<p:column filterBy="#{update1.completiondate}" sortBy="#{update1.completiondate}" headerText="Due Date"   
-			 filterMatchMode="contains"   pattern="dd-MMM-yyyy"  style="text-overflow: ellipsis; white-space: nowrap;padding: 0px 0px 0px 3px;">
+<p:column filterBy="#{update1.completiondate}" sortBy="#{update1.completiondate}" headerText="Due Date"   class="date" 
+			 filterMatchMode="contains"   pattern="dd-MMM-yyyy"  style="text-overflow: ellipsis; white-space: nowrap;padding: 0px 0px 0px 0px;">
 				<f:facet name="header">
 					<h:outputText value="Due Date" />
 				</f:facet>
@@ -160,7 +160,7 @@ function setRequestHiddenValue(new_value)
 
     
      <p:column filterBy="#{update1.completionpercentage}" sortBy="#{update1.completionpercentage}"  headerText="% Age Completion"  
-			 filterMatchMode="contains"  style="text-overflow: ellipsis; white-space: nowrap;padding: 0px 0px 0px 3px;">
+			 filterMatchMode="contains"  style="text-overflow: ellipsis; white-space: nowrap;padding: 0px 0px 0px 3px;" class="percentage" >
 				<f:facet name="header">
 					<h:outputText value="% Age    Completion" />
 				</f:facet>
@@ -180,20 +180,33 @@ function setRequestHiddenValue(new_value)
 			 filterMatchMode="in"  style="text-overflow: ellipsis; white-space: nowrap;padding: 0px 0px 0px 3px;">
 				<f:facet name="filter">
                 <p:selectCheckboxMenu label="Select" onchange="PF('updatestatusListTable').filter()">                  
-                    <f:selectItem   itemLabel="Cancel" itemValue="Cancel" />
-                    <f:selectItem   itemLabel="Close" itemValue="Close" />
+                    <f:selectItem   itemLabel="Cancelled" itemValue="Cancelled" />
+                    <f:selectItem   itemLabel="Closed" itemValue="Closed" />
                 </p:selectCheckboxMenu>
             </f:facet>
 				<h:outputText value="#{update1.stage}" style="display: inline;"   />
 			</p:column>
    
+    <p:column headerText="Attachment" exportable="false"  class="width"
+    style="padding: 0px 0px 0px 0px; text-overflow: ellipsis; white-space: nowrap; ">
+       <p:dialog widgetVar="statusDialog" header="Status" draggable="false" closable="false" resizable="false">
+      
+</p:dialog>
+	<p:commandLink  class="btn  fontsize"   ajax="false"
+ onclick="PrimeFaces.monitorDownload(start, stop);setRequestHiddenValue(#{update1.newRequestId})"
+style="font-size:12px;background-color: #e7e7e7; color: black;" >
+        <p:fileDownload value="#{createrequest.fileDownloadView()}" />
+        <span class="glyphicon glyphicon-download-alt"></span>
+    </p:commandLink >
+    </p:column>
    
-     <p:column headerText="View Notes" exportable="false"  style="padding: 0px 0px 0px 0px; ">
+   
+     <p:column headerText="View Notes" exportable="false"  style="padding: 0px 0px 0px 0px; " class="width" >
      
-     	<p:commandLink id="nonAjax12" class="btn2 btn  fontsize" 
-				style="color:black; width:135px;font-size:12px;background-color:skyblue;"
+     	<p:commandLink id="nonAjax12" 
+				style="color:black; font-size:12px;background-color:skyblue;"
     onclick="PF('#{update1.newRequestId}').show(); ">
-    		View Notes
+    	<img  src="resource/image/note.png" class="img-responsive pull-right " alt="notes" style="width:29px;"></img>
     		</p:commandLink> 
      
      
@@ -228,9 +241,9 @@ function setRequestHiddenValue(new_value)
      </p:column>
      
     
-     <p:column headerText="View / Modify" exportable="false" style="padding: 0px 0px 0px 0px; ">
+     <p:column headerText="View / Modify" exportable="false" style="padding: 0px 0px 0px 0px;" class="viewsize">
 <p:commandLink id="nonAjax" styleClass="btn btn-primary fontsize" 
-				style="color:white; width:145px; border-radius: none;font-size:12px;" onclick='setRequestHiddenValue(#{update1.newRequestId})' 
+				style="color:white;  border-radius: none;font-size:12px;" onclick='setRequestHiddenValue(#{update1.newRequestId})' 
 				action="#{updatestatusbean.modifyAction()}" ajax="false" >
 	        		View / Update
 	    		</p:commandLink> 

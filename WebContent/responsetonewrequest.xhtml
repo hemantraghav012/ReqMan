@@ -18,7 +18,7 @@
 <script type="text/javascript" src="resource/js/bootstrap.js"/>
 <script type="text/javascript" src="resource/js/jquery.js"/>
 
-<title>Response To Request</title>
+<title>Respond to New Requests</title>
 
 <script>
 
@@ -150,12 +150,12 @@ function setRequestHiddenValue(new_value)
 			</p:column> 
     
     
-      <p:column filterBy="#{response.createdby}"  sortBy="#{response.createdby}"   headerText="Task From"   
+      <p:column filterBy="#{response.friendName}"  sortBy="#{response.friendName}"   headerText="Task From"   
 			 filterMatchMode="contains"  style="text-overflow: ellipsis; white-space: nowrap; padding: 0px 0px 0px 3px; ">
 				<f:facet name="header">
 					<h:outputText value="Task From" />
 				</f:facet>
-				<h:outputText value="#{response.createdby}" style="display: inline;"   />
+				<h:outputText value="#{response.friendName}" style="display: inline;"   />
 			</p:column>
     
       
@@ -175,10 +175,9 @@ onclick="PrimeFaces.monitorDownload(start, stop);setRequestHiddenValue(#{respons
     </p:column>
     
       <p:column headerText="Notes" exportable="false"  style="padding: 0px 0px 0px 0px;" class="width">
-      	<p:commandLink id="nonAjax1" class="btn2 btn  fontsize" 
-				style="color:black; font-size:12px;background-color:skyblue;"
+      	<p:commandLink id="nonAjax1"
      onclick="PF('#{response.newRequestId}').show();setRequestHiddenValue(#{response.newRequestId})">
-     <span class="glyphicon glyphicon-envelope"></span> 
+      <img  src="resource/image/note.png" class="img-responsive pull-right " alt="notes" style="width:29px;"></img>
      </p:commandLink>
        
 

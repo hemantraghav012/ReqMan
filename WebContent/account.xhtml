@@ -96,18 +96,7 @@ function setUsersHiddenValue(new_value)
 				<h:outputText value="#{account.status}" />
 			</p:column>
 	       
-	        <p:column headerText="View / Modify" exportable="false" style="padding: 0px 0px 0px 0px;" class="viewsize" >
-         
-	    		
-	    		
-	    		<p:commandLink id="nonAjax" styleClass="btn btn-primary fontsize" 
-				style="color:white;  border-radius: none;font-size:12px;" onclick='setUsersHiddenValue(#{account.id})' 
-				action="#{accountbean.modifyAction()}" ajax="false" >
-	        		View / Update
-	    		</p:commandLink> 
-	    		
-   </p:column> 
-	       
+	   
 	    </p:dataTable>
 	    
 	   

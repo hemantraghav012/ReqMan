@@ -3,7 +3,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
  xmlns:ui="http://java.sun.com/jsf/facelets" 
  xmlns:f="http://java.sun.com/jsf/core"
-xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
+ xmlns:p="http://primefaces.org/ui"
+ xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
  xmlns:h="http://java.sun.com/jsf/html">
  
  <h:head>
@@ -53,7 +54,8 @@ xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
 
  <!--User Information Form Start --> 
  <h:form enctype="multipart/form-data" class="form-horizontal">
-   
+    <p:panel id="panel" style="border:0px;">
+       <p:focus context="panel"/>
 <div>
 <!--Display Error -->
 <h:messages style = "color:red;margin:8px;" />
@@ -61,7 +63,7 @@ xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
 
 <!--Enter User Email -->
 <h:outputLabel>Email Id:</h:outputLabel>
- <h:inputText value="#{register.emailid}" class="form-control" p:placeholder="Email Id" id="emailid" required="true" requiredMessage="* Please enter your Email Id" validatorMessage="Invalid Email Format">
+ <h:inputText value="#{register.emailid}" class="form-control" a:placeholder="Email Id" id="emailid" required="true" requiredMessage="* Please enter your Email Id" validatorMessage="Invalid Email Format">
  
  <!--Email Validation -->
   <f:validateRegex	pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
@@ -71,7 +73,7 @@ xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
 
 <!--Enter User First Name -->
 <h:outputLabel>First Name:</h:outputLabel>
-<h:inputText value="#{register.firstname}"  p:placeholder="First Name" class="form-control" id="firstname"
+<h:inputText value="#{register.firstname}"  a:placeholder="First Name" class="form-control" id="firstname"
  required="true" requiredMessage="* Please Enter Your First Name">
  </h:inputText>
  <h:message for="firstname"  style="color:red;margin:8px;"/> 
@@ -79,7 +81,7 @@ xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
 
 <!--Enter User Last Name -->
 <h:outputLabel>Last Name:</h:outputLabel>
-<h:inputText value="#{register.lastname}"  p:placeholder="Last Name" class="form-control" id="lastname" 
+<h:inputText value="#{register.lastname}"  a:placeholder="Last Name" class="form-control" id="lastname" 
 required="true" requiredMessage="* Please Enter Your Last Name">
 </h:inputText>
  <h:message for="lastname"  style="color:red;margin:8px;"/> 
@@ -87,7 +89,7 @@ required="true" requiredMessage="* Please Enter Your Last Name">
 
 <!--Enter User Short Name -->
 <h:outputLabel>Short Name:</h:outputLabel>
-<h:inputText value="#{register.shortname}" p:placeholder="Short Name"  class="form-control" id="shortname"
+<h:inputText value="#{register.shortname}" a:placeholder="Short Name"  class="form-control" id="shortname"
  required="true" requiredMessage="* Please Enter Your Short Name"  maxlength="4">
  </h:inputText>
  <span style="color:red;">Please enter upto 4 characters</span>
@@ -95,11 +97,12 @@ required="true" requiredMessage="* Please Enter Your Last Name">
 <!--Enter UserShort Name -->
  
  <!--submit button -->
-<h:commandLink action="#{register.submit()}" value="Sign up" class="btn fontsize btn-success btn-block">
-</h:commandLink>
+  <h:commandButton  action="#{register.submit()}" value="Sign up" class="btn fontsize btn-success btn-block">
+</h:commandButton>
  <!--After Submit Call Submit() method in the register class in the bean package -->
 
 <br></br><br></br>
+</p:panel>
 </h:form>
  <!--End user Form-->
  

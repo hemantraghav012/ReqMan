@@ -48,39 +48,48 @@
 <ul class="nav navbar-nav navbar-left">
 <li> <h:link  style="color:#faebd1; font-weight: bold;   background: rgba(255,255,255,0.2);  " class="glyphicon glyphicon-home"  id="nav-sign-up4" outcome="home" /> </li>
 <li><h:link value="Dashboard " style="color:#faebd1; font-weight: bold;" outcome="dashboard"/> </li>
-<li><h:commandLink value="  Request" style="color:#faebd1; font-weight: bold;" action="#{createrequest.createRequestPage}"/></li>
+
+
+
+
+
+<li class="dropdown">
+ <a class="dropbtn  hover-item " style="color:#faebd1; font-weight: bold; background-color:#f36c00;">Request <span class="caret"></span></a>         
+
+<ul class="dropdown-content hover-item " style=" font-weight: bold;background-color:#f36c00; color:#fff;">      
+<c:choose>
+ <c:when test="#{userroleset == 2 || userroleset == 1}">
+<li><h:commandLink  value="Create New Request" style="color:#faebd1;text-align:left; margin-left:-30px;  line-height: 2;" class=" btn-md " action="#{createrequest.createRequest}" /> </li>
+<li> <h:commandLink value="Monitor My Requests" style="color:#faebd1;text-align:left; margin-left:-32px; line-height: 1;" class=" btn-md " action="#{createrequest.createRequestPage}"/></li>
+<li> <h:link value="Monitor All request" style="color:#faebd1;text-align:left; margin-left:-32px; line-height: 2.5;" class=" btn-md " outcome="adminrequest"/></li> 
+</c:when>
+
+<c:otherwise>
+<li><h:commandLink  value="Create New Request" style="color:#faebd1;text-align:left; margin-left:-30px;  line-height: 1;" class=" btn-md " action="#{createrequest.createRequest}" /> </li>
+<li> <h:commandLink value="Monitor My Requests" style="color:#faebd1;text-align:left; margin-left:-32px; line-height: 3;" class=" btn-md " action="#{createrequest.createRequestPage}"/></li>
+</c:otherwise>
+</c:choose>
+ </ul> 
+</li>
+ 
+ 
+ 
+ 
+ 
+ 
 <li><h:commandLink value=" Respond to New Request" style="color:#faebd1; font-weight: bold;" action="#{responsebean.responsePage}"/></li>
-<li><h:commandLink value=" Update Task Progress" style="color:#faebd1; font-weight: bold;" action="#{updatestatusbean.updatestatusPage}"/></li>
+<li><h:commandLink value=" Update Tasks" style="color:#faebd1; font-weight: bold;" action="#{updatestatusbean.updatestatusPage}"/></li>
 
 
  <li class="dropdown">
  <a  class="dropdown-toggle  hover-item" data-toggle="dropdown"  style="color:#faebd1; font-weight: bold; background-color:#f36c00;">Master-Info
    <span class="caret">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></a> 
-<ul class="dropdown-menu" style="color:#faebd1; font-weight: bold;background-color:#f36c00; color:#fff;">   
-      
- <c:choose>
- 
-<c:when test="#{userroleset eq 1}">
-<li ><h:commandLink value=" Team Member List " style="color:#faebd1;font-weight: bold; text-align:left;" class="btn btn-block hover-item" action="#{friendbean.friendPage}" /></li> 
-<li><h:commandLink value="Category List" style="color:#faebd1; font-weight: bold;text-align:left;" class="btn btn-block hover-item" action="#{categorybean.categoryPage}"/></li>
-<li ><h:commandLink value="Project List" style="color:#faebd1;font-weight: bold;text-align:left;" class="btn btn-block hover-item" action="#{projectbean.projectPage}" /></li>
- <li ><h:commandLink value="Type List " style="color:#faebd1;font-weight: bold;text-align:left;" class="btn btn-block hover-item" action="#{requesttypebean.requesttypePage}" /></li> 
-<li> <h:link value="Roles" style="color:#faebd1; font-weight: bold;" outcome="createroles"/></li> 
-<li> <h:link value="User Roles" style="color:#faebd1; font-weight: bold;" outcome="userrole"/></li> 
-<li> <h:link value="Account" style="color:#faebd1; font-weight: bold;" outcome="account"/></li> 
-<li> <h:link value="Account Users" style="color:#faebd1; font-weight: bold;" outcome="accountuser"/></li> 
-<li> <h:link value="App Admin" style="color:#faebd1; font-weight: bold;" outcome="appadminusers"/></li> 
-
-</c:when>
-    
-<c:otherwise>
+<ul class="dropdown-menu" style="color:#faebd1; font-weight: bold;background-color:#f36c00; color:#fff;">
 <li ><h:commandLink value="Team Member List " style="color:#faebd1;font-weight: bold; text-align:left;" class="btn btn-block hover-item" action="#{friendbean.friendPage}" /></li> 
 <li><h:commandLink value="Category List" style="color:#faebd1; font-weight: bold;text-align:left;" class="btn btn-block hover-item" action="#{categorybean.categoryPage}"/></li>
 <li ><h:commandLink value="Project List" style="color:#faebd1;font-weight: bold;text-align:left;" class="btn btn-block hover-item" action="#{projectbean.projectPage}" /></li>
 <li ><h:commandLink value="Type List " style="color:#faebd1;font-weight: bold;text-align:left;" class="btn btn-block hover-item" action="#{requesttypebean.requesttypePage}" /></li> 
-</c:otherwise>
 
-</c:choose>
   </ul>        
 </li> 
 
@@ -88,8 +97,42 @@
    
 <ul class="nav navbar-nav navbar-right">
 
+<c:choose>
+ 
+<c:when test="#{userroleset == 1 ||userroleset == 2 }">
+ <li class="dropdown">
+ <a class="dropdown-toggle  hover-item" data-toggle="dropdown"  style="color:#faebd1; font-weight: bold; background-color:#f36c00;">Admin <span class="caret"></span></a>         
+
+<ul class="dropdown-menu" style="color:#faebd1; font-weight: bold;background-color:#f36c00; color:#fff;">      
+<c:choose>
+ 
+<c:when test="#{userroleset eq 1}">
+<li> <h:link value="Roles" style="color:#faebd1; font-weight: bold;" outcome="createroles"/></li> 
+<li> <h:link value="User Roles" style="color:#faebd1; font-weight: bold;" outcome="userrole"/></li> 
+<li> <h:link value="Account" style="color:#faebd1; font-weight: bold;" outcome="account"/></li> 
+<li> <h:link value="Account Users" style="color:#faebd1; font-weight: bold;" outcome="accountuser"/></li> 
+<li> <h:link value="Transaction Master" style="color:#faebd1; font-weight: bold;" outcome="appadminusers"/></li> 
+<li> <h:link value="Public Domain" style="color:#faebd1; font-weight: bold;" outcome="publicdomain"/></li> 
+<li> <h:link value="Schedule job" style="color:#faebd1; font-weight: bold;" outcome="schedulejob"/></li>
+<li><h:commandLink action="#{schedulejob.modifyAction}" value="Schedule job" style="color:#fff;font-weight: bold;text-align:left;"  class="btn btn-block hover-item"></h:commandLink></li>
+</c:when>
+    <c:when test="#{userroleset == 2}">
+<li><h:commandLink action="#{accountbean.modifyAction}" value="Account Admin" style="color:#fff;font-weight: bold;text-align:left;"  class="btn btn-block hover-item"></h:commandLink></li>
+</c:when>
+<c:otherwise>
+</c:otherwise>
+
+</c:choose>
+</ul> 
+</li>
+</c:when>
+<c:otherwise></c:otherwise>
+</c:choose>
+
+
+
 <li>
-<h:commandLink action="#{userupdate.modifyAction}" style="padding:0px;margin:0px;height:50px; width:50px; border: 1px solid #fff;">
+<h:commandLink action="#{userupdate.modifyAction}" style="padding:0px;margin:0px;height:50px; width:50px; border: 0px solid #f36c00;">
 <p:graphicImage value="#{login.imageFromDB}" stream="false" alt="image"  style="padding:0px;margin:0px;" 
 width="50"  height="50"  />
 </h:commandLink>
@@ -107,16 +150,6 @@ width="50"  height="50"  />
 <li><h:commandLink action="#{userupdate.modifyAction}" value="myprofile" style="color:#fff;font-weight: bold;text-align:left;"  class="btn btn-block hover-item"></h:commandLink></li>
 <li><h:commandLink action="#{login.logout}" value="Logout" style="color:#faebd1;font-weight: bold;text-align:left;"  class="btn btn-block hover-item"></h:commandLink></li>
 
- <c:choose>
- 
-<c:when test="#{userroleset eq 2}">
-
-<li><h:commandLink action="#{accountbean.modifyAction}" value="Account Admin" style="color:#fff;font-weight: bold;text-align:left;"  class="btn btn-block hover-item"></h:commandLink></li>
-</c:when>
-<c:otherwise>
-
-</c:otherwise>
-</c:choose>
 </ul> 
 </li>    
 </ul>

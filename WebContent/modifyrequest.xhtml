@@ -27,6 +27,8 @@
 
 </style> 
 
+
+
 </h:head>
 <h:body>
 
@@ -56,7 +58,18 @@
 
  <div class=" row form-group ">
  <div class="col-sm-2 control-label"><h:outputLabel><span style="color:red;">* </span> Title:</h:outputLabel></div>
-<div class=" col-sm-10"> <h:inputText value="#{createrequest.title}"   class="  form-control" readonly="true" disabled="true" id="title" required="true" requiredMessage="* Please enter Title" /></div>
+<div class=" col-sm-10">
+<c:choose>
+  <c:when test="#{createrequest.stage == 8 }"> 
+ <h:inputText value="#{createrequest.title}"   class="  form-control" readonly="true" disabled="true" id="title" required="true" requiredMessage="* Please enter Title" />
+ </c:when>
+ <c:otherwise>
+  <h:inputText value="#{createrequest.title}"   class="  form-control" readonly="true" disabled="true" id="title" required="true" requiredMessage="* Please enter Title" />
+ 
+ </c:otherwise>
+ </c:choose>
+ 
+ </div>
  <h:message for="title"  style="color:red;margin:8px;"/> 
 
 </div>
@@ -66,7 +79,7 @@
 <div class=" col-sm-10">
 
   <c:choose>
-  <c:when test="#{createrequest.stage eq 8 }"> 
+  <c:when test="#{createrequest.stage == 8 }"> 
 <h:inputTextarea id="address" value="#{createrequest.description}"    
  cols="19" rows="3" class="  form-control" readonly="true" disabled="true" />
  </c:when>
@@ -90,7 +103,7 @@
  <div class="col-sm-4 control-label" >
  
  <c:choose>
-  <c:when test="#{createrequest.stage eq 8 }">
+  <c:when test="#{createrequest.stage == 8 }">
 
    <p:selectOneMenu  id="multiple" value="#{createrequest.userfriend}" style=" border:0;width:100%;" 
    readonly="true" disabled="true">
@@ -118,7 +131,7 @@
 <div class="col-sm-4">
 
  <c:choose>
-  <c:when test="#{createrequest.stage eq 8 }"> 
+  <c:when test="#{createrequest.stage == 8 }"> 
 <p:calendar id="completiondate" value="#{createrequest.completiondate}" style=" border: 0;"  mindate="#{createrequest.endDate}"  pattern="dd-MM-yyyy" mask="true"  required="true" requiredMessage="* Please enter completion Date" readonly="true" disabled="true" />
 </c:when>
 <c:otherwise>
@@ -138,7 +151,7 @@
 </div>
  <div class=" col-sm-4">
  <c:choose>
-  <c:when test="#{createrequest.stage eq 8 }"> 
+  <c:when test="#{createrequest.stage == 8 }"> 
  <p:selectOneMenu id="project" value="#{createrequest.userproject}" style=" border: 0;"  readonly="true" disabled="true">
             <f:selectItem itemLabel="#{createrequest.newrequestVo.userproject}" itemValue="" />
            <f:selectItems value="#{projectbean.projectList}" var="project" itemLabel="#{project.name}"  itemValue="#{project.userProjectId}"/>
@@ -166,7 +179,7 @@
  </div>
  <div class=" col-sm-4">
   <c:choose>
-  <c:when test="#{createrequest.stage eq 8 }"> 
+  <c:when test="#{createrequest.stage == 8 }"> 
       <p:selectOneMenu  value="#{createrequest.usercategory}"  style="  border: none;" readonly="true" disabled="true">
             <f:selectItem itemLabel="#{createrequest.newrequestVo.usercategory}" itemValue="" />
            <f:selectItems value="#{categorybean.categoryList}"  var="category" itemLabel="#{category.name}"
@@ -198,7 +211,7 @@
  </div>
  <div class=" col-sm-4">
   <c:choose>
-  <c:when test="#{createrequest.stage eq 8 }"> 
+  <c:when test="#{createrequest.stage == 8 }"> 
  
  <p:selectOneMenu id="requesttype" value="#{createrequest.userrequesttype}"  style=" border: 0;" readonly="true" disabled="true">
             <f:selectItem itemLabel="#{createrequest.newrequestVo.userrequesttype}" itemValue="" />
@@ -226,8 +239,142 @@
  <h:message for="AttachedFile"  style="color:red;margin:8px;"/> 
 </div>
 
+
+ <div class=" row form-group ">
+
+ <div class="col-sm-2 control-label">
+ <h:outputLabel>Priority: &nbsp;
+ <span   data-toggle="tooltip" 
+ title="Team members can be advised to focus on requests as per  indicated priority." 
+ style="margin-top:2px;" class="pull-right glyphicon glyphicon-info-sign"></span>
+ </h:outputLabel> 
+ </div>
+<div class=" col-sm-4">
+
+ <c:choose>
+  <c:when test="#{createrequest.stage == 8 }"> 
+  <p:selectOneMenu  value="#{createrequest.priority}"  style=" border: 0;" readonly="true" disabled="true" >
+            <f:selectItem itemLabel="Select" itemValue="" />
+             <f:selectItem itemLabel="High" itemValue="High" />
+              <f:selectItem itemLabel="Medium" itemValue="Medium" />
+               <f:selectItem itemLabel="Low" itemValue="Low" />
+           
+ </p:selectOneMenu>
+ </c:when>
+<c:otherwise>
+
+<p:selectOneMenu  value="#{createrequest.priority}"  style=" border: 0;" >
+            <f:selectItem itemLabel="Select" itemValue="" />
+             <f:selectItem itemLabel="High" itemValue="High" />
+              <f:selectItem itemLabel="Medium" itemValue="Medium" />
+               <f:selectItem itemLabel="Low" itemValue="Low" />
+           
+ </p:selectOneMenu>
+ </c:otherwise>
+ </c:choose>
+ <h:message for="onlyone"  style="color:red;"/>
+</div>
+
+ <div class="col-sm-2 control-label">
+ <h:outputLabel>Weightage: &nbsp;
+ <span   data-toggle="tooltip" 
+ title="Performance  can be improved by allocating  importance to individual tasks. Very usefull in project delivery." 
+ style="margin-top:2px;" class="pull-right glyphicon glyphicon-info-sign"></span>
+ 
+ </h:outputLabel> 
+ </div>
+<div class=" col-sm-4">
+ <c:choose>
+  <c:when test="#{createrequest.stage == 8 }">
+ <p:selectOneMenu  value="#{createrequest.weightage}"  style=" border: 0;" readonly="true" disabled="true">
+            <f:selectItem itemLabel="Select" itemValue="" />
+             <f:selectItem itemLabel="1" itemValue="1" />
+              <f:selectItem itemLabel="2" itemValue="2" />
+               <f:selectItem itemLabel="3" itemValue="3" />
+                <f:selectItem itemLabel="4" itemValue="4" />
+                 <f:selectItem itemLabel="5" itemValue="5" />
+                  <f:selectItem itemLabel="6" itemValue="6" />
+                   <f:selectItem itemLabel="7" itemValue="7" />
+                    <f:selectItem itemLabel="8" itemValue="8" />          
+                   <f:selectItem itemLabel="9" itemValue="9" />
+                    <f:selectItem itemLabel="10" itemValue="10" />
+ </p:selectOneMenu>
+</c:when>
+<c:otherwise>
+ <p:selectOneMenu  value="#{createrequest.weightage}"  style=" border: 0;" >
+            <f:selectItem itemLabel="Select" itemValue="" />
+             <f:selectItem itemLabel="1" itemValue="1" />
+              <f:selectItem itemLabel="2" itemValue="2" />
+               <f:selectItem itemLabel="3" itemValue="3" />
+                <f:selectItem itemLabel="4" itemValue="4" />
+                 <f:selectItem itemLabel="5" itemValue="5" />
+                  <f:selectItem itemLabel="6" itemValue="6" />
+                   <f:selectItem itemLabel="7" itemValue="7" />
+                    <f:selectItem itemLabel="8" itemValue="8" />          
+                   <f:selectItem itemLabel="9" itemValue="9" />
+                    <f:selectItem itemLabel="10" itemValue="10" />
+ </p:selectOneMenu>
+
+</c:otherwise>
+
+</c:choose>
+
+ <h:message for="onlyone"  style="color:red;"/>
+</div>
+
+
+ </div>
+    <div class=" row form-group ">
+ <div class="col-sm-2 control-label">
+ <h:outputLabel > Estimated Effort:
+ <span   data-toggle="tooltip" 
+ title="Estimate the efforts required for this task ( in hours , days etc) to monitor efficiency and profitability. Comparison with Actual Efforts will also improve the accurcy of estimation " 
+ style="margin-top:2px;" class="pull-right glyphicon glyphicon-info-sign"></span>
+ 
+ </h:outputLabel> 
+ </div>
+<div class=" col-sm-4">
+
+ <c:choose>
+  <c:when test="#{createrequest.stage == 8 }">
+  
+<h:inputText  class="  form-control"   value="#{createrequest.estimatedeffort}" readonly="true" disabled="true"></h:inputText>
+  </c:when>
+  <c:otherwise>
+  
+<h:inputText  class="  form-control"   value="#{createrequest.estimatedeffort}" ></h:inputText>
+  </c:otherwise>
+  </c:choose>
+
+
+ <h:message for="estimateeffect"  style="color:red;"/>
+</div>
+
+ <div class="col-sm-2 control-label" >
+ <h:outputLabel>Actual Effort:&nbsp;
+ <span   data-toggle="tooltip" 
+ title="Record actual  efforts invested in the task ( in hours , days etc) . Comparison with estimated Efforts will also improve the accurcy of estimation over time." 
+ style="margin-top:2px;" class="pull-right glyphicon glyphicon-info-sign"></span>
+ </h:outputLabel> 
+ </div>
+<div class=" col-sm-4">
+<h:inputText  class="  form-control"  value="#{createrequest.actualeffort}" readonly="true" disabled="true"></h:inputText>
+ <h:message for="actualeffect"  style="color:red;"/>
+</div>
+
+
+
+</div>
+
+
+
+
     <div class=" row form-group " >
-<div class="col-sm-2 control-label" ><h:outputLabel>Notes: </h:outputLabel></div>
+<div class="col-sm-2 control-label" ><h:outputLabel>Notes: &nbsp;
+ <span   data-toggle="tooltip" 
+ title=" Enter any message to be shared with the requester. in case you can not accept the request or want the requester to change some details , put your comments here." 
+ style="margin-top:2px;" class="pull-right glyphicon glyphicon-info-sign"></span>
+ </h:outputLabel></div>
 <div class=" col-sm-10"><h:inputTextarea id="message" value="#{createrequest.message}"    
  cols="19" rows="3" class="form-control" /></div>
 <h:message for="message"  style="color:red;margin:6px;"/>
@@ -237,17 +384,17 @@
 <div class=" row form-group ">
  <div class="col-sm-2 control-label" style="padding-top:0cm;"><h:outputLabel>Stage: </h:outputLabel></div>
 <div class=" col-sm-6"> 
-<h:selectOneRadio value = "#{createrequest.stage}" id="stage" styleClass="radiobuttonspace" onclick="PF('dlg').show();" requiredMessage="* Please enter status" > 
+<h:selectOneRadio value = "#{createrequest.stage}" id="stage" styleClass="radiobuttonspace" onclick="showPopUp(this.value)" requiredMessage="* Please enter status" > 
 
 <c:choose>
 
-<c:when test="#{createrequest.stage eq 1}">
+<c:when test="#{createrequest.stage == 1}">
     <f:selectItem   itemValue = "1" itemLabel = "&nbsp; Requested"   /> 
     <f:selectItem   itemValue = "7" itemLabel = "&nbsp; Hold" /> 
     <f:selectItem   itemValue = "6" itemLabel = "&nbsp; Cancel" /> 
     </c:when>
 
-<c:when test="#{createrequest.stage eq 2}">
+<c:when test="#{createrequest.stage == 2}">
     <f:selectItem   itemValue = "2" itemLabel = "&nbsp; Accepted" /> 
     <f:selectItem   itemValue = "7" itemLabel = "&nbsp; Hold" /> 
     <f:selectItem   itemValue = "6" itemLabel = "&nbsp; Cancel" /> 
@@ -255,20 +402,20 @@
 
 
 
-<c:when test="#{createrequest.stage eq 3}">
+<c:when test="#{createrequest.stage == 3}">
     <f:selectItem   itemValue = "3" itemLabel = "&nbsp;  Returned"/> 
     <f:selectItem   itemValue = "1" itemLabel = "&nbsp;  Re-Send Request"/>  
     </c:when>
     
-<c:when test="#{createrequest.stage eq 4}">
+<c:when test="#{createrequest.stage == 4}">
     <f:selectItem   itemValue = "4" itemLabel = "&nbsp; In-Progress" />
     <f:selectItem   itemValue = "7" itemLabel = "&nbsp; Hold" /> 
     <f:selectItem   itemValue = "6" itemLabel = "&nbsp; Cancel" />      
     </c:when>
     
-<c:when test="#{createrequest.stage eq 5}">
+<c:when test="#{createrequest.stage == 5}">
      <f:selectItem   itemValue = "5" itemLabel = "&nbsp; Completed" /> 
-     <f:selectItem   itemValue = "8" itemLabel = "&nbsp; Close"   /> 
+     <f:selectItem   itemValue = "8" itemLabel = "&nbsp; Close"  /> 
         
      
     </c:when>
@@ -276,20 +423,20 @@
   
     
     
- <c:when test="#{createrequest.stage eq 6}">
+ <c:when test="#{createrequest.stage == 6}">
      <f:selectItem   itemValue = "6" itemLabel = "&nbsp; Cancel" /> 
      <f:selectItem   itemValue = "1" itemLabel = "&nbsp; Requested" /> 
      <f:selectItem   itemValue = "7" itemLabel = "&nbsp; Hold" /> 
         
     </c:when>
     
-<c:when test="#{createrequest.stage eq 7 }">
+<c:when test="#{createrequest.stage == 7 }">
      <f:selectItem   itemValue = "7" itemLabel = "&nbsp; Hold" /> 
      <f:selectItem   itemValue = "1" itemLabel = "&nbsp; Re-Send Request" /> 
      <f:selectItem   itemValue = "6" itemLabel = "&nbsp; Cancel" /> 
     </c:when>
     
-   <c:when test="#{createrequest.stage eq 8 }">   
+   <c:when test="#{createrequest.stage == 8 }">   
      <f:selectItem   itemValue = "8" itemLabel = "&nbsp; Closed" /> 
    
     </c:when>
@@ -310,35 +457,7 @@
  <h:message for="stage"  style="color:red;margin:8px;"/> 
  </div>
  
- 
- <p:dialog header="Overall Rating For Task" widgetVar="dlg" modal="true" responsive = "true"  appendToBody="true">
 
-
-<div style="background-color: #FFF;">
-
- 
- 
- <h:inputHidden value="#{createrequest.requestId}"></h:inputHidden>
- <br></br>   
-     <p:rating id ="rating" value="#{createrequest.rating}"/>     
-   
-    <h:outputLabel >Feedback</h:outputLabel> <br></br> 
-      <h:inputTextarea id="inputfeedback"  value="#{createrequest.feedback}" cols="10" rows="3" class=" form-control"  >
-      <p:watermark for="inputfeedback" value="Please Enter Your Feedback.." />       
-      </h:inputTextarea>  
-      <br></br>
-        <h:commandButton actionListener="#{createrequest.savefeedbackRating}" value="Submit" class="btn fontsize btn-success btn-block"  >
-        </h:commandButton>
-     
-<br></br>
-</div>
-
-
-     </p:dialog>
-       
-     
- 
- 
  
  <div class=" row form-group">
  <div class="col-sm-2 control-label" style="padding-top:0cm;">
@@ -361,9 +480,75 @@
  <h:message for="status"  style="color:red;margin:8px;"/> 
  </div><br></br>
 
+ 
+ <c:choose>
+  <c:when test="#{createrequest.stage == 5 || createrequest.stage == 8}">
+ <div class=" row form-group">
+ <div class="col-sm-2 control-label" style="padding-top:0cm;"> 
+ 
+ <h:outputLabel  >Rating: </h:outputLabel></div>
+<div class=" col-sm-2 pull-left" >  
 
+ <p:rating id ="rating" style="background-color:lightblue;" value="#{createrequest.rating}"></p:rating> 
+ 
+ 
+</div>
+
+ </div><br></br>
+</c:when>
+
+   <c:otherwise>
+     <div class=" row form-group collapse">
+ <div class="col-sm-2 control-label collapse" style="padding-top:0cm;"> 
+ 
+ <h:outputLabel  >Rating: </h:outputLabel></div>
+<div class=" col-sm-2 pull-left" >  
+
+ <p:rating id ="rating" style="background-color:lightblue;" value="#{createrequest.rating}"></p:rating> 
+ 
+ 
+</div>
+
+ </div><br></br>
+ </c:otherwise>
+</c:choose>
+
+  <c:choose>
+  <c:when test="#{createrequest.stage == 5 }">
+ <div class=" row form-group">
+ <div class="col-sm-2 control-label" style="padding-top:0cm;">
+ <h:outputLabel  >Feedback: </h:outputLabel></div>
+<div class=" col-sm-6">  
+  
+
+   <h:inputTextarea id="inputfeedback"  value="#{createrequest.feedback}" cols="10" rows="3" class=" form-control"  >
+      <p:watermark for="inputfeedback" value="Please Enter Your Feedback.." />       
+      </h:inputTextarea> 
+  
+</div>
+
+ </div><br></br>
+</c:when>
+ <c:otherwise>
+ <div class=" row form-group collapse">
+ <div class="col-sm-2 control-label collapse" style="padding-top:0cm;">
+ <h:outputLabel  >Feedback: </h:outputLabel></div>
+<div class=" col-sm-6">  
+  
+
+   <h:inputTextarea id="inputfeedback"  value="#{createrequest.feedback}"  cols="10" rows="3" class=" form-control"  >
+      <p:watermark for="inputfeedback" value="Please Enter Your Feedback.." />       
+      </h:inputTextarea> 
+  
+</div>
+
+ </div><br></br>
+  </c:otherwise>
+   </c:choose>
 
  
+ 
+
 
  <div class=" row form-group ">
  <div class="col-sm-3 .col-sm-offset-3"></div>
@@ -384,7 +569,7 @@
  </div>
 
  <div class="col-sm-4 ">
-<h:link value="Back to Request List" style="text-decoration:none; color:#fff;" outcome="request" class="btn fontsize btn-primary btn-block"/>
+<h:link value="Back To Request List" style="text-decoration:none; color:#fff;" outcome="request" class="btn fontsize btn-primary btn-block"/>
 </div>
 </div>
 

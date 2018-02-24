@@ -48,7 +48,7 @@
 <h4>Fully functional. No credit card required.</h4>
 
 <h:form class="form-horizontal" >
-
+<h:inputHidden value = "#{setpassword.hash}" id = "hiddenField12" /> 
  <h:inputHidden value = "#{setpassword.emailid}" id = "hiddenField" /> 
 <div><h:messages style = "color:red;margin:8px;" /></div>
 <br></br>
@@ -62,7 +62,7 @@
 
  <div class=" row form-group registerfieldname">
 <div class="col-sm-2 control-label"><h:outputLabel>Password:</h:outputLabel></div>
-<div class=" col-sm-6"><h:inputSecret value="#{setpassword.password}"  p:placeholder="password" class="form-control" id="password" required="true" requiredMessage="* Please enter your first name"></h:inputSecret>
+<div class=" col-sm-6"><h:inputSecret value="#{setpassword.password}"  p:placeholder="password" class="form-control" id="password" required="true" requiredMessage="* Please enter your password"></h:inputSecret>
 </div>
   <h:message for="password"  style="color:red;margin:8px;"/> 
 </div>

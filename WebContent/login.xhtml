@@ -13,7 +13,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
 
-   <meta name="google-signin-client_id" content="389846893349-evhrhcub22tsdnuda2oa72042kj9f32k.apps.googleusercontent.com"/>
+   <meta name="google-signin-client_id" content="389846893349-letqvi6ni3q3krkmaqr061s7pq0pcs87.apps.googleusercontent.com"/>
  <script src="https://apis.google.com/js/platform.js"  ></script>
  
 <link rel="stylesheet" href="resource/css/bootstrap.css"/>
@@ -34,7 +34,7 @@ color:blue;
 
 
 </h:head>
-<h:body style="background-color:#DCDCDC"> 
+<h:body > 
 
 
 <f:metadata>
@@ -50,16 +50,14 @@ color:blue;
        
       <!-- -end of header --> 
             
+ <div class="row" style=" margin-top: 2.5cm;">
+
+
  
-    	  <div class="modal-dialog" style=" margin-top: 2.5cm;">
-				<div class="loginmodal-container">
+  <div class="col-lg-6">
+    	  <div >
+				<div class="loginmodal-container ">
 				
-	 		
-				
-			
-  
-        
-        	 	
 					<h1>Login to <span style="font-weight: bold;">Collabor8</span> </h1><br></br>
 				  <h:form >
 				 
@@ -99,7 +97,7 @@ color:blue;
     <span>or</span>
   </div>
 
-<div class="g-signin2 " data-width="370"  data-longtitle="true" id="myP" data-onsuccess="onSignIn" ></div>
+<div class="g-signin2 " data-width="370"    data-longtitle="true" id="myP" data-onsuccess="onSignIn" ></div>
 
 
     
@@ -118,11 +116,13 @@ color:blue;
      document.getElementById("myImg").src = imagurl; 
       document.getElementById("myP").style.visibility = "hidden";
     //  location.href='googlesignin.xhtml?email='+email+'';
-      document.getElementById("status").innerHTML= 'Welcome '+name+'!<a href="http://localhost:8080/ReqMan/faces/faces/googlesignin.xhtml?email='+email+'">Continue with Google login</a>'
-          }
-   </script>
+      document.getElementById("status").innerHTML= 'Welcome '+name+'!<a href="http://localhost:8080/ReqMan/faces/faces/googlesignin.xhtml?email='+email+'"><span style="color:blue;font-size:18px;text-decoration:underline;">&nbsp;Continue with Google login</span></a><br></br><button  onclick="myFunction()"  style="background: #fff;">Sign Out</button>  '
+         }
+      
+        </script>
 
- <button onclick="myFunction()">Sign Out</button>  
+ 
+  
    
    <script>
       function myFunction() {
@@ -135,9 +135,17 @@ color:blue;
 
 				</div>
 			</div>
+<br></br>
+</div>
 
+ <div class="col-lg-6">
+ <img   src="resource/image/23.jpeg" class="img-responsive " alt="collabor8" style="width:500%;height:500px;" ></img>
+<br></br>
+ </div>
+ 
+</div>
 
-
+<br></br><br></br>
 
 
 
