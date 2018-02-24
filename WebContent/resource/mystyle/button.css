@@ -13,7 +13,7 @@
 
 .fontsize{
 	font-weight: bold;
-	font-size: 17px;
+	font-size: 16px;
 	
 }
 .btn2:hover{   
@@ -23,12 +23,10 @@
 
 .btn1:hover{
 	 background: rgba(255,255,255,0.1);
-	 box-shadow: 0 1px 1px rgba(0,0,0,0.2);
-	 border: 0.5px solid;   
+	 
      background-color:#f36c00;
      color:#fff;  
-     margin-top: 0px;
-     margin-bottom: 0px;
+     
     
 }
 .ui-button.buttoncolor1{

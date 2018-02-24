@@ -159,3 +159,49 @@
     
     
  }
+ 
+ 
+ .heigh{
+width: 1px !important;
+ }
+ 
+ 
+ 
+ .dropbtn { 
+    color: white;
+   
+    border: none;
+}
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;   
+    min-width: 200px;
+    
+   
+}
+
+.dropdown-content a {
+    color: black;
+    padding:6px;
+
+    text-decoration: none;
+   
+}
+
+
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+.dropdown:hover .dropbtn {
+    background-color:#f36c00;
+}
+ 
+ 

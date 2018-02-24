@@ -62,8 +62,9 @@ border-radius: 0px;
 
 .fixedcontainerrequset{
 	
-	  padding: 30px;
-  max-width: 950px;
+	  padding: 10px;
+  max-width: 1000px;
+  text-align:center;
   width: 100% !important;
   background-color: #fff;
   margin: 0 auto;

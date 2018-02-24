@@ -54,7 +54,7 @@ p{
 .indexfooter {
  background: #CCCCCC;
 	height: auto;
-	 position: fixed;
+	
     left: 0;
     bottom: 0;
 	padding-top: 5px;
@@ -67,5 +67,24 @@ padding-left:12px;
 	color:black;
 }
 
+
+hr.style1{
+	
+	
+	 border-top: 10px solid green;
+	margin-top:80px;
+
+ 
+  
+}
+ 
  
 
+hr.style2{
+	
+	
+
+
+ 
+  
+}
