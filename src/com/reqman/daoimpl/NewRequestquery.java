@@ -47,7 +47,7 @@ public class NewRequestquery implements NewRequestqueryInterface{
                                   + " u1.id=uf1.friendid and u1.status=true and uf1.status=true and uf1.id=r.friendid), count(r.id) from reqman.request as r" 
                                   + " where r.status=true and r.requeststatus in (2,4,5) and r.friendid in "
                                   + " (select uf.id from reqman.users as u,reqman.userfriendlist as uf where u.id=uf.userid "
-                                  + " and u.status=true and uf.status=true and u.emailid='"+userName+"') group by r.friendid";    
+                                  + " and u.status=true and uf.status=true and u.emailid='"+userName.toLowerCase().trim()+"') group by r.friendid";    
 				          query = session.createSQLQuery(sqlQuery);
 				          rows = query.list();
 				            
@@ -116,7 +116,7 @@ public class NewRequestquery implements NewRequestqueryInterface{
                +" from reqman.request as r  "
 	           +" where r.status=true and r.requeststatus in (4,5)and DATE_PART('day',CURRENT_TIMESTAMP-r.acceptdate) != 0 and r.friendid in" 
 		       +" (select uf.id from reqman.users as u,reqman.userfriendlist as uf where u.id=uf.userid "
-			   +" and u.status=true and uf.status=true and u.emailid='"+userName+"') group by r.friendid";
+			   +" and u.status=true and uf.status=true and u.emailid='"+userName.toLowerCase().trim()+"') group by r.friendid";
 	 
 		               query = session.createSQLQuery(sqlQuery);
 		               rows = query.list();

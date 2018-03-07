@@ -74,10 +74,8 @@ public class FriendMasterImpl implements FriendMasterInterface {
 				System.out.println("-password--" + hashkey);
 
 				users = new Users();
-				users.setEmailid(emailid);
-				// users.setFirstname(firstname);
-				// users.setLastname(lastname);
-				// users.setShortname(shortname);
+				users.setEmailid(emailid.toLowerCase().trim());
+				
 				users.setCreatedby("SYSTEM");
 				users.setCreatedon(new Date());
 				users.setHashkey(hashkey != null ? hashkey.trim() : "");
@@ -203,14 +201,14 @@ public class FriendMasterImpl implements FriendMasterInterface {
 						&& userfriendExist.getStatus().equals(false)) {
 					result = 2;
 				} else {
-
+					
+					
 					userfriendlist = new Userfriendlist();
 					userfriendlist.setUsersByFriendid(users);
-					users = (Users) session
-							.createCriteria(Users.class)
-							.add(Restrictions.eq("emailid",
-									userName.toLowerCase().trim()).ignoreCase())
+					users = (Users) session	.createCriteria(Users.class)
+							.add(Restrictions.eq("emailid",userName.toLowerCase().trim()).ignoreCase())
 							.uniqueResult();
+					
 					userfriendlist.setUsersByUserid(users);
 					userfriendlist.setStatus(true);
 					userfriendlist.setCreatedby(userName != null ? userName
@@ -218,7 +216,7 @@ public class FriendMasterImpl implements FriendMasterInterface {
 					userfriendlist.setDatecreated(new Date());
 					session.save(userfriendlist);
 					sendEmailonfriend sef = new sendEmailonfriend();
-					sef.friendemail(frienduser, frienduser, usename);
+				sef.friendemail(frienduser, frienduser, usename);
 
 					result = 3;
 					tx.commit();
@@ -232,14 +230,8 @@ public class FriendMasterImpl implements FriendMasterInterface {
 				System.out.println("-password--" + password);
 
 				users = new Users();
-				users.setEmailid(frienduser != null ? frienduser.trim() : "");
-				// users.setFirstname(friendfirstname != null ?
-				// friendfirstname.trim() : "");
-				// users.setLastname(friendlastname != null ?
-				// friendlastname.trim() : "");
-				// users.setShortname(friendshortname != null ?
-				// friendshortname.trim() : "");
-				// users.setPassword(password != null ? password .trim() : "");
+				users.setEmailid(frienduser != null ? frienduser.toLowerCase().trim() : "");
+				
 				users.setStatus(true);
 				users.setCreatedby(userName != null ? userName.trim() : "");
 				users.setCreatedon(new Date());

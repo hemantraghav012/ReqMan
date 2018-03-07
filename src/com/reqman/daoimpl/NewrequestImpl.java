@@ -15,6 +15,7 @@ import java.util.List;
 
 
 
+
 import org.hibernate.Criteria;
 import org.hibernate.Hibernate;
 import org.hibernate.Session;
@@ -32,6 +33,7 @@ import com.reqman.pojo.Userproject;
 import com.reqman.pojo.Userrequesttype;
 import com.reqman.pojo.Users;
 import com.reqman.util.Dateconverter;
+import com.reqman.util.newRequestsend;
 import com.reqman.vo.AdminRequestVo;
 import com.reqman.vo.NewrequestVo;
 import com.reqman.vo.requestNoteVo;
@@ -58,6 +60,7 @@ public class NewrequestImpl implements NewrequestInterface {
 		List<Request> requestList = new ArrayList<Request>();
 		try {
 
+			
 			session = HibernateUtil.getSession();
 
 			// prepare the request list object
@@ -147,11 +150,24 @@ public class NewrequestImpl implements NewrequestInterface {
 
 		try {
 
+			newRequestsend nr= new newRequestsend();
+			
+			
+			
+			
 			if (userfriendlist != null && userfriendlist.length != 0) {
 				for (int friendlist : userfriendlist) {
 
 					request = new Request();
-
+					
+					String projectname="";
+					String categoryname="";
+					String typename="";
+					String friendname="";
+					String friendemailid="";
+					String duedate="";
+					String requestorname="";
+					
 					if (userName != null && !userName.trim().equals("")) {
 						users = (Users) session
 								.createCriteria(Users.class)
@@ -160,6 +176,14 @@ public class NewrequestImpl implements NewrequestInterface {
 										.ignoreCase()).uniqueResult();
 
 						request.setCreatedby(userName.trim());
+						
+						if (!(users.getFirstname()).equalsIgnoreCase("") && users.getFirstname() != null) {
+							requestorname = users.getFirstname();
+						} else {
+							requestorname = users.getEmailid();
+						}
+						
+						
 					}
 
 					if (userproject != null) {
@@ -169,6 +193,7 @@ public class NewrequestImpl implements NewrequestInterface {
 								.uniqueResult();
 
 						request.setUserproject(userproject1);
+					 projectname=	userproject1.getProject().getName();
 					}
 
 					if (userrequesttype != null) {
@@ -178,6 +203,8 @@ public class NewrequestImpl implements NewrequestInterface {
 								.uniqueResult();
 
 						request.setUserrequesttype(userrequesttype1);
+						
+						 typename= userrequesttype1.getRequesttype().getName();
 					}
 
 					if (usercategory != null) {
@@ -187,8 +214,14 @@ public class NewrequestImpl implements NewrequestInterface {
 								.uniqueResult();
 
 						request.setUsercategory(usercategory1);
+						
+						 categoryname= usercategory1.getCategory().getName();
+						
 					}
 
+					
+					
+					
 					request.setTitle(title != null ? title.trim() : "");
 					request.setCompletionpercentage(0);
 					request.setRequeststatus(1);
@@ -213,7 +246,8 @@ public class NewrequestImpl implements NewrequestInterface {
 
 					if (completiondate != null) {
 						request.setCompletiondate(completiondate);
-
+						
+     duedate=Dateconverter.convertDateToStringDDMMDDYYYY(completiondate);
 					}
 
 					userfriendlistTemp = (Userfriendlist) session
@@ -224,7 +258,20 @@ public class NewrequestImpl implements NewrequestInterface {
 									friendlist)).uniqueResult();
 
 					request.setUserfriendlist(userfriendlistTemp);
-
+					friendemailid = userfriendlistTemp.getUsersByFriendid().getEmailid();
+					
+					if (!(userfriendlistTemp.getUsersByFriendid().getFirstname()).equalsIgnoreCase("") && userfriendlistTemp.getUsersByFriendid().getFirstname() != null) {
+						 friendname = userfriendlistTemp.getUsersByFriendid().getFirstname();
+					} else {
+						friendname = userfriendlistTemp.getUsersByFriendid().getEmailid();
+					}
+				 
+				 
+				 
+					nr.createnewrequest(friendemailid,friendname,requestorname, title, description,duedate, projectname, categoryname, typename, 
+							priority, weightage, estimatedeffort);
+					 
+					
 					requestList.add(request);
 				}
 			}
@@ -256,9 +303,9 @@ public class NewrequestImpl implements NewrequestInterface {
 		String roleName = "";
 		try {
 
-			roleName = reinf.getRoleNameByLoginId(userName);
+			roleName = reinf.getRoleNameByLoginId(userName.toLowerCase());
 
-			requestIdList = reinf.getRequestListByRole(roleName, userName);
+			requestIdList = reinf.getRequestListByRole(roleName, userName.toLowerCase());
 
 			if (requestIdList != null && requestIdList.size() != 0) {
 				session = HibernateUtil.getSession();
@@ -703,7 +750,8 @@ public class NewrequestImpl implements NewrequestInterface {
 			String description, Date completiondate, UploadedFile attachment,
 			Float completionpercentage, Integer stage, String message,
 			String userName, Integer userproject, Integer usercategory,
-			Integer userrequesttype, Integer userfriend, Integer rating, String feedback, String estimatedeffort, Integer weightage, String priority) throws Exception {
+			Integer userrequesttype, Integer userfriend, Integer rating, String feedback,
+			String estimatedeffort, Integer weightage, String priority) throws Exception {
 		// TODO Auto-generated method stub
 		Session session = null;
 		Transaction tx = null;
@@ -776,6 +824,14 @@ public class NewrequestImpl implements NewrequestInterface {
 					requestworkflow.setRequeststatus(stage);
 				}
 
+				if(requestworkflow.getRequeststatus() == 100){
+					System.out.println("status is 100");
+				}else{
+					System.out.println("status is not 100");
+				}
+				
+				
+				
 				requestworkflow.setDatemodified(new Date());
 				requestworkflow.setModifiedby(userName);
 				requestworkflow.setRating(rating);
@@ -1555,9 +1611,9 @@ public class NewrequestImpl implements NewrequestInterface {
 		String roleName = "";
 		try {
 
-			roleName = reinf.getRoleNameByLoginId(userName);
+			roleName = reinf.getRoleNameByLoginId(userName.toLowerCase().trim());
 
-			requestIdList = reinf.getAdminRequestListByRole(roleName, userName);
+			requestIdList = reinf.getAdminRequestListByRole(roleName, userName.toLowerCase().trim());
 
 			if (requestIdList != null && requestIdList.size() != 0) {
 				session = HibernateUtil.getSession();

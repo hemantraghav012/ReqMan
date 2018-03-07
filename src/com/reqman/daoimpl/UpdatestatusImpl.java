@@ -14,12 +14,16 @@ import org.hibernate.criterion.Restrictions;
 
 import com.reqman.common.HibernateUtil;
 import com.reqman.dao.UpdatestatusInterface;
+import com.reqman.pojo.Project;
 import com.reqman.pojo.Request;
 import com.reqman.pojo.Requestnotes;
+import com.reqman.pojo.Usercategory;
 import com.reqman.pojo.Userfriendlist;
 import com.reqman.pojo.Userproject;
+import com.reqman.pojo.Userrequesttype;
 import com.reqman.pojo.Users;
 import com.reqman.util.Dateconverter;
+import com.reqman.util.completerequestsend;
 import com.reqman.vo.NewrequestVo;
 import com.reqman.vo.UpdatestatusVo;
 import com.reqman.vo.requestNoteVo;
@@ -404,6 +408,7 @@ public class UpdatestatusImpl implements UpdatestatusInterface {
 					updatestatusVo.setEstimatedeffort(request.getEstimatedeffort());			
 					updatestatusVo.setActualeffort(request.getActualeffort());
 					updatestatusVo.setRequeststage(request.getRequeststatus());
+					
 	    			tx.commit();
 	            }
 	 		}
@@ -430,15 +435,20 @@ public class UpdatestatusImpl implements UpdatestatusInterface {
 	public int updateRequestById(String requestId, Date completiondate,
 			int completionpercentage,Integer stage,String message, String userName,String actualeffort) {
 		// TODO Auto-generated method stub
-		 Session session = null;
-		    Transaction tx = null;
-		   NewrequestVo  newrequestVo = new  NewrequestVo();
-		   Request requestworkflow = null;
-		   Request request=null;
+		    Session session = null;
+		    Transaction tx = null;		  
+		    Request requestworkflow = null;		
+		    Users users=null;		  
+			Userproject userproject = null;
+			Usercategory usercategory = null;
+			Userrequesttype userrequesttype = null;
+			
+		
 		   int result = 0;
 		   Requestnotes  requestnotes=null;
 				try
 				{
+					completerequestsend sr= new completerequestsend();
 					session = HibernateUtil.getSession();
 		            tx = session.beginTransaction();
 		            requestworkflow = (Request)
@@ -449,7 +459,69 @@ public class UpdatestatusImpl implements UpdatestatusInterface {
 		           
 		            if(requestworkflow != null ){
 		            	
-		           //	requestworkflow.setDescription(description);
+		            	String projectname="";
+		            	String categoryname="";
+		            	String typename="";		            	
+		            	String title="";
+		            	String description="";		            	
+		            	String priority ="";
+		            	String estimatedeffort="";
+		            	Integer weight=0;
+		            	String duedate= "";		            	
+		            	String friendname="";			            	
+		            	String requestorname="";
+		            	String createdby="";
+		            	
+		            	userproject= requestworkflow.getUserproject();
+		            	usercategory= requestworkflow.getUsercategory();
+		            	userrequesttype= requestworkflow.getUserrequesttype();
+		            	 title=requestworkflow.getTitle();
+		            	 description = requestworkflow.getDescription();
+		            	 priority=requestworkflow.getPriority();
+		            	 estimatedeffort =requestworkflow.getEstimatedeffort();
+		            	 weight=requestworkflow.getWeightage();
+		            	 completiondate=requestworkflow.getCompletiondate();
+		            	 duedate=Dateconverter.convertDateToStringDDMMDDYYYY(completiondate);
+		            	 createdby =requestworkflow.getCreatedby();
+		            	
+		            	 projectname=	userproject.getProject().getName();
+		            	 categoryname=	usercategory.getCategory().getName();
+		            	 typename= userrequesttype.getRequesttype().getName();
+		            	 
+		            	
+
+						if (userName != null) {		            	
+		            	 
+		            	 users = (Users)
+			            			session.createCriteria(Users.class)
+			            			.add(Restrictions.eq("emailid", userName))
+			            			.uniqueResult(); 
+		            	 
+		            	 if (!(users.getFirstname()).equalsIgnoreCase("") && users.getFirstname() != null) {
+							 friendname = users.getFirstname();
+						} else {
+							friendname = users.getEmailid();
+						}
+		            	 
+						}
+		            	 
+						
+						if (createdby != null) {	
+		            	 users = (Users)
+			            			session.createCriteria(Users.class)
+			            			.add(Restrictions.eq("emailid", createdby))
+			            			.uniqueResult(); 
+		            	 
+		            	 if (!(users.getFirstname()).equalsIgnoreCase("") && users.getFirstname() != null) {
+		            		 requestorname = users.getFirstname();
+						} else {
+							requestorname = users.getEmailid();
+						}
+		            	 
+						}
+		            	 
+		            	 
+		         
 		            	requestworkflow.setCompletionpercentage(completionpercentage);
 		            	if(completionpercentage>0 && completionpercentage<99.9){
 		            		stage=4;
@@ -461,7 +533,9 @@ public class UpdatestatusImpl implements UpdatestatusInterface {
 		            	}
 		            		else if(completionpercentage == 100 ){
 		            			stage=5;
-		            			requestworkflow.setRequeststatus(stage);		            		
+		            			requestworkflow.setRequeststatus(stage);
+		            			
+		            			sr.completerequest(createdby, requestorname,friendname, title, description, duedate,projectname, categoryname, typename, priority,  weight, estimatedeffort);
 		            	}
 		            	requestworkflow.setModifiedby(userName);
 		            	requestworkflow.setDatemodified(new Date());

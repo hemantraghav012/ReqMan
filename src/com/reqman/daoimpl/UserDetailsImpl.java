@@ -44,6 +44,7 @@ public class UserDetailsImpl implements UserDetailsInterface {
         {
             if(userName != null && !userName.trim().equals(""))
             {
+            	System.out.println("-userName.toLowerCase().trim()--"+userName.toLowerCase().trim());
             	session = HibernateUtil.getSession();
                 tx = session.beginTransaction();
                 users = (Users)session.createCriteria(Users.class)
@@ -54,7 +55,7 @@ public class UserDetailsImpl implements UserDetailsInterface {
 				
              if(users != null)
              {  
-            	roleName = reinf.getRoleNameByLoginId(userName);
+            	roleName = reinf.getRoleNameByLoginId(userName.toLowerCase().trim());
            	 }
              
              if(roleName != null && roleName.trim().equalsIgnoreCase(RequestConstants.REQUESTOR_ROLE))
@@ -114,10 +115,12 @@ public class UserDetailsImpl implements UserDetailsInterface {
         try {
         	session = HibernateUtil.getSession();
             tx = session.beginTransaction();
+            
+            System.out.println("-hashkey--"+hashkey);
             users = (Users)session.createCriteria(Users.class)
             		.add(Restrictions.eq("emailid", emailid.toLowerCase().trim()).ignoreCase())
             		.uniqueResult();
-            
+           
             if(users != null && users.getStatus() != null && users.getStatus().booleanValue() == true){
             	result = 1;
             }
@@ -130,7 +133,7 @@ public class UserDetailsImpl implements UserDetailsInterface {
      			System.out.println("-hashkey--"+hashkey);
             	
             	users = new Users();
-            	users.setEmailid(emailid);
+            	users.setEmailid(emailid.toLowerCase().trim());
             	users.setFirstname(firstname != null ? firstname.trim() : "");
             	users.setLastname(lastname != null ? lastname.trim() : "");
             	users.setPassword(password);
@@ -278,7 +281,7 @@ public class UserDetailsImpl implements UserDetailsInterface {
 	    			
 	    			 if(users != null)
 	                 {  
-	               		roleName = reinf.getRoleNameByLoginId(emailid);
+	               		roleName = reinf.getRoleNameByLoginId(emailid.toLowerCase().trim());
 	                   	
 	               	 }
 	                
@@ -454,7 +457,7 @@ public class UserDetailsImpl implements UserDetailsInterface {
 	            	
 	     			System.out.println("-password--"+password);
 	            	users = new Users();
-	            	users.setEmailid(emailid);
+	            	users.setEmailid(emailid.toLowerCase().trim());
 	            	
 	            	users.setCreatedby("SYSTEM");
 	            	users.setCreatedon(new Date());
@@ -620,7 +623,7 @@ public class UserDetailsImpl implements UserDetailsInterface {
 	            tx = session.beginTransaction();
 	            users = (Users)
 	            			session.createCriteria(Users.class)
-	            			.add(Restrictions.eq("emailid", emailid))	            			
+	            			.add(Restrictions.eq("emailid", emailid.toLowerCase().trim()).ignoreCase())	            			
 	            			.uniqueResult();
 	            
 	            if(users != null){
@@ -680,7 +683,7 @@ public class UserDetailsImpl implements UserDetailsInterface {
 	            
 	            if(users != null)
 	              {  
-	            		roleName = reinf.getRoleNameByLoginId(googleemail);
+	            		roleName = reinf.getRoleNameByLoginId(googleemail.toLowerCase().trim());
 	                	
 	            	 }
 	             
@@ -712,7 +715,7 @@ public class UserDetailsImpl implements UserDetailsInterface {
 	            	
 	     			System.out.println("-googleemail--"+googleemail);
 	            	users = new Users();
-	            	users.setEmailid(googleemail);
+	            	users.setEmailid(googleemail.toLowerCase().trim());
 	            	users.setCreatedby("SYSTEM");
 	            	users.setCreatedon(new Date());
 	            	users.setStatus(true);	            	
@@ -756,7 +759,7 @@ public class UserDetailsImpl implements UserDetailsInterface {
 	            	
 	            	 if(users != null)
 	                 {  
-	               		roleName = reinf.getRoleNameByLoginId(googleemail);
+	               		roleName = reinf.getRoleNameByLoginId(googleemail.toLowerCase().trim());
 	                   	
 	               	 }
 	                

@@ -30,7 +30,7 @@ public class GetRolequery implements GetrolequeryInterface{
            	session = HibernateUtil.getSession();
             tx = session.beginTransaction();
             sqlQuery ="select r.id as roleId,r.name as roleName from reqman.roles as r, reqman.users as u,reqman.userroles as ur"
-            		+ " where u.id=ur.userid and ur.roleid=r.id and r.status=true and u.emailid='"+loginId+"'";
+            		+ " where u.id=ur.userid and ur.roleid=r.id and r.status=true and u.emailid='"+loginId.toLowerCase()+"'";
             query = session.createSQLQuery(sqlQuery);
             rows = query.list();
             
@@ -93,28 +93,28 @@ public class GetRolequery implements GetrolequeryInterface{
             	sb.append("select rq.id,uf.friendid from reqman.users as u, reqman.userfriendlist as uf,reqman.request as rq,reqman.roles as r,"
             			+ "reqman.userroles as ur, reqman.accountusers as au, reqman.account as a where u.id=uf.userid and uf.id=rq.friendid "
             			+ "and u.id=ur.userid and ur.roleid=r.id and au.userid=u.id and a.id=au.accountid and r.name = '"+roleName+"' "
-            			+ "and u.emailid='"+loginId+"'");
+            			+ "and u.emailid='"+loginId.toLowerCase()+"'");
             }
             else if(roleName != null && roleName.trim().equalsIgnoreCase(RequestConstants.TEAM_MEMBER))
             {
             	sb.append("select rq.id,uf.friendid from reqman.users as u, reqman.userfriendlist as uf,reqman.request as rq,reqman.roles as r,"
             			+ "reqman.userroles as ur, reqman.accountusers as au, reqman.account as a where u.id=uf.userid and uf.id=rq.friendid "
             			+ "and u.id=ur.userid and ur.roleid=r.id and au.userid=u.id and a.id=au.accountid and r.name = '"+roleName+"' "
-            			+ "and u.emailid='"+loginId+"'");
+            			+ "and u.emailid='"+loginId.toLowerCase()+"'");
             }
             else if(roleName != null && roleName.trim().equalsIgnoreCase(RequestConstants.ACCOUNT_ADMIN_ROLE))
             {
             	sb.append("select rq.id,uf.friendid from reqman.users as u, reqman.userfriendlist as uf,reqman.request as rq,reqman.roles as r,"
             			+ "reqman.userroles as ur, reqman.accountusers as au, reqman.account as a where u.id=uf.userid and uf.id=rq.friendid "
             			+ "and u.id=ur.userid and ur.roleid=r.id and au.userid=u.id and a.id=au.accountid and r.name = '"+roleName+"' "
-            			+ " and u.emailid='"+loginId+"'");
+            			+ " and u.emailid='"+loginId.toLowerCase()+"'");
             }
             else if(roleName != null && roleName.trim().equalsIgnoreCase(RequestConstants.APP_ADMIN_ROLE))
             {
             	sb.append("select rq.id,uf.friendid from reqman.users as u, reqman.userfriendlist as uf,reqman.request as rq,reqman.roles as r,"
             			+ "reqman.userroles as ur, reqman.accountusers as au, reqman.account as a where u.id=uf.userid and uf.id=rq.friendid "
             			+ "and u.id=ur.userid and ur.roleid=r.id and au.userid=u.id and a.id=au.accountid and r.name = '"+roleName+"' "
-            			+ " and u.emailid='"+loginId+"'");
+            			+ " and u.emailid='"+loginId.toLowerCase()+"'");
             }
             else
             {
@@ -193,8 +193,8 @@ public class GetRolequery implements GetrolequeryInterface{
             {
             	sb.append("select rq.id,uf.friendid from reqman.users as u, reqman.userfriendlist as uf,reqman.request as rq,reqman.roles as r,"
             			+ "reqman.userroles as ur, reqman.accountusers as au, reqman.account as a where u.id=uf.userid and uf.id=rq.friendid "
-            			+ "and u.id=ur.userid and ur.roleid=r.id and au.userid=u.id and a.id=au.accountid and r.name = 'Requestor' "
-            			+ "and u.emailid='"+loginId+"'");
+            			+ "and u.id=ur.userid and ur.roleid=r.id and au.userid=u.id and a.id=au.accountid and r.name = '"+roleName+"' "
+            			+ "and u.emailid='"+loginId.toLowerCase().trim()+"'");
             }
             else if(roleName != null && roleName.trim().equalsIgnoreCase(RequestConstants.ACCOUNT_ADMIN_ROLE))
             {
@@ -346,7 +346,7 @@ public class GetRolequery implements GetrolequeryInterface{
             sqlQuery ="select u.emailid,ac.accountid from reqman.roles as r,reqman.accountusers as ac, reqman.account as acco,"
             		+ "reqman.users as u,reqman.userroles as ur "
             		+" where u.id=ur.userid and ur.roleid=r.id and ac.userid=u.id and "
-            		+" ac.accountid=acco.id and r.status=true and u.emailid='"+loginId+"'";
+            		+" ac.accountid=acco.id and r.status=true and u.emailid='"+loginId.toLowerCase().trim()+"'";
             query = session.createSQLQuery(sqlQuery);
             rows = query.list();
             

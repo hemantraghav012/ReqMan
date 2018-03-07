@@ -35,7 +35,7 @@ public class SchedulejobImpl implements SchedulejobInterface {
 
 	@Override
 	public int saveschedulejob(String jobname, Boolean status, String userName,
-			String day, String hour, String minute, String description)
+			String day,Integer date, Integer hour,  Integer minute, String description)
 			throws Exception {
 		// TODO Auto-generated method stub
 		 Session session = null;
@@ -53,11 +53,16 @@ public class SchedulejobImpl implements SchedulejobInterface {
 						.add(Restrictions.eq("emailid",
 								userName.toLowerCase().trim()).ignoreCase())
 						.uniqueResult();
-	         
+	            schdulejobs = (Schdulejobs) session
+						.createCriteria(Schdulejobs.class)
+						.add(Restrictions.eq("jobname",
+								jobname.toLowerCase().trim()).ignoreCase())
+						.uniqueResult();
 	            
 	            schdulejobs=new Schdulejobs();
 	           
 	            schdulejobs.setDay(day);
+	            schdulejobs.setDate(date);	            
 	            schdulejobs.setHour(hour);
 	            schdulejobs.setMinute(minute);
 	            schdulejobs.setStatus(true);
@@ -101,10 +106,21 @@ public class SchedulejobImpl implements SchedulejobInterface {
 					.uniqueResult();
 			
 			if(schedulejobs != null){
+				if(schedulejobs.getDay() != null && ! schedulejobs.getDay().isEmpty()){
 				schedulejobVo.setDay(schedulejobs.getDay());
+				}else{
+					schedulejobVo.setDay("null");
+				}
+				if(schedulejobs.getDate() != null){
+				schedulejobVo.setDate(schedulejobs.getDate());
+				}else{
+					schedulejobVo.setDate(0);
+
+				}
 				schedulejobVo.setHour(schedulejobs.getHour());
 				schedulejobVo.setMinute(schedulejobs.getMinute());
 				schedulejobVo.setJobname(schedulejobs.getJobname());
+				
 				schedulejobVo.setDescription(schedulejobs.getDescription());
             
 				tx.commit();
@@ -164,12 +180,24 @@ public class SchedulejobImpl implements SchedulejobInterface {
 						schedulejobVo=new SchedulejobVo();
 						
 						schedulejobVo.setSchedulejobId(schedulejobDB.getId());
-						schedulejobVo.setDay(schedulejobDB.getDay());
+						
+						
+						if(schedulejobDB.getDay() != null && ! schedulejobDB.getDay().isEmpty()){
+							schedulejobVo.setDay(schedulejobDB.getDay());
+							}else{
+								schedulejobVo.setDay("null");
+							}
+							if(schedulejobDB.getDate() != null){
+							schedulejobVo.setDate(schedulejobDB.getDate());
+							}else{
+								schedulejobVo.setDate(0);
+
+							}
+					
 						schedulejobVo.setHour(schedulejobDB.getHour());
 						schedulejobVo.setMinute(schedulejobDB.getMinute());
 						schedulejobVo.setJobname(schedulejobDB.getJobname());
 						schedulejobVo.setDescription(schedulejobDB.getDescription());
-						
 						SchedulejobList.add(schedulejobVo);
 							
 					}
@@ -194,8 +222,8 @@ public class SchedulejobImpl implements SchedulejobInterface {
 
 	@Override
 	public int updatescheduleById(Integer schedulejobid, Boolean status,
-			String description, String jobname, String day, String hour,
-			String minute, String userName) throws Exception {
+			String description, String jobname, String day, Integer hour,
+			Integer minute,Integer date, String userName) throws Exception {
 		// TODO Auto-generated method stub
 
 		Session session = null;
@@ -217,7 +245,7 @@ public class SchedulejobImpl implements SchedulejobInterface {
 				schedulejobs.setMinute(minute);
 				schedulejobs.setDescription(description);
 				schedulejobs.setJobname(jobname);
-				
+				schedulejobs.setDate(date);
 				session.update(schedulejobs);
 
 				
