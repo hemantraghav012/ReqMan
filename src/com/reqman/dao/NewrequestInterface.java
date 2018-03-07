@@ -23,7 +23,7 @@ public interface NewrequestInterface {
 
 	// for display data in the grid
 	public List<NewrequestVo> getNewrequestDetails(String userName,
-			Date startDate, Date endDate) throws Exception;
+			Date startDate, Date endDate) throws Exception;            
 
 	// for show value in modify page
 	public NewrequestVo getRequestById(String requestId) throws Exception;
