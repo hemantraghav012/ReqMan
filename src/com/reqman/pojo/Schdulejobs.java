@@ -28,11 +28,12 @@ public class Schdulejobs implements java.io.Serializable {
 	private String jobname;
 	private String description;
 	private String day;
-	private String hour;
-	private String minute;
+	private Integer hour;
+	private Integer minute;
 	private Boolean status;
 	private String createdby;
 	private Date createdon;
+	private Integer date;
 
 	public Schdulejobs() {
 	}
@@ -41,18 +42,20 @@ public class Schdulejobs implements java.io.Serializable {
 		this.id = id;
 	}
 
-	public Schdulejobs(int id, String jobname, String description, String day,
-			String hour, String minute, Boolean status, String createdby,
+	public Schdulejobs(int id, String jobname, String description, String day,Integer date,
+			Integer hour, Integer minute, Boolean status, String createdby,
 			Date createdon) {
 		this.id = id;
 		this.jobname = jobname;
 		this.description = description;
 		this.day = day;
+		this.date=date;
 		this.hour = hour;
 		this.minute = minute;
 		this.status = status;
 		this.createdby = createdby;
 		this.createdon = createdon;
+		
 	}
 
 	@Id
@@ -93,21 +96,30 @@ public class Schdulejobs implements java.io.Serializable {
 		this.day = day;
 	}
 
+	@Column(name = "date", length = 10)
+	public Integer getDate() {
+		return date;
+	}
+
+	public void setDate(Integer date) {
+		this.date = date;
+	}
+
 	@Column(name = "hour", length = 10)
-	public String getHour() {
+	public Integer getHour() {
 		return this.hour;
 	}
 
-	public void setHour(String hour) {
+	public void setHour(Integer hour) {
 		this.hour = hour;
 	}
 
 	@Column(name = "minute", length = 10)
-	public String getMinute() {
+	public Integer getMinute() {
 		return this.minute;
 	}
 
-	public void setMinute(String minute) {
+	public void setMinute(Integer minute) {
 		this.minute = minute;
 	}
 
