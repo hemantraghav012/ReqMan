@@ -30,9 +30,25 @@ public class UpdatestatusVo {
 	private String priority;
 	private Integer weightage;
 	private Integer requeststage;
+	private Integer project;
+	private Integer category;
+	private Integer requesttype;
+	private Integer userfriend;
+	private Integer rating;
+	private String feedback;
 	
-	
-	
+	public Integer getRating() {
+		return rating;
+	}
+	public void setRating(Integer rating) {
+		this.rating = rating;
+	}
+	public String getFeedback() {
+		return feedback;
+	}
+	public void setFeedback(String feedback) {
+		this.feedback = feedback;
+	}
 	public Integer getRequeststage() {
 		return requeststage;
 	}
@@ -171,6 +187,30 @@ public class UpdatestatusVo {
 	}
 	public void setChangedate(Date changedate) {
 		this.changedate = changedate;
+	}
+	public Integer getProject() {
+		return project;
+	}
+	public void setProject(Integer project) {
+		this.project = project;
+	}
+	public Integer getCategory() {
+		return category;
+	}
+	public void setCategory(Integer category) {
+		this.category = category;
+	}
+	public Integer getRequesttype() {
+		return requesttype;
+	}
+	public void setRequesttype(Integer requesttype) {
+		this.requesttype = requesttype;
+	}
+	public Integer getUserfriend() {
+		return userfriend;
+	}
+	public void setUserfriend(Integer userfriend) {
+		this.userfriend = userfriend;
 	}
 	
 	

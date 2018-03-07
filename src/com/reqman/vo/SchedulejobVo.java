@@ -7,13 +7,20 @@ public class SchedulejobVo {
 	private String jobname;
 	private String description;
 	private String day;
-	private String hour;
-	private String minute;
+	private Integer hour;
+	private Integer minute;
 	private String status;
+	private Integer date;
 	
 	
 	
 	
+	public Integer getDate() {
+		return date;
+	}
+	public void setDate(Integer date) {
+		this.date = date;
+	}
 	public String getStatus() {
 		return status;
 	}
@@ -45,19 +52,18 @@ public class SchedulejobVo {
 	public void setDay(String day) {
 		this.day = day;
 	}
-	public String getHour() {
+	public Integer getHour() {
 		return hour;
 	}
-	public void setHour(String hour) {
+	public void setHour(Integer hour) {
 		this.hour = hour;
 	}
-	public String getMinute() {
+	public Integer getMinute() {
 		return minute;
 	}
-	public void setMinute(String minute) {
+	public void setMinute(Integer minute) {
 		this.minute = minute;
 	}
-	
 	
 	
 	
