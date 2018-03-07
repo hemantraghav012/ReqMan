@@ -71,31 +71,182 @@ function setSchedulejobHiddenValue(new_value)
 			
 			
 				
-				
+	
+		
+
+		
+ 
 <div class=" row form-group ">
 
-                   <div class="col-sm-2 control-label">
-               <br></br>						
+
+
+                   <div class="col-sm-2 control-label" style="margin-top:-5px">
+                   <h:outputLabel>Scheduler:</h:outputLabel><br></br>
+               			<button type="button"  data-toggle="collapse" data-target=".Day">
+                         Choose Day or Date 
+                        </button>		
 					</div>
-					<div class=" col-sm-1">
+					<div class=" col-sm-2 collapse in Day">
 					<h:outputLabel>&nbsp;&nbsp;&nbsp;&nbsp;Day:</h:outputLabel><br></br>
-						<h:inputText class="  form-control" value="#{schedulejob.day}"
-							 required="true" requiredMessage="* Please enter Title" />
-						<h:message for="title" style="color:red;" />
+		<p:selectOneMenu id="day" value="#{schedulejob.day}" style="width:200px">
+		
+                   <f:selectItem itemLabel="Select " itemValue="null" />            
+                   <f:selectItem itemLabel="Monday" itemValue="Monday" />
+                   <f:selectItem itemLabel="Tuesday" itemValue="Tuesday" />
+                   <f:selectItem itemLabel="Wednesday" itemValue="Wednesday" />
+                   <f:selectItem itemLabel="Thursday" itemValue="Thursday" />
+                   <f:selectItem itemLabel="Friday" itemValue="Friday" />
+                   <f:selectItem itemLabel="Saturday" itemValue="Saturday" />
+                   <f:selectItem itemLabel="Sunday" itemValue="Sunday" />
+         
+        </p:selectOneMenu>
+						<h:message for="day" style="color:red;" />
+					</div>
+					
+					<div class=" col-sm-1 collapse Day">
+					<h:outputLabel>&nbsp;&nbsp;&nbsp;&nbsp;Date:</h:outputLabel><br></br>
+						<p:selectOneMenu id="date" value="#{schedulejob.date}" style="width:100px" >
+		
+                   <f:selectItem itemLabel="0 " itemValue="0" />            
+                   <f:selectItem itemLabel="1" itemValue="1" />
+                   <f:selectItem itemLabel="2" itemValue="2" />
+                   <f:selectItem itemLabel="3" itemValue="3" />
+                   <f:selectItem itemLabel="4" itemValue="4" />
+                   <f:selectItem itemLabel="5" itemValue="5" />
+                   <f:selectItem itemLabel="6" itemValue="6" />
+                   <f:selectItem itemLabel="7" itemValue="7" />
+                   <f:selectItem itemLabel="8" itemValue="8" />
+                   <f:selectItem itemLabel="9" itemValue="9" />
+                   <f:selectItem itemLabel="10" itemValue="10" />
+                   <f:selectItem itemLabel="11" itemValue="11" />
+                   <f:selectItem itemLabel="12" itemValue="12" />
+                   <f:selectItem itemLabel="13" itemValue="13" />
+                   <f:selectItem itemLabel="14" itemValue="14" />
+                   <f:selectItem itemLabel="15" itemValue="15" />
+                   <f:selectItem itemLabel="16" itemValue="16" />
+                   <f:selectItem itemLabel="17" itemValue="17" />
+                   <f:selectItem itemLabel="18" itemValue="18" />
+                   <f:selectItem itemLabel="19" itemValue="19" />
+                   <f:selectItem itemLabel="20" itemValue="20" />
+                   <f:selectItem itemLabel="21" itemValue="21" />
+                   <f:selectItem itemLabel="22" itemValue="22" />
+                   <f:selectItem itemLabel="23" itemValue="23" />
+                   <f:selectItem itemLabel="24" itemValue="24" />
+                   <f:selectItem itemLabel="25" itemValue="25" />
+                   <f:selectItem itemLabel="26" itemValue="26" />
+                   <f:selectItem itemLabel="27" itemValue="27" />
+                   <f:selectItem itemLabel="28" itemValue="28" />
+                   <f:selectItem itemLabel="29" itemValue="29" />
+                   <f:selectItem itemLabel="30" itemValue="30" />
+                   <f:selectItem itemLabel="31" itemValue="31" />
+               
+        </p:selectOneMenu>
+						<h:message for="date" style="color:red;" />
 					</div>
 					
 					<div class=" col-sm-1">
 					<h:outputLabel>&nbsp;&nbsp;&nbsp;&nbsp;Hour:</h:outputLabel><br></br>
-						<h:inputText class="  form-control" value="#{schedulejob.hour}"
-							 required="true" requiredMessage="* Please enter Title" />
-						<h:message for="title" style="color:red;" />
+							<p:selectOneMenu id="hours" value="#{schedulejob.hour}" style="width:100px" required="true" requiredMessage="* Please enter hour">
+		
+                   <f:selectItem itemLabel="0 " itemValue="0" />            
+                   <f:selectItem itemLabel="1" itemValue="1" />
+                   <f:selectItem itemLabel="2" itemValue="2" />
+                   <f:selectItem itemLabel="3" itemValue="3" />
+                   <f:selectItem itemLabel="4" itemValue="4" />
+                   <f:selectItem itemLabel="5" itemValue="5" />
+                   <f:selectItem itemLabel="6" itemValue="6" />
+                   <f:selectItem itemLabel="7" itemValue="7" />
+                   <f:selectItem itemLabel="8" itemValue="8" />
+                   <f:selectItem itemLabel="9" itemValue="9" />
+                   <f:selectItem itemLabel="10" itemValue="10" />
+                   <f:selectItem itemLabel="11" itemValue="11" />
+                   <f:selectItem itemLabel="12" itemValue="12" />
+                   <f:selectItem itemLabel="13" itemValue="13" />
+                   <f:selectItem itemLabel="14" itemValue="14" />
+                   <f:selectItem itemLabel="15" itemValue="15" />
+                   <f:selectItem itemLabel="16" itemValue="16" />
+                   <f:selectItem itemLabel="17" itemValue="17" />
+                   <f:selectItem itemLabel="18" itemValue="18" />
+                   <f:selectItem itemLabel="19" itemValue="19" />
+                   <f:selectItem itemLabel="20" itemValue="20" />
+                   <f:selectItem itemLabel="21" itemValue="21" />
+                   <f:selectItem itemLabel="22" itemValue="22" />
+                   <f:selectItem itemLabel="23" itemValue="23" />
+                  
+             
+               
+        </p:selectOneMenu>
+						<h:message for="hours" style="color:red;" />
 					</div>
 				
 					<div class=" col-sm-1">
 						<h:outputLabel>&nbsp;&nbsp;&nbsp;&nbsp;Minute:</h:outputLabel><br></br>
-						<h:inputText class="  form-control" value="#{schedulejob.minute}"
-							 required="true" requiredMessage="* Please enter Title" />
-						<h:message for="title" style="color:red;" />
+									<p:selectOneMenu id="minute" value="#{schedulejob.minute}" style="width:100px" required="true" requiredMessage="* Please enter minutes">
+		
+                   <f:selectItem itemLabel="0 " itemValue="0" />            
+                   <f:selectItem itemLabel="1" itemValue="1" />
+                   <f:selectItem itemLabel="2" itemValue="2" />
+                   <f:selectItem itemLabel="3" itemValue="3" />
+                   <f:selectItem itemLabel="4" itemValue="4" />
+                   <f:selectItem itemLabel="5" itemValue="5" />
+                   <f:selectItem itemLabel="6" itemValue="6" />
+                   <f:selectItem itemLabel="7" itemValue="7" />
+                   <f:selectItem itemLabel="8" itemValue="8" />
+                   <f:selectItem itemLabel="9" itemValue="9" />
+                   <f:selectItem itemLabel="10" itemValue="10" />
+                   <f:selectItem itemLabel="11" itemValue="11" />
+                   <f:selectItem itemLabel="12" itemValue="12" />
+                   <f:selectItem itemLabel="13" itemValue="13" />
+                   <f:selectItem itemLabel="14" itemValue="14" />
+                   <f:selectItem itemLabel="15" itemValue="15" />
+                   <f:selectItem itemLabel="16" itemValue="16" />
+                   <f:selectItem itemLabel="17" itemValue="17" />
+                   <f:selectItem itemLabel="18" itemValue="18" />
+                   <f:selectItem itemLabel="19" itemValue="19" />
+                   <f:selectItem itemLabel="20" itemValue="20" />
+                   <f:selectItem itemLabel="21" itemValue="21" />
+                   <f:selectItem itemLabel="22" itemValue="22" />
+                   <f:selectItem itemLabel="23" itemValue="23" />
+                   <f:selectItem itemLabel="24" itemValue="24" />
+                   <f:selectItem itemLabel="25" itemValue="25" />
+                   <f:selectItem itemLabel="26" itemValue="26" />
+                   <f:selectItem itemLabel="27" itemValue="27" />
+                   <f:selectItem itemLabel="28" itemValue="28" />
+                   <f:selectItem itemLabel="29" itemValue="29" />
+                   <f:selectItem itemLabel="30" itemValue="30" />
+                   <f:selectItem itemLabel="31" itemValue="31" />
+                   <f:selectItem itemLabel="32 " itemValue="32" />
+                   <f:selectItem itemLabel="33 " itemValue="33" />
+                   <f:selectItem itemLabel="34 " itemValue="34" />
+                   <f:selectItem itemLabel="35 " itemValue="35" />
+                   <f:selectItem itemLabel="36 " itemValue="36" />
+                   <f:selectItem itemLabel="37 " itemValue="37" />
+                   <f:selectItem itemLabel="38 " itemValue="38" />
+                   <f:selectItem itemLabel="39 " itemValue="39" />
+                   <f:selectItem itemLabel="40 " itemValue="40" />
+                   <f:selectItem itemLabel="41 " itemValue="41" />
+                   <f:selectItem itemLabel="42 " itemValue="42" />
+                   <f:selectItem itemLabel="43 " itemValue="43" />
+                   <f:selectItem itemLabel="44 " itemValue="44" />
+                   <f:selectItem itemLabel="45 " itemValue="45" />                                               
+                   <f:selectItem itemLabel="46 " itemValue="46" />
+                   <f:selectItem itemLabel="47 " itemValue="47" />
+                   <f:selectItem itemLabel="48 " itemValue="48" />
+                   <f:selectItem itemLabel="49 " itemValue="49" />
+                   <f:selectItem itemLabel="50 " itemValue="50" />
+                   <f:selectItem itemLabel="51 " itemValue="51" />
+                   <f:selectItem itemLabel="52 " itemValue="52" />
+                   <f:selectItem itemLabel="53 " itemValue="53" />
+                   <f:selectItem itemLabel="54 " itemValue="54" />
+                   <f:selectItem itemLabel="55 " itemValue="55" />
+                   <f:selectItem itemLabel="56 " itemValue="56" />
+                   <f:selectItem itemLabel="57 " itemValue="57" />
+                   <f:selectItem itemLabel="58 " itemValue="58" />
+                   <f:selectItem itemLabel="59 " itemValue="59" />
+                  
+                 
+        </p:selectOneMenu>
+						<h:message for="minute" style="color:red;" />
 					</div>
 
 
@@ -103,7 +254,7 @@ function setSchedulejobHiddenValue(new_value)
 					<div class=" col-sm-2">
 					<h:outputLabel>&nbsp;&nbsp;&nbsp;&nbsp;Job Name:</h:outputLabel><br></br>
 						<h:inputText class="  form-control" value="#{schedulejob.jobname}"
-							 required="true" requiredMessage="* Please enter Title" />
+							 required="true" requiredMessage="* Please enter jobname" />
 						<h:message for="title" style="color:red;" />
 					</div>
 
@@ -111,11 +262,11 @@ function setSchedulejobHiddenValue(new_value)
 					<div class=" col-sm-2">
 					<h:outputLabel>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Description:</h:outputLabel><br></br>
 						<h:inputTextarea id="address"  value="#{schedulejob.description}"
-							cols="19" rows="2" class="  form-control" />
+							cols="19" rows="2" class="  form-control"  required="true" requiredMessage="* Please enter description" />
 						<h:message for="address" style="color:red;" />
 					</div>
 
-                      <div class="col-sm-2 control-label" style="text-align: right">
+                      <div class="col-sm-1 control-label" style="text-align: right">
                       <br></br>
 						<h:commandButton value="submit" action="#{schedulejob.save}" class="btn fontsize btn-success btn-block"></h:commandButton>
 					</div> 
@@ -144,8 +295,7 @@ function setSchedulejobHiddenValue(new_value)
  
  
 	      <p:dataTable id="schedulejobTable" var="schedule" value="#{schedulejob.schedulejobList}" draggableColumns="true" 
-	     resizableColumns="true" 
-	     reflow="true" scrollable="true" scrollHeight="300" rows="10"  paginator="true"   	       
+	     resizableColumns="true" reflow="true" scrollable="true" scrollHeight="300" rows="10"  paginator="true"   	       
 	      paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" 
 	      rowsPerPageTemplate="5,10,15" class="table table-striped table-hover table-bordered" 	     
 	     style="margin-top:5px; margin-left:0px; " filteredValue="#{schedulejob.filteredschedulejobList}" 	     
@@ -181,6 +331,15 @@ function setSchedulejobHiddenValue(new_value)
 				<h:outputText value="#{schedule.day}" />
 			</p:column>
 			
+			
+			
+				<p:column filterBy="#{schedule.date}" sortBy="#{schedule.date}" headerText="Date"  
+			 filterMatchMode="contains"   style="padding: 0px 0px 0px 3px;">
+				<f:facet name="header">
+					<h:outputText value="Date"  />
+				</f:facet>
+				<h:outputText value="#{schedule.date}" />
+			</p:column>
 		
 			
 			<p:column filterBy="#{schedule.hour}" sortBy="#{schedule.hour}" headerText="Hour"  

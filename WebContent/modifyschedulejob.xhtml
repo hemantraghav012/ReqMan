@@ -69,17 +69,18 @@
 				
 <div class=" row form-group ">
 
-                   <div class="col-sm-2 control-label">
-                <h:outputLabel>&nbsp;&nbsp;&nbsp;&nbsp;id:</h:outputLabel><br></br>
-						<h:inputText class="  form-control" value="#{schedulejob.schedulejobid}"
-							 required="true" requiredMessage="* Please enter Title" />
-						<h:message for="title" style="color:red;" />
-						
-					</div>
+                  
 					<div class=" col-sm-1">
 					<h:outputLabel>&nbsp;&nbsp;&nbsp;&nbsp;Day:</h:outputLabel><br></br>
 						<h:inputText class="  form-control" value="#{schedulejob.day}"
-							 required="true" requiredMessage="* Please enter Title" />
+							 required="true" requiredMessage="* Please enter day" />
+						<h:message for="title" style="color:red;" />
+					</div>
+					
+					<div class=" col-sm-1">
+					<h:outputLabel>&nbsp;&nbsp;&nbsp;&nbsp;Date:</h:outputLabel><br></br>
+						<h:inputText class="  form-control" value="#{schedulejob.date}"
+							 required="true" requiredMessage="* Please enter date" />
 						<h:message for="title" style="color:red;" />
 					</div>
 					
@@ -93,7 +94,7 @@
 					<div class=" col-sm-1">
 						<h:outputLabel>&nbsp;&nbsp;&nbsp;&nbsp;Minute:</h:outputLabel><br></br>
 						<h:inputText class="  form-control" value="#{schedulejob.minute}"
-							 required="true" requiredMessage="* Please enter Title" />
+							 required="true" requiredMessage="* Please enter minute" />
 						<h:message for="title" style="color:red;" />
 					</div>
 
@@ -102,7 +103,7 @@
 					<div class=" col-sm-2">
 					<h:outputLabel>&nbsp;&nbsp;&nbsp;&nbsp;Job Name:</h:outputLabel><br></br>
 						<h:inputText class="  form-control" value="#{schedulejob.jobname}"
-							 required="true" requiredMessage="* Please enter Title" />
+							 required="true" requiredMessage="* Please enter jobname" />
 						<h:message for="title" style="color:red;" />
 					</div>
 
@@ -110,13 +111,17 @@
 					<div class=" col-sm-2">
 					<h:outputLabel>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Description:</h:outputLabel><br></br>
 						<h:inputTextarea id="address"  value="#{schedulejob.description}"
-							cols="19" rows="2" class="  form-control" />
+							cols="19" rows="2" class="  form-control"  required="true" requiredMessage="* Please enter description" />
 						<h:message for="address" style="color:red;" />
 					</div>
 
-                      <div class="col-sm-2 control-label" style="text-align: right">
+                      <div class="col-sm-1 control-label" style="text-align: right">
                       <br></br>
 						<h:commandButton value="submit" action="#{schedulejob.updateSchedulejob}" class="btn fontsize btn-success btn-block"></h:commandButton>
+					</div>
+					<div class="col-sm-2 control-label" style="text-align: right"><br></br>
+					<h:link value="Back To Scheduler List" style="text-decoration:none; color:#fff;" outcome="schedulejob" class="btn fontsize btn-primary btn-block"/>
+
 					</div> 
 
 				</div>

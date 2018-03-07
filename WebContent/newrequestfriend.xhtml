@@ -41,7 +41,7 @@
       <div class="container fixedcontainerrequset" style=" margin-top:2cm; ">
   <h2 style=" text-align: center;">    Create New Request </h2><br></br>
       
-
+<h:messages style = "color:red;margin:8px;" />
  <div class=" row form-group ">
  <div class="col-sm-3 control-label"><h:outputLabel><span style="color:red;">* </span> Title:</h:outputLabel></div>
 <div class=" col-sm-8"> <h:inputText value="#{createrequest.title}"   class="  form-control"  id="title" required="true" requiredMessage="* Please enter Title" />
@@ -254,9 +254,27 @@ style="margin-top:2px;" class="pull-right glyphicon glyphicon-info-sign"></span>
 
       </p:panelGrid>
       </div>
+   <br></br>    
+   
+   <div style="background-color:grey;padding:5px;color:#fff;">
+   
+   <marquee>You can use Collaborate to:-
+Raise Requests on team members.  
+Agree on details like due date and accepting the request. 
+Share notes , risks ,  documents and progress among team members.  
+Filter information on any parameter.  
+Export information for further analysis.  
+Automate Alerts  for approaching or past deadlines.  
+Analyze performance including estimation accuracy.  
+Classify and Prioritize tasks.
+  Estimate  time and efforts and comparison with actuals for improving planning capabilities.
+  Ratings and feedbacks for completed tasks and their analysis.
+  Submit Improvement ideas.</marquee>
+   
+</div>
    
 
-
+     <br></br>
 </h:body>
 
 

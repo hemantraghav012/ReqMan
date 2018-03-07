@@ -60,7 +60,7 @@
 <!--Display Error -->
 <h:messages style = "color:red;margin:8px;" />
 </div>
-
+<div>
 <!--Enter User Email -->
 <h:outputLabel>Email Id:</h:outputLabel>
  <h:inputText value="#{register.emailid}" class="form-control" a:placeholder="Email Id" id="emailid" required="true" requiredMessage="* Please enter your Email Id" validatorMessage="Invalid Email Format">
@@ -70,7 +70,9 @@
   </h:inputText>
  <h:message for="emailid"  style="color:red;margin:8px;"/> 
 <!--End User Email -->
+</div>
 
+<div>
 <!--Enter User First Name -->
 <h:outputLabel>First Name:</h:outputLabel>
 <h:inputText value="#{register.firstname}"  a:placeholder="First Name" class="form-control" id="firstname"
@@ -78,7 +80,9 @@
  </h:inputText>
  <h:message for="firstname"  style="color:red;margin:8px;"/> 
 <!--Enter User First Name -->
+</div>
 
+<div>
 <!--Enter User Last Name -->
 <h:outputLabel>Last Name:</h:outputLabel>
 <h:inputText value="#{register.lastname}"  a:placeholder="Last Name" class="form-control" id="lastname" 
@@ -86,7 +90,8 @@ required="true" requiredMessage="* Please Enter Your Last Name">
 </h:inputText>
  <h:message for="lastname"  style="color:red;margin:8px;"/> 
 <!--Enter User Last Name -->
-
+</div>
+<div>
 <!--Enter User Short Name -->
 <h:outputLabel>Short Name:</h:outputLabel>
 <h:inputText value="#{register.shortname}" a:placeholder="Short Name"  class="form-control" id="shortname"
@@ -95,7 +100,7 @@ required="true" requiredMessage="* Please Enter Your Last Name">
  <span style="color:red;">Please enter upto 4 characters</span>
  <h:message for="shortname"  style="color:red;margin:8px;"/> 
 <!--Enter UserShort Name -->
- 
+ </div>
  <!--submit button -->
   <h:commandButton  action="#{register.submit()}" value="Sign up" class="btn fontsize btn-success btn-block">
 </h:commandButton>
