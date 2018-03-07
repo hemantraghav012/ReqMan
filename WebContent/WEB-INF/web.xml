@@ -20,13 +20,13 @@
   <welcome-file-list>
     <welcome-file>/index.xhtml</welcome-file>
   </welcome-file-list>
-  
-  <listener>
-		<listener-class>
-			org.quartz.ee.servlet.QuartzInitializerListener
-		</listener-class>
-	</listener>
+ 
 	
+	   <listener>
+ <listener-class>
+            com.reqman.util.listener.SchedulerListner 
+        </listener-class>
+   </listener>
 	
 	<servlet>
 		<servlet-name>jersey-serlvet</servlet-name>
@@ -45,6 +45,10 @@
   
   
   
-  
+  <servlet>
+    <servlet-name>CrunchifyTutorials</servlet-name>
+    <servlet-class>com.reqman.scheduler.AutoRun</servlet-class>
+    <load-on-startup>1</load-on-startup>
+</servlet>
   
 </web-app>
