@@ -92,7 +92,7 @@ public class sendEmail1 {
 			sb.append("Collabor8");
 			sb.append("</span>");
 			sb.append(".com!");
-			sb.append("<h1>");
+			sb.append("</h1>");
 			sb.append("<hr></hr>");	
 			sb.append("<h3>");
 			sb.append(firstName +", Welcome to Collabor8 !");		

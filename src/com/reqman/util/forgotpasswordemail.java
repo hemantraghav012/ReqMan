@@ -75,20 +75,76 @@ import java.io.IOException;
 			String temp ="\"";
 			String link = MAIL_REGISTRATION_SITE_LINK+"?emailid="+To+"&hash="+hashkey;
 			
-			try{			
+			try{		
+				
+				
+				sb.append("<html>");
+				sb.append("<head>");
+				sb.append("<html><head><style type='text/css'>");
+				sb.append("span {color:red;}");			
+				sb.append("div {letter-spacing:1px;text-decoration:none;font-size:14px;max-width:550px; color:black; width: 100% !important;  background-color: #fff;  margin: 0 auto;   overflow: hidden;  font-family: roboto; }");
+				sb.append("table {border-style:ridge;padding: 40px;border-color: skyblue; border-radius: 8px;}");
+				sb.append("ul{text-align: left}");
+				sb.append("ul li {text-align: left}");
+				sb.append("p {letter-spacing:1px;font-size:16px;}");
+				sb.append("</style></head>");			
+				sb.append("<body>");						
+				sb.append("<table>");
+				sb.append("<div>");
 				sb.append("<h1>");
-				sb.append( firstName +", Welcome to Collabor8 !");			
-				sb.append("</h1>");			
-				sb.append("<br>");
-				sb.append("Your account has been created! <a href=\""+link+"\">here</a>, set your password and starting collabor8ing.");
-				sb.append("<br>");
-				sb.append("Usage is very simple . Enter one or more team members email id and start logging requests for them.");
-				sb.append("<br>");
-				sb.append("Optionally use request categories , projects and types for better analysis and management. Get more information on Collabor8.com Feel free to writte to us at helpdesk@collabor8.com ");
-				sb.append("<br>");		
-				sb.append("Thank You, "+firstName+".");			
-				sb.append("<br>");
+				sb.append("Join the team at ");
+				sb.append("<span>");
+				sb.append("Collabor8");
+				sb.append("</span>");
+			
+				sb.append("<h1>");
+				sb.append("<hr></hr>");	
+				sb.append("<h3>");
+				sb.append(firstName +", Welcome to Collabor8 !");		
+				sb.append("</h3>");			
+				sb.append("<p>");
+				sb.append("Your account has been created! Your email-id is your user id and you can set your password by clicking the ");				
+				sb.append("<a href=\""+link+"\">link here.</a>");	
+				sb.append("</p>");	
+				sb.append("<br></br>");				
+				sb.append("Collabor8 is simple to use.");									
+				sb.append("<ul>");				
+				sb.append("<li>");
+				sb.append("Enter one or more team members email id.");
+				sb.append("</li>");
+				sb.append("<li>");
+				sb.append("Attach documents to tasks and projects.");
+				sb.append("</li>");
+				sb.append("<li>");
+				sb.append("Start raising requests on them.");
+				sb.append("</li>");
+				sb.append("<li>");
+				sb.append("Optionally use request categories, projects and types for better analysis and management.");
+				sb.append("</li>");
+				sb.append("</ul>");
+				
+				sb.append("<br></br>");
+				sb.append("Get more information on Collabor8.com. Feel free to write to us at");
 				sb.append("helpdesk@collabor8.com");
+				sb.append("<br></br>");
+				sb.append("<br></br>");
+				sb.append("Happy Collabor8ing!");
+				sb.append("<br></br>");
+				sb.append("<br></br>");
+				sb.append("support@Collabor8.com");			
+				sb.append("</div>");
+				sb.append("</table>");
+				sb.append("</body>");
+				sb.append("</html>");
+				content = sb.toString();
+				
+				
+				
+				
+				
+				
+				
+				
 				
 				content = sb.toString();
 			}
