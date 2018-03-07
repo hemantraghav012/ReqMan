@@ -14,12 +14,9 @@ import com.reqman.daoimpl.RequesttypeMasterImpl;
 import com.reqman.util.SessionUtils;
 import com.reqman.util.requestemail;
 
-public class PendingRequestJob implements Job 
+public class PendingRequestJob 
 {
-	public void execute(JobExecutionContext context)
-		throws JobExecutionException 
-	{
-//	ArrayList<String> alluseremailid=new ArrayList<String>();
+	public void request(){
 	
 	requestemail rm= new requestemail();	
 		
