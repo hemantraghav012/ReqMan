@@ -33,14 +33,14 @@ public class schedulejobbean implements Serializable{
 	private String jobname;
 	private String description;
 	private String day;
-	private String hour;
-	private String minute;
+	private Integer hour;
+	private Integer minute;
 	private Boolean status;	
 	private SchedulejobVo  schedulejobVo = new SchedulejobVo ();
 	private SchedulejobInterface  schedulejobInterface = new  SchedulejobImpl();	
 	 private List<SchedulejobVo> schedulejobList = new ArrayList<SchedulejobVo>();	
 	 private List<SchedulejobVo> filteredschedulejobList = new ArrayList<SchedulejobVo>();
-	
+	private Integer date;
 	
 	
 	
@@ -56,7 +56,7 @@ public class schedulejobbean implements Serializable{
 				HttpSession session = SessionUtils.getSession();
 				String userName = (String)session.getAttribute("username");
 				System.out.println("--usersession--userName-->"+userName);
-				schedulejobList = schedulejobInterface.getschedulejobDetails(userName);
+				schedulejobList = schedulejobInterface.getschedulejobDetails(userName.toLowerCase().trim());
 				
 				setFilteredschedulejobList(schedulejobList);
 				
@@ -85,7 +85,7 @@ public class schedulejobbean implements Serializable{
 			String userName = (String)session.getAttribute("username");
 			
 			System.out.println("--usersession--userName-->"+userName);
-			result = schedulejobInterface.saveschedulejob(jobname, status, userName,day,hour,minute,description);
+			result = schedulejobInterface.saveschedulejob(jobname, status, userName.toLowerCase().trim(),day,date,hour,minute,description);
 			
 			if(result == 1)
 			{
@@ -115,7 +115,7 @@ public class schedulejobbean implements Serializable{
 								"New Schedulejob added successfully.",""));
 			}
 			
-			
+			schedulejobList = schedulejobInterface.getschedulejobDetails(userName.toLowerCase().trim());
 			
 		}
 		catch(Exception e)
@@ -154,7 +154,7 @@ public class schedulejobbean implements Serializable{
 			setDay(schedulejobVo.getDay());
 			setHour(schedulejobVo.getHour());
 			setMinute(schedulejobVo.getMinute());
-			
+			setDate(schedulejobVo.getDate());
 
 			FacesContext.getCurrentInstance().getExternalContext()
 					.dispatch("modifyschedulejob.xhtml");
@@ -178,7 +178,7 @@ public class schedulejobbean implements Serializable{
 			System.out.println("--usersession--userName-->" + userName);
 			
 			result = schedulejobInterface.updatescheduleById(schedulejobid, status,
-					description, jobname, day, hour, minute,  userName);
+					description, jobname, day, hour, minute, date, userName.toLowerCase().trim());
 
 			if (result == 2) {
 				FacesContext.getCurrentInstance().addMessage(
@@ -234,18 +234,47 @@ public class schedulejobbean implements Serializable{
 	public void setDay(String day) {
 		this.day = day;
 	}
-	public String getHour() {
+	
+
+	public Integer getHour() {
 		return hour;
 	}
-	public void setHour(String hour) {
+
+
+
+
+
+
+
+	public void setHour(Integer hour) {
 		this.hour = hour;
 	}
-	public String getMinute() {
+
+
+
+
+
+
+
+	public Integer getMinute() {
 		return minute;
 	}
-	public void setMinute(String minute) {
+
+
+
+
+
+
+
+	public void setMinute(Integer minute) {
 		this.minute = minute;
 	}
+
+
+
+
+
+
 
 	public Boolean getStatus() {
 		return status;
@@ -281,6 +310,26 @@ public class schedulejobbean implements Serializable{
 	public void setFilteredschedulejobList(
 			List<SchedulejobVo> filteredschedulejobList) {
 		this.filteredschedulejobList = filteredschedulejobList;
+	}
+
+
+
+
+
+
+
+	public Integer getDate() {
+		return date;
+	}
+
+
+
+
+
+
+
+	public void setDate(Integer date) {
+		this.date = date;
 	}
 	
 	

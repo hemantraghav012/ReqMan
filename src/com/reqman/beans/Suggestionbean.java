@@ -51,7 +51,7 @@ public class Suggestionbean implements Serializable  {
 			HttpSession session = SessionUtils.getSession();
 			String userName = (String)session.getAttribute("username");
 			System.out.println("--usersession--userName-->"+userName);
-			suggestionList = suggestionInterface.getsuggestionDetails(userName);
+			suggestionList = suggestionInterface.getsuggestionDetails(userName.toLowerCase().trim());
 		
 			
 		
@@ -79,7 +79,7 @@ public class Suggestionbean implements Serializable  {
 			String userName = (String)session.getAttribute("username");
 			
 			System.out.println("--usersession--userName-->"+userName);
-			result = suggestionInterface.savesuggestion(message, status, userName);
+			result = suggestionInterface.savesuggestion(message, status, userName.toLowerCase().trim());
 			
 			if(result == 1)
 			{
@@ -102,7 +102,7 @@ public class Suggestionbean implements Serializable  {
 			if(result == 3)
 			{
 				
-				suggestionList = suggestionInterface.getsuggestionDetails(userName);
+				suggestionList = suggestionInterface.getsuggestionDetails(userName.toLowerCase().trim());
 				
 				FacesContext.getCurrentInstance().addMessage(
 						null,

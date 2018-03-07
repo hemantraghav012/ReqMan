@@ -61,7 +61,7 @@ public class closerequestbean implements Serializable{
 			HttpSession session = SessionUtils.getSession();
 			String userName = (String) session.getAttribute("username");
 			System.out.println("--usersession--userName-->" + userName);			
-			closerequestList = newrequestInterface.getColserequestDetails(userName);			
+			closerequestList = newrequestInterface.getColserequestDetails(userName.toLowerCase().trim());			
 			setFilteredCloseRequestList(closerequestList);
 			
 

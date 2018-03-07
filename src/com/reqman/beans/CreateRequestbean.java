@@ -135,7 +135,7 @@ public class CreateRequestbean implements Serializable {
 			if (endDate == null) {
 				endDate = new Date();
 			}			
-			newrequestList = newrequestInterface.getNewrequestDetails(userName,
+			newrequestList = newrequestInterface.getNewrequestDetails(userName.toLowerCase().trim(),
 					startDate, endDate);
 			
 			setFilteredRequestList(newrequestList);
@@ -156,7 +156,7 @@ public class CreateRequestbean implements Serializable {
 			System.out.println("--create new request-->");
 			HttpSession session = SessionUtils.getSession();
 			String userName = (String) session.getAttribute("username");
-			newrequestList = newrequestInterface.getNewrequestDetails(userName,
+			newrequestList = newrequestInterface.getNewrequestDetails(userName.toLowerCase().trim(),
 					startDate, endDate);
 
 		} catch (Exception e) {
@@ -173,7 +173,7 @@ public class CreateRequestbean implements Serializable {
 			HttpSession session = SessionUtils.getSession();
 			String userName = (String) session.getAttribute("username");
 			System.out.println("--usersession--userName-->" + userName);
-			newrequestList = newrequestInterface.getNewrequestDetails(userName,
+			newrequestList = newrequestInterface.getNewrequestDetails(userName.toLowerCase().trim(),
 					startDate, endDate);
 
 		} catch (Exception e) {
@@ -218,7 +218,7 @@ public class CreateRequestbean implements Serializable {
 			}
 
 			result = newrequestInterface.save(title, description, usercategory,
-					userproject, userrequesttype, attachment, userName,
+					userproject, userrequesttype, attachment, userName.toLowerCase().trim(),
 					completiondate, userfriendlist,estimatedeffort,weightage,priority);
 
 			if (result == 1) {
@@ -393,7 +393,7 @@ public class CreateRequestbean implements Serializable {
 			System.out.println("--feedback	-" + feedback);
 			result = newrequestInterface.updateRequestById(requestId, status,
 					description, completiondate, attachment,
-					completionpercentage, stage, message, userName,
+					completionpercentage, stage, message, userName.toLowerCase().trim(),
 					userproject, usercategory, userrequesttype, userfriend,rating,feedback,estimatedeffort,weightage,priority);
 
 			if (result == 2) {
@@ -467,7 +467,7 @@ public class CreateRequestbean implements Serializable {
 			
 			
 			
-        	result = newrequestInterface.savefeedbackratingById(requestId,userName,rating,feedback,stage);
+        	result = newrequestInterface.savefeedbackratingById(requestId,userName.toLowerCase().trim(),rating,feedback,stage);
         	//setRequestId(requestId);
         	
         	if(result == 2)
@@ -537,19 +537,12 @@ public class CreateRequestbean implements Serializable {
 		List<UserVo> filteredUsers = new ArrayList<UserVo>();
 		String userName = (String) session.getAttribute("username");
 		System.out.println("--usersession--userName-->" + userName);
-		friendList = friendMasterInterface.AllUsers(userName);
+		friendList = friendMasterInterface.AllUsers(userName.toLowerCase().trim());
 
 		if (friendList != null && friendList.size() != 0 && query != null) {
 			for (UserVo userVo : friendList) {
-				if (userVo != null
-						&& userVo.getName() != null
-						&& userVo
-								.getName()
-								.toLowerCase()
-								.trim()
-								.matches(
-										"(.*)" + query.toLowerCase().trim()
-												+ "(.*)")) {
+				if (userVo != null && userVo.getName() != null
+						&& userVo.getName().toLowerCase().trim().matches("(.*)" + query.toLowerCase().trim()+ "(.*)")) {
 					filteredUsers.add(userVo);
 				}
 			}
@@ -568,7 +561,7 @@ public class CreateRequestbean implements Serializable {
 		try {
 			HttpSession session = SessionUtils.getSession();
 			String userName = (String) session.getAttribute("username");
-			requestmap = newrequestqueryInterface.piechart(userName);
+			requestmap = newrequestqueryInterface.piechart(userName.toLowerCase().trim());
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -617,7 +610,7 @@ public class CreateRequestbean implements Serializable {
 		try {
 			HttpSession session = SessionUtils.getSession();
 			String userName = (String) session.getAttribute("username");
-			requestbarmap = newrequestqueryInterface.barchart(userName);
+			requestbarmap = newrequestqueryInterface.barchart(userName.toLowerCase().trim());
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

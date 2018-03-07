@@ -60,7 +60,7 @@ public class Userrolebean implements Serializable {
 			HttpSession session = SessionUtils.getSession();
 			String userName = (String)session.getAttribute("username");
 			System.out.println("--usersession--userName-->"+userName);
-				 userroleList = userroleInterface.getuserroleDetails(userName);
+				 userroleList = userroleInterface.getuserroleDetails(userName.toLowerCase().trim());
 				
 				setFiltereduserroleList(userroleList);
 				 createLineModels();
@@ -100,7 +100,7 @@ public class Userrolebean implements Serializable {
 			  {	       
 			    HttpSession session = SessionUtils.getSession();
 				String userName = (String)session.getAttribute("username");			
-				userrolelinemap = userroleInterface.linechart(userName );
+				userrolelinemap = userroleInterface.linechart(userName.toLowerCase().trim() );
 			  } catch (Exception e)
 			    {
 					// TODO Auto-generated catch block

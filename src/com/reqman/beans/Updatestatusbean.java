@@ -52,7 +52,7 @@ public class Updatestatusbean implements Serializable {
 	private static final long serialVersionUID = -2224803034628444871L;
 	
 	
-	private Integer stage;
+	 private Integer stage;
 	 private String title;
 	 private String description;
 	 private UploadedFile attachment;
@@ -63,9 +63,15 @@ public class Updatestatusbean implements Serializable {
 	 private StreamedContent file;
 	 private Integer requeststage;
 	 private String actualeffort;
-		private String estimatedeffort;
-		private String priority;
-		private Integer weightage;
+	 private String estimatedeffort;
+	 private String priority;
+	 private Integer weightage;
+	 private Integer usercategory;
+	 private Integer userproject;
+	 private Integer userrequesttype;
+	 private Integer userfriend;
+	 private Integer rating;
+	 private String feedback;
 	 
 	 private List<UpdatestatusVo> updatestatusList = new ArrayList<UpdatestatusVo>();
 	 
@@ -88,7 +94,7 @@ public class Updatestatusbean implements Serializable {
 				HttpSession session = SessionUtils.getSession();
 				String userName = (String)session.getAttribute("username");
 				System.out.println("--usersession--userName-->"+userName);
-				updatestatusList = updatestatusInterface.getupdatestatusDetails(userName);			
+				updatestatusList = updatestatusInterface.getupdatestatusDetails(userName.toLowerCase().trim());			
 				setFilteredUpdateList(updatestatusList);
 				
 			}
@@ -110,7 +116,7 @@ public class Updatestatusbean implements Serializable {
 				HttpSession session = SessionUtils.getSession();
 				String userName = (String)session.getAttribute("username");
 				System.out.println("--usersession--userName-->"+userName);
-				updatestatusList= updatestatusInterface.getupdatestatusDetails(userName);
+				updatestatusList= updatestatusInterface.getupdatestatusDetails(userName.toLowerCase().trim());
 			
 			}
 			catch(Exception e)
@@ -133,12 +139,23 @@ public class Updatestatusbean implements Serializable {
 	        	updatestatusVo = updatestatusInterface.getRequestById(requestId);      	
 				
 	        
-	        		setTitle(updatestatusVo.getTitle() != null ? updatestatusVo.getTitle(): "");
-	        		setDescription(updatestatusVo.getDescription() != null ? updatestatusVo.getDescription() : "");
-	        		setCompletionpercentage(updatestatusVo.getCompletionpercentage());
-	        		 setActualeffort(updatestatusVo.getActualeffort());
-	        	setRequeststage(updatestatusVo.getRequeststage());
-	        	FacesContext.getCurrentInstance()
+	        	setTitle(updatestatusVo.getTitle() != null ? updatestatusVo.getTitle(): "");
+	        	setDescription(updatestatusVo.getDescription() != null ? updatestatusVo.getDescription() : "");
+	        	setCompletionpercentage(updatestatusVo.getCompletionpercentage());
+	        	setActualeffort(updatestatusVo.getActualeffort());
+	            setRequeststage(updatestatusVo.getRequeststage());
+	            setUserproject(updatestatusVo.getProject());
+				setUsercategory(updatestatusVo.getCategory());
+				setUserfriend(updatestatusVo.getUserfriend());
+				setRating(updatestatusVo.getRating());
+				setFeedback(updatestatusVo.getFeedback());
+				setEstimatedeffort(updatestatusVo.getEstimatedeffort());
+				setWeightage(updatestatusVo.getWeightage());
+				setPriority(updatestatusVo.getPriority());
+				setActualeffort(updatestatusVo.getActualeffort());
+	        	
+
+              FacesContext.getCurrentInstance()
 	            .getExternalContext().dispatch("modifyupdatestatus.xhtml");
 
 	        }
@@ -162,7 +179,7 @@ public class Updatestatusbean implements Serializable {
 				String userName = (String)session.getAttribute("username");			
 				System.out.println("--usersession--userName-->"+userName);
 				
-	        	result = updatestatusInterface.updateRequestById(requestId, completiondate, completionpercentage,stage,message,userName,actualeffort);
+	        	result = updatestatusInterface.updateRequestById(requestId, completiondate, completionpercentage,stage,message,userName.toLowerCase().trim(),actualeffort);
 	        	
 	        	if(result == 2)
 	        	{
@@ -176,7 +193,7 @@ public class Updatestatusbean implements Serializable {
 	        	
 	        	if(result == 1)
 	        	{
-	        		updatestatusList = updatestatusInterface.getupdatestatusDetails(userName);
+	        		updatestatusList = updatestatusInterface.getupdatestatusDetails(userName.toLowerCase().trim());
 	        	}
 	        	
 			}
@@ -471,6 +488,81 @@ public class Updatestatusbean implements Serializable {
 			this.requeststage = requeststage;
 		}
 
+
+
+		public Integer getUsercategory() {
+			return usercategory;
+		}
+
+
+
+		public void setUsercategory(Integer usercategory) {
+			this.usercategory = usercategory;
+		}
+
+
+
+		public Integer getUserproject() {
+			return userproject;
+		}
+
+
+
+		public void setUserproject(Integer userproject) {
+			this.userproject = userproject;
+		}
+
+
+
+		public Integer getUserrequesttype() {
+			return userrequesttype;
+		}
+
+
+
+		public void setUserrequesttype(Integer userrequesttype) {
+			this.userrequesttype = userrequesttype;
+		}
+
+
+
+		public Integer getUserfriend() {
+			return userfriend;
+		}
+
+
+
+		public void setUserfriend(Integer userfriend) {
+			this.userfriend = userfriend;
+		}
+
+
+
+		public Integer getRating() {
+			return rating;
+		}
+
+
+
+		public void setRating(Integer rating) {
+			this.rating = rating;
+		}
+
+
+
+		public String getFeedback() {
+			return feedback;
+		}
+
+
+
+		public void setFeedback(String feedback) {
+			this.feedback = feedback;
+		}
+
+
+
+		
 
 
 		

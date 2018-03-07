@@ -57,7 +57,7 @@ public class viewcompletedbean implements Serializable {
 				HttpSession session = SessionUtils.getSession();
 				String userName = (String)session.getAttribute("username");
 				System.out.println("--usersession--userName-->"+userName);				
-				completedtaskList=updatestatusInterface.getcompletedtaskDetails(userName);
+				completedtaskList=updatestatusInterface.getcompletedtaskDetails(userName.toLowerCase().trim());
 				setFilteredCompletedList(completedtaskList); 
 			}
 			catch(Exception e)

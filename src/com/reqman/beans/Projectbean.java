@@ -63,10 +63,10 @@ public class Projectbean implements Serializable{
 			HttpSession session = SessionUtils.getSession();
 			String userName = (String)session.getAttribute("username");
 			System.out.println("--usersession--userName-->"+userName);
-			projectList = projectMasterInterface.getProjectDetails(userName);
+			projectList = projectMasterInterface.getProjectDetails(userName.toLowerCase().trim());
 			setFilteredProjectList(projectList);
-			projectList1 = projectMasterInterface.getProjectStatus(userName);
-			projectList2 = projectMasterInterface.getProjectfalseStatus(userName);
+			projectList1 = projectMasterInterface.getProjectStatus(userName.toLowerCase().trim());
+			projectList2 = projectMasterInterface.getProjectfalseStatus(userName.toLowerCase().trim());
 			 createPieModels();
 			 projectaccess = true;
 		}
@@ -105,8 +105,8 @@ public class Projectbean implements Serializable{
 			projectList = new ArrayList<ProjectVo>();
 			HttpSession session = SessionUtils.getSession();
 			String userName = (String)session.getAttribute("username");
-			System.out.println("--usersession--userName-->"+userName);
-			projectList = projectMasterInterface.getProjectDetails(userName);
+			System.out.println("--usersession--userName-->"+userName.toLowerCase().trim());
+			projectList = projectMasterInterface.getProjectDetails(userName.toLowerCase().trim());
 		}
 		catch(Exception e)
 		{
@@ -143,7 +143,7 @@ public class Projectbean implements Serializable{
 			HttpSession session = SessionUtils.getSession();
 			String userName = (String)session.getAttribute("username");
 			System.out.println("--usersession--userName-->"+userName);
-			result = projectMasterInterface.saveproject(projectName, status, userName,projectaccess);
+			result = projectMasterInterface.saveproject(projectName, status, userName.toLowerCase().trim(),projectaccess);
 			
 			if(result == 1)
 			{
@@ -173,7 +173,7 @@ public class Projectbean implements Serializable{
 								"New Project added successfully.",""));
 			}
 			
-			projectList = projectMasterInterface.getProjectDetails(userName);
+			projectList = projectMasterInterface.getProjectDetails(userName.toLowerCase().trim());
 			
 		}
 		catch(Exception e)

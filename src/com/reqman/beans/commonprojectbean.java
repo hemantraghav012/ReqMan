@@ -42,7 +42,7 @@ public class commonprojectbean implements Serializable {
 				HttpSession session = SessionUtils.getSession();
 				String userName = (String)session.getAttribute("username");
 				System.out.println("--usersession--userName-->"+userName);				
-				commonproject = updatestatusInterface.getallProject(userName);
+				commonproject = updatestatusInterface.getallProject(userName.toLowerCase().trim());
 				setFilteredcommonprojectList(commonproject);
 				
 			}

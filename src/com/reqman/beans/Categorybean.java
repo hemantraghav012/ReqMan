@@ -63,10 +63,10 @@ public class Categorybean implements Serializable
 			HttpSession session = SessionUtils.getSession();
 			String userName = (String)session.getAttribute("username");
 			System.out.println("--usersession--userName-->"+userName);
-			categoryList = categoryMasterInterface.getCategoryDetails(userName);
+			categoryList = categoryMasterInterface.getCategoryDetails(userName.toLowerCase().trim());
 			setFilteredCategoryList(categoryList);
-			categoryList1 = categoryMasterInterface.getCategoryStatus(userName);
-			categoryList2 = categoryMasterInterface.getCategoryStatusfalse(userName);
+			categoryList1 = categoryMasterInterface.getCategoryStatus(userName.toLowerCase().trim());
+			categoryList2 = categoryMasterInterface.getCategoryStatusfalse(userName.toLowerCase().trim());
 			 createPieModels();
 		}
 		catch(Exception e)
@@ -105,7 +105,7 @@ public class Categorybean implements Serializable
 			HttpSession session = SessionUtils.getSession();
 			String userName = (String)session.getAttribute("username");
 			System.out.println("--usersession--userName-->"+userName);
-			categoryList = categoryMasterInterface.getCategoryDetails(userName);
+			categoryList = categoryMasterInterface.getCategoryDetails(userName.toLowerCase().trim());
 		}
 		catch(Exception e)
 		{
@@ -143,7 +143,7 @@ public class Categorybean implements Serializable
 			String userName = (String)session.getAttribute("username");
 			
 			System.out.println("--usersession--userName-->"+userName);
-			result = categoryMasterInterface.savecategory(categoryName, status, userName);
+			result = categoryMasterInterface.savecategory(categoryName, status, userName.toLowerCase().trim());
 			
 			if(result == 1)
 			{
@@ -173,7 +173,7 @@ public class Categorybean implements Serializable
 								"New Category added successfully.",""));
 			}
 			
-			categoryList = categoryMasterInterface.getCategoryDetails(userName);
+			categoryList = categoryMasterInterface.getCategoryDetails(userName.toLowerCase().trim());
 			
 		}
 		catch(Exception e)

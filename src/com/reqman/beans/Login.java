@@ -92,15 +92,15 @@ public class Login implements Serializable {
 				
 				if(rootObject != null)
 				{
-					result = subscripeInf.saveSubscription(rootObject, user);
+					result = subscripeInf.saveSubscription(rootObject, user.toLowerCase().trim());
 				}
 			}
 
-			result = userImpl.validate(user, pwd,userrole);
+			result = userImpl.validate(user.toLowerCase().trim(), pwd,userrole);
 			//boolean valid = LoginDAO.validate(user, pwd);
 			if (result == 1) {
 				HttpSession session = SessionUtils.getSession();
-				session.setAttribute("username", user);
+				session.setAttribute("username", user.toLowerCase().trim());
 				session.setAttribute("userroleset", result);
 				//for App admin
 				return "home";
@@ -109,7 +109,7 @@ public class Login implements Serializable {
 			
 			else if (result == 2) {
 				HttpSession session = SessionUtils.getSession();
-				session.setAttribute("username", user);
+				session.setAttribute("username", user.toLowerCase().trim());
 				session.setAttribute("userroleset",  result);
 				//For Account admin
 				return "home";
@@ -117,7 +117,7 @@ public class Login implements Serializable {
 			
 			else if (result ==3) {
 				HttpSession session = SessionUtils.getSession();
-				session.setAttribute("username", user);
+				session.setAttribute("username", user.toLowerCase().trim());
 				session.setAttribute("userroleset",  result);
 				//For Requestor
 				return "home";
@@ -125,7 +125,7 @@ public class Login implements Serializable {
 			
 			else if (result == 4) {
 				HttpSession session = SessionUtils.getSession();
-				session.setAttribute("username", user);
+				session.setAttribute("username", user.toLowerCase().trim());
 				session.setAttribute("userroleset",  result);
 				//For Team Member
 				return "home";
@@ -183,7 +183,7 @@ public class Login implements Serializable {
 				{
 					user = (String)session.getAttribute("username");
 				}
-				image = userImpl.getImageDetails(user);
+				image = userImpl.getImageDetails(user.toLowerCase().trim());
 				if(image == null)
 				{
 					//image = new byte[10];

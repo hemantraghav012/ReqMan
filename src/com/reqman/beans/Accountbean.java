@@ -65,7 +65,7 @@ public class Accountbean implements Serializable {
 				HttpSession session = SessionUtils.getSession();
 				String userName = (String)session.getAttribute("username");
 				System.out.println("--usersession--userName-->"+userName);
-				accountList = accountInterface.getaccountDetails(userName);
+				accountList = accountInterface.getaccountDetails(userName.toLowerCase().trim());
 				
 				setFilteredaccountList(accountList);
 				
@@ -90,7 +90,7 @@ public class Accountbean implements Serializable {
 				System.out.println("--usersession--userName-->"+userName);
 				
 	        	//setId(id);
-	        	accountVo = accountInterface.getAccountById(id,userName);      	
+	        	accountVo = accountInterface.getAccountById(id,userName.toLowerCase().trim());      	
 
 	        	System.out.println("modify action"+id);
 	        	
@@ -121,7 +121,7 @@ public class Accountbean implements Serializable {
 				System.out.println("--usersession--userName-->"+userName);
 				
 	        
-	        	result = accountInterface.updatelogo(accountname,status,id,userName,logo,imagename);
+	        	result = accountInterface.updatelogo(accountname,status,id,userName.toLowerCase().trim(),logo,imagename);
 	        	
 	        	
 	        	if (result == 1) {
@@ -200,7 +200,7 @@ public class Accountbean implements Serializable {
 					{
 						userName  = (String)session.getAttribute("username");
 					}
-					image = accountInterface.getImageDetails(userName);
+					image = accountInterface.getImageDetails(userName.toLowerCase().trim());
 					if(image == null)
 					{
 						//image = new byte[10];

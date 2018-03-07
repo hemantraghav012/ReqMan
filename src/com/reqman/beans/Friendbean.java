@@ -85,12 +85,12 @@ private  List<FriendVo> friendList = new ArrayList<FriendVo>();
 			HttpSession session = SessionUtils.getSession();
 			String userName = (String)session.getAttribute("username");
 			System.out.println("--usersession--userName-->"+userName);
-			friendList = friendMasterInterface.getUsersDetails(userName);
+			friendList = friendMasterInterface.getUsersDetails(userName.toLowerCase().trim());
 			setFilteredFriendList(friendList);
-			friendList1 = friendMasterInterface.getUsersStatus(userName);
-			friendList2 = friendMasterInterface.getUsersfasleStatus(userName);
+			friendList1 = friendMasterInterface.getUsersStatus(userName.toLowerCase().trim());
+			friendList2 = friendMasterInterface.getUsersfasleStatus(userName.toLowerCase().trim());
 			 createPieModels();
-			  getfriendList = friendMasterInterface.AllUsers(userName);
+			  getfriendList = friendMasterInterface.AllUsers(userName.toLowerCase().trim());
 		}
 		catch(Exception e)
 		{
@@ -105,7 +105,7 @@ private  List<FriendVo> friendList = new ArrayList<FriendVo>();
 		 HttpSession session = SessionUtils.getSession();
 			String userName = (String)session.getAttribute("username");
 			System.out.println("--usersession--userName-->"+userName); 
-        getfriendList = friendMasterInterface.AllUsers(userName);        
+        getfriendList = friendMasterInterface.AllUsers(userName.toLowerCase().trim());        
        
          
          return   getfriendList;  
@@ -140,7 +140,7 @@ private  List<FriendVo> friendList = new ArrayList<FriendVo>();
 			String userName = (String)session.getAttribute("username");
 			
 			System.out.println("--usersession--userName-->"+userName);
-			friendList = friendMasterInterface.getUsersDetails(userName);
+			friendList = friendMasterInterface.getUsersDetails(userName.toLowerCase().trim());
 		}
 		catch(Exception e)
 		{
@@ -176,7 +176,7 @@ private  List<FriendVo> friendList = new ArrayList<FriendVo>();
 			String userName = (String)session.getAttribute("username");
 			System.out.println("--usersession--userName-->"+userName);
 			
-				result = friendMasterInterface.savefriend(frienduser,status, friendfirstname, friendlastname,password, friendshortname,userName, hashkey );
+				result = friendMasterInterface.savefriend(frienduser,status, friendfirstname, friendlastname,password, friendshortname,userName.toLowerCase().trim(), hashkey );
 			
 			if(result == 1)
 			{
@@ -206,7 +206,7 @@ private  List<FriendVo> friendList = new ArrayList<FriendVo>();
 								"Team member is added successfully.",""));
 			}
 			
-			friendList = friendMasterInterface.getUsersDetails(userName);
+			friendList = friendMasterInterface.getUsersDetails(userName.toLowerCase().trim());
 				
 		}
 		catch(Exception e)

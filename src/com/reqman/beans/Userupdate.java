@@ -48,11 +48,11 @@ public class Userupdate implements Serializable{
 	        try
 	        {
 	        	HttpSession session = SessionUtils.getSession();
-				 userName = (String)session.getAttribute("username");
+				String userName = (String)session.getAttribute("username");
 				System.out.println("--modifyAction--userName-->"+userName);
-				setUserName(userName);
+				setUserName(userName.toLowerCase().trim());
 	           
-	        	userupdateVo = userImpl.getUseremailid(userName);
+	        	userupdateVo = userImpl.getUseremailid(userName.toLowerCase().trim());
 	        	
 	        	setFirstname(userupdateVo.getFirstname());
 	        	setLastname(userupdateVo.getLastname());
@@ -84,7 +84,7 @@ public class Userupdate implements Serializable{
 				System.out.println("--usersession--userName-->"+userName);
 				
 	        
-	        	result = userImpl.updateUsers(userName,firstname,lastname,shortname,password,photo);
+	        	result = userImpl.updateUsers(userName.toLowerCase().trim(),firstname,lastname,shortname,password,photo);
 	        	
 	        	
 	        	if (result == 1) {

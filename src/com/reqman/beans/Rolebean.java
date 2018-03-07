@@ -44,8 +44,8 @@ public class Rolebean implements Serializable{
 			roleList = new ArrayList<RoleVo>();
 			HttpSession session = SessionUtils.getSession();
 			String userName = (String)session.getAttribute("username");
-			System.out.println("--usersession--userName-->"+userName);
-			roleList  = roleMasterInterface .getroleDetails(userName);
+			System.out.println("--usersession--userName-->"+userName.toLowerCase().trim());
+			roleList  = roleMasterInterface .getroleDetails(userName.toLowerCase().trim());
 			
 		}
 		catch(Exception e)
@@ -69,8 +69,8 @@ public class Rolebean implements Serializable{
 			{
 				HttpSession session = SessionUtils.getSession();
 				String userName = (String)session.getAttribute("username");
-				System.out.println("--usersession--userName-->"+userName);
-				roleList  = roleMasterInterface .getroleDetails(userName);
+				System.out.println("--usersession--userName-->"+userName.toLowerCase().trim());
+				roleList  = roleMasterInterface .getroleDetails(userName.toLowerCase().trim());
 				
 				FacesContext.getCurrentInstance().addMessage(
 						null,

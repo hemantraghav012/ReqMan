@@ -76,7 +76,7 @@ public class Responsebean implements Serializable{
 			HttpSession session = SessionUtils.getSession();
 			String userName = (String)session.getAttribute("username");
 			System.out.println("--usersession--userName-->"+userName);						
-			responseList = responseInterface.getresponseDetails(userName);
+			responseList = responseInterface.getresponseDetails(userName.toLowerCase().trim());
 			setFilteredResponseList(responseList);
 			
 			
@@ -98,7 +98,7 @@ public class Responsebean implements Serializable{
 				HttpSession session = SessionUtils.getSession();
 				String userName = (String)session.getAttribute("username");
 				System.out.println("--usersession--userName-->"+userName);
-				responseList = responseInterface.getresponseDetails(userName);
+				responseList = responseInterface.getresponseDetails(userName.toLowerCase().trim());
 			
 			}
 			catch(Exception e)
@@ -174,7 +174,7 @@ public void modifyAction() {
 			String userName = (String)session.getAttribute("username");			
 			System.out.println("--usersession--userName-->"+userName);
 			System.out.println("--usersession--userName-->"+completiondate);
-        	result = responseInterface.updateResponsetById(requestId,stage, completiondate,userName,message,actualeffort);
+        	result = responseInterface.updateResponsetById(requestId,stage, completiondate,userName.toLowerCase().trim(),message,actualeffort);
         	
         	if(result == 2)
         	{
@@ -188,7 +188,7 @@ public void modifyAction() {
         	
         	if(result == 1)
         	{
-        		responseList = responseInterface.getresponseDetails(userName);
+        		responseList = responseInterface.getresponseDetails(userName.toLowerCase().trim());
         	}
         	
 		}

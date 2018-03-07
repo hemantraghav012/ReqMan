@@ -44,7 +44,7 @@ public class Accountuserbean implements Serializable {
 			HttpSession session = SessionUtils.getSession();
 			String userName = (String)session.getAttribute("username");
 			System.out.println("--usersession--userName-->"+userName);
-			accountuserList = accountuserInterface .getaccountuserDetails(userName);
+			accountuserList = accountuserInterface .getaccountuserDetails(userName.toLowerCase().trim());
 				
 				setFilteredaccountuserList(accountuserList);
 				

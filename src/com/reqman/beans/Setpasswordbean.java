@@ -47,7 +47,7 @@ public String setandupdate(){
 		System.out.println("--emailid--"+emailid);
 		System.out.println("--hashkey-"+hash);
 		
-    	result = userImpl.updatepasswordByHashkey(hash, emailid,password);
+    	result = userImpl.updatepasswordByHashkey(hash, emailid.toLowerCase().trim(),password);
     	
     	if(result == 2)
     	{
@@ -82,7 +82,7 @@ public String setinformationupdate(){
 		System.out.println("--emailid--"+emailid);
 		System.out.println("--hashkey-"+hash);
 		
-    	result = userImpl.updateinformationByHashkey(hash, emailid,password,firstname,lastname,shortname);
+    	result = userImpl.updateinformationByHashkey(hash, emailid.toLowerCase().trim(),password,firstname,lastname,shortname);
     	
     	if(result == 2)
     	{
@@ -120,7 +120,7 @@ public String forgotpassword()
 	int result = 0;
 	try{
 	
-		result = userImpl.forgotpassword(emailid,hashkey);
+		result = userImpl.forgotpassword(emailid.toLowerCase().trim(),hashkey);
 		
 		if (result == 1) {
 			return "sendemailbutton";
@@ -160,7 +160,7 @@ public String forgotpasswordupdate(){
 		System.out.println("--emailid--"+emailid);
 		System.out.println("--hashkey-"+hash);
 		
-    	result = userImpl.forgotpasswordwithemail(hash, emailid,password);
+    	result = userImpl.forgotpasswordwithemail(hash, emailid.toLowerCase().trim(),password);
     	
     	if(result == 2)
     	{

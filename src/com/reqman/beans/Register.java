@@ -50,7 +50,7 @@ public class Register implements Serializable{
 		int result = 0;
 		try{
 		//Pass all value through registerbean class to userImpl Interface and call saveUser() method
-			result = userImpl.saveUser(emailid, password, firstname, lastname, shortname,hashkey,photo);
+			result = userImpl.saveUser(emailid.toLowerCase().trim(), password, firstname, lastname, shortname,hashkey,photo);
 			
 			//boolean valid = LoginDAO.validate(user, pwd);
 			if (result == 1) {
@@ -101,7 +101,7 @@ public class Register implements Serializable{
 		int result = 0;
 		try{
 		
-			result = userImpl.savesocialUser(emailid, password, firstname, lastname, shortname,hashkey);
+			result = userImpl.savesocialUser(emailid.toLowerCase().trim(), password, firstname, lastname, shortname,hashkey);
 			
 			//boolean valid = LoginDAO.validate(user, pwd);
 			if (result == 1) {
@@ -154,14 +154,14 @@ public class Register implements Serializable{
 		int result = 0;
 		try{
 			System.out.println("--emailid--"+googleemail);
-			result = userImpl.saveUserthrowgoogle(googleemail);
+			result = userImpl.saveUserthrowgoogle(googleemail.toLowerCase().trim());
 			System.out.println("--emailid--"+googleemail);
 			//boolean valid = LoginDAO.validate(user, pwd);
 			
 				
 				if (result == 1) {
 					HttpSession session = SessionUtils.getSession();
-					session.setAttribute("username", googleemail);
+					session.setAttribute("username", googleemail.toLowerCase().trim());
 					session.setAttribute("userroleset", result);
 					//For App admin 
 					return "home";
@@ -169,7 +169,7 @@ public class Register implements Serializable{
 				
 				else if (result == 2) {
 					HttpSession session = SessionUtils.getSession();
-					session.setAttribute("username",googleemail);
+					session.setAttribute("username",googleemail.toLowerCase().trim());
 					session.setAttribute("userroleset", result);
 					//For Account Admin 
 					return "home";
@@ -177,7 +177,7 @@ public class Register implements Serializable{
 				
 				else if (result ==3) {
 					HttpSession session = SessionUtils.getSession();
-					session.setAttribute("username",googleemail);
+					session.setAttribute("username",googleemail.toLowerCase().trim());
 					session.setAttribute("userroleset", result);
 					//for Requestor
 					return "home";
@@ -185,7 +185,7 @@ public class Register implements Serializable{
 				
 				else if (result == 4) {
 					HttpSession session = SessionUtils.getSession();
-					session.setAttribute("username",googleemail);
+					session.setAttribute("username",googleemail.toLowerCase().trim());
 					session.setAttribute("userroleset", result);
 					//For Team member
 					return "home";

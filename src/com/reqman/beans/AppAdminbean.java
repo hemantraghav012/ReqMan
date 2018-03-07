@@ -48,7 +48,7 @@ public class AppAdminbean implements Serializable {
 		HttpSession session = SessionUtils.getSession();
 		String userName = (String)session.getAttribute("username");
 			System.out.println("--usersession--userName-->"+userName);
-			userList = appadminInterface.getappadminDetails(userName);
+			userList = appadminInterface.getappadminDetails(userName.toLowerCase().trim());
 			
 			setFilteredUserList(userList);
 			

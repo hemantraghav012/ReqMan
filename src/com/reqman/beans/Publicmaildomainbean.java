@@ -61,7 +61,7 @@ public class Publicmaildomainbean implements Serializable{
 				String userName = (String) session.getAttribute("username");
 				
 				if(publicdonainList !=null && publicdonainList.size() != 0){
-				result = publicdomainInterface.save(publicdonainList,domainname,status,userName);
+				result = publicdomainInterface.save(publicdonainList,domainname,status,userName.toLowerCase().trim());
 				}
 				else{
 					FacesContext.getCurrentInstance().addMessage(

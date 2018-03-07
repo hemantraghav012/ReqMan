@@ -67,7 +67,7 @@ public class adminrequestbean implements Serializable {
 			HttpSession session = SessionUtils.getSession();
 			String userName = (String) session.getAttribute("username");
 			System.out.println("--usersession--userName-->" + userName);					
-			adminrequestList = newrequestInterface.getadminrequestDetails(userName);			
+			adminrequestList = newrequestInterface.getadminrequestDetails(userName.toLowerCase().trim());			
 			setFilteredRequestList(adminrequestList);
 			
 			

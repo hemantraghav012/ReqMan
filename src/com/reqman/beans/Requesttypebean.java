@@ -66,10 +66,10 @@ private  List<RequesttypeVo> requesttypeList2 = new ArrayList<RequesttypeVo>();
 			HttpSession session = SessionUtils.getSession();
 			String userName = (String)session.getAttribute("username");
 			System.out.println("--usersession--userName-->"+userName);
-			requesttypeList = requesttypeMasterInterface.getRequesttypeDetails(userName);
+			requesttypeList = requesttypeMasterInterface.getRequesttypeDetails(userName.toLowerCase().trim());
 			setFilteredRequesttypeList(requesttypeList);
-			requesttypeList1 = requesttypeMasterInterface.getRequesttypeStatus(userName);
-			requesttypeList2 = requesttypeMasterInterface.getRequesttypefalseStatus(userName);
+			requesttypeList1 = requesttypeMasterInterface.getRequesttypeStatus(userName.toLowerCase().trim());
+			requesttypeList2 = requesttypeMasterInterface.getRequesttypefalseStatus(userName.toLowerCase().trim());
 			 createPieModels();
 		}
 		catch(Exception e)
@@ -105,7 +105,7 @@ private  List<RequesttypeVo> requesttypeList2 = new ArrayList<RequesttypeVo>();
 			HttpSession session = SessionUtils.getSession();
 			String userName = (String)session.getAttribute("username");
 			System.out.println("--usersession--userName-->"+userName);
-		requesttypeList = requesttypeMasterInterface.getRequesttypeDetails(userName);
+		requesttypeList = requesttypeMasterInterface.getRequesttypeDetails(userName.toLowerCase().trim());
 		}
 		catch(Exception e)
 		{
@@ -142,7 +142,7 @@ private  List<RequesttypeVo> requesttypeList2 = new ArrayList<RequesttypeVo>();
 			HttpSession session = SessionUtils.getSession();
 			String userName = (String)session.getAttribute("username");
 			System.out.println("--usersession--userName-->"+userName);
-			result = requesttypeMasterInterface.saverequesttype(requesttypeName, status, userName);
+			result = requesttypeMasterInterface.saverequesttype(requesttypeName, status, userName.toLowerCase().trim());
 			
 			if(result == 1)
 			{
@@ -172,7 +172,7 @@ private  List<RequesttypeVo> requesttypeList2 = new ArrayList<RequesttypeVo>();
 								"New Type added successfully.",
 								""));
 			}
-			requesttypeList = requesttypeMasterInterface.getRequesttypeDetails(userName);
+			requesttypeList = requesttypeMasterInterface.getRequesttypeDetails(userName.toLowerCase().trim());
 			
 			
 		}
