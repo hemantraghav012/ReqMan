@@ -37,18 +37,22 @@ import com.reqman.pojo.UserusertypeId;
 public class HibernateUtil {
     private static SessionFactory sessionFactory;
 	private static Session session;
+	private static Configuration configuration;
+	public static String schemaName="reqman";
+	static {
 
-    public static SessionFactory getSessionFactory() {
+    	try{
         if (sessionFactory == null) {
             // loads configuration and mappings
-            Configuration configuration = new Configuration();
+            configuration = new Configuration();
             configuration.setProperty("hibernate.dialect", "org.hibernate.dialect.PostgreSQLDialect");
     	    configuration.setProperty("hibernate.connection.driver_class", "org.postgresql.Driver");
-    	    configuration.setProperty("hibernate.connection.url", "jdbc:postgresql://localhost:5432/reqman");
+    	    configuration.setProperty("hibernate.connection.url", "jdbc:postgresql://localhost:5432/raqman4");
     	    configuration.setProperty("hibernate.connection.username", "postgres");
     	    configuration.setProperty("hibernate.connection.password", "3394");
     	    configuration.setProperty("hibernate.show_sql", "true");
     	    configuration.setProperty("hibernate.default_schema", "reqman");
+    	    
     	   configuration.setProperty("hibernate.hbm2ddl.auto", "update");
     	    
     	    configuration.addAnnotatedClass(Audittrail.class);
@@ -85,8 +89,17 @@ public class HibernateUtil {
             // builds a session factory from the service registry
             sessionFactory = configuration.buildSessionFactory(serviceRegistry);           
         }
-         
-        return sessionFactory;
+
+
+	
+}catch(Exception ex){
+	ex.printStackTrace();
+}
+      
+    
+	}
+    public static SessionFactory getSessionFactory() {
+    	  return sessionFactory;
     }
     
     public static Session getSession()
@@ -96,6 +109,11 @@ public class HibernateUtil {
     			
 		return session;
     }
+
+	public static Configuration getConfiguration() {
+		return configuration;
+	}
+
     
     
 

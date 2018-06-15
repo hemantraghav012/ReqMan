@@ -49,4 +49,9 @@ public class HibernateSessionFactory {
 		}
 		return sessionFactory;
 	}
+
+	public static System getConfiguration() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

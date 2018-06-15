@@ -39,10 +39,10 @@ import com.reqman.pojo.UserusertypeId;
 public class HibernateUtilH {
     private static SessionFactory sessionFactory;
 	private static Session session;
-
-    public static SessionFactory getSessionFactory() {
-    	
-    	try
+	private static Configuration configuration;
+	public static final String schemaName=null;
+	static {
+		try
     	{
             if (sessionFactory == null) {
             	
@@ -50,17 +50,17 @@ public class HibernateUtilH {
 
             	
                 // loads configuration and mappings
-                Configuration configuration = new Configuration();
-                configuration.setProperty("hibernate.dialect", "org.hibernate.dialect.PostgreSQLDialect");
-        	    configuration.setProperty("hibernate.connection.driver_class", "org.postgresql.Driver");
-        	    configuration.setProperty("hibernate.connection.url", "jdbc:postgresql://"+ dbUri.getHost() +":" + dbUri.getPort() + dbUri.getPath());
-        	    configuration.setProperty("hibernate.connection.username", dbUri.getUserInfo().split(":")[0]);
-        	    configuration.setProperty("hibernate.connection.password", dbUri.getUserInfo().split(":")[1]);
-        	    configuration.setProperty("hibernate.show_sql", "true");
-        	   // configuration.setProperty("hibernate.default_schema", "reqman");
+               configuration = new Configuration();
+               configuration.setProperty("hibernate.dialect", "org.hibernate.dialect.PostgreSQLDialect");
+        	   configuration.setProperty("hibernate.connection.driver_class", "org.postgresql.Driver");
+        	   configuration.setProperty("hibernate.connection.url", "jdbc:postgresql://"+ dbUri.getHost() +":" + dbUri.getPort() + dbUri.getPath());
+        	   configuration.setProperty("hibernate.connection.username", dbUri.getUserInfo().split(":")[0]);
+        	   configuration.setProperty("hibernate.connection.password", dbUri.getUserInfo().split(":")[1]);
+        	   configuration.setProperty("hibernate.show_sql", "true");
+        	  // configuration.setProperty("hibernate.default_schema", "");
         	   configuration.setProperty("hibernate.hbm2ddl.auto", "update");
         	    
-        	   configuration.addAnnotatedClass(Audittrail.class);
+        	configuration.addAnnotatedClass(Audittrail.class);
        	    configuration.addAnnotatedClass(Category.class);
        	    configuration.addAnnotatedClass(Menu.class);
        	    configuration.addAnnotatedClass(Project.class);
@@ -97,10 +97,15 @@ public class HibernateUtilH {
 
     		
     	}
-    	catch(Exception e)
+    	catch(Exception e) 
     	{
     		e.printStackTrace();
     	}
+    
+	}
+    public static SessionFactory getSessionFactory() {
+    	
+    	
         return sessionFactory;
     }
     
@@ -112,7 +117,11 @@ public class HibernateUtilH {
 		return session;
     }
     
-    
+    public static Configuration getConfiguration() {
+		return configuration;
+	}
+
+      
 
 
 }
