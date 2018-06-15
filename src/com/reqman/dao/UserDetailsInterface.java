@@ -11,9 +11,9 @@ public interface UserDetailsInterface
 {
 	public int validate(String userName, String password, String userrole)  throws Exception;
 	
-	public int saveUser(String emailid, String password, String firstname, String lastname, String shortname, String hashkey,UploadedFile photo) throws Exception;
+	public int saveUser(String emailid, String password, String firstname, String lastname, String shortname, String hashkey,UploadedFile photo, String organizationkey) throws Exception;
 
-	public int updateUsers(String emailid,String firstname, String lastname, String shortname, String password, UploadedFile photo) throws Exception;
+	public int updateUsers(String emailid,String firstname, String lastname, String shortname, String password, UploadedFile photo, String organizationkey) throws Exception;
 
 	public UserupdateVo getUseremailid(String userName)throws Exception;
 
@@ -35,6 +35,11 @@ public interface UserDetailsInterface
 	
 
 	public int saveUserthrowgoogle(String googleemail) throws Exception;
+
+	public int saveAccountadminUser(String emailid, String password, String firstname, String lastname, String shortname,
+			String hashkey, String organizationname)throws Exception;
+
+	
 
 
 

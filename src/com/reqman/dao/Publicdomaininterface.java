@@ -8,8 +8,10 @@ import com.reqman.vo.PublicemaildomainVo;
 
 public interface Publicdomaininterface {
 
-	public int save(List<PublicemaildomainVo> publicdonainList, String domainname, boolean status, String userName) throws Exception;
+	public int save(List<PublicemaildomainVo> publicdonainList, String userName) throws Exception;
 
-	public	PublicemaildomainVo getemaildomainfile()throws Exception;
+	//public	PublicemaildomainVo getemaildomainfile()throws Exception;
+
+	public int quickrequestcheckval(String emailid)throws Exception;
 
 }

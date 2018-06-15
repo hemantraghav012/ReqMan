@@ -6,6 +6,10 @@ import com.reqman.vo.AccountuserVo;
 
 public interface AccountuserInterface {
 
-	List<AccountuserVo> getaccountuserDetails(String userName) throws Exception;
+ public	List<AccountuserVo> getaccountuserDetails(String userName) throws Exception;
+
+ public int updateimagestatus(String userName, Boolean imagestatus) throws Exception;
+
+public AccountuserVo getAccountuserById(String userName) throws Exception;
 
 }

@@ -26,4 +26,6 @@ public interface ProjectMasterInterface {
 	public int updateProject(String oldValue, String newValue,
 			Integer updateprojectId) throws Exception;
 
+	public List<ProjectVo> getallaccountproject(String userName) throws Exception;
+
 }

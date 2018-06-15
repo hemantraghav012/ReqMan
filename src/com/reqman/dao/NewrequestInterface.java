@@ -9,7 +9,12 @@ import org.primefaces.model.UploadedFile;
 
 import com.reqman.pojo.Request;
 import com.reqman.vo.AdminRequestVo;
+import com.reqman.vo.DatasummaryVo;
+import com.reqman.vo.MonthlysummeryemailVo;
 import com.reqman.vo.NewrequestVo;
+import com.reqman.vo.QuickcreaterequestVo;
+import com.reqman.vo.UserVo;
+import com.reqman.vo.dailyDuedatewisesendRequestVo;
 
 public interface NewrequestInterface {
 
@@ -17,7 +22,7 @@ public interface NewrequestInterface {
 
 	// for save
 	public int save(String title, String description, Integer usercategory,
-			Integer userproject, Integer userrequesttype,
+			byte[] bFile, String filedata1, Integer userproject, Integer userrequesttype,
 			UploadedFile attachment, String userName, Date completiondate,
 			Integer[] userfriendlist, String estimatedeffort, Integer weightage, String priority) throws IOException, Exception;
 
@@ -31,7 +36,7 @@ public interface NewrequestInterface {
 	// for update value
 	public int updateRequestById(String requestId, Boolean status,
 			String description, Date completiondate, UploadedFile attachment,
-			Float completionpercentage, Integer stage, String message,
+			int completionpercentage, Integer stage, String message,
 			String userName, Integer userproject, Integer usercategory,
 			Integer userrequesttype, Integer userfriend, Integer rating, String feedback, String estimatedeffort, Integer weightage, String priority) throws Exception;
 
@@ -52,6 +57,30 @@ public interface NewrequestInterface {
 	public int savefeedbackratingById(String requestId, String userName,
 			Integer rating, String feedback, Integer stage) throws Exception;
 
-	public List<AdminRequestVo> getadminrequestDetails(String userName) throws Exception;
+	public List<AdminRequestVo> getadminrequestDetails(String userName, Date startDate, Date endDate) throws Exception;
+
+	public	List<MonthlysummeryemailVo> getTotalaveragebyrequester(String emailid)
+			throws Exception;
+
+	public List<MonthlysummeryemailVo> getAdminsummarybyrequester(String emailid) throws Exception;
+
+	public List<dailyDuedatewisesendRequestVo> getduedatesendrequest(String emailid) throws Exception;
+
+	public List<DatasummaryVo> getdatasummary(String userName, Date startDate, Date endDate) throws Exception;
+
+	public void getRequestStatusUpdateByrequestId(String requestId) throws Exception;
+
+	public int quickrequestsave(List<QuickcreaterequestVo> quickrequestList, String userName)throws Exception;
+
+	public int quickrequestcheckval(String titlelist, List<UserVo> selectedUsers, String userName)throws Exception;
+
+	public int soundrecoder(byte[] data, String filedata1)throws Exception;
+
+	public int updateRequestonGrid(String oldValue, String newValue, Integer updaterequestId, String userName) throws Exception;
+
+
+
+
+	
 
 }

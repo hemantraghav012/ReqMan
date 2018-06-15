@@ -30,4 +30,12 @@ public interface FriendMasterInterface {
 	// for show name in create request teammember field
 	public List<UserVo> AllUsers(String userName) throws Exception;
 
+	public List<FriendVo> getaccountUsers(String userName) throws Exception;
+
+
+
+	//public byte[] getImageDetails(String userName)throws Exception;
+
+	public byte[] getuserImage(Integer userfriendid)throws Exception;
+
 }

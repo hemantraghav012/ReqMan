@@ -2,6 +2,7 @@ package com.reqman.dao;
 
 import java.util.List;
 
+import com.reqman.vo.CategoryVo;
 import com.reqman.vo.RequesttypeVo;
 
 public interface requesttypeMasterInterface {
@@ -27,4 +28,6 @@ public interface requesttypeMasterInterface {
 	// for update status through grid
 	public int updateRequesttype(String oldValue, String newValue,
 			Integer updaterequesttypeId) throws Exception;
+	
+	public List<RequesttypeVo> getallaccountrequesttype(String userName) throws Exception;
 }

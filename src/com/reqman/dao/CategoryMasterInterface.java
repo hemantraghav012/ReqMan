@@ -27,4 +27,6 @@ public interface CategoryMasterInterface {
 	public int updateCategory(String oldValue, String newValue,
 			Integer updatecategoryId) throws Exception;
 
+	public List<CategoryVo> getAccountwiseCategory(String userName) throws Exception;
+
 }
