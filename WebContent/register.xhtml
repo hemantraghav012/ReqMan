@@ -13,7 +13,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
 <link rel="stylesheet" href="resource/css/bootstrap.css"/>
 <link rel="stylesheet" href="resource/mystyle/home.css"/>
-<link rel="stylesheet" href="resource/mystyle/onlyhome.css"/>
+
 <link rel="stylesheet" href="resource/mystyle/register.css"/>
 <link rel="stylesheet" href="resource/mystyle/button.css"/>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -23,6 +23,22 @@
 </h:head>
 
 <h:body >
+<style type="text/css"> 
+.selectRadio Label {
+	margin-right: 51px;
+
+
+} 
+</style>
+
+<script type="text/javascript">
+
+function checkSearchType()
+{
+alert(document.getElementById('msForm:searchType').checked);
+}
+
+</script>
 
  <!-- -Start header Section --> 
  <div id="indexheader">
@@ -39,7 +55,8 @@
 
  <!-- Set Image --> 
 <div class=" col-sm-6">
-<h2 style="font-weight:bold;text-align:center;line-height:55px;"> Start your free 30-day trial.</h2>
+<br></br>
+<h3 style="text-align:center;"> Start your free 30-day trial.</h3>
 <br></br>
 <img   src="resource/image/register.jpeg"  class="img-responsive " alt="collabor8" style="width:100%;"></img>     
 </div>
@@ -48,9 +65,13 @@
  
  <!--Set information --> 
 <div class=" col-sm-6">
-<h2 style="font-weight: bold; padding-left:15px;line-height:50px;margin-bottom:-20px; "> Create an account</h2>
-<h3 style="padding-left:15px;">Fully functional. No credit card required.</h3> 
-<div class="registerfieldforinputboxlen" style="padding-left:15px;line-height:35px;">
+<center>
+<br></br>
+<h3> Create an account</h3>
+
+<h3>Fully functional. No credit card required.</h3> 
+</center>
+<div class="registerfieldforinputboxlen" style="line-height:35px;">
 
  <!--User Information Form Start --> 
  <h:form enctype="multipart/form-data" class="form-horizontal">
@@ -60,9 +81,25 @@
 <!--Display Error -->
 <h:messages style = "color:red;margin:8px;" />
 </div>
-<div>
+
+ <div class="row form-group">
+       <div class=" col-sm-3"></div>
+      <div class=" col-sm-9">
+<input type="radio"  onclick="var target = event.target || event.srcElement; window.location.href = target.value" value="register.xhtml" checked="checked"><h:outputLabel>&nbsp;Personal Account</h:outputLabel></input>&nbsp;&nbsp;&nbsp;
+  <input type="radio" onclick="var target = event.target || event.srcElement; window.location.href = target.value"  value="accountadminregister.xhtml"><h:outputLabel>&nbsp;Organization Account</h:outputLabel></input>
+
+    </div>
+</div>
+
+
+  
+
+<div class="row form-group">
 <!--Enter User Email -->
+<div class=" col-sm-3 control-label">
 <h:outputLabel>Email Id:</h:outputLabel>
+</div>
+<div class=" col-sm-7">
  <h:inputText value="#{register.emailid}" class="form-control" a:placeholder="Email Id" id="emailid" required="true" requiredMessage="* Please enter your Email Id" validatorMessage="Invalid Email Format">
  
  <!--Email Validation -->
@@ -71,43 +108,94 @@
  <h:message for="emailid"  style="color:red;margin:8px;"/> 
 <!--End User Email -->
 </div>
+</div>
 
-<div>
+<div class="row form-group">
 <!--Enter User First Name -->
+<div class=" col-sm-3 control-label">
 <h:outputLabel>First Name:</h:outputLabel>
+</div>
+<div class=" col-sm-7">
 <h:inputText value="#{register.firstname}"  a:placeholder="First Name" class="form-control" id="firstname"
- required="true" requiredMessage="* Please Enter Your First Name">
+ requiredMessage="* Please Enter Your First Name">
  </h:inputText>
  <h:message for="firstname"  style="color:red;margin:8px;"/> 
 <!--Enter User First Name -->
 </div>
+</div>
 
-<div>
+<div class="row form-group">
 <!--Enter User Last Name -->
+<div class=" col-sm-3 control-label">
 <h:outputLabel>Last Name:</h:outputLabel>
+</div>
+<div class=" col-sm-7">
 <h:inputText value="#{register.lastname}"  a:placeholder="Last Name" class="form-control" id="lastname" 
-required="true" requiredMessage="* Please Enter Your Last Name">
+ requiredMessage="* Please Enter Your Last Name">
 </h:inputText>
  <h:message for="lastname"  style="color:red;margin:8px;"/> 
 <!--Enter User Last Name -->
 </div>
-<div>
+</div>
+
+<div class="row form-group">
 <!--Enter User Short Name -->
+<div class=" col-sm-3 control-label">
 <h:outputLabel>Short Name:</h:outputLabel>
+</div>
+<div class=" col-sm-7">
 <h:inputText value="#{register.shortname}" a:placeholder="Short Name"  class="form-control" id="shortname"
- required="true" requiredMessage="* Please Enter Your Short Name"  maxlength="4">
+  requiredMessage="* Please Enter Your Short Name"  maxlength="4">
  </h:inputText>
  <span style="color:red;">Please enter upto 4 characters</span>
  <h:message for="shortname"  style="color:red;margin:8px;"/> 
 <!--Enter UserShort Name -->
  </div>
+ </div>
+ 
+ 
+ <div class="row form-group">
+<!--Enter User Short Name -->
+<div class=" col-sm-3 control-label">
+<h:outputLabel>Organization:</h:outputLabel>
+</div>
+<div class=" col-sm-7">
+<h:inputText value="#{register.organizationkey}" a:placeholder="Organization key"  class="form-control" id="organizationkey"
+  requiredMessage="* Please Enter Your Short Name" >
+ </h:inputText>
+
+ <h:message for="organizationkey"  style="color:red;margin:8px;"/> 
+<!--Enter UserShort Name -->
+ </div>
+ </div>
+ 
+ 
+ <div class="row form-group" style="margin-top:-18px;line-height:15px;">
+ <div class="col-sm-3 .col-sm-offset-3"></div>
  <!--submit button -->
+ <div class=" col-sm-7">
+ <p style="font-size:12px;" >By clicking on &quot;Sign up&quot;, You agree to our 
+ <a href="termsandconditions.xhtml" style="color:blue;">Terms &amp; Conditions and Policies.</a>
+ </p>
+ </div>
+ </div>
+ 
+ <div class="row form-group" >
+ <div class="col-sm-3 .col-sm-offset-3"></div>
+ <!--submit button -->
+ <div class=" col-sm-7">
+ 
+
   <h:commandButton  action="#{register.submit()}" value="Sign up" class="btn fontsize btn-success btn-block">
 </h:commandButton>
  <!--After Submit Call Submit() method in the register class in the bean package -->
+  </div>
+</div>
 
-<br></br><br></br>
 </p:panel>
+
+
+
 </h:form>
  <!--End user Form-->
  

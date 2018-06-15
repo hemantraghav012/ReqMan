@@ -21,7 +21,7 @@
 <script type="text/javascript" src="resource/js/bootstrap.js"/>
 <script type="text/javascript" src="resource/js/jquery.js"/>
 
-	<title> Request </title>
+	<title>Admin All Request </title>
 	
 	
 	
@@ -56,9 +56,48 @@ function setstartDateValue()
       <!-- -end of header --> 
      
  
-     <br></br>  <br></br>
+     <br></br>  <br></br><br></br>  <br></br>
+     
+     <h:form>
+     
+      <div class="row" style="margin-bottom:0px;padding-left:30px;">
+      	<div class="col-sm-12"  >
+      	 <div class="textboxfordatefield" >
+      	
+       <p:outputLabel value="Requests Created From  Date:"></p:outputLabel> &nbsp;
+             
+             <p:calendar id="idStartDate" binding="#{startDate}"
+                            value="#{adminrequest.startDate}" pattern="dd-MM-yyyy" mask="true"   maxdate="#{adminrequest.endDate}">
+                </p:calendar>
+                &nbsp; &nbsp; &nbsp;
+                <p:outputLabel value="Requests Created To  Date: "></p:outputLabel> &nbsp;
+                	
+                <p:calendar id="idEndDate" value="#{adminrequest.endDate}" pattern="dd-MM-yyyy" mask="true">
+                    <f:validator validatorId="dateRangeValidator"/>
+                    <f:attribute name="startDateAttr" value="#{startDate}"/>
+                </p:calendar>
+                &nbsp; 
+                <p:commandButton action="#{adminrequest.daterange()}" value="Search" icon="ui-icon-check" 
+                 onclick="setstartDateValue()"  />
+              
+              
+              
+              
+                </div>
+               
+             
+    </div>	      
+                   	
+        </div>
+          </h:form>
+     
+     
+     
+     
+     
+     
      <h:form id="requestForm">
-  <div class="container-fluid " style="margin-top: 1.5cm" >
+  <div class="container-fluid "  >
          <h:inputHidden id="requestId" value="#{createrequest.requestId}" ></h:inputHidden>
          
      	
@@ -67,7 +106,7 @@ function setstartDateValue()
 <div class="ui-fluid ">
    
 	     <p:dataTable id="requestTable" var="request1" value="#{adminrequest.adminrequestList}" draggableColumns="true"
-	     reflow="true" scrollable="true" scrollHeight="300"  resizableColumns="true"  rows="25" rowsPerPageTemplate="25,35,50" 	         
+	     reflow="true" scrollable="true" scrollHeight="300" scrollWidth="150%"  resizableColumns="true"  rows="25" rowsPerPageTemplate="25,35,50" 	         
 	      paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" 
 	       paginator="true"  sortBy="#{request1.status},#{request1.title}" 	 styleClass="table-reflow-desktop"
 	      class="table table-striped table-hover table-bordered" style="margin-top:5px; margin-left:0px;"
@@ -141,7 +180,7 @@ function setstartDateValue()
             <f:facet name="filter">
                 <p:selectCheckboxMenu label="Search" onchange="PF('newrequestListTable').filter()"  style="font-size:10px;height:25px;" >
                    <f:selectItem itemLabel="General" itemValue="General" />
-                   <f:selectItems value="#{categorybean.categoryList}"  var="category" itemLabel="#{category.name}"
+                   <f:selectItems value="#{categorybean.accountcategoryList}"  var="category" itemLabel="#{category.name}"
                           itemValue="#{category.name}"/>
                 </p:selectCheckboxMenu>
             </f:facet>
@@ -157,7 +196,7 @@ function setstartDateValue()
 				<f:facet name="filter">				
                 <p:selectCheckboxMenu label="Search" onchange="PF('newrequestListTable').filter()" style="font-size:10px;height:25px;" >
                    <f:selectItem itemLabel="General" itemValue="General" />
-                  <f:selectItems value="#{projectbean.projectList}" var="project" itemLabel="#{project.name}"  itemValue="#{project.name}"/>
+                  <f:selectItems value="#{projectbean.accountprojectList}" var="project" itemLabel="#{project.name}"  itemValue="#{project.name}"/>
     
                 </p:selectCheckboxMenu>
             </f:facet>
@@ -171,7 +210,7 @@ function setstartDateValue()
 				<f:facet name="filter">
                 <p:selectCheckboxMenu label="Search" onchange="PF('newrequestListTable').filter()" style="font-size:10px;height:25px;" >
                     <f:selectItem itemLabel="General" itemValue="General" />
-                  <f:selectItems value="#{requesttypebean.requesttypeList}" var="requesttype" itemLabel="#{requesttype.name}"  itemValue="#{requesttype.name}"/>
+                  <f:selectItems value="#{requesttypebean.accountrequesttypeList}" var="requesttype" itemLabel="#{requesttype.name}"  itemValue="#{requesttype.name}"/>
      
                 </p:selectCheckboxMenu>
             </f:facet>
@@ -183,7 +222,8 @@ function setstartDateValue()
 			 filterMatchMode="in"  style="text-overflow: ellipsis; white-space: nowrap;padding: 0px 0px 0px 0px;">
 				<f:facet name="filter">
                 <p:selectCheckboxMenu label="Search" onchange="PF('newrequestListTable').filter()" style="font-size:10px;height:25px;" >
-                  <f:selectItems value="#{friendbean.friendList}" var="friend" itemLabel="#{friend.name}"  itemValue="#{friend.name}"/>
+               
+                  <f:selectItems value="#{friendbean.accountfriendList}" var="friend" itemLabel="#{friend.name}"  itemValue="#{friend.name}"/>
      
                 </p:selectCheckboxMenu>
             </f:facet>
@@ -215,21 +255,22 @@ function setstartDateValue()
 				<h:outputText value="#{request1.completionpercentage}%" style="display: inline;"   />
 			</p:column>
     
-    
- <!-- 
-    
-     <p:column filterBy="#{request1.status}"  sortBy="#{request1.status}" 
-			headerText="Status"   filterMatchMode="in" style="padding: 0px 0px 0px 3px;" >
-				<f:facet name="filter">
-                <p:selectCheckboxMenu label="Search" onchange="PF('newrequestListTable').filter()" style="font-size:10px;height:25px;" >
-                           <f:selectItem  itemLabel="Active" itemValue="Active" />
-                             <f:selectItem  itemLabel="In Active" itemValue="In Active" />
-                </p:selectCheckboxMenu>
-            </f:facet>
-				<h:outputText value="#{request1.status}"  />
-			</p:column>
+    <p:column filterBy="#{request1.expectedcompletion}"  sortBy="#{request1.expectedcompletion}"  headerText="Expected Completion" class="percentage" 
+			 filterMatchMode="contains"  style="text-overflow: ellipsis; white-space: nowrap; padding: 0px 0px 0px 0px;">
+				<f:facet name="header">
 			
-    -->   
+					<h:outputText value="Expected Completion" />
+				</f:facet>
+				<h:outputText value="#{request1.expectedcompletion}%" style="display: inline;"   />
+			</p:column>
+ <p:column filterBy="#{request1.createddate}" sortBy="#{request1.createddate}" headerText="Created Date"    class="date" id="Datecreated"
+			 filterMatchMode="contains"   pattern="dd-MMM-yyyy"  style="text-overflow: ellipsis; white-space: nowrap;padding: 0px 0px 0px 0px;">
+				<f:facet name="header">
+					
+					<h:outputText value="Created Date" />
+				</f:facet>
+				<h:outputText value="#{request1.createddate}" pattern="dd-MMM-yyyy"/>
+			</p:column>
     
  <p:column headerText="Attached" exportable="false" class="width"
  style="padding: 0px 0px 0px 0px; text-overflow: ellipsis; white-space: nowrap; "   >
@@ -238,50 +279,17 @@ function setstartDateValue()
 </p:dialog>
 	<p:commandLink  class="btn  fontsize"   ajax="false"
  onclick="PrimeFaces.monitorDownload(start, stop);setRequestHiddenValue(#{request1.newRequestId})"
-style="font-size:12px;background-color: #e7e7e7; color: black;" >
+style=" margin-left:0px;padding:0px" >
         <p:fileDownload value="#{createrequest.fileDownloadView()}" />
-       <span class="glyphicon glyphicon-download-alt"></span>
+       <p:row rendered="#{request1.attachmentstatus == 1 }">
+           <img  src="resource/image/attachmentnew.png" class="img-responsive pull-right " alt="attachment" style="width:29px;"></img>
+      </p:row>
     </p:commandLink >
     </p:column>
     
     
   
-   <p:column headerText="Note" exportable="false"  style="padding: 0px 0px 0px 0px;" class="width" >
-   
-   	<p:commandLink id="nonAjax1" 				
-     onclick="PF('#{request1.newRequestId}').show();setRequestHiddenValue(#{request1.newRequestId}) ">
-      <img  src="resource/image/note.png" class="img-responsive pull-right " alt="notes" style="width:29px;"></img>
-    		</p:commandLink> 
-
- <p:dialog  header="View Notes"  widgetVar="#{request1.newRequestId}" varStatus="status" modal="true" responsive = "true">
-      
-      
-       <div class="container">
-        
-         
-<p:dataTable id="noteTable" var="noteview"  value = "#{request1.noteList}" scrollable="true" scrollHeight="300"    >
-    
  
-    <p:column headerText="Date/Time" style="width:200px">
-
-  
-        <h:outputText value="#{noteview.time}"/>
-    </p:column>
-
-    <p:column headerText="createdby" style="width:250px">
-        <h:outputText value="#{noteview.createdby}"/>
-    </p:column>
-
-    <p:column headerText="Message">
-        <h:outputText value="#{noteview.message}" class="dd"/>
-    </p:column>
-</p:dataTable>
-         
-          
-       </div>
-</p:dialog> 
-
-     </p:column>
      
      
      

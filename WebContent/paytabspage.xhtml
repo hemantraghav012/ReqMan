@@ -1,0 +1,636 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Frameset//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-frameset.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+ xmlns:ui="http://java.sun.com/jsf/facelets" 
+ xmlns:f="http://java.sun.com/jsf/core"
+ xmlns:p="http://primefaces.org/ui"
+ xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+ xmlns:h="http://java.sun.com/jsf/html">
+ 
+ 
+ <h:head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<link rel="stylesheet" href="resource/css/bootstrap.css"/>
+<link rel="stylesheet" href="resource/mystyle/home.css"/>
+<link rel="stylesheet" href="resource/mystyle/paytabs.css"/>
+<link rel="stylesheet" href="resource/mystyle/register.css"/>
+<link rel="stylesheet" href="resource/mystyle/button.css"/>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script type="text/javascript" src="resource/js/bootstrap.js"/>
+<script type="text/javascript" src="resource/js/jquery.js"/>
+<title>Paytabs Page</title>
+<style type="text/css">
+        .ui-growl {
+            
+            top:60px;
+            Right:20px;
+            width:301px;
+        
+        }
+    </style>
+</h:head>
+
+<h:body style="background-color:#e2e2e2" > 
+<div class="container-fluid"  style="background-color: #f36c00;pading:0px; ">
+                        <div class="header-logo img-responsive" style="color:#f4df41; font-size:32px; font-weight: bold;background-color: #f36c00;pading:0px; ">
+                           <img  src="resource/image/C8 logo.jpeg" width="151" height="54" alt="logo"/> 
+                        </div>
+            </div>
+
+ <div class="paytabs_container">
+  <h2 style="margin-left:15px">Billing Information</h2>
+<h:form>
+<p:growl id="messages" showDetail="true" sticky="true"/>
+<div class="col-sm-3" style="margin-top:9px;font-style: normal;font-weight: normal;">
+
+<h:outputLabel style="margin-left:3px">Choose Plan:</h:outputLabel>
+</div>
+<div class="col-sm-9" style="margin-top:8px;font-style: normal;font-weight: normal;margin-left:-50px">
+<h:selectOneRadio value="#{paytabsbean.amount}" style="font-weight: normal;font-style: normal;"  >
+<f:selectItem itemValue="10" itemLabel="&nbsp; 10 &nbsp; USD For Monthly&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"></f:selectItem>
+<f:selectItem itemValue="100" itemLabel="&nbsp; 100 &nbsp; USD For Annually&nbsp;&nbsp;"></f:selectItem>
+
+</h:selectOneRadio>
+</div>
+<hr></hr>
+
+
+
+<div>
+<div class="col-sm-6" style="margin-top:8px;">
+<h:inputText value="#{paytabsbean.firstname}" a:placeholder="First Name"  class="form-control" ></h:inputText>
+</div>
+
+<div class="col-sm-6" style="margin-top:8px;">
+<h:inputText value="#{paytabsbean.lastname}" a:placeholder="Last Name"  class="form-control" ></h:inputText>
+</div>
+
+
+
+<div class="col-sm-6" style="margin-top:8px;">
+<h:selectOneMenu value="#{paytabsbean.countrycode}" class="form-control" >
+<f:selectItem itemLabel="Choose Country " itemValue="" ></f:selectItem>
+
+<f:selectItem itemValue="297" itemLabel="ABW  +297"></f:selectItem>
+<f:selectItem itemValue="93" itemLabel="AFG  +93"></f:selectItem>
+<f:selectItem itemValue="244" itemLabel="AGO  +244"></f:selectItem>
+<f:selectItem itemValue="1264" itemLabel="AIA  +1264"></f:selectItem>
+<f:selectItem itemValue="358" itemLabel="ALA  +358"></f:selectItem>
+<f:selectItem itemValue="355" itemLabel="ALB  +355"></f:selectItem>
+<f:selectItem itemValue="376" itemLabel="AND  +376"></f:selectItem>
+<f:selectItem itemValue="599" itemLabel="ANT  +599"></f:selectItem>
+<f:selectItem itemValue="54" itemLabel="ARG  +54"> </f:selectItem>
+<f:selectItem itemValue="374" itemLabel="ARM  +374"></f:selectItem>
+<f:selectItem itemValue="1684" itemLabel="ASM  +1684"></f:selectItem>
+<f:selectItem itemValue="672" itemLabel="ATA  +672"></f:selectItem>
+<f:selectItem itemValue="260" itemLabel="ATF  +260"></f:selectItem>
+<f:selectItem itemValue="1268" itemLabel="ATG  +1268"></f:selectItem>
+<f:selectItem itemValue="61"  itemLabel="AUS  +61"></f:selectItem>
+<f:selectItem itemValue="43"  itemLabel="AUT  +43"></f:selectItem>
+<f:selectItem itemValue="994" itemLabel="AZE  +994"></f:selectItem>
+<f:selectItem itemValue="257" itemLabel="BDI  +257"></f:selectItem>
+<f:selectItem itemValue="32"  itemLabel="BEL  +32"></f:selectItem>
+<f:selectItem itemValue="229" itemLabel="BEN  +229"></f:selectItem>
+<f:selectItem itemValue="226" itemLabel="BFA  +226"></f:selectItem>
+<f:selectItem itemValue="880" itemLabel="BGD  +880"></f:selectItem>
+<f:selectItem itemValue="359" itemLabel="BGR  +359"></f:selectItem>
+<f:selectItem itemValue="973" itemLabel="BHR  +973"></f:selectItem>
+<f:selectItem itemValue="1242" itemLabel="BHS  +1242"></f:selectItem>
+<f:selectItem itemValue="387" itemLabel="BIH  +387"></f:selectItem>
+<f:selectItem itemValue="375" itemLabel="BLR  +375"></f:selectItem>
+<f:selectItem itemValue="501" itemLabel="BLZ  +501"></f:selectItem>
+<f:selectItem itemValue="1441" itemLabel="BMU  +1441"></f:selectItem>
+<f:selectItem itemValue="591"    itemLabel ="BOL  +591"></f:selectItem>
+<f:selectItem itemValue="55" itemLabel="BRA  +55"></f:selectItem>
+<f:selectItem itemValue="1246" itemLabel="BRB  +1246"></f:selectItem>
+<f:selectItem itemValue="673" itemLabel="BRN  +673"></f:selectItem>
+<f:selectItem itemValue="975" itemLabel="BTN  +975"></f:selectItem>
+<f:selectItem itemValue="267" itemLabel="BWA  +267"></f:selectItem>
+<f:selectItem itemValue="236" itemLabel="CAF  +236"></f:selectItem>
+<f:selectItem itemValue="1" itemLabel="CAN  +1"></f:selectItem>
+<f:selectItem itemValue="41" itemLabel="CHE  +41"></f:selectItem>
+<f:selectItem itemValue="56" itemLabel="CHL  +56"></f:selectItem>
+<f:selectItem itemValue="86" itemLabel="CHN  +86"></f:selectItem>
+<f:selectItem itemValue="225" itemLabel="CIV  +225"></f:selectItem>
+<f:selectItem itemValue="237" itemLabel="CMR  +237"></f:selectItem>
+<f:selectItem itemValue="243" itemLabel="COD  +243"></f:selectItem>
+<f:selectItem itemValue="242" itemLabel="COG  +242"></f:selectItem>
+<f:selectItem itemValue="682" itemLabel="COK  +682"></f:selectItem>
+<f:selectItem itemValue="57" itemLabel="COL  +57"></f:selectItem>
+<f:selectItem itemValue="269" itemLabel="COM  +269"></f:selectItem>
+<f:selectItem itemValue="238" itemLabel="CPV  +238"></f:selectItem>
+<f:selectItem itemValue="506" itemLabel="CRI  +506"></f:selectItem>
+<f:selectItem itemValue="53" itemLabel="CUB  +53"></f:selectItem>
+<f:selectItem itemValue="1345" itemLabel="CYM  +1345"></f:selectItem>
+<f:selectItem itemValue="357" itemLabel="CYP  +357"></f:selectItem>
+<f:selectItem itemValue="420" itemLabel="CZE  +420"></f:selectItem>
+<f:selectItem itemValue="49" itemLabel="DEU  +49"></f:selectItem>
+<f:selectItem itemValue="253" itemLabel="DJI  +253"></f:selectItem>
+<f:selectItem itemValue="1767" itemLabel="DMA  +1767"></f:selectItem>
+<f:selectItem itemValue="45" itemLabel="DNK  +45"></f:selectItem>
+<f:selectItem itemValue="1809" itemLabel="DOM  +1809"></f:selectItem>
+<f:selectItem itemValue="213" itemLabel="DZA  +213"></f:selectItem>
+<f:selectItem itemValue="593" itemLabel="ECU  +593"></f:selectItem>
+<f:selectItem itemValue="20" itemLabel="EGY  +20"></f:selectItem>
+<f:selectItem itemValue="291" itemLabel="ERI  +291"></f:selectItem>
+<f:selectItem itemValue="212" itemLabel="ESH  +212"></f:selectItem>
+<f:selectItem itemValue="34" itemLabel="ESP  +34"></f:selectItem>
+<f:selectItem itemValue="372" itemLabel="EST  +372"></f:selectItem>
+<f:selectItem itemValue="251" itemLabel="ETH  +251"></f:selectItem>
+<f:selectItem itemValue="358" itemLabel="FIN  +358"></f:selectItem>
+<f:selectItem itemValue="679" itemLabel="FJI  +679"></f:selectItem>
+<f:selectItem itemValue="500" itemLabel="FLK  +500"></f:selectItem>
+<f:selectItem itemValue="33" itemLabel="FRA  +33"></f:selectItem>
+<f:selectItem itemValue="298" itemLabel="FRO  +298"></f:selectItem>
+<f:selectItem itemValue="691" itemLabel="FSM  +691"></f:selectItem>
+<f:selectItem itemValue="241" itemLabel="GAB  +241"></f:selectItem>
+<f:selectItem itemValue="44" itemLabel="GBR  +44"></f:selectItem>
+<f:selectItem itemValue="995" itemLabel="GEO  +995"></f:selectItem>
+<f:selectItem itemValue="233" itemLabel="GHA  +233"></f:selectItem>
+<f:selectItem itemValue="350" itemLabel="GIB  +350"></f:selectItem>
+<f:selectItem itemValue="224" itemLabel="GIN  +224"></f:selectItem>
+<f:selectItem itemValue="590"  itemLabel="GLP  +590"></f:selectItem>
+<f:selectItem itemValue="220"  itemLabel="GMB  +220"></f:selectItem>
+<f:selectItem itemValue="245"  itemLabel="GNB  +245"></f:selectItem>
+<f:selectItem itemValue="240"  itemLabel="GNQ  +240"></f:selectItem>
+<f:selectItem itemValue="30"  itemLabel="GRC  +30"></f:selectItem>
+<f:selectItem itemValue="1473"  itemLabel="GRD  +1473"></f:selectItem>
+<f:selectItem itemValue="299"  itemLabel="GRL  +299"></f:selectItem>
+<f:selectItem itemValue="502"  itemLabel="GTM  +502"></f:selectItem>
+<f:selectItem itemValue="594"  itemLabel="GUF  +594"></f:selectItem>
+<f:selectItem itemValue="1671"  itemLabel="GUM  +1671"></f:selectItem>
+<f:selectItem itemValue="592"  itemLabel="GUY  +592"></f:selectItem>
+<f:selectItem itemValue="852"  itemLabel="HKG  +852"></f:selectItem>
+<f:selectItem itemValue="504"  itemLabel="HND  +504"></f:selectItem>
+<f:selectItem itemValue="385"  itemLabel="HRV  +385"></f:selectItem>
+<f:selectItem itemValue="509"  itemLabel="HTI  +509"></f:selectItem>
+<f:selectItem itemValue="36"  itemLabel="HUN  +36"></f:selectItem>
+<f:selectItem itemValue="62"  itemLabel="IDN  +62"></f:selectItem>
+<f:selectItem itemValue="91" selected="selected"  itemLabel="IND  +91"></f:selectItem>
+<f:selectItem itemValue="353"  itemLabel="IRL  +353"></f:selectItem>
+<f:selectItem itemValue="98"  itemLabel="IRN  +98"></f:selectItem>
+<f:selectItem itemValue="964"  itemLabel="IRQ  +964"></f:selectItem>
+<f:selectItem itemValue="354"  itemLabel="ISL  +354"></f:selectItem>
+<f:selectItem itemValue="972"  itemLabel="ISR  +972"></f:selectItem>
+<f:selectItem itemValue="39"  itemLabel="ITA  +39"></f:selectItem>
+<f:selectItem itemValue="1876"  itemLabel="JAM  +1876"></f:selectItem>
+<f:selectItem itemValue="962"  itemLabel="JOR  +962"></f:selectItem>
+<f:selectItem itemValue="81"  itemLabel="JPN  +81"></f:selectItem>
+<f:selectItem itemValue="7"  itemLabel="KAZ  +7"></f:selectItem>
+<f:selectItem itemValue="254"  itemLabel="KEN  +254"></f:selectItem>
+<f:selectItem itemValue="996"  itemLabel="KGZ  +996"></f:selectItem>
+<f:selectItem itemValue="855"  itemLabel="KHM  +855"></f:selectItem>
+<f:selectItem itemValue="686"  itemLabel="KIR  +686"></f:selectItem>
+<f:selectItem itemValue="1869"  itemLabel="KNA  +1869"></f:selectItem>
+<f:selectItem itemValue="82"  itemLabel="KOR  +82"></f:selectItem>
+<f:selectItem itemValue="965"  itemLabel="KWT  +965"></f:selectItem>
+<f:selectItem itemValue="856"  itemLabel="LAO  +856"></f:selectItem>
+<f:selectItem itemValue="961"  itemLabel="LBN  +961"></f:selectItem>
+<f:selectItem itemValue="231"  itemLabel="LBR  +231"></f:selectItem>
+<f:selectItem itemValue="218"  itemLabel="LBY  +218"></f:selectItem>
+<f:selectItem itemValue="1758"  itemLabel="LCA  +1758"></f:selectItem>
+<f:selectItem itemValue="423"  itemLabel="LIE  +423"></f:selectItem>
+<f:selectItem itemValue="94"  itemLabel="LKA  +94"></f:selectItem>
+<f:selectItem itemValue="266"  itemLabel="LSO  +266"></f:selectItem>
+<f:selectItem itemValue="370"  itemLabel="LTU  +370"></f:selectItem>
+<f:selectItem itemValue="352"  itemLabel="LUX  +352"></f:selectItem>
+<f:selectItem itemValue="371"  itemLabel="LVA  +371"></f:selectItem>
+<f:selectItem itemValue="853"  itemLabel="MAC  +853"></f:selectItem>
+<f:selectItem itemValue="212"  itemLabel="MAR  +212"></f:selectItem>
+<f:selectItem itemValue="377"  itemLabel="MCO  +377"></f:selectItem>
+<f:selectItem itemValue="373"  itemLabel="MDA  +373"></f:selectItem>
+<f:selectItem itemValue="261"  itemLabel="MDG  +261"></f:selectItem>
+<f:selectItem itemValue="960"  itemLabel="MDV  +960"></f:selectItem>
+<f:selectItem itemValue="52"  itemLabel="MEX  +52"></f:selectItem>
+<f:selectItem itemValue="692"  itemLabel="MHL  +692"></f:selectItem>
+<f:selectItem itemValue="389"  itemLabel="MKD  +389"></f:selectItem>
+<f:selectItem itemValue="223"  itemLabel="MLI  +223"></f:selectItem>
+<f:selectItem itemValue="356"  itemLabel="MLT  +356"></f:selectItem>
+<f:selectItem itemValue="95"  itemLabel="MMR  +95"></f:selectItem>
+<f:selectItem itemValue="382"  itemLabel="MNE  +382"></f:selectItem>
+<f:selectItem itemValue="976"  itemLabel="MNG  +976"></f:selectItem>
+<f:selectItem itemValue="1670"  itemLabel="MNP  +1670"></f:selectItem>
+<f:selectItem itemValue="258"  itemLabel="MOZ  +258"></f:selectItem>
+<f:selectItem itemValue="222"  itemLabel="MRT  +222"></f:selectItem>
+<f:selectItem itemValue="1664"  itemLabel="MSR  +1664"></f:selectItem>
+<f:selectItem itemValue="596"  itemLabel="MTQ  +596"></f:selectItem>
+<f:selectItem itemValue="230"  itemLabel="MUS  +230"></f:selectItem>
+<f:selectItem itemValue="265"  itemLabel="MWI  +265"></f:selectItem>
+<f:selectItem itemValue="60"  itemLabel="MYS  +60"></f:selectItem>
+<f:selectItem itemValue="264"  itemLabel="NAM  +264"></f:selectItem>
+<f:selectItem itemValue="687"  itemLabel="NCL  +687"></f:selectItem>
+<f:selectItem itemValue="227"  itemLabel="NER  +227"></f:selectItem>
+<f:selectItem itemValue="672"  itemLabel="NFK  +672"></f:selectItem>
+<f:selectItem itemValue="234"  itemLabel="NGA  +234"></f:selectItem>
+<f:selectItem itemValue="505"  itemLabel="NIC  +505"></f:selectItem>
+<f:selectItem itemValue="683"  itemLabel="NIU  +683"></f:selectItem>
+<f:selectItem itemValue="31"  itemLabel="NLD  +31"></f:selectItem>
+<f:selectItem itemValue="47"  itemLabel="NOR  +47"></f:selectItem>
+<f:selectItem itemValue="977"  itemLabel="NPL  +977"></f:selectItem>
+<f:selectItem itemValue="674"  itemLabel="NRU  +674"></f:selectItem>
+<f:selectItem itemValue="64"  itemLabel="NZL  +64"></f:selectItem>
+<f:selectItem itemValue="968"  itemLabel="OMN  +968"></f:selectItem>
+<f:selectItem itemValue="92"  itemLabel="PAK  +92"></f:selectItem>
+<f:selectItem itemValue="507"  itemLabel="PAN  +507"></f:selectItem>
+<f:selectItem itemValue="870"  itemLabel="PCN  +870"></f:selectItem>
+<f:selectItem itemValue="51"  itemLabel="PER  +51"></f:selectItem>
+<f:selectItem itemValue="63"  itemLabel="PHL  +63"></f:selectItem>
+<f:selectItem itemValue="680"  itemLabel="PLW  +680"></f:selectItem>
+<f:selectItem itemValue="675"  itemLabel="PNG  +675"></f:selectItem>
+<f:selectItem itemValue="48"  itemLabel="POL  +48"></f:selectItem>
+<f:selectItem itemValue="1787"  itemLabel="PRI  +1787"></f:selectItem>
+<f:selectItem itemValue="850"  itemLabel="PRK  +850"></f:selectItem>
+<f:selectItem itemValue="351"  itemLabel="PRT  +351"></f:selectItem>
+<f:selectItem itemValue="595"  itemLabel="PRY  +595"></f:selectItem>
+<f:selectItem itemValue="970"  itemLabel="PSE  +970"></f:selectItem>
+<f:selectItem itemValue="689"  itemLabel="PYF  +689"></f:selectItem>
+<f:selectItem itemValue="974"  itemLabel="QAT  +974"></f:selectItem>
+<f:selectItem itemValue="262"  itemLabel="REU  +262"></f:selectItem>
+<f:selectItem itemValue="40"  itemLabel="ROM  +40"></f:selectItem>
+<f:selectItem itemValue="40"  itemLabel="ROU  +40"></f:selectItem>
+<f:selectItem itemValue="70"  itemLabel="RUS  +70"></f:selectItem>
+<f:selectItem itemValue="250"  itemLabel="RWA  +250"></f:selectItem>
+<f:selectItem itemValue="966"  itemLabel="SAU  +966"></f:selectItem>
+<f:selectItem itemValue="249"  itemLabel="SDN  +249"></f:selectItem>
+<f:selectItem itemValue="221"  itemLabel="SEN  +221"></f:selectItem>
+<f:selectItem itemValue="65"  itemLabel="SGP  +65"></f:selectItem>
+<f:selectItem itemValue="290"  itemLabel="SHN  +290"></f:selectItem>
+<f:selectItem itemValue="47"  itemLabel="SJM  +47"></f:selectItem>
+<f:selectItem itemValue="677"  itemLabel="SLB  +677"></f:selectItem>
+<f:selectItem itemValue="232"  itemLabel="SLE  +232"></f:selectItem>
+<f:selectItem itemValue="503"  itemLabel="SLV  +503"></f:selectItem>
+<f:selectItem itemValue="378"  itemLabel="SMR  +378"></f:selectItem>
+<f:selectItem itemValue="252"  itemLabel="SOM  +252"></f:selectItem>
+<f:selectItem itemValue="508"  itemLabel="SPM  +508"></f:selectItem>
+<f:selectItem itemValue="381"  itemLabel="SRB  +381"></f:selectItem>
+<f:selectItem itemValue="239"  itemLabel="STP  +239"></f:selectItem>
+<f:selectItem itemValue="597"  itemLabel="SUR  +597"></f:selectItem>
+<f:selectItem itemValue="421"  itemLabel="SVK  +421"></f:selectItem>
+<f:selectItem itemValue="386"  itemLabel="SVN  +386"></f:selectItem>
+<f:selectItem itemValue="46"  itemLabel="SWE  +46"></f:selectItem>
+<f:selectItem itemValue="268"  itemLabel="SWZ  +268"></f:selectItem>
+<f:selectItem itemValue="248"  itemLabel="SYC  +248"></f:selectItem>
+<f:selectItem itemValue="963"  itemLabel="SYR  +963"></f:selectItem>
+<f:selectItem itemValue="1649"  itemLabel="TCA  +1649"></f:selectItem>
+<f:selectItem itemValue="235"  itemLabel="TCD  +235"></f:selectItem>
+<f:selectItem itemValue="228"  itemLabel="TGO  +228"></f:selectItem>
+<f:selectItem itemValue="66"  itemLabel="THA  +66"></f:selectItem>
+<f:selectItem itemValue="992"  itemLabel="TJK  +992"></f:selectItem>
+<f:selectItem itemValue="690"  itemLabel="TKL  +690"></f:selectItem>
+<f:selectItem itemValue="993"  itemLabel="TKM  +993"></f:selectItem>
+<f:selectItem itemValue="676"  itemLabel="TON  +676"></f:selectItem>
+<f:selectItem itemValue="1868"  itemLabel="TTO  +1868"></f:selectItem>
+<f:selectItem itemValue="216"  itemLabel="TUN  +216"></f:selectItem>
+<f:selectItem itemValue="90"  itemLabel="TUR  +90"></f:selectItem>
+<f:selectItem itemValue="688"  itemLabel="TUV  +688"></f:selectItem>
+<f:selectItem itemValue="886"  itemLabel="TWN  +886"></f:selectItem>
+<f:selectItem itemValue="255"  itemLabel="TZA  +255"></f:selectItem>
+<f:selectItem itemValue="971"  itemLabel="UAE  +971"></f:selectItem>
+<f:selectItem itemValue="256"  itemLabel="UGA  +256"></f:selectItem>
+<f:selectItem itemValue="380"  itemLabel="UKR  +380"></f:selectItem>
+<f:selectItem itemValue="598"  itemLabel="URY  +598"></f:selectItem>
+<f:selectItem itemValue="1"  itemLabel="USA  +1"></f:selectItem>
+<f:selectItem itemValue="998"  itemLabel="UZB  +998"></f:selectItem>
+<f:selectItem itemValue="39"  itemLabel="VAT  +39"></f:selectItem>
+<f:selectItem itemValue="1784"  itemLabel="VCT  +1784"></f:selectItem>
+<f:selectItem itemValue="58"  itemLabel="VEN  +58"></f:selectItem>
+<f:selectItem itemValue="1284"  itemLabel="VGB  +1284"></f:selectItem>
+<f:selectItem itemValue="92"  itemLabel="VGB  +92"></f:selectItem>
+<f:selectItem itemValue="1340"  itemLabel="VIR  +1340"></f:selectItem>
+<f:selectItem itemValue="84"  itemLabel="VNM  +84"></f:selectItem>
+<f:selectItem itemValue="678"  itemLabel="VUT  +678"></f:selectItem>
+<f:selectItem itemValue="681"  itemLabel="WLF  +681"></f:selectItem>
+<f:selectItem itemValue="684"  itemLabel="WSM  +684"></f:selectItem>
+<f:selectItem itemValue="967"  itemLabel="YEM  +967"></f:selectItem>
+<f:selectItem itemValue="27"  itemLabel="ZAF  +27"></f:selectItem>
+<f:selectItem itemValue="260"  itemLabel="ZMB  +260"></f:selectItem>
+<f:selectItem itemValue="263"  itemLabel="ZWE  +263"></f:selectItem>
+
+
+
+</h:selectOneMenu>
+</div>
+
+<div class="col-sm-6" style="margin-top:8px;">
+<h:inputText value ="#{paytabsbean.telephone}" a:placeholder="Telephone"  class="form-control" ></h:inputText>
+</div>
+
+
+
+
+<div class="col-sm-12" style="margin-top:5px;">
+<h:inputText value ="#{paytabsbean.emailid}" a:placeholder="Email address"  class="form-control" ></h:inputText>
+</div>
+
+</div>
+
+
+
+<div>
+
+<div class="col-sm-12" style="margin-top:8px;">
+<h:outputLabel style="font-weight: bold;font-size:18px;">Billing Address</h:outputLabel>
+</div>
+<div class="col-sm-12" style="margin-top:8px;">
+
+<h:inputText value ="#{paytabsbean.billingaddress}" a:placeholder="Billing Address"  class="form-control"  maxlength="40"></h:inputText>
+</div>
+
+
+<div class="col-sm-12" style="margin-top:8px;">
+<h:selectOneMenu value="#{paytabsbean.country}" class="form-control" >
+<f:selectItem itemLabel="Choose Country " itemValue="" ></f:selectItem>
+<f:selectItem itemValue="ABW"  itemLabel="Aruba" ></f:selectItem>
+<f:selectItem itemValue="AFG"  itemLabel="Afghanistan " ></f:selectItem>
+<f:selectItem itemValue="AGO"  itemLabel="Angola " ></f:selectItem>
+<f:selectItem itemValue="AIA"  itemLabel="Anguilla " ></f:selectItem>
+<f:selectItem itemValue="ALA"  itemLabel="Åland Islands " ></f:selectItem>
+<f:selectItem itemValue="ALB"  itemLabel="Albania " ></f:selectItem>
+<f:selectItem itemValue="AND"  itemLabel="Andorra " ></f:selectItem>
+<f:selectItem itemValue="ANT"  itemLabel="Netherlands Antilles " ></f:selectItem>
+<f:selectItem itemValue="ARE"  itemLabel="United Arab Emirates " ></f:selectItem>
+<f:selectItem itemValue="ARG"  itemLabel="Argentina " ></f:selectItem>
+<f:selectItem itemValue="ARM"  itemLabel="Armenia " ></f:selectItem>
+<f:selectItem itemValue="ASM"  itemLabel="American Samoa " ></f:selectItem>
+<f:selectItem itemValue="ATA"  itemLabel="Antarctica " ></f:selectItem>
+<f:selectItem itemValue="ATF"  itemLabel="French Southern Territories " ></f:selectItem>
+<f:selectItem itemValue="ATG"  itemLabel="Antigua and Barbuda " ></f:selectItem>
+<f:selectItem itemValue="AUS"  itemLabel="Australia " ></f:selectItem>
+<f:selectItem itemValue="AUT"  itemLabel="Austria " ></f:selectItem>
+<f:selectItem itemValue="AZE"  itemLabel="Azerbaijan " ></f:selectItem>
+<f:selectItem itemValue="BDI"  itemLabel="Burundi " ></f:selectItem>
+<f:selectItem itemValue="BEL"  itemLabel="Belgium " ></f:selectItem>
+<f:selectItem itemValue="BEN"  itemLabel="Benin " ></f:selectItem>
+<f:selectItem itemValue="BFA"  itemLabel="Burkina Faso " ></f:selectItem>
+<f:selectItem itemValue="BGD"  itemLabel="Bangladesh " ></f:selectItem>
+<f:selectItem itemValue="BGR"  itemLabel="Bulgaria " ></f:selectItem>
+<f:selectItem itemValue="BHR"  itemLabel="Bahrain " ></f:selectItem>
+<f:selectItem itemValue="BHS"  itemLabel="Bahamas " ></f:selectItem>
+<f:selectItem itemValue="BIH"  itemLabel="Bosnia and Herzegovina " ></f:selectItem>
+<f:selectItem itemValue="BLM"  itemLabel="Saint Barthélemy " ></f:selectItem>
+<f:selectItem itemValue="BLR"  itemLabel="Belarus " ></f:selectItem>
+<f:selectItem itemValue="BLZ"  itemLabel="Belize " ></f:selectItem>
+<f:selectItem itemValue="BMU"  itemLabel="Bermuda " ></f:selectItem>
+<f:selectItem itemValue="BOL"  itemLabel="Bolivia, Plurinational State of" ></f:selectItem> 
+<f:selectItem itemValue="BRA"  itemLabel="Brazil " ></f:selectItem>
+<f:selectItem itemValue="BRB"  itemLabel="Barbados " ></f:selectItem>
+<f:selectItem itemValue="BRN"  itemLabel="Brunei Darussalam " ></f:selectItem>
+<f:selectItem itemValue="BTN"  itemLabel="Bhutan " ></f:selectItem>
+<f:selectItem itemValue="BVT"  itemLabel="Bouvet Island " ></f:selectItem>
+<f:selectItem itemValue="BWA"  itemLabel="Botswana " ></f:selectItem>
+<f:selectItem itemValue="CAF"  itemLabel="Central African Republic " ></f:selectItem>
+<f:selectItem itemValue="CAN"  itemLabel="Canada " ></f:selectItem>
+<f:selectItem itemValue="CCK"  itemLabel="Cocos (Keeling) Islands " ></f:selectItem>
+<f:selectItem itemValue="CHE"  itemLabel="Switzerland " ></f:selectItem>
+<f:selectItem itemValue="CHL"  itemLabel="Chile " ></f:selectItem>
+<f:selectItem itemValue="CHN"  itemLabel="China " ></f:selectItem>
+<f:selectItem itemValue="CIV"  itemLabel="Côte d'Ivoire " ></f:selectItem>
+<f:selectItem itemValue="CMR"  itemLabel="Cameroon " ></f:selectItem>
+<f:selectItem itemValue="COD"  itemLabel="Congo, the Democratic Republic of the " ></f:selectItem>
+<f:selectItem itemValue="COG"  itemLabel="Congo " ></f:selectItem>
+<f:selectItem itemValue="COK"  itemLabel="Cook Islands " ></f:selectItem>
+<f:selectItem itemValue="COL"  itemLabel="Colombia " ></f:selectItem>
+<f:selectItem itemValue="COM"  itemLabel="Comoros " ></f:selectItem>
+<f:selectItem itemValue="CPV"  itemLabel="Cape Verde " ></f:selectItem>
+<f:selectItem itemValue="CRI"  itemLabel="Costa Rica" ></f:selectItem>
+<f:selectItem itemValue="CUB"  itemLabel="Cuba " ></f:selectItem>
+<f:selectItem itemValue="CXR"  itemLabel="Christmas Island " ></f:selectItem>
+<f:selectItem itemValue="CYM"  itemLabel="Cayman Islands " ></f:selectItem>
+<f:selectItem itemValue="CYP"  itemLabel="Cyprus " ></f:selectItem>
+<f:selectItem itemValue="CZE"  itemLabel="Czech Republic " ></f:selectItem>
+<f:selectItem itemValue="DEU"  itemLabel="Germany " ></f:selectItem>
+<f:selectItem itemValue="DJI"  itemLabel="Djibouti " ></f:selectItem>
+<f:selectItem itemValue="DMA"  itemLabel="Dominica " ></f:selectItem>
+<f:selectItem itemValue="DNK"  itemLabel="Denmark " ></f:selectItem>
+<f:selectItem itemValue="DOM"  itemLabel="Dominican Republic " ></f:selectItem>
+<f:selectItem itemValue="DZA"  itemLabel="Algeria " ></f:selectItem>
+<f:selectItem itemValue="ECU"  itemLabel="Ecuador " ></f:selectItem>
+<f:selectItem itemValue="EGY"  itemLabel="Egypt " ></f:selectItem>
+<f:selectItem itemValue="ERI"  itemLabel="Eritrea " ></f:selectItem>
+<f:selectItem itemValue="ESH"  itemLabel="Western Sahara " ></f:selectItem>
+<f:selectItem itemValue="ESP"  itemLabel="Spain " ></f:selectItem>
+<f:selectItem itemValue="EST"  itemLabel="Estonia " ></f:selectItem>
+<f:selectItem itemValue="ETH"  itemLabel="Ethiopia " ></f:selectItem>
+<f:selectItem itemValue="FIN"  itemLabel="Finland " ></f:selectItem>
+<f:selectItem itemValue="FJI"  itemLabel="Fiji " ></f:selectItem>
+<f:selectItem itemValue="FLK"  itemLabel="Falkland Islands (Malvinas)" ></f:selectItem> 
+<f:selectItem itemValue="FRA"  itemLabel="France " ></f:selectItem>
+<f:selectItem itemValue="FRO"  itemLabel="Faroe Islands " ></f:selectItem>
+<f:selectItem itemValue="FSM"  itemLabel="Micronesia, Federated States of " ></f:selectItem>
+<f:selectItem itemValue="GAB"  itemLabel="Gabon " ></f:selectItem>
+<f:selectItem itemValue="GBR"  itemLabel="United Kingdom " ></f:selectItem>
+<f:selectItem itemValue="GEO"  itemLabel="Georgia " ></f:selectItem>
+<f:selectItem itemValue="GGY"  itemLabel="Guernsey " ></f:selectItem>
+<f:selectItem itemValue="GHA"  itemLabel="Ghana " ></f:selectItem>
+<f:selectItem itemValue="GIB"  itemLabel="Gibraltar " ></f:selectItem>
+<f:selectItem itemValue="GIN"  itemLabel="Guinea " ></f:selectItem>
+<f:selectItem itemValue="GLP"  itemLabel="Guadeloupe " ></f:selectItem>
+<f:selectItem itemValue="GMB"  itemLabel="Gambia " ></f:selectItem>
+<f:selectItem itemValue="GNB"  itemLabel="Guinea-Bissau " ></f:selectItem>
+<f:selectItem itemValue="GNQ"  itemLabel="Equatorial Guinea " ></f:selectItem>
+<f:selectItem itemValue="GRC"  itemLabel="Greece " ></f:selectItem>
+<f:selectItem itemValue="GRD"  itemLabel="Grenada " ></f:selectItem>
+<f:selectItem itemValue="GRL"  itemLabel="Greenland " ></f:selectItem>
+<f:selectItem itemValue="GTM"  itemLabel="Guatemala " ></f:selectItem>
+<f:selectItem itemValue="GUF"  itemLabel="French Guiana " ></f:selectItem>
+<f:selectItem itemValue="GUM"  itemLabel="Guam " ></f:selectItem>
+<f:selectItem itemValue="GUY"  itemLabel="Guyana " ></f:selectItem>
+<f:selectItem itemValue="HKG"  itemLabel="Hong Kong " ></f:selectItem>
+<f:selectItem itemValue="HMD"  itemLabel="Heard Island and McDonald Islands" ></f:selectItem> 
+<f:selectItem itemValue="HND"  itemLabel="Honduras " ></f:selectItem>
+<f:selectItem itemValue="HRV"  itemLabel="Croatia " ></f:selectItem>
+<f:selectItem itemValue="HTI"  itemLabel="Haiti " ></f:selectItem>
+<f:selectItem itemValue="HUN"  itemLabel="Hungary " ></f:selectItem>
+<f:selectItem itemValue="IDN"  itemLabel="Indonesia " ></f:selectItem>
+<f:selectItem itemValue="IMN"  itemLabel="Isle of Man " ></f:selectItem>
+<f:selectItem itemValue="IND"  itemLabel="India " selected="selected" ></f:selectItem>
+<f:selectItem itemValue="IOT"  itemLabel="British Indian Ocean Territory" ></f:selectItem> 
+<f:selectItem itemValue="IRL"  itemLabel="Ireland " ></f:selectItem>
+<f:selectItem itemValue="IRN"  itemLabel="Iran, Islamic Republic of " ></f:selectItem>
+<f:selectItem itemValue="IRQ"  itemLabel="Iraq " ></f:selectItem>
+<f:selectItem itemValue="ISL"  itemLabel="Iceland " ></f:selectItem>
+<f:selectItem itemValue="ISR"  itemLabel="Israel " ></f:selectItem>
+<f:selectItem itemValue="ITA"  itemLabel="Italy " ></f:selectItem>
+<f:selectItem itemValue="JAM"  itemLabel="Jamaica " ></f:selectItem>
+<f:selectItem itemValue="JEY"  itemLabel="Jersey " ></f:selectItem>
+<f:selectItem itemValue="JOR"  itemLabel="Jordan " ></f:selectItem>
+<f:selectItem itemValue="JPN"  itemLabel="Japan " ></f:selectItem>
+<f:selectItem itemValue="KAZ"  itemLabel="Kazakhstan " ></f:selectItem>
+<f:selectItem itemValue="KEN"  itemLabel="Kenya " ></f:selectItem>
+<f:selectItem itemValue="KGZ"  itemLabel="Kyrgyzstan " ></f:selectItem>
+<f:selectItem itemValue="KHM"  itemLabel="Cambodia " ></f:selectItem>
+<f:selectItem itemValue="KIR"  itemLabel="Kiribati " ></f:selectItem>
+<f:selectItem itemValue="KNA"  itemLabel="Saint Kitts and Nevis " ></f:selectItem>
+<f:selectItem itemValue="KOR"  itemLabel="Korea, Republic of " ></f:selectItem>
+<f:selectItem itemValue="KWT"  itemLabel="Kuwait " ></f:selectItem>
+<f:selectItem itemValue="LAO"  itemLabel="Lao People's Democratic Republic" ></f:selectItem> 
+<f:selectItem itemValue="LBN"  itemLabel="Lebanon " ></f:selectItem>
+<f:selectItem itemValue="LBR"  itemLabel="Liberia " ></f:selectItem>
+<f:selectItem itemValue="LBY"  itemLabel="Libyan Arab Jamahiriya " ></f:selectItem>
+<f:selectItem itemValue="LCA"  itemLabel="Saint Lucia " ></f:selectItem>
+<f:selectItem itemValue="LIE"  itemLabel="Liechtenstein " ></f:selectItem>
+<f:selectItem itemValue="LKA"  itemLabel="Sri Lanka " ></f:selectItem>
+<f:selectItem itemValue="LSO"  itemLabel="Lesotho " ></f:selectItem>
+<f:selectItem itemValue="LTU"  itemLabel="Lithuania " ></f:selectItem>
+<f:selectItem itemValue="LUX"  itemLabel="Luxembourg " ></f:selectItem>
+<f:selectItem itemValue="LVA"  itemLabel="Latvia " ></f:selectItem>
+<f:selectItem itemValue="MAC"  itemLabel="Macao " ></f:selectItem>
+<f:selectItem itemValue="MAF"  itemLabel="Saint Martin (French part)" ></f:selectItem> 
+<f:selectItem itemValue="MAR"  itemLabel="Morocco " ></f:selectItem>
+<f:selectItem itemValue="MCO"  itemLabel="Monaco " ></f:selectItem>
+<f:selectItem itemValue="MDA"  itemLabel="Moldova, Republic of " ></f:selectItem>
+<f:selectItem itemValue="MDG"  itemLabel="Madagascar " ></f:selectItem>
+<f:selectItem itemValue="MDV"  itemLabel="Maldives " ></f:selectItem>
+<f:selectItem itemValue="MEX"  itemLabel="Mexico " ></f:selectItem>
+<f:selectItem itemValue="MHL"  itemLabel="Marshall Islands " ></f:selectItem>
+<f:selectItem itemValue="MKD"  itemLabel="Macedonia, the former Yugoslav Republic of" ></f:selectItem> 
+<f:selectItem itemValue="MLI"  itemLabel="Mali " ></f:selectItem>
+<f:selectItem itemValue="MLT"  itemLabel="Malta " ></f:selectItem>
+<f:selectItem itemValue="MMR"  itemLabel="Myanmar " ></f:selectItem>
+<f:selectItem itemValue="MNE"  itemLabel="Montenegro " ></f:selectItem>
+<f:selectItem itemValue="MNG"  itemLabel="Mongolia " ></f:selectItem>
+<f:selectItem itemValue="MNP"  itemLabel="Northern Mariana Islands " ></f:selectItem>
+<f:selectItem itemValue="MOZ"  itemLabel="Mozambique " ></f:selectItem>
+<f:selectItem itemValue="MRT"  itemLabel="Mauritania " ></f:selectItem>
+<f:selectItem itemValue="MSR"  itemLabel="Montserrat " ></f:selectItem>
+<f:selectItem itemValue="MTQ"  itemLabel="Martinique " ></f:selectItem>
+<f:selectItem itemValue="MUS"  itemLabel="Mauritius " ></f:selectItem>
+<f:selectItem itemValue="MWI"  itemLabel="Malawi " ></f:selectItem>
+<f:selectItem itemValue="MYS"  itemLabel="Malaysia " ></f:selectItem>
+<f:selectItem itemValue="MYT"  itemLabel="Mayotte " ></f:selectItem>
+<f:selectItem itemValue="NAM"  itemLabel="Namibia " ></f:selectItem>
+<f:selectItem itemValue="NCL"  itemLabel="New Caledonia " ></f:selectItem>
+<f:selectItem itemValue="NER"  itemLabel="Niger " ></f:selectItem>
+<f:selectItem itemValue="NFK"  itemLabel="Norfolk Island " ></f:selectItem>
+<f:selectItem itemValue="NGA"  itemLabel="Nigeria " ></f:selectItem>
+<f:selectItem itemValue="NIC"  itemLabel="Nicaragua " ></f:selectItem>
+<f:selectItem itemValue="NIU"  itemLabel="Niue " ></f:selectItem>
+<f:selectItem itemValue="NLD"  itemLabel="Netherlands " ></f:selectItem>
+<f:selectItem itemValue="NOR"  itemLabel="Norway " ></f:selectItem>
+<f:selectItem itemValue="NPL"  itemLabel="Nepal " ></f:selectItem>
+<f:selectItem itemValue="NRU"  itemLabel="Nauru " ></f:selectItem>
+<f:selectItem itemValue="NZL"  itemLabel="New Zealand " ></f:selectItem>
+<f:selectItem itemValue="OMN"  itemLabel="Oman " ></f:selectItem>
+<f:selectItem itemValue="PAK"  itemLabel="Pakistan " ></f:selectItem>
+<f:selectItem itemValue="PAN"  itemLabel="Panama " ></f:selectItem>
+<f:selectItem itemValue="PCN"  itemLabel="Pitcairn " ></f:selectItem>
+<f:selectItem itemValue="PER"  itemLabel="Peru " ></f:selectItem>
+<f:selectItem itemValue="PHL"  itemLabel="Philippines " ></f:selectItem>
+<f:selectItem itemValue="PLW"  itemLabel="Palau " ></f:selectItem>
+<f:selectItem itemValue="PNG"  itemLabel="Papua New Guinea " ></f:selectItem>
+<f:selectItem itemValue="POL"  itemLabel="Poland " ></f:selectItem>
+<f:selectItem itemValue="PRI"  itemLabel="Puerto Rico " ></f:selectItem>
+<f:selectItem itemValue="PRK"  itemLabel="Korea, Democratic People's Republic of" ></f:selectItem> 
+<f:selectItem itemValue="PRT"  itemLabel="Portugal " ></f:selectItem>
+<f:selectItem itemValue="PRY"  itemLabel="Paraguay " ></f:selectItem>
+<f:selectItem itemValue="PSE"  itemLabel="Palestinian Territory, Occupied" ></f:selectItem> 
+<f:selectItem itemValue="PYF"  itemLabel="French Polynesia " ></f:selectItem>
+<f:selectItem itemValue="QAT"  itemLabel="Qatar " ></f:selectItem>
+<f:selectItem itemValue="REU"  itemLabel="Réunion " ></f:selectItem>
+<f:selectItem itemValue="ROU"  itemLabel="Romania " ></f:selectItem>
+<f:selectItem itemValue="RUS"  itemLabel="Russian Federation " ></f:selectItem>
+<f:selectItem itemValue="RWA"  itemLabel="Rwanda " ></f:selectItem>
+<f:selectItem itemValue="SAU"  itemLabel="Saudi Arabia " ></f:selectItem>
+<f:selectItem itemValue="SDN"  itemLabel="Sudan " ></f:selectItem>
+<f:selectItem itemValue="SEN"  itemLabel="Senegal " ></f:selectItem>
+<f:selectItem itemValue="SGP"  itemLabel="Singapore " ></f:selectItem>
+<f:selectItem itemValue="SGS"  itemLabel="South Georgia and the South Sandwich Islands" ></f:selectItem> 
+<f:selectItem itemValue="SHN"  itemLabel="Saint Helena, Ascension and Tristan da Cunha " ></f:selectItem>
+<f:selectItem itemValue="SJM"  itemLabel="Svalbard and Jan Mayen " ></f:selectItem>
+<f:selectItem itemValue="SLB"  itemLabel="Solomon Islands " ></f:selectItem>
+<f:selectItem itemValue="SLE"  itemLabel="Sierra Leone " ></f:selectItem>
+<f:selectItem itemValue="SLV"  itemLabel="El Salvador " ></f:selectItem>
+<f:selectItem itemValue="SMR"  itemLabel="San Marino " ></f:selectItem>
+<f:selectItem itemValue="SOM"  itemLabel="Somalia " ></f:selectItem>
+<f:selectItem itemValue="SPM Saint"  itemLabel="Pierre and Miquelon " ></f:selectItem>
+<f:selectItem itemValue="SRB"  itemLabel="Serbia " ></f:selectItem>
+<f:selectItem itemValue="STP"  itemLabel="Sao Tome and Principe " ></f:selectItem>
+<f:selectItem itemValue="SUR"  itemLabel="Suriname " ></f:selectItem>
+<f:selectItem itemValue="SVK"  itemLabel="Slovakia " ></f:selectItem>
+<f:selectItem itemValue="SVN"  itemLabel="Slovenia " ></f:selectItem>
+<f:selectItem itemValue="SWE"  itemLabel="Sweden " ></f:selectItem>
+<f:selectItem itemValue="SWZ"  itemLabel="Swaziland " ></f:selectItem>
+<f:selectItem itemValue="SYC"  itemLabel="Seychelles " ></f:selectItem>
+<f:selectItem itemValue="SYR"  itemLabel="Syrian Arab Republic " ></f:selectItem>
+<f:selectItem itemValue="TCA"  itemLabel="Turks and Caicos Islands " ></f:selectItem>
+<f:selectItem itemValue="TCD"  itemLabel="Chad " ></f:selectItem>
+<f:selectItem itemValue="TGO"  itemLabel="Togo " ></f:selectItem>
+<f:selectItem itemValue="THA"  itemLabel="Thailand " ></f:selectItem>
+<f:selectItem itemValue="TJK"  itemLabel="Tajikistan " ></f:selectItem>
+<f:selectItem itemValue="TKL"  itemLabel="Tokelau " ></f:selectItem>
+<f:selectItem itemValue="TKM"  itemLabel="Turkmenistan " ></f:selectItem>
+<f:selectItem itemValue="TLS"  itemLabel="Timor-Leste " ></f:selectItem>
+<f:selectItem itemValue="TON"  itemLabel="Tonga " ></f:selectItem>
+<f:selectItem itemValue="TTO"  itemLabel="Trinidad and Tobago " ></f:selectItem>
+<f:selectItem itemValue="TUN"  itemLabel="Tunisia " ></f:selectItem>
+<f:selectItem itemValue="TUR"  itemLabel="Turkey " ></f:selectItem>
+<f:selectItem itemValue="TUV"  itemLabel="Tuvalu " ></f:selectItem>
+<f:selectItem itemValue="TWN"  itemLabel="Taiwan, Province of China" ></f:selectItem> 
+<f:selectItem itemValue="TZA"  itemLabel="Tanzania, United Republic of " ></f:selectItem>
+<f:selectItem itemValue="UGA"  itemLabel="Uganda " ></f:selectItem>
+<f:selectItem itemValue="UKR"  itemLabel="Ukraine " ></f:selectItem>
+<f:selectItem itemValue="UMI"  itemLabel="United States Minor Outlying Islands" ></f:selectItem> 
+<f:selectItem itemValue="URY"  itemLabel="Uruguay " ></f:selectItem>
+<f:selectItem itemValue="USA"  itemLabel="United States " ></f:selectItem>
+<f:selectItem itemValue="UZB"  itemLabel="Uzbekistan " ></f:selectItem>
+<f:selectItem itemValue="VAT"  itemLabel="Holy See (Vatican City State)" ></f:selectItem>
+<f:selectItem itemValue="VCT"  itemLabel="Saint Vincent and the Grenadines " ></f:selectItem>
+<f:selectItem itemValue="VEN"  itemLabel="Venezuela,Bolivarian Republic of " ></f:selectItem>
+<f:selectItem itemValue="VGB"  itemLabel="Virgin Islands, British " ></f:selectItem>
+<f:selectItem itemValue="VIR"  itemLabel="Virgin Islands, U.S. " ></f:selectItem>
+<f:selectItem itemValue="VNM"  itemLabel="Viet Nam " ></f:selectItem>
+<f:selectItem itemValue="VUT"  itemLabel="Vanuatu " ></f:selectItem>
+<f:selectItem itemValue="WLF"  itemLabel="Wallis and Futuna " ></f:selectItem>
+<f:selectItem itemValue="WSM"  itemLabel="Samoa " ></f:selectItem>
+<f:selectItem itemValue="YEM"  itemLabel="Yemen " ></f:selectItem>
+<f:selectItem itemValue="ZAF"  itemLabel="South Africa " ></f:selectItem>
+<f:selectItem itemValue="ZMB"  itemLabel="Zambia " ></f:selectItem>
+<f:selectItem itemValue="ZWE"  itemLabel="Zimbabwe " ></f:selectItem>
+
+</h:selectOneMenu>
+</div>
+
+
+
+<div class="col-sm-12" style="margin-top:8px;">
+<h:inputText value="#{paytabsbean.city}" a:placeholder="City"  class="form-control" ></h:inputText>
+</div>
+
+
+
+
+
+<div class="col-sm-12" style="margin-top:8px;">
+<h:inputText value="#{paytabsbean.state}" a:placeholder="State/Region"  class="form-control" ></h:inputText>
+</div>
+
+<div class="col-sm-12" style="margin-top:8px;">
+<h:inputText value="#{paytabsbean.postalcode}" a:placeholder="Postal Code"  class="form-control" ></h:inputText>
+</div>
+
+
+</div>
+<!-- shiping addresss start -->
+
+
+
+
+<div class="col-sm-12"><h:commandLink action="#{paytabsbean.individualInformationSubmit()}" value="S&#818;ubmit" style="text-decoration:none;margin-top:32px;
+ color:#fff;" class="btn fontsize btn-success btn-block"></h:commandLink>
+ </div>
+
+<br></br><br></br>
+<center>
+ <img class="card-brands-supported" alt="credit cards" style="margin-top:15px;" src="https://www.paytabs.com/theme/payment_page/img/credit-cards.png" />
+ </center>
+
+</h:form>
+
+
+
+ </div>
+</h:body> 
+</html>
+

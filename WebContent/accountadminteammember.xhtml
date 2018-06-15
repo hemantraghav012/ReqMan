@@ -11,7 +11,7 @@
   
    <c:choose>
  
-<c:when test="#{userroleset eq 1}">
+<c:when test="#{userroleset eq 2}">
 <h:head>
 <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
@@ -24,17 +24,17 @@
  <link rel="stylesheet" href="resource/mystyle/button.css"/>
 <script type="text/javascript" src="resource/js/bootstrap.js"/>
 <script type="text/javascript" src="resource/js/jquery.js"/>
-<title>Account</title>
+<title>Account Team Member</title>
 <script>
 
 function setUsersHiddenValue(new_value)
 {
-	document.getElementById('accountForm:id').value = new_value;
+	document.getElementById('accountuserForm:accountteammemberid').value = new_value;
 
 }
 
 </script>
-	 <style type="text/css">
+		<style type="text/css">
         .ui-growl {
             
             top:60px;
@@ -44,9 +44,9 @@ function setUsersHiddenValue(new_value)
         }
     </style>
 </h:head> 
-<body> 
+<body>  
 
-	<div id="header">
+<div id="header">
 	<ui:insert name="header">
 		<ui:include src="header.xhtml" />
 	</ui:insert>
@@ -55,70 +55,71 @@ function setUsersHiddenValue(new_value)
       <!-- -end of header --> 
       <div class="container accountgrid">
       
-      <h:form id="accountForm">
+      <h:form id="accountuserForm">
     <div class="ui-fluid">
 <p:growl id="msgs" />
- <h:inputHidden id="id" value="#{accountbean.id}" ></h:inputHidden>
+ <h:inputHidden id="accountteammemberid" value="#{adminteammemberbean.id}" ></h:inputHidden>
+ 
  
   <div class="row">
       
       	<div class="col-sm-12">
-      		<h1 style="text-align:center;font-size:25px;">Manage Account List</h1>
+      		<h1 style="text-align:center;font-size:25px;">Manage Account Team Member List</h1>
       	</div>
       </div>
  
  
-	      <p:dataTable id="accountTable" var="account" value="#{accountbean.accountList}" draggableColumns="true" 
+ 
+	      <p:dataTable id="accountuserTable" var="accountuser" value="#{adminteammemberbean.accountteammemberList}" draggableColumns="true" 
 	     resizableColumns="true" 
-	     reflow="true" scrollable="true" scrollHeight="300" rows="10"  paginator="true"    	       
+	     reflow="true" scrollable="true" scrollHeight="300" rows="10"  paginator="true"   	       
 	      paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" 
 	      rowsPerPageTemplate="5,10,15" class="table table-striped table-hover table-bordered" 	     
-	     style="margin-top:5px; margin-left:0px; " filteredValue="#{accountbean.filteredaccountList}" 	     
-	     widgetVar="accountListTable">
+	     style="margin-top:5px; margin-left:0px; " filteredValue="#{adminteammemberbean.filteredaccountteammemberList}" 	     
+	     widgetVar="accountuserListTable">
 			
-			<p:column filterBy="#{account.id}" sortBy="#{account.id}" headerText="Account Id"  
-			 filterMatchMode="contains"   style="padding: 0px 0px 0px 3px;">
+			
+			
+			<p:column filterBy="#{accountuser.username}" sortBy="#{accountuser.username}" headerText="User Name"  
+			 filterMatchMode="contains"   style="padding: 0px 0px 0px 3px; width:350px;">
 				<f:facet name="header">
-					<h:outputText value="Account Id"  />
+					<h:outputText value="User Name"  />
 				</f:facet>
-				<h:outputText value="#{account.id}" />
+				<h:outputText value="#{accountuser.username}" />
 			</p:column>
 			
-	 
-			<p:column filterBy="#{account.name}" sortBy="#{account.name}" headerText="Account Name"  
-			 filterMatchMode="contains"   style="padding: 0px 0px 0px 3px;">
+		
+			
+			<p:column filterBy="#{accountuser.accountname}" sortBy="#{accountuser.accountname}" headerText="Account Name"  
+			 filterMatchMode="contains"   style="padding: 0px 0px 0px 3px;width:250px;">
 				<f:facet name="header">
 					<h:outputText value="Account Name"  />
 				</f:facet>
-				<h:outputText value="#{account.name}" />
+				<h:outputText value="#{accountuser.accountname}" />
 			</p:column>
-			
-		<p:column filterBy="#{account.organizationkey}" sortBy="#{account.organizationkey}" headerText="Account Key"  
-			 filterMatchMode="contains"   style="padding: 0px 0px 0px 3px;">
+						
+		<p:column filterBy="#{accountuser.organizationkeye}" sortBy="#{accountuser.organizationkey}" headerText="Account Key"  
+			 filterMatchMode="contains"   style="padding: 0px 0px 0px 3px;width:174px;">
 				<f:facet name="header">
 					<h:outputText value="Account Key"  />
 				</f:facet>
-				<h:outputText value="#{account.organizationkey}" />
+				<h:outputText value="#{accountuser.organizationkey}" />
 			</p:column>
+				
 			
+			<p:column headerText="Delete" exportable="false" style="padding: 0px 0px 0px 0px;" class="width" >
+<p:commandLink id="nonAjax" styleClass="btn btn-primary fontsize" 
+				style="color:white;  border-radius: none;font-size:12px;" onclick='setUsersHiddenValue(#{accountuser.accountteammemberid})' 
+				action="#{adminteammemberbean.modifyAction()}" ajax="false" >
+	        		Delete
+	    		</p:commandLink> 
+	    		
+	    		
+	    		
+	    		
+   </p:column>   
 			
-			<p:column filterBy="#{account.datecreated}" sortBy="#{account.datecreated}" headerText="Date Created"  
-			 filterMatchMode="contains"   style="padding: 0px 0px 0px 3px;">
-				<f:facet name="header">
-					<h:outputText value="Date Created"  />
-				</f:facet>
-				<h:outputText value="#{account.datecreated}" />
-			</p:column>
-			
-	        <p:column filterBy="#{account.status}" sortBy="#{account.status}" headerText="Status"  
-		 filterMatchMode="contains"   style="padding: 0px 0px 0px 3px;">
-				<f:facet name="header">
-					<h:outputText value="Status"  />
-				</f:facet>
-				<h:outputText value="#{account.status}" />
-			</p:column>
 	       
-	   
 	    </p:dataTable>
 	    
 	   

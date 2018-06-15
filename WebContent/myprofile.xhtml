@@ -1,8 +1,8 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" 	xmlns:h="http://java.sun.com/jsf/html" 	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough" 
-	   xmlns:ui="http://java.sun.com/jsf/facelets" 	   xmlns:f="http://java.sun.com/jsf/core" 	    xmlns:p="http://primefaces.org/ui">
+<html xmlns="http://www.w3.org/1999/xhtml" 	xmlns:h="http://java.sun.com/jsf/html" 
+	   xmlns:ui="http://java.sun.com/jsf/facelets" 	 xmlns:a="http://xmlns.jcp.org/jsf/passthrough"    xmlns:f="http://java.sun.com/jsf/core" 	    xmlns:p="http://primefaces.org/ui">
 <h:head>
 <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
@@ -14,6 +14,16 @@
 <script type="text/javascript" src="resource/js/bootstrap.js"/>
 <script type="text/javascript" src="resource/js/jquery.js"/>
 <title>My Profile</title>
+ <style type="text/css">
+        .ui-growl {
+            
+            top:60px;
+            Right:20px;
+            width:301px;
+          
+        
+        }
+          </style>
 </h:head>
 
 <h:body>
@@ -27,7 +37,7 @@
       
       <div class="container" style="margin-top:2cm;">
         <h1>Your personal details Info</h1>
-    
+     <p:growl id="message" />
     <hr></hr>
     
   <div class="row">
@@ -66,14 +76,30 @@
 
  <div class=" row form-group ">
 <div class="col-sm-2 control-label"><h:outputLabel>Password:</h:outputLabel></div>
-<div class=" col-sm-6"><h:inputText value="#{userupdate.password}"  class="form-control" id="password" required="true" requiredMessage="* Please enter your password"></h:inputText></div>
+<div class=" col-sm-6">
+<p:password value="#{userupdate.password}"  class="form-control" id="password" a:placeholder=" Password" match="ConformPassword"  requiredMessage="* Please enter your password"  validatorMessage="Password does not match the confirm password." >
+</p:password>
+
+</div>
  <h:message for="password"  style="color:red;margin:8px;"/> 
 </div>
 
 
  <div class=" row form-group ">
+<div class="col-sm-2 control-label"><h:outputLabel>Confirm Password:</h:outputLabel></div>
+<div class=" col-sm-6">
+<p:password value="#{userupdate.password}"  class="form-control" id="ConformPassword"  validatorMessage="Password does not match the confirm password."  a:placeholder="Confirm Password"  requiredMessage="* Please enter your confirm password">
+</p:password>
+
+</div>
+ <h:message for="ConformPassword"  style="color:red;margin:8px;"/> 
+</div>
+
+
+
+ <div class=" row form-group ">
 <div class="col-sm-2 control-label"><h:outputLabel>First Name:</h:outputLabel></div>
-<div class=" col-sm-6"><h:inputText value="#{userupdate.firstname}"  class="form-control" id="firstname"  requiredMessage="* Please enter your first name"></h:inputText></div>
+<div class=" col-sm-6"><h:inputText value="#{userupdate.firstname}"  class="form-control" id="firstname"   requiredMessage="* Please enter your first name"></h:inputText></div>
  <h:message for="firstname"  style="color:red;margin:8px;"/> 
 </div>
 
@@ -85,20 +111,34 @@
 
  <div class=" row form-group ">
 <div class="col-sm-2 control-label"><h:outputLabel>Short Name:</h:outputLabel></div>
-<div class="col-sm-6"><h:inputText value="#{userupdate.shortname}"  class="form-control" id="shortname"  requiredMessage="* Please enter your short name"></h:inputText></div>
+<div class="col-sm-6"><h:inputText value="#{userupdate.shortname}"  class="form-control"  maxlength="4" id="shortname"  requiredMessage="* Please enter your short name"></h:inputText>
+<span style="color:black;">(Please enter upto 4 characters.)</span>
+</div>
  <h:message for="shortname"  style="color:red;margin:8px;"/> 
 </div>
 
 <div class=" row form-group ">
 <div class="col-sm-2 control-label"><h:outputLabel style="white-space:nowrap;">Profile Image :</h:outputLabel></div>
-<div class="col-sm-4">
-<p:fileUpload value="#{userupdate.photo}" mode="simple" class="form-control" style=" border-style: hidden;" />
+<div class="col-sm-6">
+ <p:fileUpload id="choose" validator="#{userupdate.validateFile}" multiple="false" allowTypes="/(\.|\/)(gif|jpe?g|png)$/" 
+  value="#{userupdate.photo}"  mode="simple"/>
+  
+</div>
 </div>
 
+ <div class=" row form-group ">
+<div class="col-sm-2 control-label"><h:outputLabel>Organization Key:</h:outputLabel></div>
+<div class="col-sm-6"><h:inputText value="#{userupdate.organizationkey}" a:placeholder="Organization key" class="form-control" id="organizationkey"  requiredMessage="* Please enter your last name"></h:inputText></div>
+ <h:message for="lastname"  style="color:red;margin:8px;"/> 
 </div>
+
+
+<br></br>
  <div class=" row form-group ">
  <div class="col-sm-2 .col-sm-offset-2"></div>
-<div class="col-sm-6 "><h:commandLink action="#{userupdate.updateUserdetail}" value="submit" class="btn btn-lg btn-primary btn-block"></h:commandLink></div>
+<div class="col-sm-6 "><h:commandLink action="#{userupdate.updateUserdetail}" value="submit" class="btn btn-lg btn-primary btn-block">
+</h:commandLink>
+</div>
 </div>
  
 </h:form>

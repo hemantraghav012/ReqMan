@@ -20,11 +20,35 @@
 <link rel="stylesheet" href="resource/mystyle/friendmaster.css"/>
 <script type="text/javascript" src="resource/js/jquery.js"/>
 <title> header</title>
+ 
 </h:head>
 <h:body>
 <ui:composition>
 
 <h:form>
+<script type="text/javascript">
+$(document).ready(function(){
+	  var firstName = $('#firstName').text();	 
+	  var intials = $('#firstName').text().charAt(0) ;
+	  var profileImage = $('#profileImage').text(intials);
+	});
+
+</script>
+<style type="text/css">
+#profileImage {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: #512DA8;
+  font-size: 35px;
+  color: #fff;
+  text-align: center;
+  line-height:50px;
+
+
+
+}
+</style>
 <div class="navbar  navbar-default navbar-fixed-top top_menu " >
 <div class="container-fluid ">
 <div class="navbar-header">
@@ -47,26 +71,54 @@
 <div class="collapse navbar-collapse navbar-responsive-collapse margin_menu">
 <ul class="nav navbar-nav navbar-left">
 <li> <h:link  style="color:#faebd1; font-weight: bold;   background: rgba(255,255,255,0.2);  " class="glyphicon glyphicon-home"  id="nav-sign-up4" outcome="home" /> </li>
-<li><h:link value="Dashboard " style="color:#faebd1; font-weight: bold;" outcome="dashboard"/> </li>
-
-
-
-
+<li><h:link value="Dashboard " style="color:#faebd1; font-weight: bold;" outcome="dashboard">
+                 <img  src="resource/image/dashbord1.png" class="img-responsive pull-left"  ></img>
+</h:link> </li>
 
 <li class="dropdown">
- <a class="dropbtn  hover-item " style="color:#faebd1; font-weight: bold; background-color:#f36c00;">Request <span class="caret"></span></a>         
+ <a class="dropbtn  hover-item " style="color:#faebd1; font-weight: bold; background-color:#f36c00;cursor: pointer;">
+ <img  src="resource/image/requestfolder1.png" class="img-responsive pull-left"   ></img>
+ 
+ Request <span class="caret"></span></a>         
 
-<ul class="dropdown-content hover-item " style=" font-weight: bold;background-color:#f36c00; color:#fff;">      
+<ul class="dropdown-content hover-item " style=" font-weight: bold;background-color:#f36c00;  color:#fff;list-style: none;">      
 <c:choose>
  <c:when test="#{userroleset == 2 || userroleset == 1}">
-<li><h:commandLink  value="Create New Request" style="color:#faebd1;text-align:left; margin-left:-30px;  line-height: 2;" class=" btn-md " action="#{createrequest.createRequest}" /> </li>
-<li> <h:commandLink value="Monitor My Requests" style="color:#faebd1;text-align:left; margin-left:-32px; line-height: 1;" class=" btn-md " action="#{createrequest.createRequestPage}"/></li>
-<li> <h:link value="Monitor All request" style="color:#faebd1;text-align:left; margin-left:-32px; line-height: 2.5;" class=" btn-md " outcome="adminrequest"/></li> 
+ <li><h:commandLink  value="Quick Multiple Requests" style="color:#faebd1;text-align:left; margin-left:-12px;font-weight: bold;"  class="btn1 btn  " action="#{createrequest.quickcreateRequest}" >
+ <img  src="resource/image/quick.png" class="img-responsive pull-left"  style="margin-left:-32px" ></img>
+
+</h:commandLink> </li>
+ 
+<li><h:commandLink  value="Create New Request" style="color:#faebd1;text-align:left; margin-left:-12px;font-weight: bold;" class="btn1 btn  " action="#{createrequest.createRequest}">
+ <img  src="resource/image/createicon2.png" class="img-responsive pull-left"  style="margin-left:-32px" ></img>
+</h:commandLink> </li>
+
+
+<li> <h:commandLink value="Monitor My Requests" style="color:#faebd1;text-align:left; margin-left:-12px;font-weight: bold; " class="btn1 btn  " action="#{createrequest.createRequestPage}">
+  <img  src="resource/image/updatestatus.png" class="img-responsive pull-left"  style="margin-left:-32px" ></img>
+ 
+ </h:commandLink></li>
+<li> <h:link value="Monitor All request" style="color:#faebd1;text-align:left; margin-left:-12px;font-weight: bold;" class="btn1 btn " outcome="adminrequest">
+ <img  src="resource/image/updatestatus.png" class="img-responsive pull-left"  style="margin-left:-32px" ></img>
+
+</h:link></li> 
 </c:when>
 
 <c:otherwise>
-<li><h:commandLink  value="Create New Request" style="color:#faebd1;text-align:left; margin-left:-30px;  line-height: 1;" class=" btn-md " action="#{createrequest.createRequest}" /> </li>
-<li> <h:commandLink value="Monitor My Requests" style="color:#faebd1;text-align:left; margin-left:-32px; line-height: 3;" class=" btn-md " action="#{createrequest.createRequestPage}"/></li>
+
+<li><h:commandLink  value="Quick Multiple Requests" style="color:#faebd1;text-align:left; margin-left:-12px;  font-weight: bold;" class="btn1 btn " action="#{createrequest.quickcreateRequest}" >
+<img  src="resource/image/quick.png" class="img-responsive pull-left"  style="margin-left:-32px" ></img>
+
+</h:commandLink> </li>
+<li><h:commandLink  value="Create New Request" style="color:#faebd1;text-align:left; margin-left:-12px;  font-weight: bold;" class="btn1 btn " action="#{createrequest.createRequest}">
+ <img  src="resource/image/createicon2.png" class="img-responsive pull-left"  style="margin-left:-32px" ></img>
+</h:commandLink> </li>
+
+<li> <h:commandLink value="Monitor My Requests" style="color:#faebd1;text-align:left; margin-left:-12px; font-weight: bold;"  class="btn1 btn " action="#{createrequest.createRequestPage}">
+<img  src="resource/image/updatestatus.png" class="img-responsive pull-left"  style="margin-left:-32px" ></img>
+
+</h:commandLink></li>
+
 </c:otherwise>
 </c:choose>
  </ul> 
@@ -77,19 +129,37 @@
  
  
  
-<li><h:commandLink value=" Respond to New Request" style="color:#faebd1; font-weight: bold;" action="#{responsebean.responsePage}"/></li>
-<li><h:commandLink value=" Update Tasks" style="color:#faebd1; font-weight: bold;" action="#{updatestatusbean.updatestatusPage}"/></li>
+<li><h:commandLink  style="color:#faebd1; font-weight: bold;" action="#{responsebean.responsePage}">
+<img  src="resource/image/responselist1.png" class="img-responsive pull-left" ></img>&nbsp;Respond to New Request
+ 
+</h:commandLink></li>
+<li><h:commandLink  style="color:#faebd1; font-weight: bold;" action="#{updatestatusbean.updatestatusPage}">
+<img  src="resource/image/updatenew.png" class="img-responsive pull-left"  style="margin-left:-13px;"  ></img>Update Tasks
+
+</h:commandLink></li>
 
 
  <li class="dropdown">
- <a  class="dropdown-toggle  hover-item" data-toggle="dropdown"  style="color:#faebd1; font-weight: bold; background-color:#f36c00;">Master-Info
+ <a  class="dropdown-toggle  hover-item" data-toggle="dropdown"  style="color:#faebd1; font-weight: bold; background-color:#f36c00;cursor: pointer;">
+ <img  src="resource/image/icon2.png" class="img-responsive pull-left"  style="margin-left:-13px;"  ></img>
+ Master-Info
    <span class="caret">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></a> 
 <ul class="dropdown-menu" style="color:#faebd1; font-weight: bold;background-color:#f36c00; color:#fff;">
-<li ><h:commandLink value="Team Member List " style="color:#faebd1;font-weight: bold; text-align:left;" class="btn btn-block hover-item" action="#{friendbean.friendPage}" /></li> 
-<li><h:commandLink value="Category List" style="color:#faebd1; font-weight: bold;text-align:left;" class="btn btn-block hover-item" action="#{categorybean.categoryPage}"/></li>
-<li ><h:commandLink value="Project List" style="color:#faebd1;font-weight: bold;text-align:left;" class="btn btn-block hover-item" action="#{projectbean.projectPage}" /></li>
-<li ><h:commandLink value="Type List " style="color:#faebd1;font-weight: bold;text-align:left;" class="btn btn-block hover-item" action="#{requesttypebean.requesttypePage}" /></li> 
+<li ><h:commandLink style="color:#faebd1;font-weight: bold; text-align:left;" class="btn btn-block hover-item" action="#{friendbean.friendPage}" >
+<img  src="resource/image/friendlist.png" class="img-responsive pull-left"  style="margin-left:-13px;"  ></img>Team Member List 
+</h:commandLink></li> 
+<li><h:commandLink value="Category List" style="color:#faebd1; font-weight: bold;text-align:left;" class="btn btn-block hover-item" action="#{categorybean.categoryPage}">
 
+<img  src="resource/image/cat.png" class="img-responsive pull-left"  style="margin-left:-13px;"  ></img>
+</h:commandLink></li>
+<li ><h:commandLink  style="color:#faebd1;font-weight: bold;text-align:left;" class="btn btn-block hover-item" action="#{projectbean.projectPage}">
+<img  src="resource/image/projecti.png" class="img-responsive pull-left"  style="margin-left:-13px;"  ></img>Project List
+
+</h:commandLink></li>
+<li ><h:commandLink value="Type List " style="color:#faebd1;font-weight: bold;text-align:left;" class="btn btn-block hover-item" action="#{requesttypebean.requesttypePage}">
+<img  src="resource/image/typ.png" class="img-responsive pull-left" style="margin-left:-13px" ></img>
+</h:commandLink></li> 
+<li> <h:link value="Audio" style="color:#faebd1; font-weight: bold;" outcome="recoding"/></li>
   </ul>        
 </li> 
 
@@ -101,7 +171,10 @@
  
 <c:when test="#{userroleset == 1 ||userroleset == 2 }">
  <li class="dropdown">
- <a class="dropdown-toggle  hover-item" data-toggle="dropdown"  style="color:#faebd1; font-weight: bold; background-color:#f36c00;">Admin <span class="caret"></span></a>         
+ <a class="dropdown-toggle  hover-item" data-toggle="dropdown"  style="color:#faebd1; font-weight: bold;cursor: pointer; background-color:#f36c00;">
+ 
+<img  src="resource/image/admin.png" class="img-responsive pull-left"   ></img>
+ Admin <span class="caret"></span></a>         
 
 <ul class="dropdown-menu" style="color:#faebd1; font-weight: bold;background-color:#f36c00; color:#fff;">      
 <c:choose>
@@ -113,10 +186,16 @@
 <li> <h:link value="Account Users" style="color:#faebd1; font-weight: bold;" outcome="accountuser"/></li> 
 <li> <h:link value="Transaction Master" style="color:#faebd1; font-weight: bold;" outcome="appadminusers"/></li> 
 <li> <h:link value="Public Domain" style="color:#faebd1; font-weight: bold;" outcome="publicdomain"/></li> 
-<li> <h:link value="Schedule job" style="color:#faebd1; font-weight: bold;" outcome="schedulejob"/></li>
+<li> <h:link value="Schedule Job" style="color:#faebd1; font-weight: bold;" outcome="schedulejob"/></li>
+<li> <h:link value="Data Summary " style="color:#faebd1; font-weight: bold;" outcome="appadminsummary"/></li>
+<li> <h:link value="Admin Suggestion" style="color:#faebd1; font-weight: bold;" outcome="adminsuggestion"/></li>
+
 </c:when>
     <c:when test="#{userroleset == 2}">
-<li><h:commandLink action="#{accountbean.modifyAction}" value="Account Admin" style="color:#fff;font-weight: bold;text-align:left;"  class="btn btn-block hover-item"></h:commandLink></li>
+<li><h:commandLink action="#{accountbean.modifyAction}"  style="color:#faebd1;font-weight: bold;text-align:left;"  class="btn btn-block hover-item">
+<img  src="resource/image/accountadmin.png" class="img-responsive pull-left"  style="margin-left:-13px" ></img>Account Admin
+</h:commandLink></li>
+<li> <h:link value="Admin Team Members" style="color:#faebd1; font-weight: bold;" outcome="accountadminteammember"/></li>
 </c:when>
 <c:otherwise>
 </c:otherwise>
@@ -141,13 +220,22 @@ width="50"  height="50"  />
  
  -->
  <li class="dropdown">
- <a class="dropdown-toggle  hover-item" data-toggle="dropdown"  style="color:#faebd1; font-weight: bold; background-color:#f36c00;"> #{username} <span class="caret"></span></a>         
+ <a class="dropdown-toggle  hover-item" data-toggle="dropdown"  style="color:#faebd1; padding:0px; background-color:#f36c00;cursor: pointer;"> 
+ <div id="profileImage" style="padding:0px;" ></div> </a>
+          
 
 <ul class="dropdown-menu" style="color:#faebd1; font-weight: bold;background-color:#f36c00; color:#fff;">      
-<li><span class="btn btn-block hover-item disabled" style="color:#faebd1;font-weight: bold;text-align:left;">#{username}</span></li>
-<li><h:link value=" Suggestion" style="color:#faebd1; font-weight: bold;" outcome="suggestion"/></li>
-<li><h:commandLink action="#{userupdate.modifyAction}" value="myprofile" style="color:#fff;font-weight: bold;text-align:left;"  class="btn btn-block hover-item"></h:commandLink></li>
-<li><h:commandLink action="#{login.logout}" value="Logout" style="color:#faebd1;font-weight: bold;text-align:left;"  class="btn btn-block hover-item"></h:commandLink></li>
+<li><span id="firstName" class="btn btn-block hover-item disabled" style="color:#faebd1;font-weight: bold;text-align:left;">#{username}</span></li>
+<li><h:link value="Customer Input" style="color:#faebd1; font-weight: bold;" outcome="suggestion">
+<img  src="resource/image/suggestion.png" class="img-responsive pull-left" style="margin-left:-13px;"  ></img>
+</h:link></li>
+<li><h:commandLink action="#{userupdate.modifyAction}" value="My profile" style="color:#faebd1;font-weight: bold;text-align:left;"  class="btn btn-block hover-item">
+<img  src="resource/image/profile.png" class="img-responsive pull-left" style="margin-left:-14px;"   ></img>
+</h:commandLink></li>
+<li><h:commandLink action="#{login.logout}" value="Logout" style="color:#faebd1;font-weight: bold;text-align:left;"  class="btn btn-block hover-item">
+<img  src="resource/image/logout.png" class="img-responsive pull-left" style="margin-left:-14px;"   ></img>
+
+</h:commandLink></li>
 
 </ul> 
 </li>    

@@ -1,0 +1,57 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+	   
+ <html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html"
+	  xmlns:f="http://java.sun.com/jsf/core" xmlns:ui="http://java.sun.com/jsf/facelets"
+	   xmlns:p="http://primefaces.org/ui"
+	   xmlns:a="http://xmlns.jcp.org/jsf/passthrough" > 
+<h:head>
+
+<link rel="stylesheet" href="resource/mystyle/onlyhome.css"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<link rel="stylesheet" href="resource/css/bootstrap.css"/>
+<link rel="stylesheet" href="resource/mystyle/home.css"/>
+<link rel="stylesheet" href="resource/mystyle/friendmaster.css"/>
+<link rel="stylesheet" href="resource/mystyle/createcategory.css"/>
+ <link rel="stylesheet" href="resource/mystyle/button.css"/>
+<script type="text/javascript" src="resource/js/bootstrap.js"/>
+<script type="text/javascript" src="resource/js/jquery.js"/>
+<title>Audio Recoding</title>
+</h:head> 
+<h:body>
+
+<div id="header">
+	<ui:insert name="header">
+		<ui:include src="header.xhtml" />
+	</ui:insert>
+</div>
+      <!-- end of header -->
+      <br></br> <br></br> <br></br> <br></br>
+      <div class="container">
+hello
+ <p:commandButton action="#{createrequest.soundRecode()}" value="Start" />
+ 
+  
+    
+ 
+
+</div>
+
+
+<script type="text/javascript">
+function start() {
+    PF('startButton1').disable();
+   
+}
+ 
+function cancel() {
+   
+    PF('startButton1').enable();
+}
+</script>
+ </h:body>
+</html>

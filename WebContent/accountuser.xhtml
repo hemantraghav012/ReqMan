@@ -34,7 +34,15 @@ function setUsersHiddenValue(new_value)
 }
 
 </script>
-	
+	 <style type="text/css">
+        .ui-growl {
+            
+            top:60px;
+            Right:20px;
+            width:301px;
+        
+        }
+    </style>
 </h:head> 
 <body> 
 
@@ -49,8 +57,17 @@ function setUsersHiddenValue(new_value)
       
       <h:form id="accountuserForm">
     <div class="ui-fluid">
-<p:growl id="msgs" showDetail="true"/>
+<p:growl id="msgs" />
  <h:inputHidden id="accountuserid" value="#{accountuser.accountuserid}" ></h:inputHidden>
+ 
+ 
+  <div class="row">
+      
+      	<div class="col-sm-12">
+      		<h1 style="text-align:center;font-size:25px;">Manage Account User List</h1>
+      	</div>
+      </div>
+ 
  
  
 	      <p:dataTable id="accountuserTable" var="accountuser" value="#{accountuserbean.accountuserList}" draggableColumns="true" 
@@ -92,7 +109,13 @@ function setUsersHiddenValue(new_value)
 				<h:outputText value="#{accountuser.accountname}" />
 			</p:column>
 						
-		
+			<p:column filterBy="#{accountuser.organizationkey}" sortBy="#{accountuser.organizationkey}" headerText="Account Key"  
+			 filterMatchMode="contains"   style="padding: 0px 0px 0px 3px;">
+				<f:facet name="header">
+					<h:outputText value="Account Key"  />
+				</f:facet>
+				<h:outputText value="#{accountuser.organizationkey}" />
+			</p:column>
 			
 	       
 	    </p:dataTable>

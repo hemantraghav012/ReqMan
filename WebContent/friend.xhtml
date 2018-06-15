@@ -68,10 +68,12 @@ function setFriendHiddenValue(new_value)
 
   <h:form class="form-horizontal">
 
-  <h2 style="  margin-bottom:30px; margin-top:0px; text-align:center" >Add Team Member</h2>
+  <h2 style="text-align:center;" >Add Team Member
+ <span  style="font-size:15px;" data-toggle="tooltip" title="The team members will be able to manage their own name details." 
+  class=" glyphicon glyphicon-info-sign"></span></h2>
 
 
-
+<br></br>
  <div class=" row form-group ">
  <div class="col-sm-3 control-label"><h:outputLabel  > Email Id:</h:outputLabel></div>
 <div class=" col-sm-7"> <h:inputText value="#{friendbean.frienduser}" class="  form-control" validatorMessage="Invalid email format" id="friendemailid"  a:placeholder="Please Enter Email Id"   required="true" requiredMessage="* Please enter Email id">
@@ -91,12 +93,13 @@ function setFriendHiddenValue(new_value)
 </h:form>
 
   
- 
+						
+					
             <hr></hr>
 
   <h:form id="friendForm" >
 
- <p:growl id="messages" showDetail="true"  autoUpdate="true"/>
+ <p:growl id="messages" />
       <div  class="gridmargin">
  		<h:inputHidden id="friendId" value="#{friendbean.friendId}" ></h:inputHidden>
       (Only active team members will be available for transaction)
@@ -174,8 +177,27 @@ filterBy="#{friend.emailid}"  filterStyle="display:none;" filterMatchMode="conta
         
          <h:outputText value="#{friend.emailid}"   /> 
             	</p:column>        
+            	
+	 <!-- 
+	 <p:column headerText=" Id" style="padding: 0px 0px 0px 3px;"  >
+ <f:facet name="header">
+					<h:outputText value="Id" />
+				</f:facet>
+        
+         <h:outputText value="#{friend.friendid}"   /> 
+            	</p:column>  
+	  -->
 	 
-  <p:column headerText="Status" filterBy="#{friend.status}" sortBy="#{friend.status}"  filterStyle="display:none;" filterMatchMode="contains"  style="width:125px;padding: 0px 0px 0px 3px; ">
+
+<p:column headerText="Image" style="width:70px">
+					 <p:graphicImage value="#{friendbean.logoFromDB}" stream="false"  width="50px" height="50px">
+					    <ui:param name="formId" value="#{friend.friendid}"/>
+					 </p:graphicImage>
+				</p:column>
+
+
+
+  <p:column headerText="Status" filterBy="#{friend.status}" sortBy="#{friend.status}"  filterStyle="display:none;" filterMatchMode="contains"  style="width:125px;padding: 0px 0px 0px 3px;cursor: pointer; ">
               <p:cellEditor>
                  <f:facet name="output"><h:outputText value="#{friend.status}" /></f:facet>
                <f:facet name="input">

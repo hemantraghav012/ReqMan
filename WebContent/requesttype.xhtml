@@ -99,7 +99,7 @@ function setRequesttypeHiddenValue(new_value)
 
 
   <h:form id="requesttypeForm" >
- <p:growl id="messages" showDetail="true"  autoUpdate="true"/>
+ <p:growl id="messages" />
       <div  class="gridmargin">
  		<h:inputHidden id="requesttypeId" value="#{requesttypebean.requesttypeId}" ></h:inputHidden>
    	(Only active types will be available for transaction)
@@ -156,7 +156,7 @@ function setRequesttypeHiddenValue(new_value)
 	        </p:column>
 	 
 	 
-	  <p:column headerText="Status" filterBy="#{requesttype.status}" sortBy="#{requesttype.status}"  filterStyle="display:none;" filterMatchMode="contains"  style="width:125px;padding: 0px 0px 0px 3px; ">
+	  <p:column headerText="Status" filterBy="#{requesttype.status}" sortBy="#{requesttype.status}"  filterStyle="display:none;" filterMatchMode="contains"  style="width:125px;padding: 0px 0px 0px 3px; cursor: pointer;">
               <p:cellEditor>
                  <f:facet name="output"><h:outputText value="#{requesttype.status}" /></f:facet>
                <f:facet name="input">

@@ -62,7 +62,10 @@ function setRequestHiddenValue(new_value)
       	   		
 	  
           <div class="col-sm-6 pull-right" > 
-        	 <h:link value="Shared Project Tasks" style="padding-bottom:5px;"  class="btn1 btn  pull-right fontsize " outcome="commonproject" />  
+        	 <h:link value="Shared Project Tasks" style="padding-bottom:5px;"  class="btn1 btn  pull-right fontsize " outcome="commonproject" >
+        	  <img  src="resource/image/share.png" class="img-responsive pull-left"  ></img>
+	    
+        	 </h:link>  
 
      			 	
      		 <h:link value="View History" style="padding-bottom:5px;" class="btn2 btn pull-right fontsize" outcome="viewcompletedtask" >
@@ -76,13 +79,13 @@ function setRequestHiddenValue(new_value)
         </div>
      
 
-     <p:growl id="messages" showDetail="true" sticky="true" autoUpdate="true"/>
+     <p:growl id="messages" />
 
 
 <div class="ui-fluid ">
 
 	     <p:dataTable id="requestTable" var="update1" value="#{updatestatusbean.updatestatusList}" draggableColumns="true" 
-	     resizableColumns="true"
+	     resizableColumns="true" editable="true" editMode="cell" 
 	     reflow="true" scrollable="true" scrollHeight="310" 
 	      rows="25" rowsPerPageTemplate="25,35,50"   paginator="true"   
 	      paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" 
@@ -92,6 +95,10 @@ function setRequestHiddenValue(new_value)
 	     style="margin-top:10px;  " filteredValue="#{updatestatusbean.filteredUpdateList}" 
 	     widgetVar="updatestatusListTable">
 	     
+	     
+	    <f:attribute id="request123" name="updateRequestId" value="#{update1.newRequestId}" />
+	      <p:ajax event="cellEdit" listener="#{updatestatusbean.onCellEdit}" update=":requestForm:messages" />
+  
   <f:facet name="header">
 	    <div class="row" style="margin: -3px;">
 	  <div class="col-sm-3" style="margin-left: -17px" >
@@ -121,6 +128,20 @@ function setRequestHiddenValue(new_value)
 			</div>
 		</f:facet> 
 
+
+ <p:column filterBy="#{update1.serialid}"  sortBy="#{update1.serialid}" headerText="Serial Id"   
+			 filterMatchMode="contains"  style="text-overflow: ellipsis; white-space: nowrap; padding: 0px 0px 0px 0px;" class="date" >			 
+				<f:facet name="header" >				
+					 <h:outputText value="Serial Id"/>
+					 
+				</f:facet>
+				<h:outputText value="#{update1.serialid}" style="display: inline;"/>
+      
+      
+</p:column>
+
+
+
  
  <p:column filterBy="#{update1.title}"  sortBy="#{update1.title}" headerText="Title"  
 			 filterMatchMode="contains"  style="text-overflow: ellipsis; white-space: nowrap; padding: 0px 0px 0px 3px;">			 
@@ -139,12 +160,13 @@ function setRequestHiddenValue(new_value)
 				<h:outputText value="#{update1.description}" style="display: inline;"   />
 </p:column>
  
-<p:column filterBy="#{update1.completiondate}" sortBy="#{update1.completiondate}" headerText="Due Date" class="date"  
+<p:column filterBy="#{update1.datecompletion}" sortBy="#{update1.datecompletion}" headerText="Due Date" class="date"  
 			 filterMatchMode="contains"   pattern="dd-MMM-yyyy"  style="text-overflow: ellipsis; white-space: nowrap;padding: 0px 0px 0px 3px;">
-				<f:facet name="header">
-					<h:outputText value="Due Date" />
-				</f:facet>
-				<h:outputText value="#{update1.completiondate}" pattern="dd-MMM-yyyy" />
+			
+				 <h:outputText value="#{update1.datecompletion}"  pattern="dd-MM-yyyy" style="color:black;">
+				 <f:convertDateTime type="date" pattern="dd-MM-yyyy"/>
+				 </h:outputText>
+				 					
 			</p:column>
     
     
@@ -179,12 +201,26 @@ function setRequestHiddenValue(new_value)
     
      <p:column filterBy="#{update1.completionpercentage}" sortBy="#{update1.completionpercentage}"  headerText="% Age Completion"   class="percentage" 
 			 filterMatchMode="contains"  style="text-overflow: ellipsis; white-space: nowrap;padding: 0px 0px 0px 3px;">
-				<f:facet name="header">
-					<h:outputText value="% Age Completion" />
+				<p:cellEditor>		
+			 <f:facet name="output">			 
+			 <h:outputText value="#{update1.completionpercentage}%" style="display: inline;"/>
+			 </f:facet>			 
+               <f:facet name="input"> 
+               	<p:inputNumber id="inputpercentage" value="#{update1.completionpercentage}" 
+               	onclick='setRequestHiddenValue(#{update1.newRequestId})' minValue="0" maxValue="100" 
+               	symbol=" %" symbolPosition="s"> 
+               	    <ui:param name="updateRequeststatusId" value="#{update1.newRequestId}"/>
+               	</p:inputNumber>
+				
 				</f:facet>
-				<h:outputText value="#{update1.completionpercentage}%" style="display: inline;"   />
+				</p:cellEditor>
+				
 			</p:column>
     
+  
+  
+  
+  
   
      <p:column filterBy="#{update1.friendName}" sortBy="#{update1.friendName}"  headerText="Task From"  
 			 filterMatchMode="contains"  style="text-overflow: ellipsis; white-space: nowrap;padding: 0px 0px 0px 3px;">
@@ -199,17 +235,21 @@ function setRequestHiddenValue(new_value)
 </p:dialog>
 	<p:commandLink  class="btn  fontsize"   ajax="false"
  onclick="PrimeFaces.monitorDownload(start, stop);setRequestHiddenValue(#{update1.newRequestId})"
-style="font-size:12px;background-color: #e7e7e7; color: black;" >
-        <p:fileDownload value="#{createrequest.fileDownloadView()}" />
-        <span class="glyphicon glyphicon-download-alt"></span>
+style=" margin-left:0px;padding:0px"  >
+        <p:fileDownload value="#{updatestatusbean.fileDownloadView()}" />
+      <p:row rendered="#{update1.attachmentstatus == 1 }">
+          <img  src="resource/image/attachmentnew.png" class="img-responsive pull-right " alt="attachment" style="width:29px;"></img>
+      </p:row>
     </p:commandLink >
     </p:column>
    
      <p:column headerText="View Notes" exportable="false"  style="padding: 0px 0px 0px 0px; " class="width">
      
-     	<p:commandLink id="nonAjax12" 				
+     	<p:commandLink id="nonAjax12" action="#{updatestatusbean.updateRequestnotesStatus()}"		
     onclick="PF('#{update1.newRequestId}').show(); setRequestHiddenValue(#{update1.newRequestId}) ">
     		      <img  src="resource/image/note.png" class="img-responsive pull-right " alt="notes" style="width:29px;"></img>
+    	 <span Style="color:#fff;background-color:#f36c00;font-size:16px;margin-left:8px;font-weight: bold;">
+      <h:outputText value="#{update1.teammembernotescount}" style="display: inline;"/></span>
     		</p:commandLink> 
      
      
@@ -217,7 +257,7 @@ style="font-size:12px;background-color: #e7e7e7; color: black;" >
 
  <p:dialog  header="View Notes" widgetVar="#{update1.newRequestId}" varStatus="status" modal="true" responsive = "true">
       
-      
+       <p:ajax event="close"  oncomplete="window.location.href='updatestatustask.xhtml'" />
        <div class="container">
          
         
@@ -256,7 +296,10 @@ style="font-size:12px;background-color: #e7e7e7; color: black;" >
 	    		
    </p:column>   
 </p:dataTable>
-	    
+    <p:contextMenu for="requestTable" widgetVar="cMenu">   
+       <p:menuitem value="Edit Cell" icon="ui-icon-search" onclick="PF('updatestatusListTable').showCellEditor();return false;"/>  
+       <p:menuitem value="Hide Menu" icon="ui-icon-close" onclick="PF('cMenu').hide()"/>  
+   </p:contextMenu> 
 	</div>
 	
  

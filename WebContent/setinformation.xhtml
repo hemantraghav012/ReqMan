@@ -3,7 +3,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"  
-         xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
+          xmlns:p="http://primefaces.org/ui"
+	   xmlns:a="http://xmlns.jcp.org/jsf/passthrough" 
       xmlns:ui="http://java.sun.com/jsf/facelets">
       <h:head>
 <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
@@ -62,38 +63,56 @@
 
 
 <h:inputHidden   value="#{setpassword.hash}"/>
+<h:inputHidden   value="#{setpassword.emailid}"/>
  <div class=" row form-group registerfieldname">
- <div class="col-sm-2 control-label"><h:outputLabel  >Email Id:</h:outputLabel></div>
-<div class=" col-sm-6"> <h:inputText value="#{setpassword.emailid}" class="  form-control"  disabled="true" readonly="true" p:placeholder="Email Id"  id="emailid" required="true" requiredMessage="* Please enter your email id" validatorMessage="Invalid email format"> <f:validateRegex
+ <div class="col-sm-3 control-label"><h:outputLabel  >Email Id:</h:outputLabel></div>
+<div class=" col-sm-6"> <h:inputText value="#{setpassword.emailid}" class="  form-control"  disabled="true" readonly="true" a:placeholder="Email Id"  id="emailid" required="true" requiredMessage="* Please enter your email id" validatorMessage="Invalid email format"> <f:validateRegex
 		pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" /></h:inputText></div>
  <h:message for="emailid"  style="color:red;margin:8px;"/> 
 
 </div>
 <div class=" row form-group registerfieldname">
-<div class="col-sm-2 control-label"><h:outputLabel>Password:</h:outputLabel></div>
-<div class="col-sm-6"><h:inputSecret value="#{setpassword.password}" p:placeholder="Password" class="form-control" id="password" required="true" requiredMessage="* Please enter your password"></h:inputSecret></div>
+<div class="col-sm-3 control-label"><h:outputLabel>Password:</h:outputLabel></div>
+<div class="col-sm-6">
+<p:password value="#{setpassword.password}" a:placeholder="Password" class="form-control" id="password" match="ConformPassword"  required="true" requiredMessage="* Please enter your password" validatorMessage="Password does not match the confirm password.">
+</p:password>
+</div>
  <h:message for="password"  style="color:red;margin:8px;"/> 
 </div>
+
+
+<div class=" row form-group registerfieldname">
+<div class="col-sm-3 control-label"><h:outputLabel>Confirm Password:</h:outputLabel></div>
+<div class="col-sm-6">
+<p:password value="#{setpassword.password}" a:placeholder="Confirm Password" class="form-control" id="ConformPassword" required="true" requiredMessage="* Please enter your password" validatorMessage="Password does not match the confirm password.">
+</p:password>
+</div>
+ <h:message for="ConformPassword"  style="color:red;margin:8px;"/> 
+</div>
+
+
+
+
  <div class=" row form-group registerfieldname">
-<div class="col-sm-2 control-label"><h:outputLabel>First Name:</h:outputLabel></div>
-<div class=" col-sm-6"><h:inputText value="#{setpassword.firstname}"  p:placeholder="First Name" class="form-control" id="firstname" required="true" requiredMessage="* Please enter your first name"></h:inputText></div>
+<div class="col-sm-3 control-label"><h:outputLabel>First Name:</h:outputLabel></div>
+<div class=" col-sm-6"><h:inputText value="#{setpassword.firstname}"  a:placeholder="First Name" class="form-control" id="firstname" required="true" requiredMessage="* Please enter your first name"></h:inputText></div>
  <h:message for="firstname"  style="color:red;margin:8px;"/> 
 </div>
 
  <div class=" row form-group registerfieldname">
-<div class="col-sm-2 control-label"><h:outputLabel>Last Name:</h:outputLabel></div>
-<div class="col-sm-6"><h:inputText value="#{setpassword.lastname}"  p:placeholder="Last Name" class="form-control" id="lastname" required="true" requiredMessage="* Please enter your last name"></h:inputText></div>
+<div class="col-sm-3 control-label"><h:outputLabel>Last Name:</h:outputLabel></div>
+<div class="col-sm-6"><h:inputText value="#{setpassword.lastname}"  a:placeholder="Last Name" class="form-control" id="lastname" required="true" requiredMessage="* Please enter your last name"></h:inputText></div>
  <h:message for="lastname"  style="color:red;margin:8px;"/> 
 </div>
 
  <div class=" row form-group registerfieldname">
-<div class="col-sm-2 control-label"><h:outputLabel>Short Name:</h:outputLabel></div>
-<div class="col-sm-6"><h:inputText value="#{setpassword.shortname}" p:placeholder="Short Name"  maxlength="4" class="form-control" id="shortname" required="true" requiredMessage="* Please enter your short name"></h:inputText><span style="color:red;">Please enter upto 4 characters</span></div>
+<div class="col-sm-3 control-label"><h:outputLabel>Short Name:</h:outputLabel></div>
+<div class="col-sm-6"><h:inputText value="#{setpassword.shortname}" a:placeholder="Short Name"  maxlength="4" class="form-control" id="shortname" required="true" requiredMessage="* Please enter your short name"></h:inputText><span style="color:red;">Please enter upto 4 characters</span></div>
  <h:message for="shortname"  style="color:red;margin:8px;"/> 
 </div>
  <div class=" row form-group ">
- <div class="col-sm-2 .col-sm-offset-2"></div>
-<div class="col-sm-6 "><h:commandLink action="#{setpassword.setinformationupdate()}" value="Register" class="btn fontsize btn-success btn-block"></h:commandLink></div>
+ <div class="col-sm-3 .col-sm-offset-3"></div>
+<div class="col-sm-6 "><h:commandLink action="#{setpassword.setinformationupdate()}" value="Submit" class="btn fontsize btn-success btn-block"></h:commandLink></div>
 </div>
 
 </h:form>

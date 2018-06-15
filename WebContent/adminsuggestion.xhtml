@@ -1,0 +1,148 @@
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html"
+	  xmlns:f="http://java.sun.com/jsf/core" xmlns:ui="http://java.sun.com/jsf/facelets"
+	   xmlns:p="http://primefaces.org/ui"
+	   xmlns:a="http://xmlns.jcp.org/jsf/passthrough" > 
+  
+<h:head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<link rel="stylesheet" href="resource/css/bootstrap.css"/>
+<link rel="stylesheet" href="resource/mystyle/onlyhome.css"/>
+<link rel="stylesheet" href="resource/mystyle/home.css"/>
+<link rel="stylesheet" href="resource/mystyle/button.css"/>
+<link rel="stylesheet" href="resource/mystyle/friendmaster.css"/>
+<link rel="stylesheet" href="resource/mystyle/createcategory.css"/>
+<link rel="stylesheet" href="resource/mystyle/request.css"/>
+<script type="text/javascript" src="resource/js/bootstrap.js"/>
+<script type="text/javascript" src="resource/js/jquery.js"/>
+<title>New Category</title>
+ <style type="text/css">
+        .ui-growl {
+            
+            top:60px;
+            Right:20px;
+            width:301px;
+        
+        }
+    </style>
+<script>
+
+function setSuggestionHiddenValue(new_value)
+{
+	//alert("id is "+new_value);
+	document.getElementById('suggestionForm:suggestionId').value = new_value;
+
+}
+</script>
+</h:head>
+
+
+
+<h:body style="background-color:#ffefdb;">
+
+<div id="header">
+	<ui:insert name="header">
+		<ui:include src="header.xhtml" />
+	</ui:insert>
+</div>
+      <!-- end of header -->
+      
+      
+      <div style=" margin-top:1.5cm;" >
+     
+        <div class="container-fluid" >
+        
+        
+       
+         <h:form id="suggestionForm"> 
+      
+         <h:inputHidden id="suggestionId" value="#{adminsuggestionbean.id}" ></h:inputHidden>
+
+<div class="ui-fluid ">
+
+ <p:dataTable var="suggestion" value="#{adminsuggestionbean.suggestionList}" draggableColumns="true"
+	     reflow="true" scrollable="true" scrollHeight="500"  resizableColumns="true"  rows="25" rowsPerPageTemplate="25,35,50" 	         
+	      paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" 
+	       paginator="true" sortOrder="descending"  styleClass="table-reflow-desktop"
+	      class="table table-striped table-hover table-bordered" style="margin-top:5px; margin-left:0px;background-color:white;">
+       
+       
+        
+	    <f:facet name="header">
+	    <div class="row" style="margin: -3px;">
+	 			
+      		<span style=";font-size:22px;text-align:center;">Customer Input History</span>
+      
+			</div>
+		</f:facet> 
+       
+       
+        <p:column headerText="Id"  filterMatchMode="contains" filterBy="#{suggestion.id}" sortBy="#{suggestion.id}" >
+              <h:outputText value="#{suggestion.id}" style="display: inline;"/>
+        </p:column>
+        
+       
+        <p:column headerText="Message"  filterMatchMode="contains" filterBy="#{suggestion.message}" sortBy="#{suggestion.message}" >
+              <h:outputText value="#{suggestion.message}" style="display: inline;"/>
+        </p:column>
+        
+        <p:column headerText="Date Created"  filterMatchMode="contains" filterBy="#{suggestion.datecreated}" sortBy="#{suggestion.datecreated}" >
+              <h:outputText value="#{suggestion.datecreated}" style="display: inline;"/>
+        </p:column>
+        
+        <p:column headerText="Status"  filterMatchMode="contains" filterBy="#{suggestion.status}" sortBy="#{suggestion.status}" >
+              <h:outputText value="#{suggestion.status}" style="display: inline;"/>
+        </p:column>
+        
+         <p:column headerText="Created By"  filterMatchMode="contains" filterBy="#{suggestion.createdby}" sortBy="#{suggestion.createdby}" >
+              <h:outputText value="#{suggestion.createdby}" style="display: inline;"/>
+        </p:column>
+        
+         <p:column headerText="Stage"  filterMatchMode="contains" filterBy="#{suggestion.requeststatus}" sortBy="#{suggestion.requeststatus}" >
+              <h:outputText value="#{suggestion.requeststatus}" style="display: inline;"/>
+        </p:column>
+        
+        
+         <p:column headerText="Admin Remark"  filterMatchMode="contains" filterBy="#{suggestion.adminremarks}" sortBy="#{suggestion.adminremarks}" >
+              <h:outputText value="#{suggestion.adminremarks}" style="display: inline;"/>
+        </p:column>
+        
+        
+         <p:column headerText="Action Owner"  filterMatchMode="contains" filterBy="#{suggestion.actionowner}" sortBy="#{suggestion.actionowner}" >
+              <h:outputText value="#{suggestion.actionowner}" style="display: inline;"/>
+        </p:column>
+        
+        
+        
+         <p:column headerText="Message Type"  style="width:175px" filterBy="#{suggestion.messagetype}"
+          filterMatchMode="contains" sortBy="#{suggestion.messagetype}">
+                 <h:outputText value="#{suggestion.messagetype}" />
+           </p:column>
+           
+        <p:column headerText="View / Modify" exportable="false" style="padding: 0px 0px 0px 0px;" class="viewsize" >
+         
+	    		<p:commandLink id="nonAjax" styleClass="btn btn-primary fontsize" 
+				style="color:white;  border-radius: none;font-size:15.5px;" onclick='setSuggestionHiddenValue(#{suggestion.id})' 
+				action="#{adminsuggestionbean.modifyAction()}" ajax="false" >
+	        		View / Edit 
+	    		</p:commandLink> 	    		
+   </p:column> 
+        
+    </p:dataTable>
+</div>
+
+    </h:form>  
+
+
+</div>
+</div>
+
+      
+      
+      
+      
+      
+      </h:body>
+</html>

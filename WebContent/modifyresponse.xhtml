@@ -40,7 +40,14 @@
  <h2 style=" margin-bottom:1cm; text-align:center">  View/Modify Response</h2>
 <div><h:messages style = "color:red;margin:8px;" /></div>
 
+<div class=" row form-group ">
+ <div class="col-sm-4 .col-sm-offset-4"></div>
+ <div class="col-sm-3 "><h:commandButton action="#{responsebean.updateResponse}" value="Update" class="btn fontsize btn-success btn-block"></h:commandButton></div>
 
+ <div class="col-sm-4 ">
+<h:link value="Respond To New Requests" style="text-decoration:none; color:#fff;" outcome="responsetonewrequest" class="btn fontsize btn-primary btn-block"/>
+</div>
+</div>
 
  <div class=" row form-group ">
  
@@ -109,14 +116,14 @@
 
  <div class=" row form-group ">
 
- <div class="col-sm-2 control-label">
+ <div class="col-sm-3 control-label">
  <h:outputLabel>Priority: &nbsp;
  <span   data-toggle="tooltip" 
  title="Team members can be advised to focus on requests as per  indicated priority." 
  style="margin-top:2px;" class="pull-right glyphicon glyphicon-info-sign"></span>
  </h:outputLabel> 
  </div>
-<div class=" col-sm-4">
+<div class=" col-sm-3">
  <h:inputText value="#{responsebean.responseVo.priority}" readonly="true"  disabled="true" class="  form-control"  id="priority"  style="background-color:lightgrey;"  requiredMessage="* Please enter Title"/>
 
  <h:message for="priority"  style="color:red;"/>
@@ -139,7 +146,7 @@
 
  </div>
     <div class=" row form-group ">
- <div class="col-sm-2 control-label">
+ <div class="col-sm-3 control-label">
  <h:outputLabel > Estimated Effort:
  <span   data-toggle="tooltip" 
  title="Estimate the efforts required for this task ( in hours , days etc) to monitor efficiency and profitability. Comparison with Actual Efforts will also improve the accurcy of estimation " 
@@ -147,7 +154,7 @@
  
  </h:outputLabel> 
  </div>
-<div class=" col-sm-4">
+<div class=" col-sm-3">
 <h:inputText value="#{responsebean.responseVo.estimatedeffort}" readonly="true"  disabled="true" class="  form-control"  id="estimatedeffort"  style="background-color:lightgrey;"  requiredMessage="* Please enter Title"/>
  <h:message for="estimatedeffort"  style="color:red;"/>
 </div>

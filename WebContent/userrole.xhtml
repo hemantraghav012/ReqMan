@@ -32,7 +32,15 @@ function setUsersHiddenValue(new_value)
 }
 
 </script>
-	
+	<style type="text/css">
+        .ui-growl {
+            
+            top:60px;
+            Right:20px;
+            width:301px;
+        
+        }
+    </style>
 </h:head> 
 <body> 
 
@@ -46,17 +54,17 @@ function setUsersHiddenValue(new_value)
       <div class="container userrolegrid" >
       
       
-      
+      <br></br>  <br></br>  <br></br>
       
       <h:form id="userroleForm">
     <div class="ui-fluid">
-<p:growl id="msgs" showDetail="true"/>
+<p:growl id="msgs" />
  <h:inputHidden id="userroleid" value="#{userrole.userroleid}" ></h:inputHidden>
  
   <div class="row">
       
-      	<div class="col-sm-7">
-      		<h1><span style=";font-size:25px;margin-left: 3px;">Manage User Roles List</span></h1>
+      	<div class="col-sm-12">
+      		<h1 style="text-align:center;font-size:25px;">Manage User Roles List</h1>
       	</div>
       </div>
  

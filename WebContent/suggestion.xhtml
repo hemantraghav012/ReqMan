@@ -2,7 +2,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
-         xmlns:p="http://primefaces.org/ui"
+        xmlns:p="http://primefaces.org/ui"
+ xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
       xmlns:ui="http://java.sun.com/jsf/facelets">
 
 	
@@ -18,12 +19,20 @@
 <script type="text/javascript" src="resource/js/bootstrap.js"/>
 <script type="text/javascript" src="resource/js/jquery.js"/>
 <title>Create Suggestion</title>
-
+<style type="text/css">
+        .ui-growl {
+            
+            top:60px;
+            Right:20px;
+            width:301px;
+        
+        }
+    </style>
 </h:head>
 
 
 
-<h:body>
+<h:body style="background-color:#ffefdb;">
 
 <div id="header">
 	<ui:insert name="header">
@@ -31,34 +40,118 @@
 	</ui:insert>
 </div>
       <!-- end of header -->
-      <div style=" margin-top:2.5cm;">
       
-        <div class="container-fluid suggestioncontainer">
-    <h2>Create Suggestion </h2>
+      
+      <div style=" margin-top:1.5cm;" >
+     
+        <div class="container-fluid" >
+        
+        
+       <div class="row" style="border-radius: 8px;  box-shadow: 4px 4px 3px rgba(0, 0, 0, 0.5);">
+<div class="col-sm-7" style="padding:10px; border-radius: 8px;  box-shadow: 4px 4px 3px rgba(0, 0, 0, 0.5);" > 
+        
+        
+         <div class="ui-fluid">
+        
+    <h2 style="text-align: center;">Customer Input </h2>
+    <br></br>
 <h:form class="form-horizontal ">
-<h:inputTextarea id="address" value="#{suggestionbean.message}" required="true"   
+<p:growl id="messages" />
+<div class="row">
+<div class="col-sm-12">
+<h:outputLabel>&nbsp;&nbsp;Input Detail:</h:outputLabel>
+</div>
+<div class="col-sm-12">
+<h:inputTextarea id="address" value="#{suggestionbean.message}" style="background-color:#ffffdb;" required="true"   a:placeholder="Enter your Input ... "
 requiredMessage="* Please Enter your Suggestion " cols="140" rows="5" class="  form-control" />
 <h:message for="address"  style="color:red;margin:8px;"/>
+</div>
+</div>
 <br></br>
+<div class="row">
+<div class="col-sm-12">
+<h:outputLabel>&nbsp;&nbsp;Input Type:</h:outputLabel>
+</div>
+<div class="col-sm-4">
+<p:selectOneMenu value="#{suggestionbean.messagetype}" >
+          
+            <f:selectItem itemLabel="Improvement Suggestion" itemValue="improvementsuggestion" />
+            <f:selectItem itemLabel="Complaint" itemValue="complaint" />
+            <f:selectItem itemLabel="Cancellation Request" itemValue="CancellationRequest" />
+        </p:selectOneMenu>
+</div></div>
+
+
+<br></br>
+
+<div class="row">
+<div class="col-sm-12">
 <h:commandButton action="#{suggestionbean.save()}" value="Submit" class="btn  fontsize btn-success btn-block"></h:commandButton>
 
+</div></div>
+
 </h:form>
+
+
+</div>
+
+<h:form>
 <div style="margin-top: 0.5cm">
- <p:dataTable var="suggestion" value="#{suggestionbean.suggestionList}" scrollable="true" scrollHeight="150">
+<div class="ui-fluid ">
+
+ <p:dataTable var="suggestion" value="#{suggestionbean.suggestionList}" draggableColumns="true"
+	     reflow="true" scrollable="true" scrollHeight="300"  resizableColumns="true"  rows="25" rowsPerPageTemplate="25,35,50" 	         
+	      paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" 
+	       paginator="true" sortOrder="descending"  styleClass="table-reflow-desktop"
+	      class="table table-striped table-hover table-bordered" style="margin-top:5px; margin-left:0px;">
        
        
-        <p:column headerText="Message" >
-            <h:outputText value="#{suggestion.message}" />
+        
+	    <f:facet name="header">
+	    <div class="row" style="margin: -3px;">
+	 			
+      		<span style=";font-size:22px;text-align:center;">Customer Input History</span>
+      
+			</div>
+		</f:facet> 
+       
+       
+       
+       
+        <p:column headerText="Message" filterMatchMode="contains" filterBy="#{suggestion.message}" sortBy="#{suggestion.message}" >
+        <f:facet name="header" >				
+					 <h:outputText value="Message"/>
+					 
+				</f:facet>
+            <h:outputText value="#{suggestion.message}" style="display: inline;"/>
         </p:column>
         
+         <p:column headerText="Message Type"  style="width:175px" filterBy="#{suggestion.messagetype}" filterMatchMode="contains" sortBy="#{suggestion.messagetype}">
+          <f:facet name="header" >				
+					 <h:outputText value="Message Type"/>
+					 
+				</f:facet>
+            <h:outputText value="#{suggestion.messagetype}" />
+        </p:column>
+        
+        
     </p:dataTable>
-
 </div>
-
+</div>
+</h:form>
   </div>
       
-</div>
-      
+
+
+
+<div class="col-sm-5" style="padding: 40px;">
+<div style="text-align: center;">
+<img   src="resource/image/register.jpeg"  class="img-responsive " alt="collabor8" style="width:100%;height:550px;"></img>   
+</div></div></div>
+
+
+
+     </div></div> 
       
       
       

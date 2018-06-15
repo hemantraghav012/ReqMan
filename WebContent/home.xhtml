@@ -1,21 +1,37 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" 	
-xmlns:p="http://primefaces.org/ui"
-xmlns:h="http://java.sun.com/jsf/html">
+	   
+ <html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html"
+	  xmlns:f="http://java.sun.com/jsf/core" xmlns:ui="http://java.sun.com/jsf/facelets"
+	   xmlns:p="http://primefaces.org/ui"
+	   xmlns:a="http://xmlns.jcp.org/jsf/passthrough" > 
 <h:head>
+
+<link rel="stylesheet" href="resource/mystyle/onlyhome.css"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
 <link rel="stylesheet" href="resource/css/bootstrap.css"/>
 <link rel="stylesheet" href="resource/mystyle/home.css"/>
-<link rel="stylesheet" href="resource/mystyle/onlyhome.css"/>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<link rel="stylesheet" href="resource/mystyle/friendmaster.css"/>
+<link rel="stylesheet" href="resource/mystyle/createcategory.css"/>
+ <link rel="stylesheet" href="resource/mystyle/button.css"/>
 <script type="text/javascript" src="resource/js/bootstrap.js"/>
 <script type="text/javascript" src="resource/js/jquery.js"/>
 
-	<title>Collabor8 Home</title>
+	<title>Home Page</title>
+	
+	<style type="text/css">
+        .ui-growl {
+            
+            top:60px;
+            Right:20px;
+            width:301px;
+        
+        }
+    </style>
 </h:head>
 <h:body >
 <div id="header">
@@ -31,50 +47,299 @@ xmlns:h="http://java.sun.com/jsf/html">
   
       
    <h:form >
+      <p:growl id="messages" />
+	  <div class="container-fluid homecontainer"  style="margin-top:1cm;">    
+	  <p style="padding-left: 10px;font-size:18px;color:black"><spane>#{username}</spane>, Welcome to Collabor8 </p>
+      <p style="color:black; padding-left: 10px;font-size:18px;">Here’s how to get started:</p> 
+       
+      <div class="container-fluid" style="margin-top: -35px;">
+       
+    <h:form id="homeForm">
+<p:growl id="messages" />
+
+      <div  class="gridmargin">
+ 		
       
-	  <div class="container-fluid homecontainer"  style="margin-top:2cm;">    
-	  <p style="padding-left: 10px;font-size:20px;color:black"> Welcome to Collabor8 !</p>
-      <h3 style="color:#808080; padding-left: 10px;">Here’s how to get started:</h3>  
-       <p style="color:blue; padding-left: 10px;font-weight: bold;text-align:center;font-size:32px;"><span style="color:red">Collabor8</span> is easy as 1-2-3</p> 
+<div class="ui-fluid">
+
+	     <p:dataTable id="homeTable" var="home" value="#{homebean.homeList}">
+	     
+	     
+	     
+	     <p:columnGroup type="header">
+            <p:row>
+              <p:column rowspan="4" headerText="" style="background-color:skyblue;color:black;width:150px;test-align:left;"/>
+                <p:column rowspan="2" headerText="Pending for acceptance" style="background-color:yellow;text-align:center;color:black;"/>               
+                <p:column colspan="4" headerText="In-progress" style="background-color: #A0F37C;text-align:center;color:black;"/>            
+                 <p:column rowspan="2" headerText="Completed Request waiting for verification"  style="background-color:#28dc51;text-align:center;color:black;"/>            
+              <p:column rowspan="2" headerText="Close"  style="background-color:#1db565;text-align:center;color:black;"/>            
+            
+              <p:column rowspan="2" headerText="Hold"  style="background-color:#ebb380;text-align:center;color:black;"/>            
+               <p:column rowspan="2" headerText="Cancel"  style="background-color:#e0633e;text-align:center;color:black;"/>            
+              <p:column rowspan="2" headerText="Return"  style="background-color:#FFF;text-align:center;color:black;"/>            
+              
+               <p:column rowspan="2" headerText="Total"  style="background-color:#FFF;text-align:center;color:black;"/>            
+              
+            </p:row>
+           
+            <p:row>
+               <p:column headerText="Waiting for start" style="background-color:#9deb80;text-align:center;color:black;"/>
+                <p:column headerText="On target" style="background-color:lime;text-align:center;color:black;" />
+                <p:column headerText="Delay" style="background-color:salmon;text-align:center;color:black;"/>
+                <p:column headerText="Over due" style="background-color:orangered;text-align:center;color:black;"/>
+            </p:row>
+            
+        </p:columnGroup>
+	     
+	     <p:column headerText=""  style="background-color:skyblue;width:150px;test-align:left;color:black;">
+				<h:outputText value="On Teammember"/>
+			</p:column>
+	     
+	     
+			<p:column headerText="Pending for acceptance"  style="background-color:yellow;text-align:center;color:black;">
+				<h:outputText value="#{home.pendingrequest_onteammember}"/>
+			</p:column>
+			
+			<p:column headerText="Waiting for start"  style="background-color:#9deb80;text-align:center;color:black;">				
+				<h:outputText value="#{home.acceptrequest_onteammember}"/>				
+			</p:column>
+			
+			<p:column headerText="On target"  style="background-color:	lime;text-align:center;color:black;">				
+				<h:outputText value="#{home.ontargetrequest_onteammember}"/>				
+			</p:column>
+			
+			<p:column headerText="Delay"  style="background-color:salmon;text-align:center;color:black;">
+				<h:outputText value="#{home.delayrequest_onteammember}"/>				
+			</p:column>
+			
+	      <p:column headerText="Over due"  style="background-color:orangered;text-align:center;color:black;">				
+				<h:outputText value="#{home.overduerequest_onteammember}"/>				
+			</p:column>
+			
+			
+			<p:column headerText="Completed Request wating for verification"  style="background-color:#28dc51;text-align:center;color:black;">				
+				<h:outputText value="#{home.completedrequest_onteammember}"/>				
+			</p:column>
+			
+			<p:column headerText="Close"  style="background-color:#1db565;text-align:center;color:black;">				
+				<h:outputText value="#{home.closerequest_onteammember}"/>				
+			</p:column>
+			<p:column headerText="Hold"  style="background-color:#ebb380;text-align:center;color:black;">				
+				<h:outputText value="#{home.holdrequest_onteammember}"/>				
+			</p:column>
+			
+			<p:column headerText="Cancel"  style="background-color:#e0633e;text-align:center;color:black;">				
+				<h:outputText value="#{home.cancelrequest_onteammember}"/>				
+			</p:column>
+			
+			<p:column headerText="Return"  style="background-color:#fff;text-align:center;color:black;">				
+				<h:outputText value="#{home.returnrequest_onteammember}"/>				
+			</p:column>
+			
+			
+			<p:column headerText="Total Request"  style="background-color:#ffff;text-align:center;color:black;">				
+				<h:outputText value="#{home.totalrequest_onteammember}"/>				
+			</p:column>
+			
+			
+			
+	    </p:dataTable>
+	   
+	   
+	   
+	   
+	       <p:dataTable id="homeTable1" var="home" value="#{homebean.homeList}">
+	     
+	     <p:column   style="padding: 0px 0px 0px 2.5px;background-color:skyblue;width:150px;test-align:center;color:black;">				
+				<h:outputText value="On You"/>
+			</p:column>
+	     
+	     
+			<p:column  style="padding: 0px 0px 0px 2.5px;background-color:yellow;text-align:center;color:black;">				
+				<h:outputText value="#{home.pendingrequest_onyou}"/>
+			</p:column>
+			
+			
+			<p:column   style="padding: 0px 0px 0px 3px;background-color:#9deb80;text-align:center;color:black;">				
+				<h:outputText value="#{home.acceptrequest_onyou}"/>				
+			</p:column>
+			<p:column   style="padding: 0px 0px 0px 3px;background-color:lime;text-align:center;color:black;">				
+				<h:outputText value="#{home.ontargetrequest_onyou}"/>				
+			</p:column>
+				
+			<p:column  style="padding: 0px 0px 0px 3px;background-color:salmon;text-align:center;color:black;">				
+				<h:outputText value="#{home.delayrequest_onyou}"/>				
+			</p:column>
+			
+				<p:column   style="padding: 0px 0px 0px 3px;background-color:orangered;text-align:center;color:black;">				
+				<h:outputText value="#{home.overduerequest_onyou}"/>				
+			</p:column>
+			
+			
+			<p:column  style="padding: 0px 0px 0px 3px; background-color:#28dc51;text-align:center;color:black;">				
+				<h:outputText value="#{home.completedrequest_onyou}"/>				
+			</p:column>
+			
+			<p:column  style="padding: 0px 0px 0px 3px; background-color:#1db565;text-align:center;color:black;">				
+				<h:outputText value="#{home.closerequest_onyou}"/>				
+			</p:column>
+			
+			<p:column  style="padding: 0px 0px 0px 3px; background-color:#ebb380;text-align:center;color:black;">				
+				<h:outputText value="#{home.holdrequest_onyou}"/>				
+			</p:column>
+			
+			<p:column  style="padding: 0px 0px 0px 3px; background-color:#e0633e;text-align:center;color:black;">				
+				<h:outputText value="#{home.cancelrequest_onyou}"/>				
+			</p:column>
+			
+				<p:column  style="padding: 0px 0px 0px 3px; background-color:#fff;text-align:center;color:black;">				
+				<h:outputText value="#{home.returnrequest_onyou}"/>				
+			</p:column>
+			
+			<p:column   style="padding: 0px 0px 0px 3px;background-color:#ffff;text-align:center;color:black;">				
+				<h:outputText value="#{home.totalrequest_onyou}"/>				
+			</p:column>
+			
+	    </p:dataTable>
+	   
+	   
+	</div>
+    
+    </div>
+    
+      
+    </h:form>
+      
+      </div>
+      <div class="row">
+      <div class="col-sm-12">
+
+      
+      
+       <h2 style="text-align:center;"> <span style="color: #f36c00">Collabor8 </span>is easy as 1-2-3-4</h2> 
+     <br></br>
+	<div>
+          <center>
+         <div style="background-color:#BFEE90; max-width:1300px; border: 1px solid green; padding:15px; box-shadow: 5px 5px 8px #888888;">
+         	
+
+         	 
+     	 <div class="row">
      
-	 <div class="row">
+     
+       <center>
+      <div class="col-sm-1" style="font-weight: bold;"><br></br>For Requester
+     
+      </div>
+      
 	   <div class="col-sm-2" >
-   <h:link  outcome="friend" >
-      <img  src="resource/image/imagesteam.png" class="img-responsive " alt="collabor8" style="height:200px;">
-   
+   <h:link  outcome="friend">
+ 
+      <img  src="resource/image/t.png" class="img-responsive " alt="collabor8" > 
       </img>
+      <span style="color:black">1.</span><span Style="color:#f36c00;">Define Team Member(s)</span>
       </h:link>
+      <br></br><br></br><br></br>
+       <div style="box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.6);border: 1px solid #2E86C1;background-color:#2E86C1;color:#FFF">
+      <p style="padding:10px;">Click on the numbered links to use all major functionalities.</p>
+      
+      </div>
        </div>
        
-    <div class="col-sm-3" >
-     <hr class="style1"></hr>
+    <div class="col-sm-1" >
+ 
+     <img  src="resource/image/a.png" class="img-responsive " alt="collabor8" style="margin-top:22px;" ></img>
        </div>
        
        <div class="col-sm-2">
          <h:link  outcome="newrequestfriend" >
- <img  src="resource/image/imagesrequest.png" class="img-responsive " alt="collabor8"  style="height:200px;"></img>
+ <img  src="resource/image/createrequest.png" class="img-responsive " alt="collabor8"  ></img>
+  <span style="color:black">2.</span><span Style="color:#f36c00;">Create Request (s)</span>
  </h:link>
+ 
+ <img  src="resource/image/downsighn.png" class="img-responsive " alt="collabor8"  style="margin-top:22px;"></img>
      </div>
      
-     <div class="col-sm-3" >
+     <div class="col-sm-1" >
  
-     <hr class="style1"></hr>
+     <img  src="resource/image/a.png" class="img-responsive " alt="collabor8" style="margin-top:22px;" ></img>
        </div>
      
      <div class="col-sm-2">
         <h:link  outcome="request" >
- <img  src="resource/image/imagesmonitor.png" class="img-responsive " alt="collabor8" style="height:198px;" ></img>
+ <img  src="resource/image/moniter_request.png" class="img-responsive " alt="collabor8"  ></img>
+    <span style="color:black">3.</span><span Style="color:#f36c00;">Collaborate &amp; Monitor</span>
+    </h:link>
+    <img  src="resource/image/betweenarrow.png" class="img-responsive " alt="collabor8" style="margin-top:22px;" ></img>
+     </div>
+      <div class="col-sm-1" >
+ 
+     <img  src="resource/image/a.png" class="img-responsive " alt="collabor8" style="margin-top:22px;" ></img>
+       </div>
+       <div class="col-sm-2">
+        <h:link  outcome="request" >
+ <img  src="resource/image/newverify.png" class="img-responsive " alt="collabor8"  ></img>
+    <span style="color:black">4.</span><span Style="color:#f36c00;">verify &amp; Close</span>
+    </h:link>
+    <img  src="resource/image/upsighn.png" class="img-responsive " alt="collabor8" style="margin-top:22px;" ></img>
+     </div>
+     </center>
+   
+      </div>
+     
+     <br></br>
+     
+     <div style="background-color:#FFF;padding-top:5px;  border:#FFF; margin-left:10px; box-shadow: 5px 5px 8px #888888;">
+        
+      <div class="row" >
+     	 
+     
+       <center >
+        <div class="col-sm-" style="font-weight: bold;"></div>
+      <div class="col-sm-3" style="font-weight: bold;"><br></br>For Team Member</div>
+	    <div class="col-sm-1" style="font-weight: bold;"></div>
+     
+    <div class="col-sm-2" >
+   <h:link  outcome="responsetonewrequest">
+ 
+      <img  src="resource/image/agreed.png" class="img-responsive " alt="collabor8" > 
+      </img>
+      <span style="color:black">1.</span><span Style="color:#f36c00;">Agree</span>
+      </h:link>
+       </div>
+     
+     <div class="col-sm-1" >
+ 
+     <img  src="resource/image/a.png" class="img-responsive " alt="collabor8" style="margin-top:22px;" ></img>
+       </div>
+     
+     <div class="col-sm-2">
+        <h:link  outcome="updatestatustask" >
+ <img  src="resource/image/progress.png" class="img-responsive " alt="collabor8"  ></img>
+    <span style="color:black">2.</span><span Style="color:#f36c00;">Collaborate &amp; Update</span>
     </h:link>
      </div>
-     
+      <div class="col-sm-1" >
+ 
+     <img  src="resource/image/a.png" class="img-responsive " alt="collabor8" style="margin-top:22px;" ></img>
+       </div>
+       <div class="col-sm-2">
+        <h:link  outcome="updatestatustask" >
+ <img  src="resource/image/compleate.jpg" class="img-responsive " alt="collabor8"  ></img>
+    <span style="color:black">3.</span><span Style="color:#f36c00;">Complete</span>
+    </h:link>
+     </div>
+     </center>
+   
       </div>
-      <br></br>
+      </div>
+       <br></br>
       <div class="row">
       <div class="col-sm-12">
-       <p style="color:blue; padding-left: 10px;font-weight: bold;text-align:center;font-size:38px;">Optionally,
-       <h:link  outcome="category" ><span style="color:red">add Categories </span></h:link> ,
-       <h:link  outcome="project" ><span style="color:red">Projects </span></h:link>and 
-       <h:link  outcome="requesttype" ><span style="color:red">Types </span></h:link> 
+       <p style="color:black; ;font-weight: bold;text-align:center;font-size:16px;">Optionally,
+       <h:link  outcome="category" ><span style="color:#f36c00">add Categories </span></h:link> ,
+       <h:link  outcome="project" ><span style="color:#f36c00">Projects </span></h:link>and 
+       <h:link  outcome="requesttype" ><span style="color:#f36c00">Types </span></h:link> 
        
        for analysis and reports.</p> 
      
@@ -82,9 +347,17 @@ xmlns:h="http://java.sun.com/jsf/html">
       </div>
       </div>
       
+      </div>
+     </center>
+      
+      </div>
+      
+      </div>
       
       
-      <br></br>      <br></br>
+    </div>
+      
+      
       
       
        <div class="row" style="margin-top:1cm;">

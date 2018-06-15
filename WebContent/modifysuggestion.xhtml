@@ -1,0 +1,170 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+ <html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+       xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+
+<h:head>
+
+<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<link rel="stylesheet" href="resource/css/bootstrap.css"/>
+<link rel="stylesheet" href="resource/mystyle/home.css"/>
+<link rel="stylesheet" href="resource/mystyle/createcategory.css"/>
+<link rel="stylesheet" href="resource/mystyle/button.css"/>
+<script type="text/javascript" src="resource/js/bootstrap.js"/>
+<script type="text/javascript" src="resource/js/jquery.js"/>
+<title>View/Modify Request</title>
+ 
+
+
+
+</h:head>
+<h:body>
+<style type="text/css"> 
+.selectRadio Label {
+	margin-right: 51px;
+} 
+.selectRadio1 Label {
+	margin-right: 7px;
+} 
+</style>
+
+<div id="header">
+	<ui:insert name="header">
+		<ui:include src="header.xhtml" />
+	</ui:insert>
+</div>
+       
+      <!-- -end of header --> 
+        
+      	
+        <div class="ui-fluid">
+        
+        
+            <p:panelGrid columns="1"  layout="grid" styleClass="ui-panelgrid-blank ui-fluid" style=" border: 0;">
+               
+     
+       <h:form  class="form-horizontal">
+      <div class="container fixedcontainerrequset" style=" margin-top:3.5cm; ">
+      
+  <h2 style=" text-align: center;"> View/Modify Suggestion</h2>
+  
+     <h:messages style = "color:red;margin:8px; text-align:left" />
+     
+      <h:inputHidden value = "#{adminsuggestionbean.id}" id = "hiddenField" /> 
+     
+ <div class="row form-group">
+ <div class="col-sm-2 control-label">
+ <h:outputLabel>Id:</h:outputLabel>
+ </div>
+ <div class="col-sm-3">
+  <h:inputText value="#{adminsuggestionbean.suggestionVo.id}" class="form-control" readonly="true" disabled="true" required="true" requiredMessage="* Please enter id" ></h:inputText>
+  </div>  
+  </div>
+  
+ <div class="row form-group">
+ <div class="col-sm-2 control-label">
+ <h:outputLabel>Message:</h:outputLabel>
+ </div>
+ <div class="col-sm-10">
+  <h:inputTextarea value="#{adminsuggestionbean.suggestionVo.message}" class="form-control"  readonly="true" disabled="true" cols="19" rows="3" required="true" requiredMessage="* Please enter message" />
+  </div>  
+  </div>
+   <div class="row form-group">
+ <div class="col-sm-2 control-label">
+ <h:outputLabel>Message Type:</h:outputLabel>
+ </div>
+ <div class="col-sm-4">
+  <h:inputText value="#{adminsuggestionbean.suggestionVo.messagetype}" class="form-control" readonly="true" disabled="true" required="true" requiredMessage="* Please enter message type" ></h:inputText>
+  </div>  
+  <div class="col-sm-2 control-label">
+ <h:outputLabel>Stage:</h:outputLabel>
+ </div>
+  <div class="col-sm-4">
+   <p:selectOneMenu  value="#{adminsuggestionbean.requeststatus}"  style="  border: none;" required="true" requiredMessage="* Please select stage"  >
+            <f:selectItem itemLabel="#{adminsuggestionbean.suggestionVo.requeststatus}" itemValue="" />
+            <f:selectItem itemLabel="Open" itemValue="Open" />
+            <f:selectItem itemLabel="In-progress" itemValue="In-progress" />
+            <f:selectItem itemLabel="Close" itemValue="Close" />
+           
+        </p:selectOneMenu>
+  </div> 
+  
+  </div>
+  
+   <div class="row form-group">
+ <div class="col-sm-2 control-label">
+ <h:outputLabel>Date Created:</h:outputLabel>
+ </div>
+ <div class="col-sm-4">
+  <h:inputText value="#{adminsuggestionbean.suggestionVo.datecreated}" class="form-control" readonly="true" disabled="true" required="true" requiredMessage="* Please enter date created" ></h:inputText>
+  </div> 
+   
+   <div class="col-sm-2 control-label">
+  <h:outputLabel>Created By:</h:outputLabel>
+ </div>
+ <div class="col-sm-4">
+  <h:inputText value="#{adminsuggestionbean.suggestionVo.createdby}" class="form-control" readonly="true" disabled="true" required="true" requiredMessage="* Please enter createdby" ></h:inputText>
+  </div> 
+  
+  </div>
+  
+ 
+   <div class="row form-group">
+ <div class="col-sm-2 control-label">
+ <h:outputLabel>Status:</h:outputLabel>
+ </div>
+ <div class="col-sm-4">
+  <h:inputText value="#{adminsuggestionbean.suggestionVo.status}" class="form-control" required="true" requiredMessage="* Please enter status" ></h:inputText>
+  </div> 
+   
+   <div class="col-sm-2 control-label">
+  <h:outputLabel>Action Owner:</h:outputLabel>
+ </div>
+ <div class="col-sm-4">
+  <h:inputText value="#{adminsuggestionbean.actionowner}" class="form-control" required="true" requiredMessage="* Please enter action owner" ></h:inputText>
+  </div> 
+  
+  </div>
+  
+  <div class="row form-group">
+ <div class="col-sm-2 control-label">
+ <h:outputLabel>Admin Remarks:</h:outputLabel>
+ </div>
+ <div class="col-sm-10">
+  <h:inputTextarea value="#{adminsuggestionbean.adminremarks}" class="form-control"  cols="19" rows="3" required="true" requiredMessage="* Please enter admin remark" />
+  </div>  
+  </div>
+  
+   <div class=" row form-group ">
+ <div class="col-sm-3 .col-sm-offset-3"></div>
+ <div class="col-sm-4 "> 
+ <h:commandButton action="#{adminsuggestionbean.updateSuggestion}" value="Update" class="btn fontsize btn-success btn-block"  ></h:commandButton>
+  
+ 
+ </div>
+
+ <div class="col-sm-4 ">
+<h:link value="Back To Admin Customer List" style="text-decoration:none; color:#fff;" outcome="adminsuggestion" class="btn fontsize btn-primary btn-block"/>
+</div>
+</div>
+  
+  
+  
+
+   </div><!-- end of container -->
+</h:form>
+
+      </p:panelGrid>
+      </div>
+     
+</h:body>
+	
+</html>

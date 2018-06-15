@@ -34,7 +34,7 @@
       
       
       
-      <div class="container" style=" margin-top:2cm; ">
+      <div class="container" style=" margin-top:1.5cm; ">
  
   
   <div  style="margin-top:1cm;"> 
@@ -49,6 +49,29 @@
   <h2 style=" margin-bottom:1cm; text-align:center">  View/Modify Update Task Status</h2>
  </c:otherwise>
  </c:choose>
+ 
+ 
+  <div class=" row form-group ">
+ <div class="col-sm-3 .col-sm-offset-3"></div>
+ <div class="col-sm-3 ">
+ 
+  <c:choose>
+  <c:when test="#{updatestatusbean.requeststage eq 8 }"> 
+ </c:when>
+ <c:otherwise>
+ <h:commandButton action="#{updatestatusbean.updateRequest}" value="Update" class="btn fontsize btn-success btn-block"></h:commandButton>
+ </c:otherwise>
+ </c:choose>
+ </div>
+
+ <div class="col-sm-3 ">
+<h:link value="Back To Update Tasks List" style="text-decoration:none; color:#fff;" outcome="updatestatustask" class="btn fontsize btn-primary btn-block"/>
+</div>
+</div>
+ 
+ 
+ 
+ 
  
  
 <div><h:messages style = "color:red;margin:8px;" /></div>
@@ -103,8 +126,25 @@
 
 <div class=" row form-group ">
  <div class="col-sm-3 control-label"><h:outputLabel  >Due Date:</h:outputLabel></div>
-<div class=" col-sm-3"> <h:inputText value="#{updatestatusbean.updatestatusVo.completiondate}"  readonly="true" disabled="true"  style="background-color:lightgrey;" class="  form-control"  id="completiondate"   requiredMessage="* Please enter Title"/></div>
- <h:message for="completiondate"  style="color:red;margin:8px;"/> 
+<div class=" col-sm-3"> 
+
+<c:choose>
+  <c:when test="#{updatestatusbean.completiondate eq null }"> 
+ <p:calendar id="completiondate" value="#{updatestatusbean.completiondate}" style=" border: 0;" 
+   pattern="dd-MM-yyyy" mask="true"  required="true"  requiredMessage="* Please enter completion Date" p:placeholder="DD-MM-YYYY" />
+ </c:when>
+ <c:otherwise>
+  <p:calendar id="completiondate" value="#{updatestatusbean.completiondate}" style=" border: 0;" readonly="true" disabled="true" 
+   pattern="dd-MM-yyyy" mask="true"  required="true"  requiredMessage="* Please enter completion Date" p:placeholder="DD-MM-YYYY"/>
+ </c:otherwise>
+ 
+ </c:choose>
+ <br></br>
+
+
+ <h:message for="completiondate"  style="color:red;"/>
+
+</div> 
  <div class="col-sm-2 control-label"><h:outputLabel  >Category:</h:outputLabel></div>
 <div class=" col-sm-4"> <h:inputText value="#{updatestatusbean.updatestatusVo.usercategory}" readonly="true"  disabled="true" class="  form-control"  style="background-color:lightgrey;" id="usercategory"  required="true" requiredMessage="* Please enter Title"/></div>
  <h:message for="usercategory"  style="color:red;margin:8px;"/> 
@@ -201,6 +241,53 @@
 
 
 </div>
+
+
+
+
+
+<c:choose>
+  <c:when test="#{updatestatusbean.requeststage eq 8 }">
+ <div class=" row form-group">
+ <div class="col-sm-2 control-label" style="padding-top:0cm;"> 
+ 
+ <h:outputLabel  >Rating: </h:outputLabel></div>
+<div class=" col-sm-2 pull-left" >  
+
+ <p:rating id ="rating" style="background-color:lightblue;"   readonly="true"   value="#{updatestatusbean.updatestatusVo.rating}"></p:rating> 
+ 
+ 
+</div>
+
+ </div><br></br>
+</c:when>
+
+   <c:otherwise>
+     
+ </c:otherwise>
+</c:choose>
+
+  <c:choose>
+  <c:when test="#{updatestatusbean.requeststage eq 8 }">
+ <div class=" row form-group">
+ <div class="col-sm-2 control-label" style="padding-top:0cm;">
+ <h:outputLabel  >Feedback: </h:outputLabel></div>
+<div class=" col-sm-6">  
+  
+
+   <h:inputTextarea id="inputfeedback" readonly="true"  value="#{updatestatusbean.updatestatusVo.feedback}" cols="10" rows="3" class=" form-control"  >
+      <p:watermark for="inputfeedback" value="Please Enter Your Feedback.." />       
+      </h:inputTextarea> 
+  
+</div>
+
+ </div><br></br>
+</c:when>
+ <c:otherwise>
+
+  </c:otherwise>
+   </c:choose>
+
 
 
 

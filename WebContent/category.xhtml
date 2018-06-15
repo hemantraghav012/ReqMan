@@ -98,7 +98,7 @@ function setCategoryHiddenValue(new_value)
  
             <hr ></hr>
  <h:form id="categoryForm">
-<p:growl id="messages" showDetail="true"  autoUpdate="true"/>
+<p:growl id="messages" />
 
       <div  class="gridmargin">
  		<h:inputHidden id="categoryId" value="#{categorybean.categoryId}" ></h:inputHidden>
@@ -113,7 +113,7 @@ function setCategoryHiddenValue(new_value)
 	      filteredValue="#{categorybean.filteredCategoryList}"  widgetVar="categoryListTable">
 	
 	     
-	     <f:attribute name="updateCategoryId" value="#{category.userCategoryId}" />
+	     <f:attribute id="cate12" name="updateCategoryId" value="#{category.userCategoryId}" />
 	      <p:ajax event="cellEdit" listener="#{categorybean.onCellEdit}" update=":categoryForm:messages" />
  
 	      <f:facet name="header">
@@ -154,7 +154,7 @@ function setCategoryHiddenValue(new_value)
 				<h:outputText value="#{category.name}" />
 			</p:column>
 			
-			 <p:column headerText="Status" filterBy="#{category.status}" sortBy="#{category.status}"  filterStyle="display:none;" filterMatchMode="contains"  style="width:125px;padding: 0px 0px 0px 3px; ">
+			 <p:column headerText="Status" filterBy="#{category.status}" sortBy="#{category.status}"  filterStyle="display:none;" filterMatchMode="contains"  style="width:125px;padding: 0px 0px 0px 3px;cursor: pointer; ">
               <p:cellEditor>
                  <f:facet name="output"><h:outputText value="#{category.status}" /></f:facet>
                <f:facet name="input">

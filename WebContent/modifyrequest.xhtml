@@ -21,16 +21,20 @@
 <script type="text/javascript" src="resource/js/bootstrap.js"/>
 <script type="text/javascript" src="resource/js/jquery.js"/>
 <title>View/Modify Request</title>
-<style type="text/css"> 
-.radiobuttonspace span { padding-right: 10px; } 
-.radiobuttonspace td { width: 170px; } 
-
-</style> 
+ 
 
 
 
 </h:head>
 <h:body>
+<style type="text/css"> 
+.selectRadio Label {
+	margin-right: 51px;
+} 
+.selectRadio1 Label {
+	margin-right: 7px;
+} 
+</style>
 
 <div id="header">
 	<ui:insert name="header">
@@ -53,8 +57,39 @@
      
        <h:form enctype="multipart/form-data" class="form-horizontal">
       <div class="container fixedcontainerrequset" style=" margin-top:50px; ">
-  <h2 style=" text-align: center;"> View/Modify Request</h2><br></br>
-     <h:inputHidden value = "#{createrequest.requestId}" id = "hiddenField" /> 
+  <h2 style=" text-align: center;"> View/Modify Request</h2>
+  
+  
+  
+  
+ <div class=" row form-group ">
+ <div class="col-sm-3 .col-sm-offset-3"></div>
+ <div class="col-sm-4 ">
+  <c:choose>
+  <c:when test="#{createrequest.stage eq 8 }"> 
+
+ </c:when>
+ <c:otherwise>
+ <h:commandButton action="#{createrequest.updateRequest}" value="Update" class="btn fontsize btn-success btn-block"  ></h:commandButton>
+  </c:otherwise> 
+ </c:choose>
+ </div>
+
+ <div class="col-sm-4 ">
+<h:link value="Back To Request List" style="text-decoration:none; color:#fff;" outcome="request" class="btn fontsize btn-primary btn-block"/>
+</div>
+</div>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+       <h:inputHidden value = "#{createrequest.requestId}" id = "hiddenField" /> 
 
  <div class=" row form-group ">
  <div class="col-sm-2 control-label"><h:outputLabel><span style="color:red;">* </span> Title:</h:outputLabel></div>
@@ -126,7 +161,7 @@
                                 
    <h:message for="multiple"  style="color:red;margin:8px;"/>
  <div class="col-sm-2 control-label">
- <h:outputLabel style="margin-top:0px;" >Due  Date:</h:outputLabel>
+ <h:outputLabel style="margin-top:0px;" >Due Date:</h:outputLabel>
  </div>
 <div class="col-sm-4">
 
@@ -227,10 +262,7 @@
         </c:otherwise>
         
         </c:choose>
-        
-        
-        
-        
+               
 </div>
  <h:message for="requesttype"  style="color:red;margin:8px;"/>
  
@@ -384,60 +416,59 @@
 <div class=" row form-group ">
  <div class="col-sm-2 control-label" style="padding-top:0cm;"><h:outputLabel>Stage: </h:outputLabel></div>
 <div class=" col-sm-6"> 
-<h:selectOneRadio value = "#{createrequest.stage}" id="stage" styleClass="radiobuttonspace" onclick="showPopUp(this.value)" requiredMessage="* Please enter status" > 
+<h:selectOneRadio value = "#{createrequest.stage}" id="stage" styleClass="selectRadio1"  requiredMessage="* Please enter status" > 
 
 <c:choose>
 
 <c:when test="#{createrequest.stage == 1}">
-    <f:selectItem   itemValue = "1" itemLabel = "&nbsp; Requested"   /> 
-    <f:selectItem   itemValue = "7" itemLabel = "&nbsp; Hold" /> 
-    <f:selectItem   itemValue = "6" itemLabel = "&nbsp; Cancel" /> 
+    <f:selectItem   itemValue = "1" itemLabel = "&nbsp;Requested&nbsp; &nbsp; "   /> 
+
+    <f:selectItem   itemValue = "6" itemLabel = "&nbsp;Cancel" /> 
     </c:when>
 
 <c:when test="#{createrequest.stage == 2}">
-    <f:selectItem   itemValue = "2" itemLabel = "&nbsp; Accepted" /> 
-    <f:selectItem   itemValue = "7" itemLabel = "&nbsp; Hold" /> 
-    <f:selectItem   itemValue = "6" itemLabel = "&nbsp; Cancel" /> 
+    <f:selectItem   itemValue = "2" itemLabel = "&nbsp;Accepted&nbsp; &nbsp; &nbsp; " /> 
+    <f:selectItem   itemValue = "7" itemLabel = "&nbsp;Hold&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; " /> 
+    <f:selectItem   itemValue = "6" itemLabel = "&nbsp;Cancel" /> 
     </c:when>
 
 
 
 <c:when test="#{createrequest.stage == 3}">
-    <f:selectItem   itemValue = "3" itemLabel = "&nbsp;  Returned"/> 
-    <f:selectItem   itemValue = "1" itemLabel = "&nbsp;  Re-Send Request"/>  
+    <f:selectItem   itemValue = "3" itemLabel = "&nbsp;Returned&nbsp; &nbsp; &nbsp; "/> 
+    <f:selectItem   itemValue = "1" itemLabel = "&nbsp;Re-Send Request"/>  
     </c:when>
     
 <c:when test="#{createrequest.stage == 4}">
-    <f:selectItem   itemValue = "4" itemLabel = "&nbsp; In-Progress" />
-    <f:selectItem   itemValue = "7" itemLabel = "&nbsp; Hold" /> 
-    <f:selectItem   itemValue = "6" itemLabel = "&nbsp; Cancel" />      
+    <f:selectItem   itemValue = "4" itemLabel = "&nbsp;In-Progress&nbsp; " />
+    <f:selectItem   itemValue = "7" itemLabel = "&nbsp;Hold&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; " /> 
+    <f:selectItem   itemValue = "6" itemLabel = "&nbsp;Cancel" />      
     </c:when>
     
 <c:when test="#{createrequest.stage == 5}">
-     <f:selectItem   itemValue = "5" itemLabel = "&nbsp; Completed" /> 
-     <f:selectItem   itemValue = "8" itemLabel = "&nbsp; Close"  /> 
-        
-     
+     <f:selectItem   itemValue = "5" itemLabel = "&nbsp;Completed&nbsp; &nbsp; " /> 
+     <f:selectItem   itemValue = "8" itemLabel = "&nbsp;Close&nbsp; &nbsp;&nbsp; &nbsp;"  /> 
+     <f:selectItem   itemValue = "4" itemLabel = "&nbsp;In-Progress&nbsp; " />     
     </c:when>
     
   
     
-    
  <c:when test="#{createrequest.stage == 6}">
-     <f:selectItem   itemValue = "6" itemLabel = "&nbsp; Cancel" /> 
-     <f:selectItem   itemValue = "1" itemLabel = "&nbsp; Requested" /> 
-     <f:selectItem   itemValue = "7" itemLabel = "&nbsp; Hold" /> 
+     <f:selectItem   itemValue = "6" itemLabel = "&nbsp;Cancel&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; " /> 
+     <f:selectItem   itemValue = "1" itemLabel = "&nbsp;Requested&nbsp; &nbsp; " /> 
+     <f:selectItem   itemValue = "7" itemLabel = "&nbsp;Hold" /> 
         
     </c:when>
     
 <c:when test="#{createrequest.stage == 7 }">
-     <f:selectItem   itemValue = "7" itemLabel = "&nbsp; Hold" /> 
-     <f:selectItem   itemValue = "1" itemLabel = "&nbsp; Re-Send Request" /> 
-     <f:selectItem   itemValue = "6" itemLabel = "&nbsp; Cancel" /> 
+     <f:selectItem   itemValue = "7" itemLabel = "&nbsp;Hold&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; " /> 
+      <f:selectItem   itemValue = "6" itemLabel = "&nbsp;Cancel&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; " />
+     <f:selectItem   itemValue = "1" itemLabel = "&nbsp;Re-Send Request" /> 
+     
     </c:when>
     
    <c:when test="#{createrequest.stage == 8 }">   
-     <f:selectItem   itemValue = "8" itemLabel = "&nbsp; Closed" /> 
+     <f:selectItem   itemValue = "8" itemLabel = "&nbsp;Closed&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; " /> 
    
     </c:when>
 
@@ -458,67 +489,34 @@
  </div>
  
 
- 
- <div class=" row form-group">
- <div class="col-sm-2 control-label" style="padding-top:0cm;">
- <h:outputLabel  >Status: </h:outputLabel></div>
-<div class=" col-sm-6"> 
-<h:selectOneRadio value = "#{createrequest.status}" id="status" required="true"  styleClass="radiobuttonspace"  requiredMessage="* Please enter status"> 
-  <c:choose>
-  <c:when test="#{createrequest.stage eq 8 }">   
-   <f:selectItem itemValue = "true" itemLabel = "&nbsp; Active" itemDisabled="true" /> 
-   <f:selectItem itemValue = "false" itemLabel = "&nbsp; In-Active" itemDisabled="true" />
-   </c:when>
-   <c:otherwise>
-    <f:selectItem itemValue = "true" itemLabel = "&nbsp; Active" /> 
-   <f:selectItem itemValue = "false" itemLabel = "&nbsp; In-Active" />
-  
+<c:choose>
+  <c:when test="#{createrequest.stage == 5 || createrequest.stage == 8}"> 
    
-   </c:otherwise>
-   </c:choose>
-</h:selectOneRadio> </div>
- <h:message for="status"  style="color:red;margin:8px;"/> 
- </div><br></br>
-
- 
- <c:choose>
-  <c:when test="#{createrequest.stage == 5 || createrequest.stage == 8}">
  <div class=" row form-group">
- <div class="col-sm-2 control-label" style="padding-top:0cm;"> 
- 
+ <div class="col-sm-2 control-label" style="padding-top:0cm;">  
  <h:outputLabel  >Rating: </h:outputLabel></div>
-<div class=" col-sm-2 pull-left" >  
+<div class=" col-sm-4 pull-left" > 
+ <p:rating id ="rating" style="background-color:lightblue;" value="#{createrequest.rating}"></p:rating>  
+</div>
+ <div class="col-sm-2 control-label" style="padding-top:0cm;" >
+ <h:outputLabel>Percentage:&nbsp;
+ <span   data-toggle="tooltip" 
+ title=" Update the progress of task  completion in the number field or using the slider." 
+ style="margin-top:2px;" class="pull-right glyphicon glyphicon-info-sign"></span>
 
- <p:rating id ="rating" style="background-color:lightblue;" value="#{createrequest.rating}"></p:rating> 
- 
- 
+</h:outputLabel></div>
+<div class=" col-sm-4 pull-left" >  
+
+   <p:inputNumber id="txt1" value="#{createrequest.completionpercentage}" symbol=" %" symbolPosition="s"   style="width:10px; "/>
+
 </div>
 
  </div><br></br>
-</c:when>
-
-   <c:otherwise>
-     <div class=" row form-group collapse">
- <div class="col-sm-2 control-label collapse" style="padding-top:0cm;"> 
  
- <h:outputLabel  >Rating: </h:outputLabel></div>
-<div class=" col-sm-2 pull-left" >  
-
- <p:rating id ="rating" style="background-color:lightblue;" value="#{createrequest.rating}"></p:rating> 
- 
- 
-</div>
-
- </div><br></br>
- </c:otherwise>
-</c:choose>
-
-  <c:choose>
-  <c:when test="#{createrequest.stage == 5 }">
- <div class=" row form-group">
+<div class=" row form-group">
  <div class="col-sm-2 control-label" style="padding-top:0cm;">
  <h:outputLabel  >Feedback: </h:outputLabel></div>
-<div class=" col-sm-6">  
+<div class=" col-sm-10">  
   
 
    <h:inputTextarea id="inputfeedback"  value="#{createrequest.feedback}" cols="10" rows="3" class=" form-control"  >
@@ -528,26 +526,34 @@
 </div>
 
  </div><br></br>
+ 
 </c:when>
- <c:otherwise>
- <div class=" row form-group collapse">
- <div class="col-sm-2 control-label collapse" style="padding-top:0cm;">
- <h:outputLabel  >Feedback: </h:outputLabel></div>
-<div class=" col-sm-6">  
-  
 
-   <h:inputTextarea id="inputfeedback"  value="#{createrequest.feedback}"  cols="10" rows="3" class=" form-control"  >
-      <p:watermark for="inputfeedback" value="Please Enter Your Feedback.." />       
-      </h:inputTextarea> 
-  
-</div>
+</c:choose>
 
- </div><br></br>
-  </c:otherwise>
+  
+ 
+ 
+ <div class=" row form-group">
+ <div class="col-sm-2 control-label" style="padding-top:0cm;">
+ <h:outputLabel  >Status: </h:outputLabel></div>
+<div class=" col-sm-6"> 
+<h:selectOneRadio value = "#{createrequest.status}" id="status" required="true"  styleClass="selectRadio"  requiredMessage="* Please enter status"> 
+  <c:choose>
+  <c:when test="#{createrequest.stage eq 8 }">   
+   <f:selectItem itemValue = "true" itemLabel ="&nbsp;Active" itemDisabled="true" /> 
+   <f:selectItem itemValue = "false" itemLabel ="&nbsp;In-Active" itemDisabled="true" />
+   </c:when>
+   <c:otherwise>
+    <f:selectItem itemValue = "true" itemLabel ="&nbsp;Active" /> 
+   <f:selectItem itemValue = "false" itemLabel ="&nbsp;In-Active" />
+  
+   
+   </c:otherwise>
    </c:choose>
-
- 
- 
+</h:selectOneRadio> </div>
+ <h:message for="status"  style="color:red;margin:8px;"/> 
+ </div><br></br>
 
 
  <div class=" row form-group ">
@@ -559,12 +565,7 @@
  </c:when>
  <c:otherwise>
  <h:commandButton action="#{createrequest.updateRequest}" value="Update" class="btn fontsize btn-success btn-block"  ></h:commandButton>
-   
-
-
- 
- </c:otherwise>
- 
+  </c:otherwise> 
  </c:choose>
  </div>
 

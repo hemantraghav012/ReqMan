@@ -26,7 +26,16 @@
 .radiobuttonspace td { width: 170px; } 
 
 </style> 
-
+<style type="text/css">
+        .ui-growl {
+            
+            top:60px;
+            Right:20px;
+            width:301px;
+          
+        
+        }
+          </style>
 </h:head>
 <h:body>
 
@@ -37,11 +46,10 @@
 </div>
        
       <!-- -end of header --> 
-         <h:messages style = "color:red;margin:8px;" />
+        
       	
         <div class="ui-fluid">
         
-        <h:messages style = "color:red;margin:8px;" />
         
         
         
@@ -52,19 +60,27 @@
        <h:form enctype="multipart/form-data" class="form-horizontal">
       <div class="container fixedcontainerrequset" style=" margin-top:50px; ">
   <h2 style=" text-align: center;"> View/Modify Account</h2><br></br>
+   <p:growl id="message" />
      <h:inputHidden value = "#{accountbean.id}" id = "hiddenField" /> 
-  <p:graphicImage value="#{accountbean.logoFromDB}" stream="false"  width="150px" height="150px"/> 
-  
+  <p:graphicImage value="#{accountbean.logoFromDB}" stream="false"   height="100px"/> 
+  <br></br>
  <div class=" row form-group ">
- <div class="col-sm-2 control-label"><h:outputLabel><span style="color:red;">* </span> Account Name:</h:outputLabel></div>
-<div class=" col-sm-10"> <h:inputText value="#{accountbean.accountname}"   class="  form-control" readonly="true" disabled="true" id="title" required="true" requiredMessage="* Please enter Title" /></div>
+ <div class="col-sm-3 control-label"><h:outputLabel><span style="color:red;">* </span>Organization Name:</h:outputLabel></div>
+<div class=" col-sm-9"> <h:inputText value="#{accountbean.accountname}"   class="  form-control"  id="title" required="true" requiredMessage="* Please enter organization name" /></div>
  <h:message for="title"  style="color:red;margin:8px;"/> 
 
 </div>
 
+<div class=" row form-group ">
+ <div class="col-sm-3 control-label"><h:outputLabel><span style="color:red;">* </span> Organization Key:</h:outputLabel></div>
+<div class=" col-sm-9"> <h:inputText value="#{accountbean.organizationkey}"   class="  form-control" readonly="true" disabled="true" id="organizationkey" required="true" requiredMessage="* Please enter organization key" /></div>
+ <h:message for="organizationkey"  style="color:red;margin:8px;"/> 
+
+</div>
+
  <div class=" row form-group ">
- <div class="col-sm-2 control-label"><h:outputLabel><span style="color:red;">* </span> Logo Name:</h:outputLabel></div>
-<div class=" col-sm-10"> <h:inputText value="#{accountbean.imagename}"   class="  form-control" readonly="true" disabled="true" id="title1" required="true" requiredMessage="* Please enter Title"></h:inputText></div>
+ <div class="col-sm-3 control-label"><h:outputLabel><span style="color:red;">* </span> Logo Name:</h:outputLabel></div>
+<div class=" col-sm-9"> <h:inputText value="#{accountbean.imagename}"   class="  form-control" readonly="true" disabled="true" id="title1" required="true" requiredMessage="* Please enter Logo Name"></h:inputText></div>
  <h:message for="title1"  style="color:red;margin:8px;"/> 
 
 </div>
@@ -73,9 +89,11 @@
 
 
 <div class=" row form-group ">
-<div class="col-sm-2 control-label"><h:outputLabel style="white-space:nowrap;">Profile Image :</h:outputLabel></div>
+<div class="col-sm-3 control-label"><h:outputLabel style="white-space:nowrap;">Profile Image :</h:outputLabel></div>
 <div class="col-sm-4">
-<p:fileUpload value="#{accountbean.logo}" mode="simple" class="form-control" style=" border-style: hidden;" />
+<p:fileUpload id="choose" validator="#{accountbean.validateFile}" multiple="false" allowTypes="/(\.|\/)(gif|jpe?g|png)$/" 
+  value="#{accountbean.logo}"  mode="simple"/>
+
 </div>
 
 </div>
@@ -96,7 +114,7 @@
  </div>
 
  <div class="col-sm-4 ">
-<h:link value="Back to Account List" style="text-decoration:none; color:#fff;" outcome="account" class="btn fontsize btn-primary btn-block"/>
+<h:link value="Back to Home" style="text-decoration:none; color:#fff;" outcome="home" class="btn fontsize btn-primary btn-block"/>
 </div>
 </div>
 

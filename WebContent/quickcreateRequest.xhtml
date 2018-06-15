@@ -1,0 +1,526 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+ xmlns:ui="http://java.sun.com/jsf/facelets" 
+  xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+ 	xmlns:h="http://java.sun.com/jsf/html">
+<h:head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<link rel="stylesheet" href="resource/css/bootstrap.css"/>
+<link rel="stylesheet" href="resource/mystyle/home.css"/>
+<link rel="stylesheet" href="resource/mystyle/createcategory.css"/>
+  <link rel="stylesheet" href="resource/mystyle/button.css"/>
+<script type="text/javascript" src="resource/js/bootstrap.js"/>
+<script type="text/javascript" src="resource/js/jquery.js"/>
+
+	<title>Quick Multiple Requests </title>
+	
+	
+	
+	 <style type="text/css">
+        .ui-growl {
+            
+            top:60px;
+            Right:20px;
+            width:301px;
+          
+        
+        }
+          </style>
+ 
+</h:head>
+<h:body>
+	<div id="header">
+	<ui:insert name="header">
+		<ui:include src="header.xhtml" />
+	</ui:insert>
+</div>
+       
+      <!-- -end of header --> 
+      
+              
+     <div class="ui-fluid">
+       <h:form  class="form-horizontal" id="quickrequest"  >
+      
+      
+      <div class="container quickfixedcontainerrequset" style=" margin-top:2cm; " >
+       <p:growl id="gridme"   /> 
+      
+      
+      
+  <h2 style=" text-align: center;">Quick Multiple Requests <span  style="font-size:15px;" data-toggle="tooltip" title="Create  new requests quickly with minimum information. So that the work can begin as soon as possible. More details can be added later on in request grid." 
+  class=" glyphicon glyphicon-info-sign"></span></h2>
+  
+ 
+
+    <div class=" row form-group ">
+ <div class="col-sm-3 .col-sm-offset-3"></div>
+<div class="col-sm-3">
+<h:commandButton action="#{createrequest.quicksubmit()}" value="S&#818;ubmit" style="text-decoration:none; color:#fff;" class="btn fontsize btn-success btn-block">
+</h:commandButton>
+</div>
+<div class="col-sm-3"><h:link value="Back to Request List" style="text-decoration:none; color:#fff;" outcome="request"  class="btn fontsize btn-primary btn-block"/></div>
+
+</div>
+       
+      
+      <div class=" row form-group ">
+
+<div class=" col-sm-4">
+<h:outputLabel><span style="color:red;">* </span> Title:</h:outputLabel>
+</div>
+
+
+ 
+<div class=" col-sm-6">
+<h:outputLabel for="user"><span style="color:red;">* </span>Team Member(s):&nbsp;
+ <span   data-toggle="tooltip" title="select one or more team members. Even your own name for To-Do tasks! Use this easy to select Auto-complete function." 
+ style="margin-top:2px;" class="pull-right glyphicon glyphicon-info-sign"></span>
+ </h:outputLabel> 
+</div>
+ 
+<div class="col-sm-2"> 
+ <h:outputLabel style="white-space:nowrap;">Completion Date:&nbsp;
+ <span   data-toggle="tooltip" 
+ title="If left blank , team member must enter a date on accepting the request" 
+ style="margin-top:2px;" class="pull-right glyphicon glyphicon-info-sign"></span>
+ 
+ 
+ </h:outputLabel>
+
+ </div> 
+
+
+</div>
+      
+      
+      
+      
+     
+       
+            
+
+ <div class=" row form-group " style="margin-top:-10px;">
+
+
+
+<div class=" col-sm-4"> <h:inputText value="#{createrequest.titlelist1}"  id="title1" style="height:29px;padding:5px;"  class="  form-control"   required="true" requiredMessage="* Please enter Title" >
+
+
+</h:inputText>
+ <h:message for="title1"  style="color:red;"/>
+</div>
+
+
+ 
+<div class=" col-sm-6">
+ <p:autoComplete  id="user1"  multiple="true" value="#{createrequest.selectedUsers1}"   completeMethod="#{createrequest.getUserDetails}" 
+   var="friend1" itemLabel="#{friend1.name}" converter="requestFriendConverter"  itemValue="#{friend1}"  forceSelection="true"  required="true" requiredMessage="*  Please enter task owner's name">
+  
+  		    <p:ajax event="blur"  onstart="rc()"  />
+         <p:column >
+             <h:outputText value="#{friend1.name}"/>
+         </p:column>                           
+ 
+ </p:autoComplete>
+  
+ <h:message  for="user1" style="color:red;"/>
+</div>
+
+<div class="col-sm-2"> 
+<p:calendar  value="#{createrequest.completiondate1}" p:placeholder="DD-MM-YYYY" 
+             mindate="#{createrequest.endDate}"  style=" border: 0;"  pattern="dd-MM-yyyy" mask="true" >
+             
+          
+             </p:calendar>
+
+ </div> 
+
+      
+  
+</div>
+ 
+
+ <p:remoteCommand name="rc"   process="@this,title1,user1" update="gridme" actionListener="#{createrequest.handleKeyEvent}" />
+
+
+
+
+<div class=" row form-group "  style="margin-top:-10px;">
+
+<div class=" col-sm-4"> <h:inputText value="#{createrequest.titlelist2}"  style="height:29px;padding:5px;"  id="title2"  class="  form-control"    requiredMessage="* Please enter Title" />
+ <h:message  for="title2" style="color:red;"/>
+</div>
+
+
+ 
+<div class=" col-sm-6">
+ <p:autoComplete  id="user2"  multiple="true" value="#{createrequest.selectedUsers2}" completeMethod="#{createrequest.getUserDetails}" 
+   var="friend1" itemLabel="#{friend1.name}" converter="requestFriendConverter"  itemValue="#{friend1}"  forceSelection="true"   requiredMessage="*  Please enter task owner's name">
+  
+ 		 <p:ajax event="blur"  onstart="rc2()"  />
+
+         <p:column>
+             <h:outputText value="#{friend1.name}" />
+         </p:column>                           
+ 
+
+ 
+ </p:autoComplete>
+ <h:message for="user2"  style="color:red;"/>
+</div>
+ 
+ 
+<div class="col-sm-2" > 
+<p:calendar  value="#{createrequest.completiondate2}" p:placeholder="DD-MM-YYYY" 
+             mindate="#{createrequest.endDate}"  style=" border: 0;"  pattern="dd-MM-yyyy" mask="true" />
+
+ </div> 
+
+
+</div>
+
+
+ <p:remoteCommand name="rc2"   process="@this,title2,user2" update="gridme" actionListener="#{createrequest.handleKeyEvent}" />
+
+
+
+<div class=" row form-group "  style="margin-top:-10px;">
+<div class=" col-sm-4"> <h:inputText value="#{createrequest.titlelist3}"   id="title3" style="height:29px;padding:5px;"  class="  form-control"   requiredMessage="* Please enter Title" />
+ <h:message  for="title3" style="color:red;"/>
+</div>
+
+
+<div class=" col-sm-6">
+ <p:autoComplete  id="user3"  multiple="true" value="#{createrequest.selectedUsers3}" completeMethod="#{createrequest.getUserDetails}" 
+   var="friend1" itemLabel="#{friend1.name}" converter="requestFriendConverter"  itemValue="#{friend1}"  forceSelection="true"  requiredMessage="*  Please enter task owner's name">
+  
+ 		 <p:ajax event="blur"  onstart="rc3()"  />
+
+         <p:column>
+             <h:outputText value="#{friend1.name}" />
+         </p:column>                           
+ 
+
+ 
+ </p:autoComplete>
+ <h:message for="user3"  style="color:red;"/>
+</div>
+ 
+ 
+<div class="col-sm-2"> 
+<p:calendar  value="#{createrequest.completiondate3}" p:placeholder="DD-MM-YYYY" 
+             mindate="#{createrequest.endDate}"  style=" border: 0;"  pattern="dd-MM-yyyy" mask="true" />
+
+ </div> 
+
+
+</div>
+
+
+<p:remoteCommand name="rc3"   process="@this,title3,user3" update="gridme" actionListener="#{createrequest.handleKeyEvent}" />
+ 
+
+
+
+<div class=" row form-group " style="margin-top:-10px;">
+ <div class=" col-sm-4"><h:inputText value="#{createrequest.titlelist4}"  id="title4" style="height:29px;padding:5px;"  class="  form-control"   requiredMessage="* Please enter Title" />
+ <h:message for="title4"  style="color:red;"/>
+</div>
+
+
+<div class=" col-sm-6">
+ <p:autoComplete  id="user4"  multiple="true" value="#{createrequest.selectedUsers4}" completeMethod="#{createrequest.getUserDetails}" 
+   var="friend1" itemLabel="#{friend1.name}" converter="requestFriendConverter"  itemValue="#{friend1}"  forceSelection="true"  requiredMessage="*  Please enter task owner's name">
+  
+ 		 <p:ajax event="blur"  onstart="rc4()"  />
+
+         <p:column>
+             <h:outputText value="#{friend1.name}" />
+         </p:column>                           
+ 
+
+ 
+ </p:autoComplete>
+ <h:message  for="user4" style="color:red;"/>
+</div>
+ 
+ 
+<div class="col-sm-2"> 
+<p:calendar  value="#{createrequest.completiondate4}" p:placeholder="DD-MM-YYYY" 
+             mindate="#{createrequest.endDate}"  style=" border: 0;"  pattern="dd-MM-yyyy" mask="true" />
+
+ </div> 
+
+
+</div>
+<p:remoteCommand name="rc4"   process="@this,title4,user4" update="gridme" actionListener="#{createrequest.handleKeyEvent}" />
+ 
+
+
+
+<div class=" row form-group " style="margin-top:-10px;">
+ <div class=" col-sm-4"><h:inputText value="#{createrequest.titlelist5}"  id="title5" style="height:29px;padding:5px;"   class="  form-control"   requiredMessage="* Please enter Title" />
+ <h:message for="title5"  style="color:red;"/>
+</div>
+
+
+<div class=" col-sm-6">
+ <p:autoComplete  id="user5"  multiple="true" value="#{createrequest.selectedUsers5}" completeMethod="#{createrequest.getUserDetails}" 
+   var="friend1" itemLabel="#{friend1.name}" converter="requestFriendConverter"  itemValue="#{friend1}"  forceSelection="true"  requiredMessage="*  Please enter task owner's name">
+  
+ 		 <p:ajax event="blur"  onstart="rc5()"  />
+
+         <p:column>
+             <h:outputText value="#{friend1.name}" />
+         </p:column>                           
+ 
+
+ 
+ </p:autoComplete>
+ <h:message for="user5"  style="color:red;"/>
+</div>
+ 
+
+<div class="col-sm-2"> 
+<p:calendar  value="#{createrequest.completiondate5}" p:placeholder="DD-MM-YYYY" 
+             mindate="#{createrequest.endDate}"  style=" border: 0;"  pattern="dd-MM-yyyy" mask="true" />
+
+ </div> 
+
+
+</div>
+
+
+
+<p:remoteCommand name="rc5"   process="@this,title5,user5" update="gridme" actionListener="#{createrequest.handleKeyEvent}" />
+
+
+
+ <div class=" row form-group " style="margin-top:-10px;">
+<div class=" col-sm-4"><h:inputText value="#{createrequest.titlelist6}"  id="title6" style="height:29px;padding:5px;"   class="  form-control"    requiredMessage="* Please enter Title" />
+ <h:message for="title6"  style="color:red;"/>
+</div>
+
+
+<div class=" col-sm-6">
+ <p:autoComplete  id="user6"  multiple="true" value="#{createrequest.selectedUsers6}" completeMethod="#{createrequest.getUserDetails}" 
+   var="friend1" itemLabel="#{friend1.name}" converter="requestFriendConverter"  itemValue="#{friend1}"  forceSelection="true"  requiredMessage="*  Please enter task owner's name">
+  
+ 		 <p:ajax event="blur"  onstart="rc6()"  />
+ 		
+
+         <p:column>
+             <h:outputText value="#{friend1.name}" />
+         </p:column>                           
+ 
+
+ 
+ </p:autoComplete>
+ <h:message  for="user6" style="color:red;"/>
+</div>
+ 
+ 
+<div class="col-sm-2"> 
+<p:calendar  value="#{createrequest.completiondate6}" p:placeholder="DD-MM-YYYY" 
+             mindate="#{createrequest.endDate}"  style=" border: 0;"  pattern="dd-MM-yyyy" mask="true" />
+
+ </div> 
+
+
+</div>
+
+<p:remoteCommand name="rc6"   process="@this,title6,user6" update="gridme" actionListener="#{createrequest.handleKeyEvent}" />
+
+
+
+<div class=" row form-group " style="margin-top:-10px;">
+<div class=" col-sm-4"><h:inputText value="#{createrequest.titlelist7}"  id="title7"  style="height:29px;padding:5px;"   class="  form-control"   requiredMessage="* Please enter Title" />
+ <h:message  for="title7" style="color:red;"/>
+</div>
+
+
+
+<div class=" col-sm-6">
+ <p:autoComplete id="user7"  multiple="true" value="#{createrequest.selectedUsers7}" completeMethod="#{createrequest.getUserDetails}" 
+   var="friend1" itemLabel="#{friend1.name}" converter="requestFriendConverter"  itemValue="#{friend1}"  forceSelection="true"  requiredMessage="*  Please enter task owner's name">
+   
+   <p:ajax event="blur"  onstart="rc7()"  />
+ 		 
+ 		  <p:column>
+             <h:outputText value="#{friend1.name}" />
+         </p:column>                           
+ 
+
+ 
+ </p:autoComplete>
+ <h:message for="user7"  style="color:red;"/>
+</div>
+ 
+
+<div class="col-sm-2"> 
+<p:calendar  value="#{createrequest.completiondate7}" p:placeholder="DD-MM-YYYY" 
+             mindate="#{createrequest.endDate}"  style=" border: 0;"  pattern="dd-MM-yyyy" mask="true" />
+
+ </div> 
+
+
+</div>
+
+
+<p:remoteCommand name="rc7"   process="@this,title7,user7" update="gridme" actionListener="#{createrequest.handleKeyEvent}" />
+
+
+<div class=" row form-group " style="margin-top:-10px;">
+<div class=" col-sm-4"><h:inputText value="#{createrequest.titlelist8}"  id="title8"  style="height:29px;padding:5px;"  class="  form-control"   requiredMessage="* Please enter Title" />
+ <h:message  for="title8" style="color:red;"/>
+</div>
+
+
+
+<div class=" col-sm-6">
+ <p:autoComplete  id="user8" multiple="true" value="#{createrequest.selectedUsers8}" completeMethod="#{createrequest.getUserDetails}" 
+   var="friend1" itemLabel="#{friend1.name}" converter="requestFriendConverter"  itemValue="#{friend1}"  forceSelection="true"  requiredMessage="*  Please enter task owner's name">
+  
+ 		
+ <p:ajax event="blur"  onstart="rc8()"  />
+         <p:column>
+             <h:outputText value="#{friend1.name}" />
+         </p:column>                           
+ 
+
+ 
+ </p:autoComplete>
+ <h:message for="user8"  style="color:red;"/>
+</div>
+ 
+
+<div class="col-sm-2"> 
+<p:calendar  value="#{createrequest.completiondate8}" p:placeholder="DD-MM-YYYY" 
+             mindate="#{createrequest.endDate}"  style=" border: 0;"  pattern="dd-MM-yyyy" mask="true" />
+
+ </div> 
+
+
+</div>
+
+
+<p:remoteCommand name="rc8"   process="@this,title8,user8" update="gridme" actionListener="#{createrequest.handleKeyEvent}" />
+
+
+
+
+<div class=" row form-group " style="margin-top:-10px;">
+<div class=" col-sm-4"><h:inputText value="#{createrequest.titlelist9}"  id="title9" style="height:29px;padding:5px;"   class="  form-control"   requiredMessage="* Please enter Title" />
+ <h:message for="title9"  style="color:red;"/>
+</div>
+
+
+ 
+<div class=" col-sm-6">
+ <p:autoComplete  id="user9"  multiple="true" value="#{createrequest.selectedUsers9}" completeMethod="#{createrequest.getUserDetails}" 
+   var="friend1" itemLabel="#{friend1.name}" converter="requestFriendConverter"  itemValue="#{friend1}"  forceSelection="true"  requiredMessage="*  Please enter task owner's name">
+  
+ 		
+ <p:ajax event="blur"  onstart="rc9()"  />
+
+         <p:column>
+             <h:outputText value="#{friend1.name}" />
+         </p:column>                           
+ 
+
+ 
+ </p:autoComplete>
+ <h:message  for="user9" style="color:red;"/>
+</div>
+ 
+
+<div class="col-sm-2"> 
+<p:calendar  value="#{createrequest.completiondate9}" p:placeholder="DD-MM-YYYY" 
+             mindate="#{createrequest.endDate}"  style=" border: 0;"  pattern="dd-MM-yyyy" mask="true" />
+
+ </div> 
+
+
+</div>
+
+<p:remoteCommand name="rc9"   process="@this,title9,user9" update="gridme" actionListener="#{createrequest.handleKeyEvent}" />
+
+
+
+<div class=" row form-group " style="margin-top:-10px;">
+<div class=" col-sm-4"><h:inputText value="#{createrequest.titlelist10}"  id="title10"  style="height:29px;padding:5px;"   class="  form-control"   requiredMessage="* Please enter Title" />
+ <h:message for="title10"  style="color:red;"/>
+</div>
+
+
+
+<div class=" col-sm-6">
+ <p:autoComplete id="user10" multiple="true" value="#{createrequest.selectedUsers10}" completeMethod="#{createrequest.getUserDetails}" 
+   var="friend1" itemLabel="#{friend1.name}" converter="requestFriendConverter"  itemValue="#{friend1}"  forceSelection="true"  requiredMessage="*  Please enter task owner's name">
+  
+ <p:ajax event="blur"  onstart="rc10()"  />
+         <p:column>
+             <h:outputText value="#{friend1.name}" />
+         </p:column>                           
+ 
+ </p:autoComplete>
+ <h:message for="user10"  style="color:red;"/>
+</div>
+ 
+
+<div class="col-sm-2"> 
+<p:calendar  value="#{createrequest.completiondate10}" p:placeholder="DD-MM-YYYY" 
+             mindate="#{createrequest.endDate}"  style=" border: 0;"  pattern="dd-MM-yyyy" mask="true" />
+
+ </div> 
+
+
+</div>
+
+<p:remoteCommand name="rc10"   process="@this,title10,user10" update="gridme" actionListener="#{createrequest.handleKeyEvent}" />
+
+
+
+
+
+ <br></br>
+
+
+<p:hotkey bind="ctrl+s" actionListener="#{createrequest.quicksubmit()}"/>
+<div class=" row form-group ">
+ <div class="col-sm-3 .col-sm-offset-3"></div>
+<div class="col-sm-3">
+<h:commandButton action="#{createrequest.quicksubmit()}" value="S&#818;ubmit" style="text-decoration:none; color:#fff;" class="btn fontsize btn-success btn-block">
+</h:commandButton>
+</div>
+<div class="col-sm-3"><h:link value="Back to Request List" style="text-decoration:none; color:#fff;" outcome="request"  class="btn fontsize btn-primary btn-block"/></div>
+
+</div>
+
+
+
+
+   </div><!-- end of container -->
+   
+  
+  
+</h:form>
+</div>
+     
+     
+   <br></br>    
+   
+
+   
+
+     <br></br>
+</h:body>
+
+
+</html>

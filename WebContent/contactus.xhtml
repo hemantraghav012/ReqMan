@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Frameset//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-frameset.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+ xmlns:ui="http://java.sun.com/jsf/facelets" 
+ xmlns:f="http://java.sun.com/jsf/core"
+ xmlns:p="http://primefaces.org/ui"
+ xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+ xmlns:h="http://java.sun.com/jsf/html">
+ 
+ <h:head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<link rel="stylesheet" href="resource/css/bootstrap.css"/>
+<link rel="stylesheet" href="resource/mystyle/home.css"/>
+
+<link rel="stylesheet" href="resource/mystyle/register.css"/>
+<link rel="stylesheet" href="resource/mystyle/button.css"/>
+<script type="text/javascript" src="resource/js/bootstrap.js"/>
+<script type="text/javascript" src="resource/js/jquery.js"/>
+
+<title>Contact Us</title>
+</h:head> 
+<h:body style="background-coloe:#A9A9A9">
+  
+            <div id="indexheader">
+	<ui:insert name="indexheader">
+		<ui:include src="indexheader.xhtml" />
+	</ui:insert>
+</div>
+       
+      <!-- -end of header --> 
+<br></br><br></br><br></br><br></br>
+<div class="container" >
+<div class="row" >
+
+<div class="col-sm-6" style="background-color:#f0f0f5; padding:15px; ">
+
+
+
+<h1 style="text-align:center; font-weight: bold;">Contact Us</h1>
+
+<h4 style="text-align:center;">If you have any questions or suggestions</h4>
+<h4 style="text-align:center;">please provide us your feedback in the form below</h4>
+<h:form>
+<br></br>
+
+<div class="row form-group">
+<!--Enter User First Name -->
+
+<div class=" col-sm-12">
+<h:inputText value="#{register.firstname}"  a:placeholder="First Name" class="form-control" id="firstname"
+ required="true" requiredMessage="* Please Enter Your First Name">
+ </h:inputText>
+ <h:message for="firstname"  style="color:red;margin:8px;"/> 
+<!--Enter User First Name -->
+</div>
+</div>
+<br></br>
+
+
+<div class="row form-group">
+<!--Enter User Email -->
+
+<div class=" col-sm-12">
+ <h:inputText value="#{register.emailid}" class="form-control" a:placeholder="Email Id" id="emailid" required="true" requiredMessage="* Please enter your Email Id" validatorMessage="Invalid Email Format">
+ 
+ <!--Email Validation -->
+  <f:validateRegex	pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+  </h:inputText>
+ <h:message for="emailid"  style="color:red;margin:8px;"/> 
+<!--End User Email -->
+</div>
+</div>
+
+<br></br>
+ <div class=" row form-group " >
+ 
+<div class=" col-sm-12"><h:inputTextarea id="address" value="#{createrequest.description}"  a:placeholder="Add your message"
+ cols="12" rows="10" class="  form-control" />
+ <h:message for="address"  style="color:red;"/>
+ </div>
+</div> 
+
+<br></br>
+ <div class="row form-group" >
+
+ <!--submit button -->
+  <div class=" col-sm-3"></div>
+ <div class=" col-sm-6">
+  <h:commandButton  action="#{register.submit()}" value="Sign up" class="btn fontsize btn-success btn-block">
+</h:commandButton>
+ <!--After Submit Call Submit() method in the register class in the bean package -->
+  </div>
+   <div class=" col-sm-3"></div>
+</div>
+
+</h:form>
+</div>
+<div class="col-sm-1"></div>
+<div class="col-sm-5" >
+<img   src="resource/image/contact-us.jpg"  class="img-responsive " alt="collabor8" style="width:100%; height:550px;"></img> 
+</div>
+
+
+</div>
+</div>
+
+
+
+
+
+</h:body>
+</html>

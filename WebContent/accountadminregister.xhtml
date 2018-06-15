@@ -1,0 +1,213 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+ xmlns:ui="http://java.sun.com/jsf/facelets" 
+  xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+ 	xmlns:h="http://java.sun.com/jsf/html">
+<h:head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<link rel="stylesheet" href="resource/css/bootstrap.css"/>
+<link rel="stylesheet" href="resource/mystyle/home.css"/>
+<link rel="stylesheet" href="resource/mystyle/createcategory.css"/>
+  <link rel="stylesheet" href="resource/mystyle/button.css"/>
+<script type="text/javascript" src="resource/js/bootstrap.js"/>
+<script type="text/javascript" src="resource/js/jquery.js"/>
+ <style type="text/css">
+        .ui-growl {
+            
+            top:60px;
+            Right:20px;
+            width:301px;
+          
+        
+        }
+          </style>
+
+<title>Organization Admin Sign Up</title>
+
+</h:head>
+
+<h:body >
+
+ <!-- -Start header Section --> 
+ <div id="indexheader">
+	<ui:insert name="indexheader">
+	<ui:include src="indexheader.xhtml" />
+	</ui:insert>
+</div>       
+ <!-- -end of header --> 
+  
+
+ <!-- Start page content -->  
+<div class="container registerfield" style="margin-top:1.5cm;">
+<div class="row">
+
+ <!-- Set Image --> 
+<div class=" col-sm-6">
+<h3 style="text-align:center;"> Start your free 30-day trial.</h3>
+
+<h3 style="text-align:center;">Fully functional. No credit card required.</h3> 
+<br></br>
+<img   src="resource/image/orgadmin.jpeg"  class="img-responsive " alt="collabor8" style="width:100%;"></img>     
+</div>
+ <!--End of Image Section --> 
+ 
+ 
+ <!--Set information --> 
+<div class=" col-sm-6">
+
+<h3 style="text-align:center;"> Create an Organization account</h3>
+
+<div class="registerfieldforinputboxlen" >
+
+   <p:growl id="message" />
+ <!--User Information Form Start --> 
+ <h:form enctype="multipart/form-data" class="form-horizontal">
+    <p:panel id="panel" style="border:0px;">
+       <p:focus context="panel"/>
+
+
+       
+         <br></br> 
+ <div class="row form-group">
+       <div class=" col-sm-3"></div>
+      <div class=" col-sm-9">
+<input type="radio"  onclick="var target = event.target || event.srcElement; window.location.href = target.value" value="register.xhtml" ><h:outputLabel>&nbsp;Personal Account</h:outputLabel></input> &nbsp;&nbsp;&nbsp;
+  <input type="radio" onclick="var target = event.target || event.srcElement; window.location.href = target.value"  value="accountadminregister.xhtml" checked="checked"><h:outputLabel>&nbsp;Organization Account</h:outputLabel></input>
+
+    </div>
+</div>
+<br></br>
+
+<div class="row form-group">
+<!--Enter User Email -->
+<div class=" col-sm-3 control-label">
+<h:outputLabel>Email Id:</h:outputLabel>
+</div>
+<div class=" col-sm-8">
+ <h:inputText value="#{accountadminregister.emailid}" class="form-control" a:placeholder="Email Id" id="emailid" required="true" requiredMessage="* Please enter your Email Id" validatorMessage="Invalid Email Format">
+ 
+ <!--Email Validation -->
+  <f:validateRegex	pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+<p:ajax event="blur" update="message" listener="#{accountadminregister.checkdomain}" />
+  </h:inputText>
+ <h:message for="emailid"  style="color:red;margin:8px;"/> 
+<!--End User Email -->
+</div>
+</div>
+<br></br>
+
+<div class="row form-group">
+<!--Enter User First Name -->
+<div class=" col-sm-3 control-label">
+<h:outputLabel>Organization Name:</h:outputLabel>
+</div>
+<div class=" col-sm-8">
+<h:inputText value="#{accountadminregister.organizationname}"  a:placeholder="Organization Name" class="form-control" id="organizationkey"
+ required="true" requiredMessage="* Please Enter Your Organization Name" minlength="4" validatorMessage="Please enter minimum 4 characters">
+  <f:validateLength minimum = "5"  />
+ </h:inputText>
+  <span style="color:black;"> &nbsp;&nbsp;(Please enter minimum 4 characters)</span>
+ <h:message for="organizationkey"  style="color:red;margin:8px;"/> 
+<!--Enter User First Name -->
+</div>
+</div>
+<br></br>
+
+<div class="row form-group">
+<!--Enter User First Name -->
+<div class=" col-sm-3 control-label">
+<h:outputLabel>First Name:</h:outputLabel>
+</div>
+<div class=" col-sm-8">
+<h:inputText value="#{accountadminregister.firstname}"  a:placeholder="First Name" class="form-control" id="firstname"
+ required="true" requiredMessage="* Please Enter Your First Name">
+ </h:inputText>
+ <h:message for="firstname"  style="color:red;margin:8px;"/> 
+<!--Enter User First Name -->
+</div>
+</div>
+<br></br>
+<div class="row form-group">
+<!--Enter User Last Name -->
+<div class=" col-sm-3 control-label">
+<h:outputLabel>Last Name:</h:outputLabel>
+</div>
+<div class=" col-sm-8">
+<h:inputText value="#{accountadminregister.lastname}"  a:placeholder="Last Name" class="form-control" id="lastname" 
+required="true" requiredMessage="* Please Enter Your Last Name">
+</h:inputText>
+ <h:message for="lastname"  style="color:red;margin:8px;"/> 
+<!--Enter User Last Name -->
+</div>
+</div>
+<br></br>
+<div class="row form-group">
+<!--Enter User Short Name -->
+<div class=" col-sm-3 control-label">
+<h:outputLabel>Short Name:</h:outputLabel>
+</div>
+<div class=" col-sm-8">
+<h:inputText value="#{accountadminregister.shortname}" a:placeholder="Short Name"  class="form-control" id="shortname"
+ required="true" requiredMessage="* Please Enter Your Short Name"  maxlength="4">
+ </h:inputText>
+ <span style="color:red;">Please enter upto 4 characters</span>
+ <h:message for="shortname"  style="color:red;margin:8px;"/> 
+<!--Enter UserShort Name -->
+ </div>
+ </div>
+ <br></br>
+ <div class="row form-group" style="margin-top:-18px;line-height:15px;">
+ <div class="col-sm-3 .col-sm-offset-3"></div>
+ <!--submit button -->
+ <div class=" col-sm-8" >
+ <p style="font-size:14px;" >By clicking on &quot;Sign up&quot;, You agree to our 
+ <a href="termsandconditions.xhtml" style="color:blue;">Terms &amp; Conditions and Policies.</a>
+ </p>
+ </div>
+ </div>
+ 
+
+ 
+ <div class="row form-group" >
+ <div class="col-sm-3 .col-sm-offset-3"></div>
+ <!--submit button -->
+ <div class=" col-sm-8">
+ 
+  <h:commandButton  action="#{accountadminregister.submit()}" value="Sign up" class="btn fontsize btn-success btn-block">
+</h:commandButton>
+ <!--After Submit Call Submit() method in the register class in the bean package -->
+  </div>
+</div>
+<br></br>
+</p:panel>
+</h:form>
+ <!--End user Form-->
+ 
+</div>
+<!--End of register field length div--> 
+
+</div>
+ <!--End of Set information --> 
+ 
+</div>
+ <!--end of row --> 
+ 
+</div>
+<!-- End page content --> 
+
+ <!--Footer Section Start --> 
+  <div id="footer">
+	<ui:insert name="footer">
+	<ui:include src="footerpage.xhtml" />
+	</ui:insert>
+</div>       
+<!-- -end of footer --> 
+
+</h:body>
+</html>

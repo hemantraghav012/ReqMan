@@ -17,7 +17,16 @@
   <link rel="stylesheet" href="resource/mystyle/button.css"/>
 <script type="text/javascript" src="resource/js/bootstrap.js"/>
 <script type="text/javascript" src="resource/js/jquery.js"/>
-
+ <style type="text/css">
+        .ui-growl {
+            
+            top:60px;
+            Right:20px;
+            width:301px;
+          
+        
+        }
+          </style>
 	<title>Create New Request </title>
 </h:head>
 <h:body>
@@ -33,15 +42,20 @@
 	
         <div class="ui-fluid">
             <p:panelGrid columns="1"  layout="grid" styleClass="ui-panelgrid-blank ui-fluid" style=" border: 0;">
-               
-     
+            
+                  <p:growl id="message" sticky="false" />
        <h:form enctype="multipart/form-data" class="form-horizontal">
        <p:panel id="panel" style="border:0px;">
        <p:focus context="panel"/>
       <div class="container fixedcontainerrequset" style=" margin-top:2cm; ">
-  <h2 style=" text-align: center;">    Create New Request </h2><br></br>
+  <h2 style=" text-align: center;">    Create New Request </h2>
       
-<h:messages style = "color:red;margin:8px;" />
+<div class=" row form-group ">
+ <div class="col-sm-3 .col-sm-offset-3"></div>
+<div class="col-sm-4"><h:commandLink action="#{createrequest.save()}" value="S&#818;ubmit" style="text-decoration:none; color:#fff;" class="btn fontsize btn-success btn-block"></h:commandLink></div>
+<div class="col-sm-4"><h:link value="Back to Request List" style="text-decoration:none; color:#fff;" outcome="request"  class="btn fontsize btn-primary btn-block"/></div>
+
+</div>
  <div class=" row form-group ">
  <div class="col-sm-3 control-label"><h:outputLabel><span style="color:red;">* </span> Title:</h:outputLabel></div>
 <div class=" col-sm-8"> <h:inputText value="#{createrequest.title}"   class="  form-control"  id="title" required="true" requiredMessage="* Please enter Title" />
@@ -57,31 +71,44 @@
  </div>
 </div> 
  
+ 
 
-
+ 
+ 
   <div class="row form-group ">
  <div class="col-sm-3 control-label">
- <h:outputLabel for="user">Team Member(s):&nbsp;
+ <h:outputLabel for="user"><span style="color:red;">* </span>Team Member(s):&nbsp;
  <span   data-toggle="tooltip" title="select one or more team members. Even your own name for To-Do tasks! Use this easy to select Auto-complete function." 
  style="margin-top:2px;" class="pull-right glyphicon glyphicon-info-sign"></span>
- </h:outputLabel> 
+ </h:outputLabel>  
  </div>
-<div class=" col-sm-8">
- <p:autoComplete id="user" multiple="true" value="#{createrequest.selectedUsers}" completeMethod="#{createrequest.getUserDetails}" 
-   var="friend1" itemLabel="#{friend1.name}" converter="requestFriendConverter"  itemValue="#{friend1}"  forceSelection="true" >
-  
- 		
-
+<div class="col-sm-8">
+ 
+ <p:autoComplete id="teammember" multiple="true" value="#{createrequest.selectedUsers}" completeMethod="#{createrequest.getUserDetails}" 
+   var="friend1" itemLabel="#{friend1.name}" converter="requestFriendConverter"    itemValue="#{friend1}"  forceSelection="true" required="true" requiredMessage=" Please enter task owner's name" >
+  <p:ajax event="blur"  onstart="rc()"  />
          <p:column>
-             <h:outputText value="#{friend1.name}" />
+             <h:outputText value="#{friend1.name}" />              
          </p:column>                           
  
-
- 
  </p:autoComplete>
- <h:message for="onlyone"  style="color:red;"/>
-</div>
+  <h:message for="teammember"  style="color:red;"/>
  </div>
+  <div class="col-sm-1"  style="margin-top:4px; ">
+         <h:outputLabel onclick="PF('dlg1').show();" id="friendmaster" style="margin-left:-75px;">
+        <span class="glyphicon" style="color:green;">&#x2b;</span>
+        </h:outputLabel>
+        
+        <p:tooltip  for="friendmaster" value="Please click here to add team member.  Information on this screen will be deleted and need to be entered again." trackMouse="true" />
+ 
+        </div>
+  
+ 
+ </div>
+
+<p:remoteCommand name="rc"   process="@this,title,teammember" update="message" actionListener="#{createrequest.handleKeyEvent}" />
+
+
  
 <div class=" row form-group ">
  <div class="col-sm-3 control-label">
@@ -94,11 +121,14 @@
  </h:outputLabel>
  </div>
 <div class="col-sm-3"> 
+<div class="row">
+<div class="col-sm-11"> 
 <p:calendar id="completiondate" value="#{createrequest.completiondate}" p:placeholder="DD-MM-YYYY" 
              mindate="#{createrequest.endDate}"  style=" border: 0;"  pattern="dd-MM-yyyy" mask="true" />
 <h:message for="completiondate"  style="color:red;"/>
  </div> 
- 
+ </div>
+ </div>
  <div class="col-sm-2 control-label">
  <h:outputLabel>Category:&nbsp;
  <span   data-toggle="tooltip" title="Categorize your requests for better monitoring and reporting. E.g. High / Medium / Low priority." 
@@ -111,8 +141,16 @@
             <f:selectItems value="#{categorybean.categoryList1}"  var="category" itemLabel="#{category.name}"
                           itemValue="#{category.userCategoryId}"/>      
         </p:selectOneMenu>
- <h:message for="category"  style="color:red;"/>
-</div>
+        <h:message for="category"  style="color:red;"/>
+        </div>
+        
+        <div class=" col-sm-1" style="margin-top:4px; ">
+         <h:outputLabel onclick="PF('dlg2').show();" id="categorymaster" style="margin-left:-75px;">
+        <span class="glyphicon" style="color:green;">&#x2b;</span>
+        </h:outputLabel>
+         <p:tooltip  for="categorymaster" value="Please click here to add category.  Information on this screen will be deleted and need to be entered again." trackMouse="true" />
+        </div>
+
 </div>
 
  <div class=" row form-group ">
@@ -120,15 +158,28 @@
 <h:outputLabel>Project:&nbsp;
 <span   data-toggle="tooltip" title="Use Projects to assign your requests for better project visibility , collaboration, reporting and management. E.g. New product launch , New software etc." 
 style="margin-top:2px;" class="pull-right glyphicon glyphicon-info-sign"></span>
-</h:outputLabel>
+</h:outputLabel> 
 </div>
- <div class=" col-sm-3"> 
+ <div class=" col-sm-3">
+ <div class="row">
+ <div class=" col-sm-11">
  <p:selectOneMenu id="project" value="#{createrequest.userproject}" style=" border: 0;" >
            <f:selectItem itemLabel="Select" itemValue="" />
            <f:selectItems value="#{projectbean.projectList1}" var="project" itemLabel="#{project.name}" 
                           itemValue="#{project.userProjectId}"/>
-        </p:selectOneMenu>
+        </p:selectOneMenu> 
+        
+        
+        </div>
+        <div class=" col-sm-1" style="margin-left:-20px;margin-top:4px; ">
+         <h:outputLabel onclick="PF('dlg3').show();" id="projectmaster" >
+        <span class="glyphicon" style="color:green;">&#x2b;</span>
+        </h:outputLabel>
+         <p:tooltip  for="projectmaster" value="Please click here to add project.  Information on this screen will be deleted and need to be entered again." trackMouse="true" />
+        </div>
+        </div>
  <h:message for="project"  style="color:red;"/>
+
 </div>
  
  <div class="col-sm-2 control-label">
@@ -138,31 +189,59 @@ style="margin-top:2px;" class="pull-right glyphicon glyphicon-info-sign"></span>
  </h:outputLabel>
  </div>
  <div class=" col-sm-3">
+
  <p:selectOneMenu id="requesttype" value="#{createrequest.userrequesttype}"  style=" border: 0;" >
             <f:selectItem itemLabel="Select" itemValue="" />
             <f:selectItems value="#{requesttypebean.requesttypeList1}" var="requesttype" itemLabel="#{requesttype.name}"
                            itemValue="#{requesttype.userRequesttypeId}"/>
  </p:selectOneMenu>
+ 
  <h:message for="requesttype"  style="color:red;"/>
-</div>
+ </div>
+        <div class=" col-sm-1" style="margin-top:4px; ">
+        <h:outputLabel onclick="PF('dlg4').show();" id="typemaster" style="margin-left:-75px;" >
+        <span class="glyphicon" style="color:green;">&#x2b;</span>
+        </h:outputLabel>
+         <p:tooltip  for="typemaster" value="Please click here to add type.  Information on this screen will be deleted and need to be entered again." trackMouse="true" />
+        </div>
+
 
 </div>
  <br></br>
 <div class=" row form-group ">
-<div class="col-sm-3 control-label">
-<h:outputLabel style="white-space:nowrap;" id ="attach" >Attach File :</h:outputLabel></div>
-<div class="col-sm-7">
+<div class="col-sm-3 control-label" style="margin-top:-6px;">
+<h:outputLabel style="white-space:nowrap; " id ="attach" >Attach File:&nbsp;
+ <span   data-toggle="tooltip" title=" Attachment size should be less than 20MB." 
+ style="margin-top:2px;" class="pull-right glyphicon glyphicon-info-sign"></span></h:outputLabel></div>
+<div class="col-sm-3">
 
- <p:fileUpload id="photo" value="#{createrequest.attachment}" mode="simple" ></p:fileUpload>
-   <h:message for="photo"  style="color:red;"/>
+ <p:fileUpload id="photo" validator="#{createrequest.validateFile}" multiple="false"   value="#{createrequest.attachment}"  mode="simple"/>
+
 </div>
+<div class="col-sm-2 control-label">
+ <h:outputLabel style="white-space:nowrap;margin-top:-5px;">Recording:&nbsp;
+
+ </h:outputLabel>
+ </div>
+<div class="col-sm-3 ">
+
+ <p:commandButton action="#{createrequest.soundRecode()}" value="Record Voice Message" />
+ <h:message for="soundrecording"  style="color:red;"/>
+</div>
+
+
+
+
+
+
+
 </div>
 
 
 
 <div class="row">
 <div class="col-sm-3">
-<a type="button"  data-toggle="collapse" data-target=".friend" ><span style="color:blue; text-decoration:underline;">Advance Options...</span>
+<a type="button"  data-toggle="collapse" data-target=".friend" ><span style="color:blue; cursor: pointer;text-decoration:underline;">Advance Options...</span>
 </a>
 </div>
 </div>
@@ -236,10 +315,10 @@ style="margin-top:2px;" class="pull-right glyphicon glyphicon-info-sign"></span>
  <br></br>
 
 
-
+<p:hotkey bind="ctrl+s" actionListener="#{createrequest.save()}"/>
 <div class=" row form-group ">
  <div class="col-sm-3 .col-sm-offset-3"></div>
-<div class="col-sm-4"><h:commandLink action="#{createrequest.save()}" value="Submit" style="text-decoration:none; color:#fff;" class="btn fontsize btn-success btn-block"></h:commandLink></div>
+<div class="col-sm-4"><h:commandLink action="#{createrequest.save()}" value="S&#818;ubmit" style="text-decoration:none; color:#fff;" class="btn fontsize btn-success btn-block"></h:commandLink></div>
 <div class="col-sm-4"><h:link value="Back to Request List" style="text-decoration:none; color:#fff;" outcome="request"  class="btn fontsize btn-primary btn-block"/></div>
 
 </div>
@@ -272,7 +351,571 @@ Classify and Prioritize tasks.
   Submit Improvement ideas.</marquee>
    
 </div>
+
+
+
+<!-- Create request page end   -->
+
+
+
+
+
+
+
    
+<p:dialog  widgetVar="dlg2" modal="true" height="500" width="800">
+     <div class="row">
+  
+  
+      <div class="col-sm-12  addteammember" >
+
+  <h:form class="form-horizontal">
+
+  <h2 style="  margin-bottom:30px; margin-top:0px; text-align:center" > Create New Category</h2>
+
+
+
+ <div class=" row form-group ">
+  <div class="col-sm-3 control-label"><h:outputLabel  >Category Name :</h:outputLabel></div>
+<div class=" col-sm-7"> <h:inputText value="#{categorybean.categoryName}" maxlength="20" class="  form-control"  id="categoryname"  required="true" requiredMessage="* Please enter category name"/><span style="color:red;">Please enter upto 20 characters.</span></div>
+
+</div>
+
+
+ <div class=" row form-group ">
+ <div class="col-sm-3 .col-sm-offset-2"></div>
+ <div class="col-sm-7 "><h:commandButton action="#{categorybean.saveCategory}" value="Submit" class="btn fontsize btn-success btn-block"></h:commandButton></div>
+
+</div>
+
+
+</h:form>
+
+  
+ 
+            <hr ></hr>
+ <h:form id="categoryForm">
+<p:growl id="messages" />
+
+      <div  class="gridmargin">
+ 		<h:inputHidden id="categoryId" value="#{categorybean.categoryId}" ></h:inputHidden>
+      	(Only active categories will be available for transaction)
+<div class="ui-fluid">
+
+	     <p:dataTable id="categoryTable" var="category" value="#{categorybean.categoryList}" editable="true" editMode="cell" 
+	     reflow="true" scrollable="true" scrollHeight="250"   sortBy="#{category.status},#{category.name}" 
+	     class="table table-striped table-hover table-bordered" style="margin-top:20px;" 
+	       resizableColumns="true" paginator="true" rows="25" rowsPerPageTemplate="25,35,50" 	
+	       paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" 
+	      filteredValue="#{categorybean.filteredCategoryList}"  widgetVar="categoryListTable">
+	
+	     
+	     <f:attribute name="updateCategoryId" value="#{category.userCategoryId}" />
+	      <p:ajax event="cellEdit" listener="#{categorybean.onCellEdit}" update=":categoryForm:messages" />
+ 
+	      <f:facet name="header">
+	    <div class="row" style="margin: -3px;">
+	  <div class="col-sm-4" style="margin-left: -17px" >
+	   <h:inputText id="globalFilter" onkeyup="PF('categoryListTable').filter() "  a:placeholder="Search on any field (s) "   class="form-control"  />
+		</div>
+			
+			<div class="col-sm-6">
+      		<span style=";font-size:22px;text-align:center;">Manage Category List</span>
+      	</div> 
+						
+			<div class="col-sm-2 pull-right" style="margin-right: -17px">
+			
+			 <h:commandLink id="excel">
+	     <img  src="resource/image/Excel.png" class="img-responsive pull-right " alt="Excel" style="width:35px;"></img>
+	        <p:dataExporter type="xls" target="categoryTable" fileName="category" postProcessor="#{categorybean.postProcessXLS}" />
+	    </h:commandLink>
+			
+			 <h:commandLink id="pdf" >
+	     <img  src="resource/image/pdf.png" class="img-responsive pull-right" alt="pdf" style="width:35px;"></img>
+	        <p:dataExporter type="pdf" target="categoryTable" fileName="category" preProcessor="#{categorybean.preProcessPDF}"/>
+	    </h:commandLink>		
+			</div>
+			
+			</div>
+		</f:facet> 
+	     
+	     
+	     
+	     
+	 
+			<p:column filterBy="#{category.name}" sortBy="#{category.name}" headerText="Category Name"  
+			filterStyle="display:none;" filterMatchMode="contains"   style="padding: 0px 0px 0px 3px;">
+				<f:facet name="header">
+					<h:outputText value="Category Name"  />
+				</f:facet>
+				<h:outputText value="#{category.name}" />
+			</p:column>
+			
+			 <p:column headerText="Status" filterBy="#{category.status}" sortBy="#{category.status}"  filterStyle="display:none;" filterMatchMode="contains"  style="width:125px;padding: 0px 0px 0px 3px;cursor: pointer; ">
+              <p:cellEditor>
+                 <f:facet name="output"><h:outputText value="#{category.status}" /></f:facet>
+               <f:facet name="input">
+                   <p:selectOneMenu value="#{category.status}" onclick='setCategoryHiddenValue(#{category.userCategoryId})' style="width:125px">
+                       <f:selectItem   itemLabel="Active" itemValue="Active" />
+                        <f:selectItem  itemLabel="In-Active" itemValue="In-Active" />
+                   </p:selectOneMenu>
+               </f:facet>    </p:cellEditor>
+          </p:column>
+	       
+	        
+	        
+	       
+	    </p:dataTable>
+	    
+	    <p:contextMenu for="categoryTable" widgetVar="cMenu">   
+       <p:menuitem value="Edit Cell" icon="ui-icon-search" onclick="PF('categoryListTable').showCellEditor();return false;"/>  
+       <p:menuitem value="Hide Menu" icon="ui-icon-close" onclick="PF('cMenu').hide()"/>  
+   </p:contextMenu> 
+	</div>
+
+
+</div><!-- end oc container -->
+      
+      </h:form>
+      
+      
+      </div>
+      
+      
+    
+
+       </div>
+</p:dialog>
+
+
+<p:dialog  widgetVar="dlg3" modal="true" height="500" width="800">
+ <div class="row">
+  
+  
+      <div class="col-sm-12  addteammember" >
+
+  <h:form class="form-horizontal">
+
+  <h2 style="  margin-bottom:30px; margin-top:0px; text-align:center" > Create New Project</h2>
+
+
+
+ <div class=" row form-group ">
+<div class="col-sm-3 control-label"><h:outputLabel  >Project Name:</h:outputLabel></div>
+<div class=" col-sm-7"> <h:inputText value="#{projectbean.projectName}" maxlength="20" class="  form-control"  id="projectname"  required="true" requiredMessage="* Please Enter Project Name"/><span style="color:red;">Please enter upto 20 characters.</span></div>
+
+</div><br></br>
+
+<div class=" row form-group ">
+ <div class="col-sm-3 control-label" style="padding-top:0px;"><h:outputLabel  >Project Access: </h:outputLabel></div>
+<div class=" col-sm-7"> 
+<h:selectOneRadio value = "#{projectbean.projectaccess}" id="projectaccess" required="true"    requiredMessage="* Please enter projectaccess"> 
+   <f:selectItem itemValue = "true" itemLabel = "&nbsp;&nbsp;Task Owner Only &nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;" />
+     
+    <f:selectItem itemValue = "false" itemLabel = "&nbsp;&nbsp;All Project Team"  />   <span   data-toggle="tooltip" title="Select project Access to Task Owner Only or All Project Team"  class="glyphicon glyphicon-question-sign pull-right" style="color: blue; font-size:18px" ></span>
+</h:selectOneRadio> </div>
+ 
+ <h:message for="projectaccess"  style="color:red;margin:8px;"/> 
+ </div>
+ <div class=" row form-group ">
+ <div class="col-sm-3 .col-sm-offset-2"></div>
+ <div class="col-sm-7 "><h:commandButton action="#{projectbean.saveProject}" value="Submit" class="btn fontsize btn-success btn-block"></h:commandButton></div>
+
+</div>
+
+
+</h:form>
+
+  
+ 
+            <hr ></hr>
+  <h:form id="projectForm">
+<p:growl id="messages" />
+
+      <div  class="gridmargin">
+ 		<h:inputHidden id="projectId" value="#{projectbean.projectId}" ></h:inputHidden>
+    	(Only active projects will be available for transaction)
+<div class="ui-fluid">
+
+	     <p:dataTable id="projectTable" var="project" value="#{projectbean.projectList}" editable="true" editMode="cell" 
+	     reflow="true" scrollable="true" scrollHeight="250" sortBy="#{project.status},#{project.name}"
+	      class="table table-striped table-hover table-bordered" style="margin-top:20px" 
+	         resizableColumns="true"  rows="25" rowsPerPageTemplate="25,35,50" 	 paginator="true" 
+	       paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" 
+	    
+	       filteredValue="#{projectbean.filteredProjectList}"     widgetVar="projectListTable">
+	      
+	       <f:attribute name="updateProjectId" value="#{project.userProjectId}" />
+	      <p:ajax event="cellEdit" listener="#{projectbean.onCellEdit}" update=":projectForm:messages" />
+ 
+ 
+ 
+  <f:facet name="header">
+	    <div class="row" style="margin: -3px;">
+	  <div class="col-sm-4" style="margin-left: -17px" >
+	 <h:inputText id="globalFilter" onkeyup="PF('projectListTable').filter()" a:placeholder="Search on any field (s) " class="form-control "/>
+			</div>
+				
+				<div class="col-sm-6">
+      		<span style=";font-size:22px;text-align:center;">Manage Project List</span>
+      	</div>  
+						
+			<div class="col-sm-2 pull-right" style="margin-right: -17px">
+			
+			 <h:commandLink id="excel">
+	     <img  src="resource/image/Excel.png" class="img-responsive pull-right " alt="Excel" style="width:35px;"></img>
+	        <p:dataExporter type="xls"  target="projectTable" fileName="project"   postProcessor="#{projectbean.postProcessXLS}" />
+	    </h:commandLink>
+			
+			 <h:commandLink id="pdf" >
+	     <img  src="resource/image/pdf.png" class="img-responsive pull-right" alt="pdf" style="width:35px;"></img>
+	        <p:dataExporter type="pdf" target="projectTable" fileName="project"  preProcessor="#{projectbean.preProcessPDF}" />
+	    </h:commandLink>		
+			</div>
+			
+			</div>
+		</f:facet> 
+ 
+			  <p:column headerText="Project Name" sortBy="#{project.name}" filterBy="#{project.name}" filterStyle="display:none;" filterMatchMode="contains" style="padding: 0px 0px 0px 3px;">
+	        <f:facet name="header">
+					<h:outputText value="Project Name" />
+				</f:facet>
+	        
+	            <h:outputText value="#{project.name}" />
+	        </p:column>
+			
+	 
+	 
+	 
+	 <p:column headerText="Status" filterBy="#{project.status}" sortBy="#{project.status}"  filterStyle="display:none;" filterMatchMode="contains"  style="width:100px;padding: 0px 0px 0px 3px;text-align:left; cursor: pointer;">
+              <p:cellEditor>
+                 <f:facet name="output"><h:outputText value="#{project.status}" /></f:facet>
+               <f:facet name="input">
+                   <p:selectOneMenu value="#{project.status}" onclick='setProjectHiddenValue(#{project.userProjectId})' style="width:100px">
+                       <f:selectItem   itemLabel="Active" itemValue="Active" />
+                        <f:selectItem  itemLabel="In-Active" itemValue="In-Active" />
+                   </p:selectOneMenu>
+               </f:facet>    </p:cellEditor>
+          </p:column>
+	      
+	 <p:column headerText="Project Access" filterBy="#{project.projectaccess}" sortBy="#{project.projectaccess}"  filterStyle="display:none;" filterMatchMode="contains"  style="width:190px;padding: 0px 0px 0px 3px; cursor: pointer;">
+              <p:cellEditor>
+                 <f:facet name="output"><h:outputText value="#{project.projectaccess}" /></f:facet>
+               <f:facet name="input">
+                   <p:selectOneMenu value="#{project.projectaccess}" onclick='setProjectHiddenValue(#{project.userProjectId})' style="width:190px">
+                       <f:selectItem   itemLabel="Task Owner Only" itemValue="Task Owner Only" />
+                        <f:selectItem  itemLabel="All Project Team" itemValue="All Project Team" />
+                   </p:selectOneMenu>
+               </f:facet>    </p:cellEditor>
+          </p:column>
+	        
+	        
+	      
+	       
+	    </p:dataTable>
+	    <p:contextMenu for="projectTable" widgetVar="cMenu">   
+       <p:menuitem value="Edit Cell" icon="ui-icon-search" onclick="PF('projectListTable').showCellEditor();return false;"/>  
+       <p:menuitem value="Hide Menu" icon="ui-icon-close" onclick="PF('cMenu').hide()"/>  
+   </p:contextMenu> 
+	</div>
+
+
+
+</div><!-- end oc container -->
+      
+      </h:form>
+      
+      </div>
+      
+      
+       
+
+       </div>
+
+</p:dialog>
+
+
+
+<p:dialog  widgetVar="dlg4" modal="true" height="500" width="800">
+
+ <div class="row">
+  
+  
+      <div class="col-sm-12  addteammember" >
+
+
+  <h:form class="form-horizontal">
+ 
+  <h2 style="  margin-bottom:30px; margin-top:0px; text-align:center" >Create New Type</h2>
+
+
+
+ <div class=" row form-group ">
+<div class="col-sm-3 control-label"><h:outputLabel  >Type Name:</h:outputLabel></div>
+<div class=" col-sm-7"> <h:inputText value="#{requesttypebean.requesttypeName}" maxlength="20" class="  form-control"  id="requesttypename"  required="true" requiredMessage="* Please enter user type "/><span style="color:red;">Please enter upto 20 characters.</span></div>
+ <h:message for="requesttypename"  style="color:red;margin:8px;"/> 
+</div>
+
+
+ <div class=" row form-group ">
+ <div class="col-sm-3 .col-sm-offset-3"></div>
+ <div class="col-sm-7"><h:commandButton action="#{requesttypebean.saveRequesttype}" value="Submit" class="btn  btn-success btn-block fontsize"></h:commandButton></div>
+
+ 
+</div>
+
+
+</h:form>
+  
+ 
+            <hr ></hr>
+
+
+  <h:form id="requesttypeForm" >
+ <p:growl id="messages" />
+      <div  class="gridmargin">
+ 		<h:inputHidden id="requesttypeId" value="#{requesttypebean.requesttypeId}" ></h:inputHidden>
+   	(Only active types will be available for transaction)
+      
+      	
+
+	<div class="ui-fluid">
+
+
+	     <p:dataTable id="requesttypeTable" var="requesttype" value="#{requesttypebean.requesttypeList}" editable="true" 
+	     editMode="cell" 
+	     reflow="true" scrollable="true" scrollHeight="250" sortBy="#{requesttype.status},#{requesttype.name}"
+	      class="table table-striped table-hover table-bordered" style="margin-top:20px"
+	         resizableColumns="true"  rows="25" rowsPerPageTemplate="25,35,50" 	  paginator="true" 
+	       paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" 
+	    
+	      filteredValue="#{requesttypebean.filteredRequesttypeList}"     widgetVar="requesttypeListTable">
+	      
+	       <f:attribute name="updateRequesttypeId" value="#{requesttype.userRequesttypeId}" />
+	      <p:ajax event="cellEdit" listener="#{requesttypebean.onCellEdit}" update=":requesttypeForm:messages" />
+ 
+	     
+	      <f:facet name="header">
+	    <div class="row" style="margin: -3px;">
+	  <div class="col-sm-4" style="margin-left: -17px" >
+	  <h:inputText id="globalFilter" onkeyup="PF('requesttypeListTable').filter()" a:placeholder="Search on any field (s) " class="form-control "/>
+		</div>
+				
+				<div class="col-sm-6">
+      		<span style=";font-size:22px;text-align:center;">Manage Type List</span>
+      	</div>  
+						
+			<div class="col-sm-2 pull-right" style="margin-right: -17px">
+			
+			<h:commandLink id="excel">
+	     <img  src="resource/image/Excel.png" class="img-responsive pull-right " alt="Excel" style="width:35px;"></img>
+	        <p:dataExporter type="xls" target="requesttypeTable" fileName="requesttype" postProcessor="#{requesttypebean.postProcessXLS}" />
+	    </h:commandLink>
+			
+			 <h:commandLink id="pdf" >
+	     <img  src="resource/image/pdf.png" class="img-responsive pull-right" alt="pdf" style="width:35px;"></img>
+	        <p:dataExporter type="pdf" target="requesttypeTable" fileName="requesttype"  preProcessor="#{requesttypebean.preProcessPDF}"  />
+	    </h:commandLink>	
+			</div>
+			
+			</div>
+		</f:facet> 
+	     
+	        <p:column headerText="Type Name" sortBy="#{requesttype.name}" filterBy="#{requesttype.name}" filterStyle="display:none;" filterMatchMode="contains" style="padding: 0px 0px 0px 3px;">
+	         <f:facet name="header">
+				<h:outputText value="Type Name" />
+				</f:facet>
+	            <h:outputText value="#{requesttype.name}" />
+	        </p:column>
+	 
+	 
+	  <p:column headerText="Status" filterBy="#{requesttype.status}" sortBy="#{requesttype.status}"  filterStyle="display:none;" filterMatchMode="contains"  style="width:125px;padding: 0px 0px 0px 3px; cursor: pointer;">
+              <p:cellEditor>
+                 <f:facet name="output"><h:outputText value="#{requesttype.status}" /></f:facet>
+               <f:facet name="input">
+                   <p:selectOneMenu value="#{requesttype.status}" onclick='setRequesttypeHiddenValue(#{requesttype.userRequesttypeId})' style="width:125px">
+                       <f:selectItem   itemLabel="Active" itemValue="Active" />
+                        <f:selectItem  itemLabel="In-Active" itemValue="In-Active" />
+                   </p:selectOneMenu>
+               </f:facet>    </p:cellEditor>
+          </p:column>
+	    </p:dataTable>
+	   
+	</div>
+
+	
+
+</div><!-- end oc container -->
+      
+      </h:form>
+      
+      </div>
+      
+      
+       
+
+       </div>
+
+
+</p:dialog>
+
+
+
+<p:dialog  widgetVar="dlg1" modal="true" height="500" width="800">
+
+       
+  <div class="row">
+  
+  
+      <div class="col-sm-12  addteammember" >
+
+  <h:form class="form-horizontal">
+
+  <h2 style="text-align:center;" >Add Team Member
+ <span  style="font-size:15px;" data-toggle="tooltip" title="The team members will be able to manage their own name details." 
+  class=" glyphicon glyphicon-info-sign"></span></h2>
+
+
+<br></br>
+ <div class=" row form-group ">
+ <div class="col-sm-3 control-label"><h:outputLabel  > Email Id:</h:outputLabel></div>
+<div class=" col-sm-7"> <h:inputText value="#{friendbean.frienduser}" class="  form-control" validatorMessage="Invalid email format" id="friendemailid"  a:placeholder="Please Enter Email Id"   required="true" requiredMessage="* Please enter Email id">
+  <f:validateRegex
+		pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+ </h:inputText></div> 
+</div>
+
+
+ <div class=" row form-group ">
+ <div class="col-sm-3 .col-sm-offset-2"></div>
+ <div class="col-sm-7 "><h:commandButton action="#{friendbean.savefriend}" value="Submit" class="btn fontsize btn-success btn-block"></h:commandButton></div>
+
+ 
+</div>
+
+</h:form>
+
+  
+ 
+            <hr></hr>
+
+  <h:form id="friendForm" >
+
+ <p:growl id="messages"/>
+      <div  class="gridmargin">
+ 		<h:inputHidden id="friendId" value="#{friendbean.friendId}" ></h:inputHidden>
+      (Only active team members will be available for transaction)
+	<div class="ui-fluid">
+
+
+	     <p:dataTable id="friendTable" var="friend" value="#{friendbean.friendList}" reflow="true" editable="true" editMode="cell" 
+	     scrollable="true" scrollHeight="250" sortBy="#{friend.status},#{friend.firstname}" 
+	     class="table table-striped table-hover table-bordered" style="margin-top:20px"
+	       resizableColumns="true"  rows="25" rowsPerPageTemplate="25,35,50" 	 paginator="true" 	         
+	      paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" 
+	     filteredValue="#{friendbean.filteredFriendList}"     widgetVar="friendListTable">
+   
+     <f:attribute name="updateFriendId" value="#{friend.userFriendId}" />
+	      <p:ajax event="cellEdit"    listener="#{friendbean.onCellEdit}" update=":friendForm:messages"/>
+ 
+      <f:facet name="header">
+	    <div class="row" style="margin: -3px;">
+	  <div class="col-sm-4" style="margin-left: -17px" >
+	      <h:inputText id="globalFilter" onkeyup="PF('friendListTable').filter()" a:placeholder="Search on any field (s) " class="form-control "/>
+		</div>
+			
+			<div class="col-sm-6">
+      		<span style=";font-size:22px;text-align:center;">Manage Team Member List</span>
+      	</div> 
+						
+			<div class="col-sm-2 pull-right" style="margin-right: -17px">
+			
+			<h:commandLink id="excel">
+	     <img  src="resource/image/Excel.png" class="img-responsive pull-right " alt="Excel" style="width:35px;"></img>
+	        <p:dataExporter type="xls" target="friendTable" fileName="friend" postProcessor="#{friendbean.postProcessXLS}" />
+	    </h:commandLink>
+			
+			 <h:commandLink id="pdf" >
+	     <img  src="resource/image/pdf.png" class="img-responsive pull-right" alt="pdf" style="width:35px;"></img>
+	        <p:dataExporter type="pdf" target="friendTable" fileName="friend" preProcessor="#{friendbean.preProcessPDF}" />
+	    </h:commandLink>		
+			</div>
+			
+			</div>
+		</f:facet> 
+
+	 
+	       <p:column headerText="Short Name" style="width:99px;padding: 0px 0px 0px 2px;"
+filterBy="#{friend.shortname}"  filterStyle="display:none;" filterMatchMode="contains">
+ <f:facet name="header">
+					<h:outputText value="Short Name" />
+				</f:facet>
+        <h:outputText value="#{friend.shortname}" />
+         </p:column>
+        
+        <p:column headerText="First Name" style="width:105px;padding:0px 0px 0px 3px;" sortBy="#{friend.firstname}"
+        filterBy="#{friend.firstname}"  filterStyle="display:none;" filterMatchMode="contains">
+ <f:facet name="header">
+					<h:outputText value="First Name" />
+				</f:facet>
+        		
+        		<h:outputText value="#{friend.firstname}" />    		
+        </p:column>
+ 
+        <p:column headerText="Last Name" style="width:105px;padding: 0px 0px 0px 3px;"
+        filterBy="#{friend.lastname}"  filterStyle="display:none;" filterMatchMode="contains">
+ <f:facet name="header">
+					<h:outputText value="Last Name" />
+				</f:facet>
+        
+       	<h:outputText value="#{friend.lastname}" />    		
+        </p:column>
+ 
+         <p:column headerText="Email Id" style="padding: 0px 0px 0px 3px;"  
+filterBy="#{friend.emailid}"  filterStyle="display:none;" filterMatchMode="contains">
+ <f:facet name="header">
+					<h:outputText value="Email Id" />
+				</f:facet>
+        
+         <h:outputText value="#{friend.emailid}"   /> 
+            	</p:column>        
+	 
+  <p:column headerText="Status" filterBy="#{friend.status}" sortBy="#{friend.status}"  filterStyle="display:none;" filterMatchMode="contains"  style="width:125px;padding: 0px 0px 0px 3px;cursor: pointer; ">
+              <p:cellEditor>
+                 <f:facet name="output"><h:outputText value="#{friend.status}" /></f:facet>
+               <f:facet name="input">
+                   <p:selectOneMenu value="#{friend.status}" onclick='setFriendHiddenValue(#{friend.userFriendId})' style="width:125px">
+                       <f:selectItem   itemLabel="Active" itemValue="Active" />
+                        <f:selectItem  itemLabel="In-Active" itemValue="In-Active" />
+                   </p:selectOneMenu>
+               </f:facet>    </p:cellEditor>
+          </p:column>
+	    
+				
+				
+	    </p:dataTable>
+	     <p:contextMenu for="friendTable" widgetVar="cMenu">   
+       <p:menuitem value="Edit Cell" icon="ui-icon-search" onclick="PF('friendListTable').showCellEditor();return false;"/>  
+       <p:menuitem value="Hide Menu" icon="ui-icon-close" onclick="PF('cMenu').hide()"/>  
+   </p:contextMenu>
+	</div>
+
+
+
+</div><!-- end oc container -->
+      
+      </h:form>
+      
+      </div>
+      
+      
+
+       </div>
+
+</p:dialog>
+
+
+
 
      <br></br>
 </h:body>

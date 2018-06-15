@@ -60,17 +60,38 @@
        </div>
        
          <div class="row">
-         
+           
           <div class="col-sm-5">
-          <p:chart type="pie" model="#{createrequest.piechart}" style="width:500px;height:300px"/>
+        <center>
+          <p:chart type="pie" model="#{createrequest.piechart}" style="width:500px;height:400px"/>
+          </center>
            </div>
-        
-         <div class="col-sm-5">
+            <div class="col-sm-1"></div>
+         <div class="col-sm-6">
+          <center>
       <p:chart id="p2" type="bar" model="#{createrequest.barModel}"  style="height:400px"/> 
+      </center>
        </div> 
        
         
        </div>
+<br></br>
+<div class="row">
+           
+         
+         <div class="col-sm-6">
+          <center>
+      <p:chart type="bar" model="#{createrequest.barModelcloser}"  style="height:400px"/> 
+      </center>
+       </div> 
+        <div class="col-sm-6">
+          <center>
+      <p:chart type="bar" model="#{createrequest.barModelaverage}"  style="height:400px"/> 
+      </center>
+       </div> 
+        
+       </div>
+
 
  <br></br>
   <br></br><br></br>

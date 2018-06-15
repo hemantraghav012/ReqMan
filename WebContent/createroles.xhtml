@@ -22,6 +22,15 @@
 <script type="text/javascript" src="resource/js/bootstrap.js"/>
 <script type="text/javascript" src="resource/js/jquery.js"/>
 <title>Role Page</title>
+ <style type="text/css">
+        .ui-growl {
+            
+            top:60px;
+            Right:20px;
+            width:301px;
+        
+        }
+    </style>
 </h:head> 
 <body> 
 
@@ -35,7 +44,7 @@
       <!-- -end of header --> 
 <div class="container accountgrid" style="margin-left:0px;">
  <h:form class="form-horizontal"  >
-  <h2 style="  margin-bottom:30px; margin-top:30px; text-align:center" > Create Roles</h2>
+  <h2 style=" margin-top:0px; text-align:center" > Create Roles</h2>
 
 <div><h:messages style = "color:red;margin:8px;" /></div>
 
@@ -79,7 +88,7 @@
       	
 
 <div class="ui-fluid">
-<p:growl id="msgs" showDetail="true"/>
+<p:growl id="msgs" />
 	     <p:dataTable id="rolesTable" var="roles" value="#{rolebean.roleList}" 
 	     reflow="true" scrollable="true" scrollHeight="250" 	 
 	     class="table table-striped table-hover table-bordered" 
