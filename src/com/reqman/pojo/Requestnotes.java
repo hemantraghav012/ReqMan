@@ -32,7 +32,9 @@ public class Requestnotes implements java.io.Serializable {
 	private String message;
 	private String createdby;
 	private Date createdon;
-
+	private Boolean requeststatus;
+	private Boolean teammemberstatus;
+	
 	public Requestnotes() {
 	}
 
@@ -41,12 +43,14 @@ public class Requestnotes implements java.io.Serializable {
 	}
 
 	public Requestnotes(int id, Request request, String message,
-			String createdby, Date createdon) {
+			String createdby, Date createdon,Boolean requeststatus,Boolean teammemberstatus) {
 		this.id = id;
 		this.request = request;
 		this.message = message;
 		this.createdby = createdby;
 		this.createdon = createdon;
+		this.requeststatus =requeststatus;
+		this.teammemberstatus = teammemberstatus;
 	}
 
 	@Id
@@ -97,5 +101,23 @@ public class Requestnotes implements java.io.Serializable {
 	public void setCreatedon(Date createdon) {
 		this.createdon = createdon;
 	}
+	@Column(name = "requeststatus")
+	public Boolean getRequeststatus() {
+		return requeststatus;
+	}
 
+	public void setRequeststatus(Boolean requeststatus) {
+		this.requeststatus = requeststatus;
+	}
+	@Column(name = "teammemberstatus")
+	public Boolean getTeammemberstatus() {
+		return teammemberstatus;
+	}
+
+	public void setTeammemberstatus(Boolean teammemberstatus) {
+		this.teammemberstatus = teammemberstatus;
+	}
+
+	
+	
 }

@@ -28,6 +28,7 @@ public class Accountusers implements java.io.Serializable {
 	private int id;
 	private Account account;
 	private Users users;
+	private Boolean imagestatus;
 
 	public Accountusers() {
 	}
@@ -36,10 +37,11 @@ public class Accountusers implements java.io.Serializable {
 		this.id = id;
 	}
 
-	public Accountusers(int id, Account account, Users users) {
+	public Accountusers(int id, Account account, Users users,Boolean imagestatus) {
 		this.id = id;
 		this.account = account;
 		this.users = users;
+		this.imagestatus=imagestatus;
 	}
 
 	@Id
@@ -72,5 +74,16 @@ public class Accountusers implements java.io.Serializable {
 	public void setUsers(Users users) {
 		this.users = users;
 	}
+	@Column(name = "imagestatus")
+	public Boolean getImagestatus() {
+		return imagestatus;
+	}
 
+	public void setImagestatus(Boolean imagestatus) {
+		this.imagestatus = imagestatus;
+	}
+
+	
+	
+	
 }

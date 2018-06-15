@@ -28,6 +28,10 @@ public class Suggestion implements java.io.Serializable {
 	private Boolean status;
 	private Date datecreated;
 	private String createdby;
+	private String messagetype;
+	private Integer requeststatus;
+	private String adminremarks;
+	private String actionowner;
 	 
 	public Suggestion(){
 		
@@ -37,14 +41,19 @@ public class Suggestion implements java.io.Serializable {
 		this.id = id;
 	}
 
-	public Suggestion(int id, String address, Boolean status, Date datecreated,
-			String createdby) {
+	
+	public Suggestion(int id, String message, Boolean status, Date datecreated, String createdby, String messagetype,
+			Integer requeststatus, String adminremarks, String actionowner) {
 		super();
 		this.id = id;
 		this.message = message;
 		this.status = status;
 		this.datecreated = datecreated;
 		this.createdby = createdby;
+		this.messagetype = messagetype;
+		this.requeststatus = requeststatus;
+		this.adminremarks = adminremarks;
+		this.actionowner = actionowner;
 	}
 
 	@Id
@@ -97,7 +106,46 @@ public class Suggestion implements java.io.Serializable {
 	public void setCreatedby(String createdby) {
 		this.createdby = createdby;
 	}
+	
+	@Column(name = "messagetype", length = 100)
+	public String getMessagetype() {
+		return messagetype;
+	}
 
+	public void setMessagetype(String messagetype) {
+		this.messagetype = messagetype;
+	}
+
+	
+	
+	
+	@Column(name = "adminremarks",  length = 100)
+	public String getAdminremarks() {
+		return adminremarks;
+	}
+
+	public void setAdminremarks(String adminremarks) {
+		this.adminremarks = adminremarks;
+	}
+
+	@Column(name = "actionowner",  length = 100)
+	public String getActionowner() {
+		return actionowner;
+	}
+
+	public void setActionowner(String actionowner) {
+		this.actionowner = actionowner;
+	}
+	@Column(name = "requeststatus",  length = 100)
+	public Integer getRequeststatus() {
+		return requeststatus;
+	}
+
+	public void setRequeststatus(Integer requeststatus) {
+		this.requeststatus = requeststatus;
+	}
+
+	
 	
 	
 

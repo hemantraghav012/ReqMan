@@ -41,6 +41,7 @@ public class Request implements java.io.Serializable {
 	private Integer requeststatus;
 	private Boolean status;
 	private Date datecreated;
+	private Date teammembercompletiondate;
 	private String createdby;
 	private Date datemodified;
 	private String modifiedby;
@@ -58,6 +59,10 @@ public class Request implements java.io.Serializable {
     private Integer weightage;
     private String estimatedeffort;
     private String actualeffort;
+    private Boolean attachmentstatus;
+    private Integer serialid;
+    private byte[] soundaudio;
+    private String audiofilename;
     
     
 	public Request() {
@@ -68,22 +73,15 @@ public class Request implements java.io.Serializable {
 	}
 
 	
-	
-	
-	
-
-	public Request(int id, Usercategory usercategory,
-			Userfriendlist userfriendlist, Userproject userproject,
-			Userrequesttype userrequesttype, String title, String description,
-			Date completiondate, byte[] attachment, Integer requeststatus,
-			Boolean status, Date datecreated, String createdby,
-			Date datemodified, String modifiedby, String filename,
-			int completionpercentage, Date acceptdate, Date updatedate,
-			Integer revisionnumber, String approvedby, Date approveddate,
-			Set<Requestnotes> requestnoteses, Integer rating, String feedback,
-			String priority, Integer weightage, String estimatedeffort,
-			String actualeffort) {
-		super();
+	public Request(int id, Usercategory usercategory, Userfriendlist userfriendlist, Userproject userproject,
+			Userrequesttype userrequesttype, String title, String description, Date completiondate, byte[] attachment,
+			Integer requeststatus, Boolean status, Date datecreated, Date teammembercompletiondate, String createdby,
+			Date datemodified, String modifiedby, String filename, int completionpercentage, Date acceptdate,
+			Date updatedate, Integer revisionnumber, String approvedby, Date approveddate,
+			Set<Requestnotes> requestnoteses, Integer rating, String feedback, String priority, Integer weightage,
+			String estimatedeffort, String actualeffort, Boolean attachmentstatus, Integer serialid, byte[] soundaudio,
+			String audiofilename) {
+		//super();
 		this.id = id;
 		this.usercategory = usercategory;
 		this.userfriendlist = userfriendlist;
@@ -96,6 +94,7 @@ public class Request implements java.io.Serializable {
 		this.requeststatus = requeststatus;
 		this.status = status;
 		this.datecreated = datecreated;
+		this.teammembercompletiondate = teammembercompletiondate;
 		this.createdby = createdby;
 		this.datemodified = datemodified;
 		this.modifiedby = modifiedby;
@@ -113,6 +112,10 @@ public class Request implements java.io.Serializable {
 		this.weightage = weightage;
 		this.estimatedeffort = estimatedeffort;
 		this.actualeffort = actualeffort;
+		this.attachmentstatus = attachmentstatus;
+		this.serialid = serialid;
+		this.soundaudio = soundaudio;
+		this.audiofilename = audiofilename;
 	}
 
 	@Id
@@ -124,6 +127,16 @@ public class Request implements java.io.Serializable {
 
 	public void setId(int id) {
 		this.id = id;
+	}
+
+	
+	@Column(name = "serialid")
+	public Integer getSerialid() {
+		return serialid;
+	}
+
+	public void setSerialid(Integer serialid) {
+		this.serialid = serialid;
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
@@ -380,6 +393,39 @@ public class Request implements java.io.Serializable {
 
 	public void setActualeffort(String actualeffort) {
 		this.actualeffort = actualeffort;
+	}
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "teammembercompletiondate", length = 29)
+	public Date getTeammembercompletiondate() {
+		return teammembercompletiondate;
+	}
+
+	public void setTeammembercompletiondate(Date teammembercompletiondate) {
+		this.teammembercompletiondate = teammembercompletiondate;
+	}
+	@Column(name = "attachmentstatus")
+	public Boolean getAttachmentstatus() {
+		return attachmentstatus;
+	}
+
+	public void setAttachmentstatus(Boolean attachmentstatus) {
+		this.attachmentstatus = attachmentstatus;
+	}
+	@Column(name = "soundaudio")
+	public byte[] getSoundaudio() {
+		return soundaudio;
+	}
+
+	public void setSoundaudio(byte[] soundaudio) {
+		this.soundaudio = soundaudio;
+	}
+	@Column(name = "audiofilename", length = 60)
+	public String getAudiofilename() {
+		return audiofilename;
+	}
+
+	public void setAudiofilename(String audiofilename) {
+		this.audiofilename = audiofilename;
 	}
 
 	
