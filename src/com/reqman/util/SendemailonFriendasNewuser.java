@@ -1,28 +1,25 @@
 package com.reqman.util;
+
 import java.io.IOException;
-	import java.io.InputStream;
-	import java.util.Properties;
-	import java.util.Random;
-	import com.sendgrid.Content;
-	import com.sendgrid.Email;
-	import com.sendgrid.Mail;
-	import com.sendgrid.Method;
-	import com.sendgrid.Request;
-	import com.sendgrid.Response;
-	import com.sendgrid.SendGrid;
+import java.io.InputStream;
+import java.util.Properties;
+import java.util.Random;
 
+import com.sendgrid.Content;
+import com.sendgrid.Email;
+import com.sendgrid.Mail;
+import com.sendgrid.Method;
+import com.sendgrid.Request;
+import com.sendgrid.Response;
+import com.sendgrid.SendGrid;
 
+public class SendemailonFriendasNewuser {
 
-	public class forgotpasswordemail {
-		
-		
-		  private static String MAIL_REGISTRATION_SITE_LINK = "";
-		
-		  private static char[] symbols = null;
-		  
-		  private static Random random = new Random();
-
-
+	private static String MAIL_REGISTRATION_SITE_LINK = "";
+	public static String Click_here;
+	  private static char[] symbols = null;	  
+	  private static Random random = new Random();
+	  
 	static {
 		Properties myResources = new Properties();
 		InputStream propertiesStream;
@@ -34,7 +31,8 @@ import java.io.IOException;
 			for (char ch = 'a'; ch <= 'z'; ++ch)
 				tmp.append(ch);
 			symbols = tmp.toString().toCharArray();
-
+			
+			
 			Thread currentThread = Thread.currentThread();
 			ClassLoader contextClassLoader = currentThread.getContextClassLoader();
 			propertiesStream = contextClassLoader.getResourceAsStream("ReqManConfig.properties");
@@ -45,7 +43,7 @@ import java.io.IOException;
 			}
 			if (propertiesStream != null) {
 				myResources.load(propertiesStream);
-				MAIL_REGISTRATION_SITE_LINK = myResources.getProperty("AppUrl2");
+				MAIL_REGISTRATION_SITE_LINK = myResources.getProperty("AppUrl1");
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -53,26 +51,33 @@ import java.io.IOException;
 			e.printStackTrace();
 		}
 	}
-
+	
+	
+	
 	public static String prepareRandomString(int len) {
 		char[] buf = new char[len];
 		for (int idx = 0; idx < buf.length; ++idx)
 			buf[idx] = symbols[random.nextInt(symbols.length)];
 		return new String(buf);
 	}
-
-	public String createPasswordContent(String To, String firstName, String hashkey) {
+	
+	
+	public String addnewfriend(String To, String emailid, String friendemailid, String hashkey) {
 		StringBuffer sb = new StringBuffer();
 		String content = "";
 		String temp = "\"";
-		String link = MAIL_REGISTRATION_SITE_LINK + "?emailid=" + To + "&hash=" + hashkey;
+		// String here="http://localhost:8080/ReqMan/faces/login.xhtml";
+	
 
+		String link = MAIL_REGISTRATION_SITE_LINK + "?emailid=" + To + "&hash=" + hashkey;
+		
 		try {
 
 			sb.append("<html>");
 			sb.append("<head>");
 			sb.append("<html><head><style type='text/css'>");
 			sb.append("span {color:#f36c00;}");
+			sb.append("h3 {letter-spacing:1px;text-decoration:none;font-size:14px;}");
 			sb.append(
 					"div {letter-spacing:1px;text-decoration:none;font-size:14px;max-width:550px; color:black; width: 100% !important;  background-color: #fff;  margin: 0 auto;   overflow: hidden;  font-family: roboto; }");
 			sb.append("table {border-style:ridge;padding: 40px;border-color: skyblue; border-radius: 8px;}");
@@ -86,78 +91,113 @@ import java.io.IOException;
 			sb.append("<h1>");
 			sb.append("Join the team at ");
 			sb.append("<span>");
-			sb.append("Collabor8");
+			sb.append("Collabor8!");
 			sb.append("</span>");
 
-			sb.append("<h1>");
+			sb.append("</h1>");
 			sb.append("<hr></hr>");
 			sb.append("<h3>");
-			sb.append(firstName + ", Welcome back  to Collabor8 !");
+			sb.append("Dear  " + emailid + "!");
 			sb.append("</h3>");
+			sb.append("<br></br>");
+			sb.append("Welcome to Collabor8.");
+			sb.append("<br></br>");
 			sb.append("<p>");
-			sb.append("You can re-set your password by clicking the ");
-			sb.append("<a href=\"" + link + "\">link here.</a>");
+			sb.append(" Your team member," + friendemailid + ", has invited you to use Collabor8. ");
+			sb.append(
+					"This web based tool will help improve outcomes while saving lots of time, not just for you but also your other team members.");
+			sb.append("</p>");
+					
+			sb.append("<p>");
+			sb.append("Please click ");
+			sb.append("<a href=\"" + link + "\"> link here.</a>");
+			sb.append("to start using collabor8.");
 			sb.append("</p>");
 			
 			sb.append("<br></br>");
-			sb.append("Collaborate will benefit you and your team by:-");
+			sb.append(" Benefits will include :-");
 			sb.append("<ul>");
 			sb.append("<li>");
-			sb.append("Saving 30-60 minutes of every users time. Daily.");
+			sb.append("Saving time for all team members , Approx. 30-60 minutes every day!");
 			sb.append("</li>");
 			sb.append("<li>");
-			sb.append("Automatically following up on tasks and highlighting delayed tasks.");
+			sb.append("Improving accountability and role clarity.");
 			sb.append("</li>");
 			sb.append("<li>");
-			sb.append("Improving team performance by calculating their efficiency & timeliness.");
+			sb.append("Improving team collaboration,");
 			sb.append("</li>");
 			sb.append("<li>");
-			sb.append("Keep very good record of all the tasks ever handled and export hem to excel.");
+			sb.append("Measuring and enhancing performance ,");
+			sb.append("</li>");
+
+			sb.append("<li>");
+			sb.append("Better resource management.");
 			sb.append("</li>");
 			sb.append("<li>");
-			sb.append("Capture customer feedbacks and rating to trigger further improvement.");
+			sb.append("Good record of work done for better performance appraisals.");
 			sb.append("</li>");
+
 			sb.append("<li>");
-			sb.append("Eliminating time wasted in asking for .");
-			sb.append("</li>");
-			sb.append("<li>");
-			sb.append("Improve knowledge collection from past records.");
-			sb.append("</li>");
-			sb.append("</ul>");
-			sb.append("<br></br>");
-					
-			sb.append("<br></br>");
-			sb.append("Collabor8 is simple to use.");
-			sb.append("<ul>");
-			sb.append("<li>");
-			sb.append("Enter one or more team members email id.");
-			sb.append("</li>");
-			sb.append("<li>");
-			sb.append("Attach documents to tasks and projects.");
-			sb.append("</li>");
-			sb.append("<li>");
-			sb.append("Start raising requests on them.");
-			sb.append("</li>");
-			sb.append("<li>");
-			sb.append("Optionally use request categories, projects and types for better analysis and management.");
+			sb.append("No task is forgotten!");
 			sb.append("</li>");
 			sb.append("</ul>");
 
-			sb.append("<br></br>");
-			sb.append("Get more information on www.teamcollaborate.net . Feel free to write to us at ");
-			sb.append(" admin@teamcollaborate.net");
-			sb.append("<br></br>");
-			sb.append("<br></br>");
-			sb.append("Happy Collabor8ing!");
+			
+		
 			sb.append("<br></br>");
 			sb.append("<br></br>");
+			sb.append("Its user friendly features include:-");
+			sb.append("<ul>");
+			sb.append("<li>");
+			sb.append(" Raise Requests on team members.");
+			sb.append("</li>");
+			sb.append("<li>");
+			sb.append(" Agree on details like due date and accepting the request.");
+			sb.append("</li>");
+			sb.append("<li>");
+			sb.append("Share notes , risks ,  documents and progress among team members.");
+			sb.append("</li>");
+			sb.append("<li>");
+			sb.append("Filter information on any parameter.");
+			sb.append("</li>");
+
+			sb.append("<li>");
+			sb.append("Export information for further analysis.");
+			sb.append("</li>");
+			sb.append("<li>");
+			sb.append(" Automate Alerts  for approaching or past deadlines.");
+			sb.append("</li>");
+
+			sb.append("<li>");
+			sb.append("Analyze performance including estimation accuracy.");
+			sb.append("</li>");
+			sb.append("<li>");
+			sb.append(" Classifying & Prioritizing tasks.");
+			sb.append("</li>");
+			sb.append("<li>");
+			sb.append("Estimation of time & efforts and comparison with actuals for improving planning capabilities.");
+			sb.append("</li>");
+			sb.append("<li>");
+			sb.append("Ratings and feedbacks for completed tasks and their analysis.");
+			sb.append("</li>");
+			sb.append("<li>");
+			sb.append("Submit Improvement ideas.");
+			sb.append("</li>");
+			sb.append("</ul>");
+
+			sb.append("Wishing you happy collabor8ing!");
+			sb.append("<br></br>");
+			sb.append("<br></br>");
+			sb.append("Collabor8 Team");
+			sb.append("<br></br>");
+			sb.append("<br></br>");
+
 			sb.append("</div>");
 			sb.append("</table>");
 			sb.append("</body>");
 			sb.append("</html>");
 			content = sb.toString();
 
-			content = sb.toString();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -165,20 +205,23 @@ import java.io.IOException;
 		return content;
 	}
 
-	public String createAccount(String To, String firstName) throws Exception {
-
-		String hashkey = "";
+	public String friendemail(String To, String emailid, String friendemailid) throws Exception {
 
 		StringBuffer sb = new StringBuffer();
+		String hashkey = "";
 		try {
 			hashkey = prepareRandomString(30);
+			// SendGrid sg = new SendGrid("SXoOwlD1RJ2kbfiCfYuR4A");
 			Email from = new Email(SearchConstants.FROM_ADD);
-			String subject = firstName + ", Welcome to Collabor8!";
+			String subject = emailid + ", Welcome to Collabor8 !";
 			Email to = new Email(To);
-			Content content = new Content("text/html", createPasswordContent(To, firstName, hashkey));
+			// Content content = getContent(To, firstName, password);
+			Content content = new Content("text/html", addnewfriend(To, emailid, friendemailid,hashkey));
+			// Content content = new Content("hello password");
 			Mail mail = new Mail(from, subject, to, content);
 			SendGrid sg = new SendGrid(SearchConstants.EMAIL_KEY);
 			Request request = new Request();
+
 			request.setMethod(Method.POST);
 			request.setEndpoint("mail/send");
 			request.setBody(mail.build());
@@ -186,11 +229,12 @@ import java.io.IOException;
 			System.out.println(response.getStatusCode());
 			System.out.println(response.getBody());
 			System.out.println(response.getHeaders());
+
 		} catch (Exception e) {
-			hashkey = "";
+
 			throw new Exception(e);
 		}
-
 		return hashkey;
 	}
+
 }

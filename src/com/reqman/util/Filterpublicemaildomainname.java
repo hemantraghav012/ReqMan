@@ -1,5 +1,6 @@
 package com.reqman.util;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -68,64 +69,53 @@ public static void readXLSFile() throws IOException
 	
 	
 	@SuppressWarnings("rawtypes")
-	public static List<PublicemaildomainVo> readXLSXFile(UploadedFile excelfile) throws Exception
-	{
-		List<PublicemaildomainVo> domainnameList = new ArrayList<PublicemaildomainVo>();		
-		PublicemaildomainVo publicemaildomainVo=null;
-		XSSFSheet sheet= null;
-		XSSFRow row; 
+	public static List<PublicemaildomainVo> readXLSXFile(UploadedFile excelfile) throws Exception {
+		List<PublicemaildomainVo> domainnameList = new ArrayList<PublicemaildomainVo>();
+		PublicemaildomainVo publicemaildomainVo = null;
+		XSSFSheet sheet = null;
+		XSSFRow row;
 		XSSFCell cell;
-	try {
-		
-		String filename=excelfile.getFileName() !=null ? excelfile.getFileName():"";
-		
-		InputStream ExcelFileToRead = new FileInputStream(filename);
-		XSSFWorkbook  wb = new XSSFWorkbook(ExcelFileToRead);
-		
-		//XSSFWorkbook test = new XSSFWorkbook(); 
-		if(wb !=null){
-		 sheet = wb.getSheetAt(0);
-		}
-		if(sheet != null){
+		try {
 
-		Iterator rows = sheet.rowIterator();
+			String filename = excelfile.getFileName() != null ? excelfile.getFileName() : "";
 
-		while (rows.hasNext())
-		{
-			row=(XSSFRow) rows.next();
-			Iterator cells = row.cellIterator();
-			while (cells.hasNext())
-			{
-				cell=(XSSFCell) cells.next();
-		
-				if (cell.getCellType() == XSSFCell.CELL_TYPE_STRING)
-				{
-				String name=cell.getStringCellValue();
-				
-					publicemaildomainVo =new PublicemaildomainVo();
-					publicemaildomainVo.setName(name);
-					publicemaildomainVo.setStatus(true);
-					
-					
-				}
-			
+			InputStream ExcelFileToRead = new FileInputStream(filename);
+			XSSFWorkbook wb = new XSSFWorkbook(ExcelFileToRead);
+
+			// XSSFWorkbook test = new XSSFWorkbook();
+			if (wb != null) {
+				sheet = wb.getSheetAt(0);
 			}
-			domainnameList.add(publicemaildomainVo);
-			System.out.println("domainlist--"+domainnameList);
+			if (sheet != null) {
+
+				Iterator rows = sheet.rowIterator();
+
+				while (rows.hasNext()) {
+					row = (XSSFRow) rows.next();
+					Iterator cells = row.cellIterator();
+					while (cells.hasNext()) {
+						cell = (XSSFCell) cells.next();
+
+						if (cell.getCellType() == XSSFCell.CELL_TYPE_STRING) {
+							String name = cell.getStringCellValue();
+
+							publicemaildomainVo = new PublicemaildomainVo();
+							publicemaildomainVo.setName(name);
+							publicemaildomainVo.setStatus(true);
+
+						}
+
+					}
+					domainnameList.add(publicemaildomainVo);
+					System.out.println("domainlist--" + domainnameList);
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new Exception(e);
 		}
-		}
+
+		return domainnameList;
 	}
-	catch (Exception e) 
-	{
-		e.printStackTrace();
-		throw new Exception(e);
-	}
-
-	return domainnameList;
-	}
-
-
-
-	
 
 }

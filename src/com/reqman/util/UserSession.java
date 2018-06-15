@@ -1,9 +1,9 @@
 package com.reqman.util;
 
 public class UserSession {
-	
+
 	private String emailId;
-	
+
 	private String userName;
 
 	public String getEmailId() {
