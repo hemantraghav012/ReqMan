@@ -11,6 +11,16 @@
   
 } 
 
+.btn3 {
+  background-color: #03C03C;
+   color:#fff;
+  
+} 
+
+.btn3:hover{   
+  background-color:#03C03C;
+   color:#fff;  
+}
 .fontsize{
 	font-weight: bold;
 	font-size: 16px;
@@ -41,12 +51,13 @@
 
 
 .red{
-   background-color:#FF0000;  
+   background-color:#f36c00; 
+  
 }
 
 
 .green{
-	 background-color:#3db545;  
+	 background-color:#90EE90;  
 }
 .white{
 	 background-color:#fff;  

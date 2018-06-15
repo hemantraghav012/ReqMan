@@ -78,7 +78,21 @@ border-radius: 0px;
 
 
 
-
+.quickfixedcontainerrequset{
+	
+	  padding: 10px;
+  max-width: 1300px;
+  text-align:center;
+  width: 100% !important;
+  background-color: #fff;
+  margin: 0 auto;
+  border-radius: 8px;
+  box-shadow: 4px 4px 3px rgba(0, 0, 0, 0.5);
+  overflow: hidden;
+  font-family: roboto;
+   
+       border: .5px solid rgba(0, 0, 0, 0.2);
+}
 
 
 

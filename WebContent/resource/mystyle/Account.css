@@ -2,10 +2,25 @@
 
 .accountgrid{  
 	padding: 80px;
-  max-width:750px;
+  max-width:1000px;
   width: 100% !important;
   background-color: #fff;
-  margin: 0 auto;
+ margin-top: 30px;
+  border-radius: 8px;
+
+  overflow: hidden;
+  font-family: roboto;
+   
+    
+}
+
+
+.datasummary{  
+	padding: 20px;
+  max-width:100%
+  width: 100% !important;
+  background-color: #fff;
+  margin-top: 100px;
   border-radius: 8px;
 
   overflow: hidden;
