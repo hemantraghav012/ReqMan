@@ -44,6 +44,7 @@ public class Categorybean implements Serializable
 	private List<CategoryVo> categoryList = new ArrayList<CategoryVo>();	
 	private List<CategoryVo> categoryList1 = new ArrayList<CategoryVo>();
 	private List<CategoryVo> categoryList2 = new ArrayList<CategoryVo>();
+	private List<CategoryVo> accountcategoryList = new ArrayList<CategoryVo>();
 	private List<CategoryVo> filteredCategoryList = new ArrayList<CategoryVo>();
 	private String categoryName;	
 	private Boolean status;	
@@ -67,6 +68,7 @@ public class Categorybean implements Serializable
 			setFilteredCategoryList(categoryList);
 			categoryList1 = categoryMasterInterface.getCategoryStatus(userName.toLowerCase().trim());
 			categoryList2 = categoryMasterInterface.getCategoryStatusfalse(userName.toLowerCase().trim());
+			accountcategoryList = categoryMasterInterface.getAccountwiseCategory(userName.toLowerCase().trim());
 			 createPieModels();
 		}
 		catch(Exception e)
@@ -352,5 +354,14 @@ public class Categorybean implements Serializable
 		this.categoryList2 = categoryList2;
 	}
 
+	public List<CategoryVo> getAccountcategoryList() {
+		return accountcategoryList;
+	}
+
+	public void setAccountcategoryList(List<CategoryVo> accountcategoryList) {
+		this.accountcategoryList = accountcategoryList;
+	}
+
+	
 
 }

@@ -19,6 +19,7 @@ import com.reqman.daoimpl.SuggestionImpl;
 import com.reqman.util.SessionUtils;
 import com.reqman.util.UserSession;
 import com.reqman.vo.CategoryVo;
+import com.reqman.vo.NewrequestVo;
 import com.reqman.vo.SuggestionVo;
 
 
@@ -34,8 +35,12 @@ public class Suggestionbean implements Serializable  {
 	 */
 	private static final long serialVersionUID = -4279569817641243590L;
 	
+	private Integer id;
 	private String message;
 	private Boolean status;	
+	private String messagetype;
+	
+	private SuggestionVo suggestionVo = new SuggestionVo();
 	private SuggestionInterface suggestionInterface =  new SuggestionImpl();
 	private List<SuggestionVo> suggestionList = new ArrayList<SuggestionVo>();
 	
@@ -79,26 +84,9 @@ public class Suggestionbean implements Serializable  {
 			String userName = (String)session.getAttribute("username");
 			
 			System.out.println("--usersession--userName-->"+userName);
-			result = suggestionInterface.savesuggestion(message, status, userName.toLowerCase().trim());
+			result = suggestionInterface.savesuggestion(message, status,messagetype, userName.toLowerCase().trim());
 			
-			if(result == 1)
-			{
-				FacesContext.getCurrentInstance().addMessage(
-						null,
-						new FacesMessage(FacesMessage.SEVERITY_WARN,
-								"Category already exist",
-								"Category already exist"));
-				return "suggestion";
-			}
-			if(result == 2)
-			{
-				FacesContext.getCurrentInstance().addMessage(
-						null,
-						new FacesMessage(FacesMessage.SEVERITY_WARN,
-								"Category already exist and in active, please activate by using modify category ",
-								"Category already exist and in active, please activate by using modify category"));
-				return "suggestion";
-			}
+			
 			if(result == 3)
 			{
 				
@@ -106,9 +94,9 @@ public class Suggestionbean implements Serializable  {
 				
 				FacesContext.getCurrentInstance().addMessage(
 						null,
-						new FacesMessage(FacesMessage.SEVERITY_WARN,
-								"Category created  successfully.",
-								"Category created  successfully."));
+						new FacesMessage(FacesMessage.SEVERITY_INFO,
+								"Customer Input created  successfully.",
+								""));
 			}
 			
 			
@@ -126,8 +114,27 @@ public class Suggestionbean implements Serializable  {
 		
 		
 		
-		return "home";
+		return "suggestion";
 	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	public String getMessage() {
@@ -153,6 +160,48 @@ public class Suggestionbean implements Serializable  {
 
 	public void setStatus(Boolean status) {
 		this.status = status;
+	}
+
+
+
+
+	public String getMessagetype() {
+		return messagetype;
+	}
+
+
+
+
+	public void setMessagetype(String messagetype) {
+		this.messagetype = messagetype;
+	}
+
+
+
+
+	public Integer getId() {
+		return id;
+	}
+
+
+
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+
+
+
+	public SuggestionVo getSuggestionVo() {
+		return suggestionVo;
+	}
+
+
+
+
+	public void setSuggestionVo(SuggestionVo suggestionVo) {
+		this.suggestionVo = suggestionVo;
 	}
 	
 

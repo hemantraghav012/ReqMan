@@ -13,8 +13,11 @@ import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
+import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ViewScoped;
+import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
+import javax.faces.validator.ValidatorException;
 import javax.imageio.ImageIO;
 import javax.servlet.http.HttpSession;
 
@@ -37,6 +40,7 @@ import com.reqman.vo.NewrequestVo;
 @ManagedBean(name="accountbean",eager = true)
 @RequestScoped
 @ViewScoped
+@SessionScoped
 @javax.faces.view.ViewScoped
 public class Accountbean implements Serializable {
 	
@@ -53,7 +57,7 @@ public class Accountbean implements Serializable {
 		private  String accountname;
 		private boolean status;
 	 private String imagename;
-
+	 private String organizationkey;
 		@PostConstruct
 	    public void init() 
 		{
@@ -85,9 +89,9 @@ public class Accountbean implements Serializable {
 	        try
 	        {
 	        	HttpSession session = SessionUtils.getSession();
-				String userName = (String)session.getAttribute("username");
-				
+				String userName = (String)session.getAttribute("username");				
 				System.out.println("--usersession--userName-->"+userName);
+				
 				
 	        	//setId(id);
 	        	accountVo = accountInterface.getAccountById(id,userName.toLowerCase().trim());      	
@@ -96,7 +100,7 @@ public class Accountbean implements Serializable {
 	        	
 	        		setAccountname(accountVo.getName() != null ? accountVo.getName(): "");
 	        		setImagename(accountVo.getImagename() != null ? accountVo.getImagename() : "");
-	        		
+	        		setOrganizationkey(accountVo.getOrganizationkey() !=null ? accountVo.getOrganizationkey(): "");
 
 	        }
 	        catch(Exception e){
@@ -105,6 +109,31 @@ public class Accountbean implements Serializable {
 	        }
 	        return "modifyaccount.xhtml";
 	    }
+		
+		
+		
+		public void validateFile(FacesContext ctx,
+	            UIComponent comp,
+	            Object value) {
+	        List<FacesMessage> msgs = new ArrayList<FacesMessage>();
+	        UploadedFile file = (UploadedFile)value;
+	        int fileByte = file.getContents().length;
+	        if(fileByte != 0){
+	        if(fileByte > 5000000){
+	            msgs.add(new FacesMessage("Too big must be at most 5MB"));
+	        }
+	        if (!(file.getContentType().startsWith("image"))) {
+	            msgs.add(new FacesMessage("not an Image file"));
+	        }
+	        if (!msgs.isEmpty()) {
+	            throw new ValidatorException(msgs);
+	        }
+	        }
+	        else{
+	        	
+	        }
+	    }
+		
 		
 		
 		
@@ -155,7 +184,7 @@ public class Accountbean implements Serializable {
 							null,
 							new FacesMessage(FacesMessage.SEVERITY_WARN,
 									"Problem while modifying the Category",
-									"Problem while modifying the Category"));
+									""));
 					return "modifyaccount.xhtml";
 	        	}
 	        	
@@ -168,7 +197,7 @@ public class Accountbean implements Serializable {
 						null,
 						new FacesMessage(FacesMessage.SEVERITY_WARN,
 								"Problem while modifying the Category",
-								"Problem while modifying the Category"));
+								""));
 				return "modifyaccount.xhtml";
 			}
 			
@@ -339,6 +368,20 @@ public class Accountbean implements Serializable {
 
 	public void setImagename(String imagename) {
 		this.imagename = imagename;
+	}
+
+
+
+
+	public String getOrganizationkey() {
+		return organizationkey;
+	}
+
+
+
+
+	public void setOrganizationkey(String organizationkey) {
+		this.organizationkey = organizationkey;
 	}
 
 

@@ -46,6 +46,7 @@ public class Projectbean implements Serializable{
 	private  List<ProjectVo> projectList1 = new ArrayList<ProjectVo>();
 	private  List<ProjectVo> projectList2 = new ArrayList<ProjectVo>();
 	private  List<ProjectVo> projectList = new ArrayList<ProjectVo>();
+	private  List<ProjectVo> accountprojectList = new ArrayList<ProjectVo>();
 	private List<ProjectVo> filteredProjectList = new ArrayList<ProjectVo>();	
 	private String projectName;	
 	private Boolean status;	
@@ -67,6 +68,7 @@ public class Projectbean implements Serializable{
 			setFilteredProjectList(projectList);
 			projectList1 = projectMasterInterface.getProjectStatus(userName.toLowerCase().trim());
 			projectList2 = projectMasterInterface.getProjectfalseStatus(userName.toLowerCase().trim());
+			accountprojectList = projectMasterInterface.getallaccountproject(userName.toLowerCase().trim());
 			 createPieModels();
 			 projectaccess = true;
 		}
@@ -368,6 +370,18 @@ public class Projectbean implements Serializable{
 
 	public void setProjectaccess(Boolean projectaccess) {
 		this.projectaccess = projectaccess;
+	}
+
+
+
+	public List<ProjectVo> getAccountprojectList() {
+		return accountprojectList;
+	}
+
+
+
+	public void setAccountprojectList(List<ProjectVo> accountprojectList) {
+		this.accountprojectList = accountprojectList;
 	}
 
 

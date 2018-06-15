@@ -76,7 +76,7 @@ public class Rolebean implements Serializable{
 						null,
 						new FacesMessage(FacesMessage.SEVERITY_WARN,
 								"Role created  successfully.",
-								"Role created  successfully."));
+								""));
 			}
 			
 			

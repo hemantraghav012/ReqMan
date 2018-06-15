@@ -2,11 +2,15 @@ package com.reqman.beans;
 
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
+import javax.faces.validator.ValidatorException;
 import javax.servlet.http.HttpSession;
 
 import org.primefaces.model.UploadedFile;
@@ -34,11 +38,7 @@ public class Userupdate implements Serializable{
 		private UserupdateVo userupdateVo = new UserupdateVo();
 		private UserDetailsInterface userImpl = new UserDetailsImpl();
 		  private UploadedFile photo;
-		
-		  
-		  
-		  
-		  
+		  private String organizationkey;
 		  
 		  
 		  
@@ -84,7 +84,7 @@ public class Userupdate implements Serializable{
 				System.out.println("--usersession--userName-->"+userName);
 				
 	        
-	        	result = userImpl.updateUsers(userName.toLowerCase().trim(),firstname,lastname,shortname,password,photo);
+	        	result = userImpl.updateUsers(userName.toLowerCase().trim(),firstname,lastname,shortname,password,photo,organizationkey);
 	        	
 	        	
 	        	if (result == 1) {
@@ -117,8 +117,8 @@ public class Userupdate implements Serializable{
 	        		FacesContext.getCurrentInstance().addMessage(
 							null,
 							new FacesMessage(FacesMessage.SEVERITY_WARN,
-									"Problem while modifying the Category",
-									"Problem while modifying the Category"));
+									"Problem while modifying the Update user",
+									""));
 					return "myprofile.xhtml";
 	        	}
 	        	
@@ -130,13 +130,35 @@ public class Userupdate implements Serializable{
 				FacesContext.getCurrentInstance().addMessage(
 						null,
 						new FacesMessage(FacesMessage.SEVERITY_WARN,
-								"Problem while modifying the Category",
-								"Problem while modifying the Category"));
+								"Problem while modifying the Update user",
+								""));
 				return "myprofile.xhtml";
 			}
 			
 		}
 		
+		
+		public void validateFile(FacesContext ctx,
+	            UIComponent comp,
+	            Object value) {
+	        List<FacesMessage> msgs = new ArrayList<FacesMessage>();
+	        UploadedFile file = (UploadedFile)value;
+	        int fileByte = file.getContents().length;
+	        if(fileByte != 0){
+	        if(fileByte > 1000000){
+	            msgs.add(new FacesMessage("Too big must be at most 1MB"));
+	        }
+	        if (!(file.getContentType().startsWith("image"))) {
+	            msgs.add(new FacesMessage("not an Image file"));
+	        }
+	        if (!msgs.isEmpty()) {
+	            throw new ValidatorException(msgs);
+	        }
+	        }
+	        else{
+	        	
+	        }
+	    }
 		
 		
 		
@@ -215,6 +237,18 @@ public class Userupdate implements Serializable{
 
 		public void setPhoto(UploadedFile photo) {
 			this.photo = photo;
+		}
+
+
+
+		public String getOrganizationkey() {
+			return organizationkey;
+		}
+
+
+
+		public void setOrganizationkey(String organizationkey) {
+			this.organizationkey = organizationkey;
 		}
 
 

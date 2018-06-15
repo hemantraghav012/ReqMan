@@ -1,7 +1,7 @@
 package com.reqman.beans;
 
 import java.io.Serializable;
-import java.util.Date;
+
 
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -11,13 +11,7 @@ import javax.servlet.http.HttpSession;
 
 import org.primefaces.model.UploadedFile;
 
-import com.reqman.dao.NewrequestInterface;
-import com.reqman.dao.UserDetailsInterface;
-import com.reqman.daoimpl.NewrequestImpl;
-import com.reqman.daoimpl.UserDetailsImpl;
-import com.reqman.pojo.Usercategory;
-import com.reqman.pojo.Userproject;
-import com.reqman.pojo.Userrequesttype;
+
 import com.reqman.util.SessionUtils;
 
 

@@ -36,7 +36,7 @@ public class Register implements Serializable{
 	private String shortname;
 	private String hashkey;
 	private String emailstatus;
-	
+	private String organizationkey;
 	 @ManagedProperty(value = "#{param.email}")
 	private String googleemail;
 	private	UserDetailsInterface userImpl = new UserDetailsImpl();
@@ -45,13 +45,13 @@ public class Register implements Serializable{
 	{
 		
 		//is declared as type UserDetailsInterface(interface) and the object it references is of type UserDetailsImpl(class).
-		UserDetailsInterface userImpl = new UserDetailsImpl();
+		//UserDetailsInterface userImpl = new UserDetailsImpl();
 		
 		int result = 0;
 		try{
 		//Pass all value through registerbean class to userImpl Interface and call saveUser() method
-			result = userImpl.saveUser(emailid.toLowerCase().trim(), password, firstname, lastname, shortname,hashkey,photo);
-			
+			result = userImpl.saveUser(emailid.toLowerCase().trim(), password, firstname, lastname, shortname,hashkey,photo,organizationkey);
+		
 			//boolean valid = LoginDAO.validate(user, pwd);
 			if (result == 1) {
 				FacesContext.getCurrentInstance().addMessage(
@@ -317,6 +317,18 @@ public class Register implements Serializable{
 
 	public void setGoogleemail(String googleemail) {
 		this.googleemail = googleemail;
+	}
+
+
+
+	public String getOrganizationkey() {
+		return organizationkey;
+	}
+
+
+
+	public void setOrganizationkey(String organizationkey) {
+		this.organizationkey = organizationkey;
 	}
 
 

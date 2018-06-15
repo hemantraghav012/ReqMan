@@ -29,8 +29,8 @@ import com.reqman.dao.FriendMasterInterface;
 import com.reqman.dao.NewRequestqueryInterface;
 import com.reqman.dao.NewrequestInterface;
 import com.reqman.daoimpl.FriendMasterImpl;
-import com.reqman.daoimpl.NewRequestquery;
 import com.reqman.daoimpl.NewrequestImpl;
+import com.reqman.daoimpl.query.NewRequestquery;
 import com.reqman.util.Dateconverter;
 import com.reqman.util.SessionUtils;
 import com.reqman.vo.AdminRequestVo;
@@ -55,10 +55,14 @@ public class adminrequestbean implements Serializable {
 	
 	private List<AdminRequestVo> adminrequestList = new ArrayList<AdminRequestVo>();
 	private List<AdminRequestVo> filteredRequestList = new ArrayList<AdminRequestVo>();
+	private Date startDate;
+	private Date endDate;
 	
 	
 	
 	
+
+
 	@PostConstruct
 	public void init() {
 		try {
@@ -66,8 +70,14 @@ public class adminrequestbean implements Serializable {
 			adminrequestList = new ArrayList<AdminRequestVo>();			
 			HttpSession session = SessionUtils.getSession();
 			String userName = (String) session.getAttribute("username");
-			System.out.println("--usersession--userName-->" + userName);					
-			adminrequestList = newrequestInterface.getadminrequestDetails(userName.toLowerCase().trim());			
+			System.out.println("--usersession--userName-->" + userName);	
+			if (startDate == null) {
+				startDate = Dateconverter.getPreToPreMonthDate(new Date());
+			}
+			if (endDate == null) {
+				endDate = new Date();
+			}	
+			adminrequestList = newrequestInterface.getadminrequestDetails(userName.toLowerCase().trim(),startDate, endDate);			
 			setFilteredRequestList(adminrequestList);
 			
 			
@@ -77,7 +87,25 @@ public class adminrequestbean implements Serializable {
 		}
 
 	}
+	public String daterange() {
+		try {
+			adminrequestList = new ArrayList<AdminRequestVo>();
+			System.out.println("--create new adminrequest-->");
+			HttpSession session = SessionUtils.getSession();
+			String userName = (String) session.getAttribute("username");
+			adminrequestList = newrequestInterface.getadminrequestDetails(userName.toLowerCase().trim(),
+					startDate, endDate);
 
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return "adminrequest";
+	}
+	
+	
+	
+	
+	
 	
 	// for print excel
 		public void postProcessXLS(Object document) {
@@ -126,7 +154,24 @@ public class adminrequestbean implements Serializable {
 	
 	
 	
-	
+		public Date getStartDate() {
+			return startDate;
+		}
+
+
+		public void setStartDate(Date startDate) {
+			this.startDate = startDate;
+		}
+
+
+		public Date getEndDate() {
+			return endDate;
+		}
+
+
+		public void setEndDate(Date endDate) {
+			this.endDate = endDate;
+		}
 	
 	
 	public AdminRequestVo getAdminrequestVo() {

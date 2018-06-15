@@ -1,16 +1,27 @@
 package com.reqman.beans;
 
+import java.awt.Graphics;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.Serializable;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
+import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
+import javax.faces.event.PhaseId;
+import javax.faces.view.facelets.FaceletContext;
+import javax.imageio.ImageIO;
 import javax.servlet.http.HttpSession;
 
 import org.apache.poi.hssf.usermodel.HSSFCell;
@@ -20,6 +31,8 @@ import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.hssf.util.HSSFColor;
 import org.primefaces.event.CellEditEvent;
+import org.primefaces.model.DefaultStreamedContent;
+import org.primefaces.model.StreamedContent;
 import org.primefaces.model.chart.PieChartModel;
 
 import com.lowagie.text.BadElementException;
@@ -27,7 +40,9 @@ import com.lowagie.text.Document;
 import com.lowagie.text.DocumentException;
 import com.lowagie.text.PageSize;
 import com.reqman.dao.FriendMasterInterface;
+import com.reqman.dao.UserDetailsInterface;
 import com.reqman.daoimpl.FriendMasterImpl;
+import com.reqman.daoimpl.UserDetailsImpl;
 import com.reqman.pojo.Category;
 import com.reqman.pojo.Userfriendlist;
 import com.reqman.pojo.Users;
@@ -42,7 +57,7 @@ import com.reqman.vo.UserVo;
 
 
 @ManagedBean(name="friendbean",eager = true)
-@ViewScoped
+@SessionScoped
 public class Friendbean implements Serializable{
 	
 	/**
@@ -59,6 +74,7 @@ private  List<FriendVo> friendList = new ArrayList<FriendVo>();
 	private  List<FriendVo> filteredFriendList = new ArrayList<FriendVo>();
 	private  List<FriendVo> friendList1 = new ArrayList<FriendVo>();
 	private  List<FriendVo> friendList2 = new ArrayList<FriendVo>();
+	private  List<FriendVo> AccountfriendList = new ArrayList<FriendVo>();
 	private String frienduser;
     private Boolean status;	
 	private String userid;
@@ -71,9 +87,13 @@ private  List<FriendVo> friendList = new ArrayList<FriendVo>();
 	private FriendVo selectedFriend;
 	private PieChartModel piechart;
 	private  List<UserVo> getfriendList ;
+	private  StreamedContent logoFromDB;
 	
-	 
 	
+	
+	
+
+
 	
 
 
@@ -89,6 +109,7 @@ private  List<FriendVo> friendList = new ArrayList<FriendVo>();
 			setFilteredFriendList(friendList);
 			friendList1 = friendMasterInterface.getUsersStatus(userName.toLowerCase().trim());
 			friendList2 = friendMasterInterface.getUsersfasleStatus(userName.toLowerCase().trim());
+			AccountfriendList = friendMasterInterface.getaccountUsers(userName.toLowerCase().trim());
 			 createPieModels();
 			  getfriendList = friendMasterInterface.AllUsers(userName.toLowerCase().trim());
 		}
@@ -177,7 +198,7 @@ private  List<FriendVo> friendList = new ArrayList<FriendVo>();
 			System.out.println("--usersession--userName-->"+userName);
 			
 				result = friendMasterInterface.savefriend(frienduser,status, friendfirstname, friendlastname,password, friendshortname,userName.toLowerCase().trim(), hashkey );
-			
+				System.out.println("--usersession--userName-->"+hashkey);
 			if(result == 1)
 			{
 				FacesContext.getCurrentInstance().addMessage(
@@ -254,6 +275,121 @@ private  List<FriendVo> friendList = new ArrayList<FriendVo>();
 	
 	
 	
+	 /*
+	 
+	
+	 @SuppressWarnings("unused")
+		public StreamedContent getLogoFromDB() throws IOException {
+			FacesContext context = FacesContext.getCurrentInstance();
+			UserDetailsInterface userImpl = new UserDetailsImpl();
+			HttpSession session = SessionUtils.getSession();
+			String userName = (String)session.getAttribute("username");
+			
+			String userLoginId = "";
+			byte[] image = null;
+			if (session == null) {
+				return new DefaultStreamedContent();
+			} else {
+				//user = (String)session.getAttribute("username");
+				ByteArrayOutputStream bos = new ByteArrayOutputStream();
+
+				// Reading image from database assuming that product image (bytes)
+				// of product id I1 which is already stored in the database.
+				try {
+				
+					
+					if(userName  == null)
+					{
+						userName  = (String)session.getAttribute("username");
+					}
+					image = friendMasterInterface.getImageDetails(userName.toLowerCase().trim());
+					if(image == null)
+					{
+						//image = new byte[10];
+						
+						//ByteArrayOutputStream bos = new ByteArrayOutputStream();
+						BufferedImage img = ImageIO.read(context.getExternalContext()
+								.getResourceAsStream("/resource/image/C8 logo.jpeg"));
+						int w = img.getWidth(null);
+						int h = img.getHeight(null);
+			 
+						// image is scaled two times at run time
+						int scale = 2;
+			 
+						BufferedImage bi = new BufferedImage(w * scale, h * scale,
+								BufferedImage.TYPE_INT_ARGB);
+						Graphics g = bi.getGraphics();
+			 
+						g.drawImage(img, 10, 10, w * scale, h * scale, null);
+			 
+						ImageIO.write(bi, "png", bos);
+			 
+						return new DefaultStreamedContent(new ByteArrayInputStream(
+								bos.toByteArray()), "image/png");
+					}
+				} catch (Exception e) { 
+						e.printStackTrace();
+				}
+
+				return new DefaultStreamedContent(new ByteArrayInputStream(image),
+						"image/png");
+
+			}
+		}
+	 
+	 
+	 */
+	 
+	
+	 
+	 public StreamedContent getLogoFromDB() throws Exception {
+		 byte[] image = null;
+			FacesContext context = FacesContext.getCurrentInstance();
+		 FaceletContext faceletContext = (FaceletContext) FacesContext.getCurrentInstance().getAttributes().get(FaceletContext.FACELET_CONTEXT_KEY);
+		 Integer userfriendid = (Integer) faceletContext.getAttribute("formId");
+		 
+		 try {
+			ByteArrayOutputStream bos = new ByteArrayOutputStream();
+
+				 image =friendMasterInterface.getuserImage(userfriendid);
+	 
+				 if(image == null)
+					{
+						//image = new byte[10];
+						
+						//ByteArrayOutputStream bos = new ByteArrayOutputStream();
+						BufferedImage img = ImageIO.read(context.getExternalContext()
+								.getResourceAsStream("/resource/image/avatar.png"));
+						int w = img.getWidth(null);
+						int h = img.getHeight(null);
+			 
+						// image is scaled two times at run time
+						int scale = 2;
+			 
+						BufferedImage bi = new BufferedImage(w * scale, h * scale,
+								BufferedImage.TYPE_INT_ARGB);
+						Graphics g = bi.getGraphics();
+			 
+						g.drawImage(img, 10, 10, w * scale, h * scale, null);
+			 
+						ImageIO.write(bi, "png", bos);
+			 
+						return new DefaultStreamedContent(new ByteArrayInputStream(
+								bos.toByteArray()), "image/png");
+					}
+				 
+		 } catch (Exception e) { 
+				e.printStackTrace();
+		}
+
+		return new DefaultStreamedContent(new ByteArrayInputStream(image),
+				"image/png");
+
+				 
+				
+	 
+			
+		}
 	
 	
 
@@ -467,6 +603,25 @@ private  List<FriendVo> friendList = new ArrayList<FriendVo>();
 
 
 
+	public List<FriendVo> getAccountfriendList() {
+		return AccountfriendList;
+	}
+
+
+
+	public void setAccountfriendList(List<FriendVo> accountfriendList) {
+		AccountfriendList = accountfriendList;
+	}
+
+
+
+	public void setLogoFromDB(StreamedContent logoFromDB) {
+		this.logoFromDB = logoFromDB;
+	}
+
+
+
+	
 
 	
 	

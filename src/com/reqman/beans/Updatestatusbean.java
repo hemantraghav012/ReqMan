@@ -17,6 +17,7 @@ import javax.faces.bean.ViewScoped;
 
 
 import javax.faces.context.FacesContext;
+import javax.faces.view.facelets.FaceletContext;
 import javax.servlet.http.HttpSession;
 
 import org.apache.poi.hssf.usermodel.HSSFCell;
@@ -25,6 +26,7 @@ import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.hssf.util.HSSFColor;
+import org.primefaces.event.CellEditEvent;
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
 import org.primefaces.model.UploadedFile;
@@ -42,8 +44,8 @@ import com.reqman.vo.UpdatestatusVo;
 
 
 @ManagedBean(name="updatestatusbean",eager = true)
-@RequestScoped
 @ViewScoped
+
 public class Updatestatusbean implements Serializable {
 
 	/**
@@ -128,6 +130,73 @@ public class Updatestatusbean implements Serializable {
 		
 	 
 	 
+	 public void updateRequestnotesStatus(){
+		 
+		int result=0;
+		 try
+	        {
+	        	System.out.println("modify action"+requestId);
+	            //addMessage("Welcome to Primefaces!!");
+	        	setRequestId(requestId);
+	          updatestatusInterface.getRequestStatusUpdateByrequestId(requestId);      	
+				
+	        
+	        
+
+	        }
+	        catch(Exception e){
+	        	e.printStackTrace();
+	        }
+	        
+	    }
+	 
+	 
+	 public void onCellEdit(CellEditEvent event) {
+	     int result = 0;
+	     
+	     Integer oldValue = 0;
+	     Integer newValue = 0;
+	     Integer updateRequestId = 0;
+		 try
+		 {
+			HttpSession session = SessionUtils.getSession();
+			FaceletContext faceletContext = (FaceletContext) FacesContext.getCurrentInstance().getAttributes()
+					.get(FaceletContext.FACELET_CONTEXT_KEY);
+
+			String userName = (String) session.getAttribute("username");
+
+			oldValue = (Integer) event.getOldValue();
+			newValue = (Integer) event.getNewValue();
+
+			updateRequestId = (Integer) faceletContext.getAttribute("updateRequeststatusId");
+		     
+		     
+		    // updateRequestId = (Integer) event.getComponent().getAttributes().get("updateRequestId");
+	         System.out.println("updatecategoryId"+updateRequestId);
+	        if(newValue != null && !newValue.equals(oldValue)) 
+	        {
+	           	result = updatestatusInterface.getUpdateRequestById(oldValue, newValue,updateRequestId,userName); 
+	        	if(result==1){
+	            FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO,"The task has been changed successfully.","Old status is " + oldValue + ", New status is " + newValue);
+	            FacesContext.getCurrentInstance().addMessage(null, msg);
+	        	}
+	        	if(result==2){
+		            FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO,"The task has been not changed successfully.Please enter the completion date.","Please enter the completion date.");
+		            FacesContext.getCurrentInstance().addMessage(null, msg);
+		        	}
+	        	}
+		 }
+		 catch(Exception e)
+		 {
+			 e.printStackTrace();
+			 FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Internal Error", e.getMessage().toString());
+	            FacesContext.getCurrentInstance().addMessage(null, msg);
+		 }
+	       
+	    }
+	
+	 
+	 
 	 public void modifyAction() {
 			
 			
@@ -153,7 +222,7 @@ public class Updatestatusbean implements Serializable {
 				setWeightage(updatestatusVo.getWeightage());
 				setPriority(updatestatusVo.getPriority());
 				setActualeffort(updatestatusVo.getActualeffort());
-	        	
+				setCompletiondate(updatestatusVo.getDatecompletion());
 
               FacesContext.getCurrentInstance()
 	            .getExternalContext().dispatch("modifyupdatestatus.xhtml");
@@ -169,16 +238,10 @@ public class Updatestatusbean implements Serializable {
 		{
 			int result = 0;
 			try{
-				System.out.println("--updateRequest-status-"+status);
-				System.out.println("--updateRequest-status-"+description);
-				System.out.println("--updateRequest-status-"+completiondate);
-				System.out.println("--updateRequest-status-"+title);
 				
-				System.out.println("--updateRequesr requestid-"+requestId);
 				HttpSession session = SessionUtils.getSession();
 				String userName = (String)session.getAttribute("username");			
-				System.out.println("--usersession--userName-->"+userName);
-				
+						System.out.println("completionj date--"+completiondate);		
 	        	result = updatestatusInterface.updateRequestById(requestId, completiondate, completionpercentage,stage,message,userName.toLowerCase().trim(),actualeffort);
 	        	
 	        	if(result == 2)
@@ -186,14 +249,20 @@ public class Updatestatusbean implements Serializable {
 	        		FacesContext.getCurrentInstance().addMessage(
 							null,
 							new FacesMessage(FacesMessage.SEVERITY_WARN,
-									"Problem while modifying the Category",
-									"Problem while modifying the Category"));
+									"Problem while modifying the Update request",
+									""));
 					return "modifyupdatestatus";
 	        	}
 	        	
 	        	if(result == 1)
 	        	{
 	        		updatestatusList = updatestatusInterface.getupdatestatusDetails(userName.toLowerCase().trim());
+	        		FacesContext.getCurrentInstance().addMessage(
+							null,
+							new FacesMessage(FacesMessage.SEVERITY_INFO,
+									"Request update  successfully.",
+									""));
+
 	        	}
 	        	
 			}
@@ -203,8 +272,8 @@ public class Updatestatusbean implements Serializable {
 				FacesContext.getCurrentInstance().addMessage(
 						null,
 						new FacesMessage(FacesMessage.SEVERITY_WARN,
-								"Problem while modifying the Category",
-								"Problem while modifying the Category"));
+								"Problem while modifying the Update request",
+								""));
 				return "modifyupdatestatus.xhtml";
 			}
 			return "updatestatustask";

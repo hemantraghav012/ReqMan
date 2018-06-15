@@ -46,6 +46,7 @@ public class Requesttypebean implements Serializable{
 private  List<RequesttypeVo> requesttypeList = new ArrayList<RequesttypeVo>();
 private  List<RequesttypeVo> requesttypeList1 = new ArrayList<RequesttypeVo>();
 private  List<RequesttypeVo> requesttypeList2 = new ArrayList<RequesttypeVo>();
+private  List<RequesttypeVo> accountrequesttypeList = new ArrayList<RequesttypeVo>();
 	private requesttypeMasterInterface requesttypeMasterInterface = new RequesttypeMasterImpl();
 	private	RequesttypeVo requesttypeVo = new RequesttypeVo();
 	private  List<RequesttypeVo> filteredRequesttypeList = new ArrayList<RequesttypeVo>();
@@ -70,6 +71,7 @@ private  List<RequesttypeVo> requesttypeList2 = new ArrayList<RequesttypeVo>();
 			setFilteredRequesttypeList(requesttypeList);
 			requesttypeList1 = requesttypeMasterInterface.getRequesttypeStatus(userName.toLowerCase().trim());
 			requesttypeList2 = requesttypeMasterInterface.getRequesttypefalseStatus(userName.toLowerCase().trim());
+			accountrequesttypeList = requesttypeMasterInterface.getallaccountrequesttype(userName.toLowerCase().trim());
 			 createPieModels();
 		}
 		catch(Exception e)
@@ -366,6 +368,18 @@ private  List<RequesttypeVo> requesttypeList2 = new ArrayList<RequesttypeVo>();
 
 	public void setRequesttypeVo(RequesttypeVo requesttypeVo) {
 		this.requesttypeVo = requesttypeVo;
+	}
+
+
+
+	public List<RequesttypeVo> getAccountrequesttypeList() {
+		return accountrequesttypeList;
+	}
+
+
+
+	public void setAccountrequesttypeList(List<RequesttypeVo> accountrequesttypeList) {
+		this.accountrequesttypeList = accountrequesttypeList;
 	}
 	
 	

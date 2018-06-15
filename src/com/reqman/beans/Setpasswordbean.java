@@ -49,17 +49,59 @@ public String setandupdate(){
 		
     	result = userImpl.updatepasswordByHashkey(hash, emailid.toLowerCase().trim(),password);
     	
-    	if(result == 2)
-    	{
-    		FacesContext.getCurrentInstance().addMessage(
+    	if (result == 1) {
+			HttpSession session = SessionUtils.getSession();
+			session.setAttribute("username", emailid.toLowerCase().trim());
+			session.setAttribute("userroleset", result);
+			//for App admin
+			FacesContext.getCurrentInstance().addMessage(
 					null,
-					new FacesMessage(FacesMessage.SEVERITY_WARN,
-							"Problem while modifying the Category",
-							"Problem while modifying the Category"));
-			return "eregisters.xhtml";
-    	}
+					new FacesMessage(FacesMessage.SEVERITY_INFO,
+							"Password created  successfully.",""));
+			return "home";
+			
+		} 
+		
+		else if (result == 2) {
+			HttpSession session = SessionUtils.getSession();
+			session.setAttribute("username", emailid.toLowerCase().trim());
+			session.setAttribute("userroleset",  result);
+			//For Account admin
+			FacesContext.getCurrentInstance().addMessage(
+					null,
+					new FacesMessage(FacesMessage.SEVERITY_INFO,
+							"Password created  successfully.",""));
+			return "home";
+		} 
+		
+		else if (result ==3) {
+			HttpSession session = SessionUtils.getSession();
+			session.setAttribute("username", emailid.toLowerCase().trim());
+			session.setAttribute("userroleset",  result);
+			//For Requestor
+			FacesContext.getCurrentInstance().addMessage(
+					null,
+					new FacesMessage(FacesMessage.SEVERITY_INFO,
+							"Password created  successfully.",""));
+			return "home";
+		} 
+		
+		else if (result == 4) {
+			HttpSession session = SessionUtils.getSession();
+			session.setAttribute("username", emailid.toLowerCase().trim());
+			session.setAttribute("userroleset",  result);
+			//For Team Member
+			FacesContext.getCurrentInstance().addMessage(
+					null,
+					new FacesMessage(FacesMessage.SEVERITY_INFO,
+							"Password created  successfully.",""));
+			return "home";
+		} 
     	
     	
+    	
+    		
+			
     	
 	}
 	catch(Exception e)
@@ -68,11 +110,11 @@ public String setandupdate(){
 		FacesContext.getCurrentInstance().addMessage(
 				null,
 				new FacesMessage(FacesMessage.SEVERITY_WARN,
-						"Problem while modifying the Category",
-						"Problem while modifying the Category"));
+						"Problem while modifying the Password",
+						""));
 		return "eregisters.xhtml";
 	}
-	return "login";
+	return "home";
 }
 
 
@@ -84,15 +126,55 @@ public String setinformationupdate(){
 		
     	result = userImpl.updateinformationByHashkey(hash, emailid.toLowerCase().trim(),password,firstname,lastname,shortname);
     	
-    	if(result == 2)
-    	{
-    		FacesContext.getCurrentInstance().addMessage(
+    	if (result == 1) {
+			HttpSession session = SessionUtils.getSession();
+			session.setAttribute("username", emailid.toLowerCase().trim());
+			session.setAttribute("userroleset", result);
+			//for App admin
+			FacesContext.getCurrentInstance().addMessage(
 					null,
-					new FacesMessage(FacesMessage.SEVERITY_WARN,
-							"Problem while modifying the Category",
-							"Problem while modifying the Category"));
-			return "setinformation.xhtml";
-    	}
+					new FacesMessage(FacesMessage.SEVERITY_INFO,
+							"Credentials Save  successfully.",""));
+			return "home";
+			
+		} 
+		
+		else if (result == 2) {
+			HttpSession session = SessionUtils.getSession();
+			session.setAttribute("username", emailid.toLowerCase().trim());
+			session.setAttribute("userroleset",  result);
+			//For Account admin
+			FacesContext.getCurrentInstance().addMessage(
+					null,
+					new FacesMessage(FacesMessage.SEVERITY_INFO,
+							"Credentials Save  successfully.",""));
+			return "home";
+		} 
+		
+		else if (result ==3) {
+			HttpSession session = SessionUtils.getSession();
+			session.setAttribute("username", emailid.toLowerCase().trim());
+			session.setAttribute("userroleset",  result);
+			//For Requestor
+			FacesContext.getCurrentInstance().addMessage(
+					null,
+					new FacesMessage(FacesMessage.SEVERITY_INFO,
+							"Credentials Save  successfully.",""));
+			return "home";
+		} 
+		
+		else if (result == 4) {
+			HttpSession session = SessionUtils.getSession();
+			session.setAttribute("username", emailid.toLowerCase().trim());
+			session.setAttribute("userroleset",  result);
+			//For Team Member
+			FacesContext.getCurrentInstance().addMessage(
+					null,
+					new FacesMessage(FacesMessage.SEVERITY_INFO,
+							"Credentials Save  successfully.",""));
+			return "home";
+		} 
+    	
     	
     	
     	
@@ -103,8 +185,8 @@ public String setinformationupdate(){
 		FacesContext.getCurrentInstance().addMessage(
 				null,
 				new FacesMessage(FacesMessage.SEVERITY_WARN,
-						"Problem while modifying the Category",
-						"Problem while modifying the Category"));
+						"Problem while modifying the Credentials",
+						""));
 		return "setinformation.xhtml";
 	}
 	return "login";
@@ -168,7 +250,7 @@ public String forgotpasswordupdate(){
 					null,
 					new FacesMessage(FacesMessage.SEVERITY_WARN,
 							"Problem while modifying the Category",
-							"Problem while modifying the Category"));
+							""));
 			return "forgotpasswordemail.xhtml";
     	}
     	
@@ -182,7 +264,7 @@ public String forgotpasswordupdate(){
 				null,
 				new FacesMessage(FacesMessage.SEVERITY_WARN,
 						"Problem while modifying the Category",
-						"Problem while modifying the Category"));
+						""));
 		return "eregisters.xhtml";
 	}
 	return "login";

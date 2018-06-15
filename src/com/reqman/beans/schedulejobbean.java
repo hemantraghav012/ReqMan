@@ -196,7 +196,7 @@ public class schedulejobbean implements Serializable{
 					null,
 					new FacesMessage(FacesMessage.SEVERITY_WARN,
 							"Problem while modifying the Schedulejob",
-							"Problem while modifying the Schedulejob"));
+							""));
 			return "modifyschedulejob.xhtml";
 		}
 		return "home";

@@ -57,18 +57,19 @@ public class Publicmaildomainbean implements Serializable{
 			try {
 				
 				publicdonainList=filterpublicemaildomain.readXLSXFile(excelfile);
+				
 				HttpSession session = SessionUtils.getSession();
 				String userName = (String) session.getAttribute("username");
 				
 				if(publicdonainList !=null && publicdonainList.size() != 0){
-				result = publicdomainInterface.save(publicdonainList,domainname,status,userName.toLowerCase().trim());
+				result = publicdomainInterface.save(publicdonainList,userName.toLowerCase().trim());
 				}
 				else{
 					FacesContext.getCurrentInstance().addMessage(
 							null,
 							new FacesMessage(FacesMessage.SEVERITY_WARN,
 									"Domain List already exist",
-									"Domain List already exist"));
+									""));
 					return "publicdomain";
 				}
 				if (result == 1) {
@@ -76,7 +77,7 @@ public class Publicmaildomainbean implements Serializable{
 							null,
 							new FacesMessage(FacesMessage.SEVERITY_WARN,
 									"Domain List already exist",
-									"Domain List already exist"));
+									""));
 					return "publicdomain";
 				}
 				if (result == 2) {
@@ -86,8 +87,8 @@ public class Publicmaildomainbean implements Serializable{
 									null,
 									new FacesMessage(
 											FacesMessage.SEVERITY_WARN,
-											"Domain List already exist and in active, please activate by using modify Domain List ",
-											"Domain List already exist and in active, please activate by using modify Domain List"));
+											"Domain List already exist and in active,  ",
+											"please activate by using modify Domain List"));
 					return "publicdomain";
 				}
 				
@@ -95,7 +96,7 @@ public class Publicmaildomainbean implements Serializable{
 							null,
 							new FacesMessage(FacesMessage.SEVERITY_WARN,
 									"Domain List created  successfully.",
-									"Domain List created  successfully."));
+									""));
 						
 				
 
@@ -116,28 +117,10 @@ public class Publicmaildomainbean implements Serializable{
 	
 	
 	
-	 public StreamedContent fileDownloadView() { 
-		 	System.out.println("hellodownload");
-		 	InputStream stream = null;
-		 	try{
-		 		
-				
-				
-	        	
+	
+	
+	
 
-	        	
-		 	}
-		 	catch(Exception e){
-		 		e.printStackTrace();
-		 	}
-	        
-	       return file;
-	    }
-	 
-	
-	
-	
-	
 	 
 	 
 	 
@@ -150,87 +133,38 @@ public class Publicmaildomainbean implements Serializable{
 		this.excelfile = excelfile;
 	}
 
-
-
-
-
-
-
 	public boolean isStatus() {
 		return status;
 	}
-
-
-
-
-
 
 
 	public void setStatus(boolean status) {
 		this.status = status;
 	}
 
-
-
-
-
-
-
 	public String getDomainname() {
 		return domainname;
 	}
-
-
-
-
-
-
 
 	public void setDomainname(String domainname) {
 		this.domainname = domainname;
 	}
 
-
-
-
-
-
 	public PublicemaildomainVo getPublicemaildomainVo() {
 		return publicemaildomainVo;
 	}
-
-
-
-
-
 
 	public void setPublicemaildomainVo(PublicemaildomainVo publicemaildomainVo) {
 		this.publicemaildomainVo = publicemaildomainVo;
 	}
 
-
-
-
-
-
 	public StreamedContent getFile() {
 		return file;
 	}
 
-
-
-
-
-
 	public void setFile(StreamedContent file) {
 		this.file = file;
 	}
-
-
-
-	 
-	 
-	 
-	 
+ 
 
 }

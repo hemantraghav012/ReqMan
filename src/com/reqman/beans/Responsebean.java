@@ -22,6 +22,8 @@ import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.hssf.util.HSSFColor;
+import org.primefaces.event.CellEditEvent;
+import org.primefaces.event.RowEditEvent;
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
 
@@ -38,7 +40,7 @@ import com.reqman.vo.UpdatestatusVo;
 
 
 @ManagedBean(name="responsebean",eager = true)
-@RequestScoped
+
 @ViewScoped
 public class Responsebean implements Serializable{
 
@@ -109,7 +111,25 @@ public class Responsebean implements Serializable{
 		}
 		
 	
-	
+	 public void updateRequestnotesStatus(){
+		 
+			int result=0;
+			 try
+		        {
+		        	System.out.println("modify action"+requestId);
+		            
+		        	setRequestId(requestId);
+		        	
+		        	responseInterface.getRequestStatusUpdateByrequestId(requestId);
+		        
+		        
+
+		        }
+		        catch(Exception e){
+		        	e.printStackTrace();
+		        }
+		        
+		    }
 	
 public void modifyAction() {
 		
@@ -181,13 +201,18 @@ public void modifyAction() {
         		FacesContext.getCurrentInstance().addMessage(
 						null,
 						new FacesMessage(FacesMessage.SEVERITY_WARN,
-								"Problem while modifying the Category",
-								"Problem while modifying the Category"));
+								"Problem while modifying the Request",
+								""));
 				return "modifyresponse.xhtml";
         	}
         	
         	if(result == 1)
         	{
+        		FacesContext.getCurrentInstance().addMessage(
+						null,
+						new FacesMessage(FacesMessage.SEVERITY_INFO,
+								"Request successfully updated.",
+								""));
         		responseList = responseInterface.getresponseDetails(userName.toLowerCase().trim());
         	}
         	
@@ -198,8 +223,8 @@ public void modifyAction() {
 			FacesContext.getCurrentInstance().addMessage(
 					null,
 					new FacesMessage(FacesMessage.SEVERITY_WARN,
-							"Problem while modifying the Category",
-							"Problem while modifying the Category"));
+							"Problem while modifying the Request",
+							""));
 			return "modifyresponse.xhtml";
 		}
 		return "responsetonewrequest";
@@ -217,6 +242,7 @@ public void modifyAction() {
 	        	//stream = FacesContext.getCurrentInstance().getExternalContext().getResourceAsStream("/resource/temp/avatar.jpg");
 	        	if(responseVo.getFile() != null && responseVo.getFile().length != 0)
 	        	{
+	        		
 	        		stream = new ByteArrayInputStream(responseVo.getFile());
 	        		
 	        	}
@@ -243,6 +269,64 @@ public void modifyAction() {
 	    }
 	 
 	
+	 
+	 
+	 
+	
+	 public void onCellEdit(RowEditEvent event) {
+	     int result = 0;
+	  Date completiondate_on_row   = null;
+	  String stage_on_row = "";
+	     Integer requestId = 0;
+	     Integer requestId_on_row = null;
+		 try
+		 {
+			 HttpSession session = SessionUtils.getSession();
+				String userName = (String)session.getAttribute("username");			
+				System.out.println("--usersession--userName-->"+userName);
+			   requestId = (Integer) event.getComponent().getAttributes().get("updateResponseId");
+	      
+	         completiondate_on_row =    ((ResponseVo) event.getObject()).getCompletiondate();
+	         stage_on_row =   ((ResponseVo) event.getObject()).getStage();
+	 requestId_on_row = ((ResponseVo) event.getObject()).getNewRequestId();
+	        if(event !=null) 
+	        {
+	        	result = responseInterface.getupdateongrid(completiondate_on_row, stage_on_row, requestId,userName);
+	        }
+	        	
+	        if(result == 1){	
+	        	FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO,"The request has been Update successfully.","Date is " + completiondate_on_row + ", New stage is " + stage_on_row);
+	            FacesContext.getCurrentInstance().addMessage(null, msg);
+	            
+	           // responseList = responseInterface.getresponseDetails(userName.toLowerCase().trim());
+	        }
+	        
+	        if(result == 2){
+				FacesContext.getCurrentInstance().addMessage(null,
+						new FacesMessage(FacesMessage.SEVERITY_INFO, "No Change", ""));
+        		
+	        }
+	        responseList = responseInterface.getresponseDetails(userName.toLowerCase().trim());
+        	
+	        
+		 }
+		 catch(Exception e)
+		 {
+			 e.printStackTrace();
+			 FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Internal Error", e.getMessage().toString());
+	            FacesContext.getCurrentInstance().addMessage(null, msg);
+		 }
+	       
+	    }
+	 
+	 
+	
+	 
+	 public void onRowCancel(RowEditEvent event) {
+	        FacesMessage msg = new FacesMessage("Edit Cancelled", ((ResponseVo) event.getObject()).getNewRequestId().toString());
+	        FacesContext.getCurrentInstance().addMessage(null, msg);
+	    }
+	 
 	
 	 public void postProcessXLS(Object document) {
 	        HSSFWorkbook wb = (HSSFWorkbook) document;
