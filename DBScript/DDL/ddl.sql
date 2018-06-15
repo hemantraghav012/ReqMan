@@ -109,13 +109,16 @@ CREATE TABLE reqman.request
     description character varying(500) COLLATE "default".pg_catalog,
     completiondate timestamp without time zone,
     attachment bytea,
+    soundaudio bytea,
     requeststatus integer,
     status boolean,
     datecreated timestamp without time zone,
+     teammembercompletiondate timestamp without time zone,
     createdby character varying(50) COLLATE "default".pg_catalog,
     datemodified timestamp without time zone,
     modifiedby character varying(50) COLLATE "default".pg_catalog,
     filename character varying(50) COLLATE "default".pg_catalog,
+    audiofilename character varying(50) COLLATE "default".pg_catalog,
     friendid integer,
     completionpercentage real,
     acceptdate timestamp without time zone,
@@ -407,7 +410,7 @@ CREATE TABLE reqman.users
     emailstatus character varying(255) COLLATE "default".pg_catalog,
     accountid integer,
     CONSTRAINT pk_users_id PRIMARY KEY (id),
-    CONSTRAINT uniq_user_id UNIQUE (emailid),
+    CONSTRAINT uniq_user_id UNIQUE (emailid,hashkey),
     CONSTRAINT account_users_fk FOREIGN KEY (accountid)
         REFERENCES reqman.account (id) MATCH SIMPLE
         ON UPDATE NO ACTION
@@ -508,12 +511,13 @@ CREATE TABLE reqman.account
 (
     id integer NOT NULL DEFAULT nextval('reqman.account_id_seq'::regclass),
     name character varying(100) COLLATE "default".pg_catalog,
+     organizationkey character varying(100) COLLATE "default".pg_catalog,
     status boolean,
     datecreated timestamp without time zone,
     createdby character varying(100) COLLATE "default".pg_catalog,
      photo bytea,
     CONSTRAINT id_account_pk PRIMARY KEY (id),
-    CONSTRAINT account_name_unique UNIQUE (name)
+    CONSTRAINT account_name_unique UNIQUE (organizationkey)
 )
 WITH (
     OIDS = FALSE
@@ -618,8 +622,9 @@ CREATE TABLE reqman.schdulejobs
     jobname character varying(200) COLLATE "default".pg_catalog,
     description character varying(200) COLLATE "default".pg_catalog,
     day character varying(10) COLLATE "default".pg_catalog,
-    hour character varying(10) COLLATE "default".pg_catalog,
-    minute character varying(10) COLLATE "default".pg_catalog,
+   hour integer,
+   minute integer,
+    date integer,
     status boolean,
     createdby character varying(50) COLLATE "default".pg_catalog,
     createdon timestamp without time zone,
@@ -634,3 +639,27 @@ ALTER TABLE reqman.schdulejobs
     OWNER to postgres;
 
 GRANT ALL ON TABLE reqman.schdulejobs TO postgres WITH GRANT OPTION;
+
+
+CREATE TABLE reqman.suggestion
+(
+    id integer NOT NULL DEFAULT nextval('reqman.suggestion_id_seq'::regclass),
+    message character varying(200) COLLATE "default".pg_catalog,
+    createdby character varying(500) COLLATE "default".pg_catalog,
+   datecreated timestamp without time zone,
+   adminremarks character varying(500) COLLATE "default".pg_catalog,
+   actionowner character varying(500) COLLATE "default".pg_catalog,    
+    messagetype character varying(50) COLLATE "default".pg_catalog,
+    status boolean,
+    requeststatus integer,
+    CONSTRAINT pk_suggestion PRIMARY KEY (id)
+)
+WITH (
+    OIDS = FALSE
+)
+TABLESPACE pg_default;
+
+ALTER TABLE reqman.suggestion
+    OWNER to postgres;
+
+GRANT ALL ON TABLE reqman.suggestion TO postgres WITH GRANT OPTION;
