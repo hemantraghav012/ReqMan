@@ -15,19 +15,7 @@
 			<job-class>com.reqman.scheduler.PendingRequestJob</job-class>
 		</job>
 
-		<trigger>
-			<cron>
-				<name>dummyTriggerName</name>
-				<job-name>PendingRequestJob</job-name>
-				<job-group>PendingRequestGroup</job-group>
-				<!-- It will run every 5 seconds -->
-			<!-- 	<cron-expression>0/5 * * * * ?</cron-expression> -->
-				<cron-expression>0 44 17 ? * FRI</cron-expression>
-
-
-				
-			</cron>
-		</trigger>
+			
 	</schedule>
 </job-scheduling-data>
 
