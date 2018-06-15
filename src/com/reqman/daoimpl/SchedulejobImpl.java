@@ -34,65 +34,56 @@ import com.reqman.vo.requestNoteVo;
 public class SchedulejobImpl implements SchedulejobInterface {
 
 	@Override
-	public int saveschedulejob(String jobname, Boolean status, String userName,
-			String day,Integer date, Integer hour,  Integer minute, String description)
-			throws Exception {
+	public int saveschedulejob(String jobname, Boolean status, String userName, String day, Integer date, Integer hour,
+			Integer minute, String description) throws Exception {
 		// TODO Auto-generated method stub
-		 Session session = null;
-	        SessionFactory hsf = null;
-	        Transaction tx = null;
-	        Users users=null;
-	        Schdulejobs schdulejobs = null;
-	        int result = 0;
-	        try {
-	        	session = HibernateUtil.getSession();
-	            tx = session.beginTransaction();   
-	            
-	            users = (Users) session
-						.createCriteria(Users.class)
-						.add(Restrictions.eq("emailid",
-								userName.toLowerCase().trim()).ignoreCase())
-						.uniqueResult();
-	            schdulejobs = (Schdulejobs) session
-						.createCriteria(Schdulejobs.class)
-						.add(Restrictions.eq("jobname",
-								jobname.toLowerCase().trim()).ignoreCase())
-						.uniqueResult();
-	            
-	            schdulejobs=new Schdulejobs();
-	           
-	            schdulejobs.setDay(day);
-	            schdulejobs.setDate(date);	            
-	            schdulejobs.setHour(hour);
-	            schdulejobs.setMinute(minute);
-	            schdulejobs.setStatus(true);
-	            schdulejobs.setCreatedby(userName);
-	            schdulejobs.setCreatedon(new Date());
-	            schdulejobs.setJobname(jobname);
-	            schdulejobs.setDescription(description);
-	           
-	           
-	            	session.save(schdulejobs);
-	            	tx.commit();
-	            	result = 3;
-	            
-	        } catch (Exception e) {
-	        	if(tx != null)
-	            tx.rollback();
-	            e.printStackTrace();
-	            result = 4;
-	            throw new Exception(e);
-	        } finally {
-	        	if(session != null)
-	            session.close();
-	        }
-			
-			return result;
-	 	}
+		Session session = null;
+		SessionFactory hsf = null;
+		Transaction tx = null;
+		Users users = null;
+		Schdulejobs schdulejobs = null;
+		int result = 0;
+		try {
+			session = HibernateUtil.getSession();
+			tx = session.beginTransaction();
+
+			users = (Users) session.createCriteria(Users.class)
+					.add(Restrictions.eq("emailid", userName.toLowerCase().trim()).ignoreCase()).uniqueResult();
+			schdulejobs = (Schdulejobs) session.createCriteria(Schdulejobs.class)
+					.add(Restrictions.eq("jobname", jobname.toLowerCase().trim()).ignoreCase()).uniqueResult();
+
+			schdulejobs = new Schdulejobs();
+
+			schdulejobs.setDay(day);
+			schdulejobs.setDate(date);
+			schdulejobs.setHour(hour);
+			schdulejobs.setMinute(minute);
+			schdulejobs.setStatus(true);
+			schdulejobs.setCreatedby(userName);
+			schdulejobs.setCreatedon(new Date());
+			schdulejobs.setJobname(jobname);
+			schdulejobs.setDescription(description);
+
+			session.save(schdulejobs);
+			tx.commit();
+			result = 3;
+
+		} catch (Exception e) {
+			if (tx != null)
+				tx.rollback();
+			e.printStackTrace();
+			result = 4;
+			throw new Exception(e);
+		} finally {
+			if (session != null)
+				session.close();
+		}
+
+		return result;
+	}
 
 	@Override
-	public SchedulejobVo getscheduleById(Integer schedulejobid)
-			throws Exception {
+	public SchedulejobVo getscheduleById(Integer schedulejobid) throws Exception {
 		// TODO Auto-generated method stub
 		Session session = null;
 		Transaction tx = null;
@@ -102,27 +93,26 @@ public class SchedulejobImpl implements SchedulejobInterface {
 			session = HibernateUtil.getSession();
 			tx = session.beginTransaction();
 			schedulejobs = (Schdulejobs) session.createCriteria(Schdulejobs.class)
-					.add(Restrictions.eq("id", Integer.valueOf(schedulejobid)))
-					.uniqueResult();
-			
-			if(schedulejobs != null){
-				if(schedulejobs.getDay() != null && ! schedulejobs.getDay().isEmpty()){
-				schedulejobVo.setDay(schedulejobs.getDay());
-				}else{
+					.add(Restrictions.eq("id", Integer.valueOf(schedulejobid))).uniqueResult();
+
+			if (schedulejobs != null) {
+				if (schedulejobs.getDay() != null && !schedulejobs.getDay().isEmpty()) {
+					schedulejobVo.setDay(schedulejobs.getDay());
+				} else {
 					schedulejobVo.setDay("null");
 				}
-				if(schedulejobs.getDate() != null){
-				schedulejobVo.setDate(schedulejobs.getDate());
-				}else{
+				if (schedulejobs.getDate() != null) {
+					schedulejobVo.setDate(schedulejobs.getDate());
+				} else {
 					schedulejobVo.setDate(0);
 
 				}
 				schedulejobVo.setHour(schedulejobs.getHour());
 				schedulejobVo.setMinute(schedulejobs.getMinute());
 				schedulejobVo.setJobname(schedulejobs.getJobname());
-				
+
 				schedulejobVo.setDescription(schedulejobs.getDescription());
-            
+
 				tx.commit();
 			}
 		} catch (Exception e) {
@@ -141,68 +131,59 @@ public class SchedulejobImpl implements SchedulejobInterface {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<SchedulejobVo> getschedulejobDetails(String userName)
-			throws Exception {
+	public List<SchedulejobVo> getschedulejobDetails(String userName) throws Exception {
 		// TODO Auto-generated method stub
 		List<SchedulejobVo> SchedulejobList = new ArrayList<SchedulejobVo>();
 
 		Session session = null;
 		Transaction tx = null;
-		Users usersTemp=null;
+		Users usersTemp = null;
 		Schdulejobs Schedulejobs = null;
 		SchedulejobVo schedulejobVo = null;
-		
+
 		try {
 
-				session = HibernateUtil.getSession();
-				tx = session.beginTransaction();
-				
-				
-				usersTemp = (Users) session
-						.createCriteria(Users.class)
-						.add(Restrictions.eq("emailid",
-								userName.toLowerCase().trim()).ignoreCase())
-						.uniqueResult();
+			session = HibernateUtil.getSession();
+			tx = session.beginTransaction();
 
-				if (usersTemp != null) {
+			usersTemp = (Users) session.createCriteria(Users.class)
+					.add(Restrictions.eq("emailid", userName.toLowerCase().trim()).ignoreCase()).uniqueResult();
 
-					@SuppressWarnings("unchecked")
-					List<Schdulejobs> schdulejobsPojoList = (List<Schdulejobs>) session
-							.createCriteria(Schdulejobs.class)					
-							.list();
-							
-					
-								
+			if (usersTemp != null) {
+
+				@SuppressWarnings("unchecked")
+				List<Schdulejobs> schdulejobsPojoList = (List<Schdulejobs>) session.createCriteria(Schdulejobs.class)
+						.list();
+
 				if (schdulejobsPojoList != null && schdulejobsPojoList.size() != 0) {
 
 					for (Schdulejobs schedulejobDB : schdulejobsPojoList) {
 
-						schedulejobVo=new SchedulejobVo();
-						
-						schedulejobVo.setSchedulejobId(schedulejobDB.getId());
-						
-						
-						if(schedulejobDB.getDay() != null && ! schedulejobDB.getDay().isEmpty()){
-							schedulejobVo.setDay(schedulejobDB.getDay());
-							}else{
-								schedulejobVo.setDay("null");
-							}
-							if(schedulejobDB.getDate() != null){
-							schedulejobVo.setDate(schedulejobDB.getDate());
-							}else{
-								schedulejobVo.setDate(0);
+						schedulejobVo = new SchedulejobVo();
 
-							}
-					
+						schedulejobVo.setSchedulejobId(schedulejobDB.getId());
+
+						if (schedulejobDB.getDay() != null && !schedulejobDB.getDay().isEmpty()) {
+							schedulejobVo.setDay(schedulejobDB.getDay());
+						} else {
+							schedulejobVo.setDay("null");
+						}
+						if (schedulejobDB.getDate() != null) {
+							schedulejobVo.setDate(schedulejobDB.getDate());
+						} else {
+							schedulejobVo.setDate(0);
+
+						}
+
 						schedulejobVo.setHour(schedulejobDB.getHour());
 						schedulejobVo.setMinute(schedulejobDB.getMinute());
 						schedulejobVo.setJobname(schedulejobDB.getJobname());
 						schedulejobVo.setDescription(schedulejobDB.getDescription());
 						SchedulejobList.add(schedulejobVo);
-							
+
 					}
 					tx.commit();
-				
+
 				}
 			}
 		} catch (Exception e) {
@@ -221,25 +202,23 @@ public class SchedulejobImpl implements SchedulejobInterface {
 	}
 
 	@Override
-	public int updatescheduleById(Integer schedulejobid, Boolean status,
-			String description, String jobname, String day, Integer hour,
-			Integer minute,Integer date, String userName) throws Exception {
+	public int updatescheduleById(Integer schedulejobid, Boolean status, String description, String jobname, String day,
+			Integer hour, Integer minute, Integer date, String userName) throws Exception {
 		// TODO Auto-generated method stub
 
 		Session session = null;
-		Transaction tx = null;		
-		Schdulejobs schedulejobs = null;		
+		Transaction tx = null;
+		Schdulejobs schedulejobs = null;
 		int result = 0;
-		
+
 		try {
 			session = HibernateUtil.getSession();
 			tx = session.beginTransaction();
 			schedulejobs = (Schdulejobs) session.createCriteria(Schdulejobs.class)
-					.add(Restrictions.eq("id", Integer.valueOf(schedulejobid)))
-					.uniqueResult();
+					.add(Restrictions.eq("id", Integer.valueOf(schedulejobid))).uniqueResult();
 
 			if (schedulejobs != null) {
-				
+
 				schedulejobs.setDay(day);
 				schedulejobs.setHour(hour);
 				schedulejobs.setMinute(minute);
@@ -248,7 +227,6 @@ public class SchedulejobImpl implements SchedulejobInterface {
 				schedulejobs.setDate(date);
 				session.update(schedulejobs);
 
-				
 				tx.commit();
 				result = 1;
 
@@ -267,8 +245,5 @@ public class SchedulejobImpl implements SchedulejobInterface {
 		return result;
 
 	}
-
-		
-
 	
 }

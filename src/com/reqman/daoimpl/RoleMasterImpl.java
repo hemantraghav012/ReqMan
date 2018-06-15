@@ -27,45 +27,38 @@ public class RoleMasterImpl implements RoleMasterInterface {
 	public List<RoleVo> getroleDetails(String userName) throws Exception {
 		// TODO Auto-generated method stub
 		List<RoleVo> roleList = new ArrayList<RoleVo>();
-		
+
 		Users usersTemp = null;
-	    Session session = null;
-	    Transaction tx = null;
-	    RoleVo roleVo = null;
-	    Roles roles = null;
-		try
-		{
-           	session = HibernateUtil.getSession();
-            tx = session.beginTransaction();
-           
-            Criteria crit = session.createCriteria(Roles.class);
-						
-			List<Roles> rolesPojoList = (List<Roles>)crit.list();
-            	
-            		for(Roles rolesDB : rolesPojoList)
-            		{
-            			roleVo=new RoleVo();
-            			roleVo.setId(rolesDB.getId());
-            			roleVo.setName(rolesDB.getName());
-            			roleVo.setDatecreated(rolesDB.getDatecreated());
-            			roleVo.setCreatedby(rolesDB.getCreatedby());
-            			roleVo.setStatus(rolesDB.getStatus());
-            			roleList.add(roleVo);
-            			}
-            		
-            	
-            	tx.commit();
-            
-		}
-		catch(Exception e)
-		{
+		Session session = null;
+		Transaction tx = null;
+		RoleVo roleVo = null;
+		Roles roles = null;
+		try {
+			session = HibernateUtil.getSession();
+			tx = session.beginTransaction();
+
+			Criteria crit = session.createCriteria(Roles.class);
+
+			List<Roles> rolesPojoList = (List<Roles>) crit.list();
+
+			for (Roles rolesDB : rolesPojoList) {
+				roleVo = new RoleVo();
+				roleVo.setId(rolesDB.getId());
+				roleVo.setName(rolesDB.getName());
+				roleVo.setDatecreated(rolesDB.getDatecreated());
+				roleVo.setCreatedby(rolesDB.getCreatedby());
+				roleVo.setStatus(rolesDB.getStatus());
+				roleList.add(roleVo);
+			}
+
+			tx.commit();
+
+		} catch (Exception e) {
 			e.printStackTrace();
+		} finally {
+			if (session != null)
+				session.close();
 		}
-		finally 
-		{
-        	if(session != null)
-            session.close();
-	    }
 
 		return roleList;
 	}
@@ -73,39 +66,38 @@ public class RoleMasterImpl implements RoleMasterInterface {
 	@Override
 	public int getsaverole(Integer id, String name) throws Exception {
 		// TODO Auto-generated method stub
-		 Session session = null;
-	        SessionFactory hsf = null;
-	        Transaction tx = null;
-	      Roles roles = null;
-	        int result = 0;
-	        try {
-	        	session = HibernateUtil.getSession();
-	            tx = session.beginTransaction();
-	            
-	           
-	            	roles=new Roles();
-	            	roles=new Roles();
-	            	roles.setId(id);
-	            	roles.setName(name);	            
-	            	roles.setCreatedby("SYSTEM");	            
-	            	roles.setDatecreated(new Date());
-	            	roles.setStatus(true);
-	            	session.save(roles);
-	            	tx.commit();
-	            	result = 3;
-	            
-	        } catch (Exception e) {
-	        	if(tx != null)
-	            tx.rollback();
-	            e.printStackTrace();
-	            result = 4;
-	            throw new Exception(e);
-	        } finally {
-	        	if(session != null)
-	            session.close();
-	        }
-			
-			return result;
-	 	}
-	
+		Session session = null;
+		SessionFactory hsf = null;
+		Transaction tx = null;
+		Roles roles = null;
+		int result = 0;
+		try {
+			session = HibernateUtil.getSession();
+			tx = session.beginTransaction();
+
+			roles = new Roles();
+			roles = new Roles();
+			roles.setId(id);
+			roles.setName(name);
+			roles.setCreatedby("SYSTEM");
+			roles.setDatecreated(new Date());
+			roles.setStatus(true);
+			session.save(roles);
+			tx.commit();
+			result = 3;
+
+		} catch (Exception e) {
+			if (tx != null)
+				tx.rollback();
+			e.printStackTrace();
+			result = 4;
+			throw new Exception(e);
+		} finally {
+			if (session != null)
+				session.close();
+		}
+
+		return result;
+	}
+
 }

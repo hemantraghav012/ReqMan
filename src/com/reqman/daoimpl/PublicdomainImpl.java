@@ -17,6 +17,7 @@ import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.hibernate.Criteria;
 import org.hibernate.Hibernate;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -28,21 +29,21 @@ import com.reqman.dao.Publicdomaininterface;
 import com.reqman.pojo.Account;
 import com.reqman.pojo.Publicemaildomains;
 import com.reqman.pojo.Request;
+import com.reqman.pojo.Userfriendlist;
 import com.reqman.pojo.Users;
 import com.reqman.vo.AccountVo;
 import com.reqman.vo.NewrequestVo;
 import com.reqman.vo.PublicemaildomainVo;
+import com.reqman.vo.UserVo;
 
 
 
 public class PublicdomainImpl implements Publicdomaininterface{
 	
 
-	 @SuppressWarnings("unused")
-	 @Override
-	public int save(List<PublicemaildomainVo> publicdonainList,
-			String domainname, boolean status, String userName)
-			throws Exception {
+	@SuppressWarnings("unused")
+	@Override
+	public int save(List<PublicemaildomainVo> publicdonainList, String userName) throws Exception {
 		// TODO Auto-generated method stub
 		Session session = null;
 		Transaction tx = null;
@@ -58,15 +59,11 @@ public class PublicdomainImpl implements Publicdomaininterface{
 			for (PublicemaildomainVo publicemaildomainVo : publicdonainList) {
 				name = publicemaildomainVo.getName();
 
-				publicemaildomain = (Publicemaildomains) session
-						.createCriteria(Publicemaildomains.class)
-						.add(Restrictions.eq("name", name.toLowerCase().trim())
-								.ignoreCase()).uniqueResult();
+				publicemaildomain = (Publicemaildomains) session.createCriteria(Publicemaildomains.class)
+						.add(Restrictions.eq("name", name.toLowerCase().trim()).ignoreCase()).uniqueResult();
 
-				if (publicemaildomain != null
-						&& publicemaildomain.getName() != null
-						&& publicemaildomain.getName().trim()
-								.equalsIgnoreCase(name.trim())) {
+				if (publicemaildomain != null && publicemaildomain.getName() != null
+						&& publicemaildomain.getName().trim().equalsIgnoreCase(name.trim())) {
 					publicemaildomain.setStatus(true);
 
 					session.update(publicemaildomain);
@@ -103,7 +100,7 @@ public class PublicdomainImpl implements Publicdomaininterface{
 
 		return result;
 	}
-
+/*
 	@Override
 	public PublicemaildomainVo getemaildomainfile() throws Exception {
 		// TODO Auto-generated method stub
@@ -137,5 +134,55 @@ public class PublicdomainImpl implements Publicdomaininterface{
 		return publicemaildomainVo;
 
 	}
+*/
+	
+	@Override
+	public int quickrequestcheckval(String emailid) throws Exception {
+		// TODO Auto-generated method stub
+		Session session = null;
+		Transaction tx = null;
+		int result = 0;
+		Publicemaildomains publicemaildomains = null;
 
-	 }
+		String emailArr[] = {};
+		try {
+
+			session = HibernateUtil.getSession();
+			tx = session.beginTransaction();
+			if (emailid != null) {
+				emailArr = emailid.split("@");
+				if (emailArr != null && emailArr.length >= 2) {
+
+					Criteria crit = session.createCriteria(Publicemaildomains.class);
+
+					crit.add(Restrictions.eq("name", emailArr[1].toLowerCase().trim()).ignoreCase());
+
+					publicemaildomains = (Publicemaildomains) crit.uniqueResult();
+				}
+				if (publicemaildomains != null) {
+					result = 1;
+				}
+
+				else {
+					result = 3;
+				}
+
+				tx.commit();
+
+			}
+
+		} catch (Exception e) {
+			if (tx != null)
+				tx.rollback();
+			e.printStackTrace();
+			result = 4;
+			throw new Exception(e);
+		} finally {
+			if (session != null)
+				session.close();
+		}
+
+		return result;
+	}
+
+}
