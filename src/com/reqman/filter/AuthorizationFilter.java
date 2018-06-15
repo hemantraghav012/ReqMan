@@ -108,7 +108,55 @@ public class AuthorizationFilter implements Filter {
  					|| reqURI.contains("javax.faces.resource")) {
  				chain.doFilter(request, response);
  			}
+			else if(reqURI.indexOf("/accountadminregister.xhtml") >=0 
+ 					|| (ses != null && ses.getAttribute("username") != null)
+ 					|| reqURI.indexOf("/public/") >= 0
+ 					|| reqURI.contains("javax.faces.resource")) {
+ 				chain.doFilter(request, response);
+ 			}
 			
+			else if(reqURI.indexOf("/termsandconditions.xhtml") >=0 
+ 					|| (ses != null && ses.getAttribute("username") != null)
+ 					|| reqURI.indexOf("/public/") >= 0
+ 					|| reqURI.contains("javax.faces.resource")) {
+ 				chain.doFilter(request, response);
+ 			}
+			else if(reqURI.indexOf("/contactus.xhtml") >=0 
+ 					|| (ses != null && ses.getAttribute("username") != null)
+ 					|| reqURI.indexOf("/public/") >= 0
+ 					|| reqURI.contains("javax.faces.resource")) {
+ 				chain.doFilter(request, response);
+ 			}
+			else if(reqURI.indexOf("/aboutus.xhtml") >=0 
+ 					|| (ses != null && ses.getAttribute("username") != null)
+ 					|| reqURI.indexOf("/public/") >= 0
+ 					|| reqURI.contains("javax.faces.resource")) {
+ 				chain.doFilter(request, response);
+ 			}
+			else if(reqURI.indexOf("/blogs.xhtml") >=0 
+ 					|| (ses != null && ses.getAttribute("username") != null)
+ 					|| reqURI.indexOf("/public/") >= 0
+ 					|| reqURI.contains("javax.faces.resource")) {
+ 				chain.doFilter(request, response);
+ 			}
+			else if(reqURI.indexOf("/paytabspaypage.xhtml") >=0 
+					|| (ses != null && ses.getAttribute("username") != null)
+					|| reqURI.indexOf("/public/") >= 0
+					|| reqURI.contains("javax.faces.resource")) {
+				chain.doFilter(request, response);
+			}
+			else if(reqURI.indexOf("/paytabspage.xhtml") >=0 
+					|| (ses != null && ses.getAttribute("username") != null)
+					|| reqURI.indexOf("/public/") >= 0
+					|| reqURI.contains("javax.faces.resource")) {
+				chain.doFilter(request, response);
+			}
+			else if(reqURI.indexOf("/paytabspageorg.xhtml") >=0 
+					|| (ses != null && ses.getAttribute("username") != null)
+					|| reqURI.indexOf("/public/") >= 0
+					|| reqURI.contains("javax.faces.resource")) {
+				chain.doFilter(request, response);
+			}
 			else
 			{
 				resp.sendRedirect(reqt.getContextPath() + "/faces/index.xhtml");
