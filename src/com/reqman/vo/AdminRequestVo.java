@@ -21,17 +21,24 @@ public class AdminRequestVo {
 	private int completionpercentage;
 	private String stage;
 	private String changedate;
+	private String createddate;
 	private List<requestNoteVo> noteList;
 	private Integer project;
 	private Integer category;
 	private Integer requesttype;
 	private Integer userfriend;
+	private Integer expectedcompletion;
+	private Integer attachmentstatus;
 	
 	
 	
 	
-	
-	
+	public String getCreateddate() {
+		return createddate;
+	}
+	public void setCreateddate(String createddate) {
+		this.createddate = createddate;
+	}
 	public int getNewRequestId() {
 		return newRequestId;
 	}
@@ -151,6 +158,18 @@ public class AdminRequestVo {
 	}
 	public void setUserfriend(Integer userfriend) {
 		this.userfriend = userfriend;
+	}
+	public Integer getExpectedcompletion() {
+		return expectedcompletion;
+	}
+	public void setExpectedcompletion(Integer expectedcompletion) {
+		this.expectedcompletion = expectedcompletion;
+	}
+	public Integer getAttachmentstatus() {
+		return attachmentstatus;
+	}
+	public void setAttachmentstatus(Integer attachmentstatus) {
+		this.attachmentstatus = attachmentstatus;
 	}
 	
 	

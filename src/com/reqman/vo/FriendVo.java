@@ -1,8 +1,10 @@
 package com.reqman.vo;
 
+import org.primefaces.model.StreamedContent;
+
 public class FriendVo {
 
-
+    
 	private String firstname;
 	private String lastname;
 	private String status;
@@ -10,6 +12,7 @@ public class FriendVo {
 	private String shortname;
 	private Integer userFriendId;
 	private String name;
+	private  Integer friendid;
 	
 	
 	
@@ -19,6 +22,13 @@ public class FriendVo {
 	
 	
 	
+	
+	public Integer getFriendid() {
+		return friendid;
+	}
+	public void setFriendid(Integer friendid) {
+		this.friendid = friendid;
+	}
 	public String getName() {
 		return name;
 	}

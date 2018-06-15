@@ -10,6 +10,8 @@ import org.primefaces.model.UploadedFile;
 
 public class ResponseVo{
 	
+	
+	
 	private Integer newRequestId;
 	private String stage;
 	private String title;
@@ -30,17 +32,41 @@ public class ResponseVo{
 	private List<requestNoteVo> noteList;
 	private Date createdate;
 	private String changedate;
-	
+	private Integer serialid;
 	private String actualeffort;
 	private String estimatedeffort;
 	private String priority;
 	private Integer weightage;
+	private Integer teammembernotescount;
+	private Integer attachmentstatus;
+	
+	
+	
+	
 
-	
-	
-	
-	
-	
+	public Integer getSerialid() {
+		return serialid;
+	}
+
+	public void setSerialid(Integer serialid) {
+		this.serialid = serialid;
+	}
+
+	public Integer getAttachmentstatus() {
+		return attachmentstatus;
+	}
+
+	public void setAttachmentstatus(Integer attachmentstatus) {
+		this.attachmentstatus = attachmentstatus;
+	}
+
+	public Integer getTeammembernotescount() {
+		return teammembernotescount;
+	}
+
+	public void setTeammembernotescount(Integer teammembernotescount) {
+		this.teammembernotescount = teammembernotescount;
+	}
 
 	public String getActualeffort() {
 		return actualeffort;

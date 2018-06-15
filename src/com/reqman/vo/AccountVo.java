@@ -12,10 +12,17 @@ public class AccountVo {
 	private Date  datecreated;
 	private String ceatedby;
 	private String imagename;
-	 
+	private String organizationkey;
 	
 	
 	
+	
+	public String getOrganizationkey() {
+		return organizationkey;
+	}
+	public void setOrganizationkey(String organizationkey) {
+		this.organizationkey = organizationkey;
+	}
 	public String getImagename() {
 		return imagename;
 	}

@@ -29,7 +29,8 @@ public class requestNoteVo implements Serializable{
 	private String createdon;
 	private String createdby;
 	private String  time;
-	
+	private Boolean requeststatus;
+	private Boolean teammemberstatus;
 	
 	
 	
@@ -49,35 +50,7 @@ public class requestNoteVo implements Serializable{
 		  }
 		 };
 	
-	 
-		 public void postProcessXLS(Object document) {
-		        HSSFWorkbook wb = (HSSFWorkbook) document;
-		        HSSFSheet sheet = wb.getSheetAt(0);
-		        HSSFRow header = sheet.getRow(0);
-		         
-		        HSSFCellStyle cellStyle = wb.createCellStyle();  
-		        cellStyle.setFillForegroundColor(HSSFColor.GREEN.index);
-		        cellStyle.setFillPattern(HSSFCellStyle.SOLID_FOREGROUND);
-		         
-		        for(int i=0; i < header.getPhysicalNumberOfCells();i++) {
-		            HSSFCell cell = header.getCell(i);
-		             
-		            cell.setCellStyle(cellStyle);
-		        }
-		        
-		        
-		     }
-		     
-		    public void preProcessPDF(Object document) throws IOException, BadElementException, DocumentException {
-		        Document pdf = (Document) document;
-		        pdf.open();
-		        pdf.setPageSize(PageSize.A4);
-		 
-		        //ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
-		        //String logo = externalContext.getRealPath("") + File.separator + "resources" + File.separator + "demo" + File.separator + "images" + File.separator + "prime_logo.png";
-		         
-		        pdf.addTitle("Collabor8");
-		    }
+
 			
 		
 
@@ -85,6 +58,22 @@ public class requestNoteVo implements Serializable{
 	
 	
 	
+	public Boolean getRequeststatus() {
+				return requeststatus;
+			}
+
+			public void setRequeststatus(Boolean requeststatus) {
+				this.requeststatus = requeststatus;
+			}
+
+			public Boolean getTeammemberstatus() {
+				return teammemberstatus;
+			}
+
+			public void setTeammemberstatus(Boolean teammemberstatus) {
+				this.teammemberstatus = teammemberstatus;
+			}
+
 	public String getTime() {
 		return time;
 	}

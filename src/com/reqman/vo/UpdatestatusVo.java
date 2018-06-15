@@ -15,6 +15,7 @@ public class UpdatestatusVo {
 	private String userproject;
 	private String userrequesttype;	
 	private String completiondate;
+	private Date datecompletion;
 	private String status;
 	private String friendName;
 	private byte[] file;
@@ -36,7 +37,30 @@ public class UpdatestatusVo {
 	private Integer userfriend;
 	private Integer rating;
 	private String feedback;
+	private Integer serialid;
+	private Integer teammembernotescount;
+	private Integer attachmentstatus;
 	
+	
+	
+	public Integer getSerialid() {
+		return serialid;
+	}
+	public void setSerialid(Integer serialid) {
+		this.serialid = serialid;
+	}
+	public Integer getAttachmentstatus() {
+		return attachmentstatus;
+	}
+	public void setAttachmentstatus(Integer attachmentstatus) {
+		this.attachmentstatus = attachmentstatus;
+	}
+	public Integer getTeammembernotescount() {
+		return teammembernotescount;
+	}
+	public void setTeammembernotescount(Integer teammembernotescount) {
+		this.teammembernotescount = teammembernotescount;
+	}
 	public Integer getRating() {
 		return rating;
 	}
@@ -211,6 +235,12 @@ public class UpdatestatusVo {
 	}
 	public void setUserfriend(Integer userfriend) {
 		this.userfriend = userfriend;
+	}
+	public Date getDatecompletion() {
+		return datecompletion;
+	}
+	public void setDatecompletion(Date datecompletion) {
+		this.datecompletion = datecompletion;
 	}
 	
 	

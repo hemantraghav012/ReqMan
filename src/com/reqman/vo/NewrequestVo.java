@@ -29,6 +29,7 @@ public class NewrequestVo implements Serializable
 	private int completionpercentage;
 	private String stage;	
 	private String changedate;
+	private String createddate;
 	private List<requestNoteVo> noteList;
 	private Integer project;
 	private Integer category;
@@ -42,12 +43,80 @@ public class NewrequestVo implements Serializable
 	private String estimatedeffort;
 	private String priority;
 	private Integer weightage;
+	private Integer requesternotescount;
+	private Integer expectedcompletion;
+	private Integer attachmentstatus;
+	private Integer performance;
+	private Integer serialid;
 	
 	
 	
 	
+
+
+	public Integer getSerialid() {
+		return serialid;
+	}
+
+
+	public void setSerialid(Integer serialid) {
+		this.serialid = serialid;
+	}
+
+
+	public Integer getPerformance() {
+		return performance;
+	}
+
+
+	public void setPerformance(Integer performance) {
+		this.performance = performance;
+	}
+
+
+	public Integer getAttachmentstatus() {
+		return attachmentstatus;
+	}
+
+
+	public void setAttachmentstatus(Integer attachmentstatus) {
+		this.attachmentstatus = attachmentstatus;
+	}
+
+
 	
-	
+
+
+	public Integer getExpectedcompletion() {
+		return expectedcompletion;
+	}
+
+
+	public void setExpectedcompletion(Integer expectedcompletion) {
+		this.expectedcompletion = expectedcompletion;
+	}
+
+
+	public Integer getRequesternotescount() {
+		return requesternotescount;
+	}
+
+
+	public void setRequesternotescount(Integer requesternotescount) {
+		this.requesternotescount = requesternotescount;
+	}
+
+
+	public String getCreateddate() {
+		return createddate;
+	}
+
+
+	public void setCreateddate(String createddate) {
+		this.createddate = createddate;
+	}
+
+
 	public String getActualeffort() {
 		return actualeffort;
 	}
