@@ -20,37 +20,32 @@ import com.reqman.util.CommonConstants;
 	
 	public class SchedulerDAO {
 	
-		@SuppressWarnings("unchecked")
-		public List<Schdulejobs> findAll() {
-			
-			Session session =null;
-		    Transaction tx = null;
-			 List<Schdulejobs> objValue = null;
-			try { 
-				session = HibernateUtil.getSession();
-				 tx = session.beginTransaction();
-				 
-				  objValue = (List<Schdulejobs>) session
-							.createCriteria(Schdulejobs.class)
-							.list();
+	@SuppressWarnings("unchecked")
+	public List<Schdulejobs> findAll() {
 
-				 
-			
-			} catch (Exception re) {
-			
-			 	re.printStackTrace();
-			 	if(tx != null)
-    			{
-    				tx.rollback();
-    			}
-				//throw re;
-			}finally{
-				if(session!=null)
-					session.close();
+		Session session = null;
+		Transaction tx = null;
+		List<Schdulejobs> objValue = null;
+		try {
+			session = HibernateUtil.getSession();
+			tx = session.beginTransaction();
+
+			objValue = (List<Schdulejobs>) session.createCriteria(Schdulejobs.class).list();
+
+		} catch (Exception re) {
+
+			re.printStackTrace();
+			if (tx != null) {
+				tx.rollback();
 			}
-			return objValue;
-			
+			// throw re;
+		} finally {
+			if (session != null)
+				session.close();
 		}
+		return objValue;
+
+	}
 		
 		
 		
