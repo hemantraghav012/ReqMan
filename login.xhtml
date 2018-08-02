@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Frameset//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-frameset.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+        xmlns:p="http://primefaces.org/ui"
+    xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+ 
+      xmlns:f="http://java.sun.com/jsf/core"  
+      
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+  
+      
+      <h:head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+     <meta name="google-signin-client_id" content="437622396713-7pjomjgqh57el4qc3ojlr2mlbf4r8ihf.apps.googleusercontent.com"/>
+ <script src="https://apis.google.com/js/platform.js"  ></script>
+ 
+<link rel="stylesheet" href="resource/css/bootstrap.css"/>
+<link rel="stylesheet" href="resource/mystyle/home.css"/>
+<link rel="stylesheet" href="resource/mystyle/onlyhome.css"/>
+ <link rel="stylesheet" href="resource/mystyle/button.css"/>
+<link rel="stylesheet" href="resource/mystyle/login.css"/>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script type="text/javascript" src="resource/js/bootstrap.js"/>
+<script type="text/javascript" src="resource/js/jquery.js"/>
+<title>Log In</title>
+<style type="text/css">
+        .ui-growl {
+            
+            top:60px;
+            Right:20px;
+            width:301px;
+            z-index:9999;
+        }
+
+
+a{
+color:blue;
+}
+</style>
+
+
+</h:head>
+<h:body class="fontfanily_size"> 
+
+
+<f:metadata>
+    <f:viewParam name="hostedpage_id" value="#{login.hostedpage_id}" />
+</f:metadata>
+            
+            
+            <div id="indexheader">
+	<ui:insert name="indexheader">
+		<ui:include src="indexheader.xhtml" />
+	</ui:insert>
+</div>
+       
+      <!-- -end of header --> 
+            
+ <div class="row" style=" margin-top: 2.5cm;">
+
+ <p:growl id="messages" />
+ 
+  <div class="col-lg-6">
+    	  <div >
+				<div class="loginmodal-container ">
+				
+					<h1>Login to <span style="font-weight: bold;">Collabor8</span> </h1><br></br>
+				  <h:form >
+				 
+				  
+				  
+   <div><h:messages style = "color:red;margin:8px;" /></div>
+   
+     <h:outputText class="form-group">Email Id</h:outputText>
+
+     <h:inputText   value="#{login.user}" id="emailid" required="true"  class="form-control"  requiredMessage="* Please enter your emaid id"
+      validatorMessage="Invalid email format">
+       <f:validateRegex	pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" a:placeholder="Email-id" />
+		 </h:inputText>
+				 <h:message for="emailid"  style="color:red;margin:8px;"/> 
+    
+    
+    <h:outputText class="form-group">Password</h:outputText>
+     <h:inputSecret  value="#{login.pwd}" id="password"  class="form-control" required="true" requiredMessage="* Please enter your Password" a:placeholder="Password"></h:inputSecret>
+		 <h:message for="password"  style="color:red;margin:8px;"/> 
+     
+ 
+  
+  
+   <h:commandButton   action="#{login.validateUsernamePassword}"
+			value="Login"  class="btn fontsize btn-success btn-block"></h:commandButton>
+	 
+</h:form>
+					
+				  <div class="login-help">
+					 <a href="faces/forgotpassword.xhtml" style="color:blue;fontsize:16px;">Forgot Password...</a>
+					 <br></br>
+					
+					  
+					 <a href="faces/register.xhtml" style="color:blue;fontsize:16px;">  Register New User...</a> 
+				  </div>
+				  <div class="or-break">
+    <span>or</span>
+  </div>
+
+<div class="g-signin2 " data-width="370"    data-longtitle="true"   id="myP" data-onsuccess="onSignIn" ></div>
+
+
+    
+		
+	 <img id="myImg"/><br></br>
+      <p id="name"></p>
+      <div id="status">
+   </div>
+   <script type="text/javascript">
+      function onSignIn(googleUser) {
+   
+      var profile = googleUser.getBasicProfile();
+      var imagurl=profile.getImageUrl();
+      var name=profile.getName();     
+      var email=profile.getEmail();
+  //    alert("email"+email );
+
+      document.getElementById("formId:email").value = email;
+     document.getElementById("myImg").src = imagurl; 
+      document.getElementById("myP").style.visibility = "hidden";
+
+    //  location.href='googlesignin.xhtml?email='+email+'';
+     document.getElementById("status").innerHTML= 'Welcome '+name+'!<a  onclick="some()"  style="color:blue;font-size:18px;text-decoration:underline;cursor: pointer;" >&nbsp;Continue with Google login</a><br></br><button  onclick="myFunction()"  style="background: #fff;">Sign Out</button>  '
+
+         'Welcome'+name+'<button  onclick="some()"  style="background: #fff;">Sign Out</button> '
+ // alert("email"+hr );
+       }
+      function some(){
+    	  $("#formId\\:button1").click() 
+    	}
+
+      
+        </script>
+        <h:form id="formId">
+      
+         <h:inputHidden id="email" value="#{register.googleemail}" />
+<h:commandLink id="button1" action="#{register.googlesubmit()}" value="Google Sign In" class="btn fontsize btn-success btn-block hide" style="display:hidden;"/>
+
+
+ 
+  </h:form>
+   
+   <script>
+      function myFunction() {
+      gapi.auth2.getAuthInstance().disconnect();     
+      location.reload(false)
+   }
+   </script> 
+   
+
+
+				</div>
+			</div>
+<br></br>
+</div>
+
+ <div class="col-lg-6">
+ <img   src="resource/image/23.jpeg" class="img-responsive " alt="collabor8" style="width:500%;height:500px;" ></img>
+<br></br>
+ </div>
+ 
+</div>
+
+<br></br><br></br>
+
+
+
+
+
+
+
+
+
+
+  
+	<div id="footer">
+	<ui:insert name="footer">
+		<ui:include src="footerpage.xhtml" />
+	</ui:insert>
+</div>
+       
+      <!-- -end of footer --> 		
+</h:body>
+</html>

@@ -1,0 +1,381 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Frameset//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-frameset.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"  
+     xmlns:p="http://primefaces.org/ui"
+ xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+      <h:head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+    <meta name="google-signin-client_id" content="437622396713-7pjomjgqh57el4qc3ojlr2mlbf4r8ihf.apps.googleusercontent.com"/>
+ <script src="https://apis.google.com/js/platform.js"  ></script>
+
+<link rel="stylesheet" href="resource/css/bootstrap.css"/>
+<link rel="stylesheet" href="resource/mystyle/home.css"/>
+<link rel="stylesheet" href="resource/mystyle/onlyhome.css"/>
+ <link rel="stylesheet" href="resource/mystyle/register.css"/>
+ <link rel="stylesheet" href="resource/mystyle/button.css"/>
+  <link rel="stylesheet" href="resource/mystyle/registerlink.css"/>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script type="text/javascript" src="resource/js/bootstrap.js"/>
+<script type="text/javascript" src="resource/js/jquery.js"/>
+<title>Sign up</title>
+
+<style type="text/css">
+        .ui-growl {
+            
+            top:60px;
+            Right:20px;
+            width:301px;
+        
+        }
+    </style>
+</h:head>
+
+<h:body class="fontfanily_size">
+
+        <div id="emailheader">
+	<ui:insert name="emailheader">
+		<ui:include src="emailheader.xhtml" />
+	</ui:insert>
+</div>
+       
+      <!-- -end of header --> 
+      
+
+<div><h:messages style = "color:red;margin:8px;" /></div>
+ <p:growl id="messages" />
+<div  style=" margin-top:50px; " >
+
+<div class="secondtop" style="background-image: url('resource/image/test2.jpg');" >
+
+
+<div class="row">
+
+<div class="col-sm-1">
+
+</div>
+<div class="col-sm-4" style=" background-color: #fff; margin-top:22px;">
+<h:form class="form-horizontal"  >
+
+<div class="row "  >
+<br></br>
+<div class="col-sm-2"></div>
+<div class="col-sm-8"  style="font-size: 26px; color: Black;font-weight:bold;">REGISTER / LOGIN</div>
+</div>
+<br></br>
+
+
+<div class="row">
+<div class="col-sm-12">
+ <h:inputText value="#{register.emailid}" class="  form-control" style=" height: 44px;"  a:placeholder=" Please Enter Email Id"  id="emailid" required="true" requiredMessage="* Please enter your email id" validatorMessage="Invalid email format"> <f:validateRegex
+		pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" /></h:inputText>
+</div>
+</div>
+<br></br>
+<div class="row">
+<div class="col-sm-12">
+ <h:inputText value="#{register.password}" class="  form-control" style=" height: 44px;"  a:placeholder=" Please Enter Password"  id="password" required="true" requiredMessage="* Please enter your email id" validatorMessage="Invalid email format">
+		</h:inputText>
+		</div>
+		
+		</div>
+<br></br>
+<div class="row">
+<div class="col-sm-12">
+<h:commandLink action="#{register.linksubmit()}" value="Submit" class="btn fontsize btn-success btn-block"></h:commandLink>
+</div>
+</div>
+<br></br>
+
+</h:form>
+ <div class="login-help">
+					 <a href="faces/forgotpassword.xhtml" style="color:blue;fontsize:16px;">Forgot Password...</a>
+					
+					 </div> <br></br>
+<div class="row">
+ <div class="col-sm-12" >
+<div class="g-signin2 " data-width="427"    data-longtitle="true" id="myP" data-onsuccess="onSignIn" ></div>
+<img id="myImg"/><br></br>
+      <p id="name"></p>
+      <div id="status">
+     
+   </div>
+    <br></br>
+</div>
+
+ 
+   
+</div>
+
+</div>
+
+ <div class="col-sm-1" ></div>
+ <div class="col-sm-4" >
+
+
+      <h2 style="color: black;font-size:26px;text-align: left; font-weight: 700;">Use Collabor8 to:-</h2>
+<ul style=" font-size:16px;text-align: left; font-weight: 600; ">
+<li>Assign Tasks Among team members.</li>
+<li>Send automatic follow-up notices.</li>
+<li>Monitor progress of tasks.</li>
+<li>Automate reminders for priority tasks.</li>
+<li>Keep record of work done by team members.</li>
+<li>Analyze true performance of team members.</li>
+<li>Improve planning by comparing estimates versus actual efforts.</li>
+<li>Record Customer feedbacks &amp; ratings.</li>
+<li>Create professional basis for Performance appraisals.</li>
+<li>Monitor and manage people capacity.</li>
+<li>Analyze information any way you want on various dimensions. </li>
+<li>Share notes with team members.</li>
+<li>Verify Task completeness before closure.</li>
+
+</ul>
+
+
+</div>
+</div>
+   
+  
+</div>
+</div>
+   
+   
+    <br></br>
+      
+   
+    
+   
+   
+   
+   <br></br> 
+
+      <div class="row">
+      
+    
+      
+      <div class="col-sm-5" style="text-align:justify;margin-left:25px">
+      
+      
+<h2 style="color:Black;font-size:26px;">Collabor8 is best used for :-</h2>
+<ui  style ="font-size:16px; LINE-HEIGHT:35px;  ">
+
+<li>Incident management system for customer complaints.</li>
+<li>Performance appraisals record system</li>
+<li>Action Point management from meetings</li>
+<li>Audit point tracking systems</li>
+<li>Automating reminder for tasks</li>
+<li>To-Do List management  for tasks to self.</li>
+<li>Comparing expected progress with actual progress.</li>
+<li>Collaboration between team members from different organization having any email domain.</li>
+<li>Compare estimated efforts with actual and improving planning performance.</li>
+
+</ui>
+    
+      </div>
+           <div class="col-sm-1"></div>
+  <div class="col-sm-6" style="margin-top:15px;">
+      <img   src="resource/image/useinbolgs.png"  class="img-responsive " alt="collabor8" style="width:100%; "></img> 
+
+</div>
+  
+
+</div>
+
+<br></br>
+
+
+
+      <br></br>
+<div class="row">
+
+
+
+ 
+ <div class="col-sm-5" >
+
+ <img  src="resource/image/registeraddlinktest3.jpg"  class="img-responsive img-thumbnail" alt="collabor8"  ></img>
+   
+ </div><!-- end column -->
+<div class="col-sm-1" ></div>
+<div class="col-sm-6 " style="margin-left: 25px;text-align:justify;"  >
+
+<h2 style="font-size: 26px;">Save time. Improve  efficiency.</h2>
+<br></br>
+<p style="font-size:16px; LINE-HEIGHT:30px;font-size:16px;">Collbor8 will help you to save your time in creating requests
+ for team members from your smart phone or from your laptop. Automated status reports will help you  Improve 
+  working efficiency and save follow-up efforts. </p>
+<br></br>
+<h2 style="font-size:26px;">Improve collaboration and team alignment</h2>
+<br></br>
+<p style="font-size:16px; LINE-HEIGHT:30px;font-size:16px;">Request for new tasks from anywhere and update progress and
+ status anytime. Share notes Collaboratively and let team members see the complete 360 picture.</p>
+ 
+ <h2 style="font-size: 26px;">Let no agreed task be forgotten, by you and team members</h2>
+<br></br>
+<p style=" font-size:16px;LINE-HEIGHT:30px;">
+Collabor8 will remind you and your team members for the agreed tasks. It will also inform 
+the team members when a new request is created for them. </p>
+<br></br>
+ 
+ 
+ </div><!-- end column -->
+ 
+ 
+ </div><!--end row  -->
+<br></br>
+   
+   
+   
+   
+<div class="row hide" style="margin-top:5px;">
+<div class="col-sm-6" style="margin-top:15px;">
+      <img  src="https://i.imgur.com/cBU8Qh2.jpg" class="img-responsive img-thumbnail" alt="collabor8" style="width:100%;" ></img>
+      </div>
+      
+      <div class="col-sm-5 " style="text-align:justify;margin-left:25px;background-color:#fff;">
+      <br></br>
+      <h2 style="color: #03b4f2;font-size:26px;text-align: left;">Use Collabor8 to:-</h2>
+<ui style=" font-size:16px; LINE-HEIGHT:30px;  ">
+<li>Assign Tasks Among team member.</li>
+<li>Send automatic follow-up.</li>
+<li>Monitor progress.</li>
+<li>Automatic reminder for priority tasks.</li>
+<li>Keep record of work done.</li>
+<li>Analyze performance.</li>
+<li>Improve planning.</li>
+<li>Record Customer feedbacks &amp; Ratings.</li>
+<li>Analyze plan versus actual performance.</li>
+
+<li>Create professional basis for Performance appraisals.</li>
+<li>Monitor and manage people capacity.  </li>
+<li>Analyze information any way you want on  various dimensions.</li>
+
+
+</ui>
+<br></br><br></br>
+
+      </div>
+      </div>
+    <br></br>
+ 
+
+
+
+<script type="text/javascript">
+      function onSignIn(googleUser) {
+   
+      var profile = googleUser.getBasicProfile();
+      var imagurl=profile.getImageUrl();
+      var name=profile.getName();     
+      var email=profile.getEmail();
+  //    alert("email"+email );
+
+      document.getElementById("formId:email").value = email;
+     document.getElementById("myImg").src = imagurl; 
+      document.getElementById("myP").style.visibility = "hidden";
+
+    //  location.href='googlesignin.xhtml?email='+email+'';
+     document.getElementById("status").innerHTML= 'Welcome '+name+'!<a  onclick="some()"  style="color:blue;font-size:18px;text-decoration:underline;cursor: pointer;" >&nbsp;Continue with Google login</a><br></br><button  onclick="myFunction()"  style="background: #fff;">Sign Out</button>  '
+
+         'Welcome'+name+'<button  onclick="some()"  style="background: #fff;">Sign Out</button> '
+ // alert("email"+hr );
+       }
+      function some(){
+    	  $("#formId\\:button1").click() 
+    	}
+
+      
+        </script>
+        <h:form id="formId">
+      
+         <h:inputHidden id="email" value="#{register.googleemail}" />
+<h:commandLink id="button1" action="#{register.googlesubmit()}" value="Google Sign In" class="btn fontsize btn-success btn-block hide" style="display:hidden;"/>
+
+
+ 
+  </h:form>
+   
+   <script>
+      function myFunction() {
+      gapi.auth2.getAuthInstance().disconnect();     
+      location.reload(false)
+   }
+   </script> 
+   
+
+
+
+
+ <section class="pricing bx" style=" background-image: url(resource/image/23.jpeg);  ">
+        <div class="container" >
+            <p style="text-align:center;padding:40px 40px 40px 40px; font-size:26px;">Free onboarding. Scalable plans. Simple rules.</p>
+            <div class="offer-list ">
+                <div class="offer allcommonclass" >
+                    <div class="about">
+                        <div class="package">
+                        <br></br> <br></br>
+                            <h4>Collabor8 Pro</h4>
+                           
+                            <div class="price">
+                                from <span><sup>&#36;</sup>10</span>/mo
+                            </div>
+                        </div>
+                       
+                    </div>
+                    <div class="details">
+                  For efficiency and target oriented managers. 
+                    </div>
+                </div>
+               
+                <div class="offer pro active allcommonclass">
+                    <div class="about">
+                        <div class="package">
+                        <br></br>
+                            <span class="popular">MOST POPULAR</span>
+                            <h4>Collabor8 max</h4>
+                            
+                            <div class="price">
+                                from <span><sup>&#36;</sup>100</span>/year
+                            </div>
+                        </div>
+                        
+                    </div>
+                    <div class="details">
+                        For teams with customer focus and commitment.
+                    </div>
+                </div>
+               
+                <div class="offer allcommonclass">
+                    <div class="about">
+                        <div class="package">
+                        <br></br> <br></br>
+                            <h4>Collabor8 Enterprise</h4>
+                            
+                            <div class="price">
+                                from <span><sup>&#36;</sup>8</span>/User/mo
+                            </div>
+                        </div>
+                    </div>
+                    <div class="details">
+                   For flexible user base organizational billing.
+                    </div>
+                </div>
+            </div>
+             <br></br>   <br></br>   <br></br>   <br></br>
+                                </div>
+    </section>
+   <br></br>
+  <div id="footer">
+	<ui:insert name="footer">
+		<ui:include src="footerpage.xhtml" />
+	</ui:insert>
+</div>
+       
+      <!-- -end of footer --> 
+</h:body>
+</html>
